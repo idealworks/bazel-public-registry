@@ -1,0 +1,6 @@
+module(
+    name = "bazel_public_registry",
+    version = "0.0.0",
+    compatibility_level = 1,
+)
+
