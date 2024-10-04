@@ -2,7 +2,7 @@
     "integrity": "sha256-Fb39zsWKfaMK3IesKweORBfb5TkvOvtxn5um0GJkVZM=",
     "url": "http://archive.ubuntu.com/ubuntu/pool/universe/t/tinyxml/tinyxml_2.6.2.orig.tar.gz",
     "overlay": {
-        "MODULE.bazel": "sha256-Ego96eAKADjWi7CVj1j95rPKtcwbRzH+vbdwBKRYRPo=",
+        "MODULE.bazel": "sha256-VOuGyVS5n6pEgaY0fZWojiNdt9W/c3oWPIJVic70QFA=",
         "BUILD.bazel": "sha256-vKEsaNXibrfBop9YbJq9i0np2h+wginaJix3DF5So68="
     }
 }
