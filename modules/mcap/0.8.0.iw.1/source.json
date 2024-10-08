@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/foxglove/mcap/archive/refs/tags/releases/cpp/v0.8.0.tar.gz",
+  "integrity": "sha256-KDP3I0QwjqWGOfOzY6DPF2aVgK56tDX0PzsQTP9u9Ug=",
+  "strip_prefix": "mcap-releases-cpp-v0.8.0/cpp/mcap",
+  "overlay": {
+    "MODULE.bazel": "sha256-gA7huje7ceT2QC8yrevg9+F0dUZnH7dKJa2jXgAWnb8=",
+    "BUILD.bazel": "sha256-1DnMY/PhvlyueD/ptCpksasGLuQEaGajVFIlytQAj3w="
+  }
+}

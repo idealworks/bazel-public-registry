@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/rpyutils/archive/refs/tags/0.2.1.tar.gz",
+  "integrity": "sha256-+H2MCisaXCi3IvFo1xcAdubYLmjFyzHP908VqfolH7k=",
+  "strip_prefix": "rpyutils-0.2.1",
+  "overlay": {
+    "MODULE.bazel": "sha256-jOoUaHwhEVr52KoUya0TX1p0Kqp8Dos7kjNtEb8t35g=",
+    "BUILD.bazel": "sha256-/bk8uBtUTj7pwhkOYm3i9gzLAjX8XJ0i4ILuKsUWNJw="
+  }
+}

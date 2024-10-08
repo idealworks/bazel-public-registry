@@ -1,0 +1,17 @@
+{
+  "url": "https://github.com/ros2/rclcpp/archive/refs/tags/16.0.9.tar.gz",
+  "integrity": "sha256-zuVbQWg2EDCjcY2LXT022fHZyRRg1TT3TSj0ahAeb2E=",
+  "strip_prefix": "rclcpp-16.0.9",
+  "patches": {
+    "rclcpp_fix-maybe-uninitialized-warning.patch": "sha256-j4nrT8O9KWijPBJSuxZy3FWpTJtaA+a0Xx43Q8fUCeo=",
+    "rclcpp_ts_libs_ownership.patch": "sha256-OGFrA94ks9RKN6UMt7UWQ+nROsU58+mouJdXFGC8MCE=",
+    "rclcpp_include_functional_node_parameters.patch": "sha256-+uHfHTlZEzU10OtaEBJr/A/6v54z1TO0Wp97B2wJi7w="
+  },
+  "patch_strip": 1,
+  "overlay": {
+    "MODULE.bazel": "sha256-HEAtoorodYF/Qkv9SaApcTTIRDE3ZCnDODh/nwXsi3o=",
+    "BUILD.bazel": "sha256-p7jn5rAq2u9oKSA1/o8aU5YZW9lGm/Dp8tp+teaKrDY=",
+    "requirements.txt": "sha256-GQzV2W/B2yR7dYaKaiXc10FSgLwd4FLENYR7+MJ3Fgo=",
+    "requirements_lock.txt": "sha256-AyRJVClhOREtQF8EgnaIkjx+lKJqoUXd014Bp5fqE5g="
+  }
+}

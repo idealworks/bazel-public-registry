@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/osrf/osrf_pycommon/archive/refs/tags/2.0.2.tar.gz",
+  "integrity": "sha256-G7T5qRxrAvq2e+J+Y4Qb8F9J3DKXAUlWKgx+qFs6K5w=",
+  "strip_prefix": "osrf_pycommon-2.0.2",
+  "overlay": {
+    "MODULE.bazel": "sha256-ozObKGTHomrmuxB3XWRu7mZMkJ/npTwQkl6KPBwoCw4=",
+    "BUILD.bazel": "sha256-ARSmSkUDx6hKbpUVknBohDMdoMwD5Mt4S/xPK6aVri4="
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/cameron314/readerwriterqueue/archive/refs/tags/v1.0.6.tar.gz",
+  "integrity": "sha256-/Gj1W71JqLZGRiaV4Xd/uPLAtPNC1eZXQTUhExK6VsE=",
+  "strip_prefix": "readerwriterqueue-1.0.6",
+  "overlay": {
+    "MODULE.bazel": "sha256-Rckzf+79C/uX1tHI0EbQNsl7yBUcCTbXlG5Esu91rKI=",
+    "BUILD.bazel": "sha256-KuQvn0Xp/7n5RhC01a8wBbOC76xMKj49dFvyhI5Hmac="
+  }
+}

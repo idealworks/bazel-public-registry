@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/ros2/rmw_implementation/archive/refs/tags/2.8.3.tar.gz",
+  "integrity": "sha256-oJ90RC2d9lhbLfOqAMOr4v40KfHcDgHZN1CfM6IbRr8=",
+  "strip_prefix": "rmw_implementation-2.8.3",
+  "patches": {
+    "rmw_implementation_library_path.patch": "sha256-alk3ZxxIMjZOIv0u4saqco6InCXCnDLWdq5WJYGXOlU="
+  },
+  "patch_strip": 1,
+  "overlay": {
+    "MODULE.bazel": "sha256-SJ+T8EFAd5QDdmZG+R/H9G/+VBRUyeHAgSMVBJFny28=",
+    "BUILD.bazel": "sha256-bgQ9WJ/pZVpm/GLonZIpZ8u7OlcmUVV0XUByLsa2BCQ="
+  }
+}

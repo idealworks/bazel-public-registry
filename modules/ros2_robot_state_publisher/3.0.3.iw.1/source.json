@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros/robot_state_publisher/archive/refs/tags/3.0.3.tar.gz",
+  "integrity": "sha256-dCNaN5rjvK9qYjbd02/szqZGN0kFewnzQJvLztDAR/k=",
+  "strip_prefix": "robot_state_publisher-3.0.3",
+  "overlay": {
+    "MODULE.bazel": "sha256-DfHYAuJmAUUYEbHtaJCGdwv9Th0evAfZVm6bR/aKu2M=",
+    "BUILD.bazel": "sha256-J/sm244u8lM9fBywGVRAr4dGnOyAeVPUHhOSbzPBydk="
+  }
+}

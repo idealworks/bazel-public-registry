@@ -1,0 +1,15 @@
+{
+  "url": "https://github.com/ros2/rosbag2/archive/refs/tags/0.15.11.tar.gz",
+  "integrity": "sha256-XHZD+CSUxwPkBqgYPbQrpUZpRsccl3ytOKzzu/8k6aE=",
+  "strip_prefix": "rosbag2-0.15.11",
+  "patches": {
+    "rosbag2_relax_plugin_errors.patch": "sha256-IsZ2Y83+2T58GRUW5kYtGPQbKSveBUpPLqeS6GHEWf0="
+  },
+  "patch_strip": 1,
+  "overlay": {
+    "MODULE.bazel": "sha256-M9ueTJn2ZGcvF/hv6/wXS8S8QPcwcWVbdC0wUML2pJA=",
+    "BUILD.bazel": "sha256-d2cLPSAfVsN+MFe/TJ0ViKons8nSoP+mrGu8PfACSv4=",
+    "requirements.txt": "sha256-67DhZUXJEb0x7DOs5X3t+EwE5nPS3CjAKQho5K3023c=",
+    "requirements_lock.txt": "sha256-0PgLByyernG60b3j2BtWzjoc2SNP0HlAzvja6+TCGWI="
+  }
+}

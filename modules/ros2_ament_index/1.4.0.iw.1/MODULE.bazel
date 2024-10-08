@@ -1,0 +1,4 @@
+module(name = "ros2_ament_index", version = "1.4.0.iw.1")
+
+bazel_dep(name = "rules_cc", version = "0.0.10")
+bazel_dep(name = "rules_python", version = "0.36.0")

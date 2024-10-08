@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/rmw/archive/refs/tags/6.1.2.tar.gz",
+  "integrity": "sha256-/F62BsRHc6WF9jMrM7j+VsEDghzZHjuVwxp6tX04+g4=",
+  "strip_prefix": "rmw-6.1.2",
+  "overlay": {
+    "MODULE.bazel": "sha256-098YcO/ADDDI9L6mWsqG/yKLNVsfzVg3TzuhypfhFR4=",
+    "BUILD.bazel": "sha256-qEzHNTT5J/zvuRBAES6K0MlXdvrQ8oPeCyQRTPa1KZY="
+  }
+}

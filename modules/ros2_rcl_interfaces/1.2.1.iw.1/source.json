@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/rcl_interfaces/archive/refs/tags/1.2.1.tar.gz",
+  "integrity": "sha256-4mcEjJ94qr7UtL4RuwKMhIgSdYflBlw7Pa/zVQ3yWHU=",
+  "strip_prefix": "rcl_interfaces-1.2.1",
+  "overlay": {
+    "MODULE.bazel": "sha256-7NRkjUR6JlqX4+hVX8Vz2iNW+3Ai34AS0KZvIlNprDA=",
+    "BUILD.bazel": "sha256-9LUsuyPr6nr2odXhx4jiGo7uBiCOUlmpNttsgPUm45c="
+  }
+}

@@ -1,0 +1,8 @@
+module(name = "ros2_pluginlib", version = "5.1.0.iw.1")
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "1.0.0.eddy.2")
+bazel_dep(name = "ros2_ament_index", version = "1.4.0.iw.1")
+bazel_dep(name = "ros2_class_loader", version = "2.2.0.iw.1")
+bazel_dep(name = "ros2_rcpputils", version = "2.4.3.iw.1")
+bazel_dep(name = "ros2_rcutils", version = "5.1.6.iw.1")
+bazel_dep(name = "tinyxml2", version = "10.0.0")

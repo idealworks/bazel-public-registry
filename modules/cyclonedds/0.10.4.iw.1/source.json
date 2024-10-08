@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/eclipse-cyclonedds/cyclonedds/archive/refs/tags/0.10.4.tar.gz",
+  "integrity": "sha256-/nu1pDSOMWVqk19y3skJp9Kw/PEIQGFPtVLwjrLahIQ=",
+  "strip_prefix": "cyclonedds-0.10.4",
+  "overlay": {
+    "MODULE.bazel": "sha256-k8KgL7ZGDC9XPLVGHGiq2PYtQICsQdcdL4HZ5gnze/E=",
+    "BUILD.bazel": "sha256-Lb1ZWp5ChmLEshZPLei7L72dJkwQZoLpoWPX6dXaeG8="
+  }
+}

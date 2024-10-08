@@ -1,0 +1,9 @@
+module(name = "foxglove_bridge", version = "0.7.9.iw.1")
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "1.0.0.eddy.2")
+bazel_dep(name = "nlohmann_json", version = "3.11.3")
+bazel_dep(name = "ros2_rcl_interfaces", version = "1.2.1.iw.1")
+bazel_dep(name = "ros2_rclcpp", version = "16.0.9.iw.1")
+bazel_dep(name = "ros2_resource_retriever", version = "3.1.2.iw.1")
+bazel_dep(name = "rules_cc", version = "0.0.10")
+bazel_dep(name = "websocketpp", version = "0.8.2.bcr.1")

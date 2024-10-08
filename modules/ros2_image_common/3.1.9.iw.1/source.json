@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros-perception/image_common/archive/refs/tags/3.1.9.tar.gz",
+  "integrity": "sha256-BDPtWcuBPxQHLINRGInWlQrwwiPjRs1/+VkWJ0oxNc0=",
+  "strip_prefix": "image_common-3.1.9",
+  "overlay": {
+    "MODULE.bazel": "sha256-Wm9m3JfiVUJvdub6Dns7VAYCwCAw0+nGO3o0WXjrYQk=",
+    "BUILD.bazel": "sha256-5K6nzxADlbQ6HG9W9FsDFLNAachbXx6wbrIpUttNN2o="
+  }
+}

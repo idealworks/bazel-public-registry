@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/rmw_dds_common/archive/refs/tags/1.6.0.tar.gz",
+  "integrity": "sha256-hd2fWG1TtljlOJo4j+PZmohLoG9Weln5kI7LluKRMu8=",
+  "strip_prefix": "rmw_dds_common-1.6.0",
+  "overlay": {
+    "MODULE.bazel": "sha256-i0DwVZNmrELnkd8keSL0RA8x0FIScubg4BdDU54LRHo=",
+    "BUILD.bazel": "sha256-8YmRZ8iLa0MdQO1kDs2a0501cte+RpzQx47NhL0uErE="
+  }
+}

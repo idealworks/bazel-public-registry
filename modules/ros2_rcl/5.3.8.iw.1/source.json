@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/rcl/archive/refs/tags/5.3.8.tar.gz",
+  "integrity": "sha256-b9oWhuREqp7O6rfmYdGEtyWN7jak9hnTjk31cJcJXgk=",
+  "strip_prefix": "rcl-5.3.8",
+  "overlay": {
+    "MODULE.bazel": "sha256-KBBLtbp4y9b1TZaPwdUJtRgW35ixsw6m+lqjYKsU7Kw=",
+    "BUILD.bazel": "sha256-9UZNE7F/YO+zRPG4zJagIsayPgOOpDEp5flPPSS5k8A="
+  }
+}

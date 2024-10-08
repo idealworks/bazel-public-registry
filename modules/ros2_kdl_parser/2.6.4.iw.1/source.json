@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros/kdl_parser/archive/refs/tags/2.6.4.tar.gz",
+  "integrity": "sha256-8o2pvX6qiZX0tnvJyDIddGcEOqQ+AbkYqiObi5lxv1Y=",
+  "strip_prefix": "kdl_parser-2.6.4",
+  "overlay": {
+    "MODULE.bazel": "sha256-soOqLWEEDRmIwZ5GAUdJfDp9ckv9JkrKLSXSkm9xHfQ=",
+    "BUILD.bazel": "sha256-VmKJov+Q6PsSYbI+fvyD9vJoqKBdXWf2MMaKKgJ1hGY="
+  }
+}

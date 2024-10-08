@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/ros2/rcutils/archive/refs/tags/5.1.6.tar.gz",
+  "integrity": "sha256-tkwwdxYryEWnxBAYC8bHjmPjp1YihbdMCYLu4QHqDyg=",
+  "strip_prefix": "rcutils-5.1.6",
+  "overlay": {
+    "MODULE.bazel": "sha256-eijZWRpaQocgvGan1LINof2KtKdn22idSf0xLj5RzH0=",
+    "BUILD.bazel": "sha256-RsHXIg+eCLIyu+JwPUnGe9tnMwBECvV9hB6HjtkmPOo=",
+    "requirements.txt": "sha256-GQzV2W/B2yR7dYaKaiXc10FSgLwd4FLENYR7+MJ3Fgo=",
+    "requirements_lock.txt": "sha256-AyRJVClhOREtQF8EgnaIkjx+lKJqoUXd014Bp5fqE5g="
+  }
+}

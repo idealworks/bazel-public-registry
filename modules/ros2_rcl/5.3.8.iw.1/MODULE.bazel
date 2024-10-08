@@ -1,0 +1,11 @@
+module(name = "ros2_rcl", version = "5.3.8.iw.1")
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "1.0.0.eddy.2")
+bazel_dep(name = "libyaml", version = "0.2.5")
+bazel_dep(name = "ros2_rcl_interfaces", version = "1.2.1.iw.1")
+bazel_dep(name = "ros2_rcl_logging", version = "2.3.1.iw.1")
+bazel_dep(name = "ros2_rcutils", version = "5.1.6.iw.1")
+bazel_dep(name = "ros2_rmw", version = "6.1.2.iw.1")
+bazel_dep(name = "ros2_rmw_implementation", version = "2.8.3.iw.1")
+bazel_dep(name = "ros2_rosidl", version = "3.1.5.iw.1")
+bazel_dep(name = "ros2_tracing", version = "4.1.1.iw.1")

@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros/console_bridge/archive/1.0.2.tar.gz",
+  "integrity": "sha256-MDphnAGp4Uo8guuXYrikKO9TEabUY1OHKrmpBDWL5KQ=",
+  "strip_prefix": "console_bridge-1.0.2",
+  "overlay": {
+    "MODULE.bazel": "sha256-M4syzgVIG4bYQMnYNEf/fupQpUs0flHeFRRQF9d/C4s=",
+    "BUILD.bazel": "sha256-AySWmwAt0jDXLLd1NgbpJPwU5mNT9bXOxQE+i4abiS8="
+  }
+}

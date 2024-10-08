@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/message_filters/archive/refs/tags/4.3.4.tar.gz",
+  "integrity": "sha256-r5miWRx7df3WWFwj5lmfr7m1K5MNlHJz+xqQMig1xAI=",
+  "strip_prefix": "message_filters-4.3.4",
+  "overlay": {
+    "MODULE.bazel": "sha256-UqHYtq1J/3gVjt8lloFIxeAbWVojVeYur+5hRpqx1YM=",
+    "BUILD.bazel": "sha256-VtPb/Sfw4hX+LHTwXgXnc7AulskDfMg5edCU0nVLjQg="
+  }
+}

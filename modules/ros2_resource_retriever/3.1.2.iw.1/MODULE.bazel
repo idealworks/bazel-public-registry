@@ -1,0 +1,5 @@
+module(name = "ros2_resource_retriever", version = "3.1.2.iw.1")
+
+bazel_dep(name = "curl", version = "8.8.0.bcr.1")
+bazel_dep(name = "ros2_ament_index", version = "1.4.0.iw.1")
+bazel_dep(name = "rules_cc", version = "0.0.10")

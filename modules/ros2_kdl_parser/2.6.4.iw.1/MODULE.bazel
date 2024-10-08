@@ -1,0 +1,7 @@
+module(name = "ros2_kdl_parser", version = "2.6.4.iw.1")
+
+bazel_dep(name = "orocos_kdl", version = "1.5.1.40.g507de66.iw.1")
+bazel_dep(name = "ros2_rcutils", version = "5.1.6.iw.1")
+bazel_dep(name = "ros2_urdf", version = "2.6.0.iw.1")
+bazel_dep(name = "ros2_urdfdom_headers", version = "1.0.6.iw.1")
+bazel_dep(name = "rules_cc", version = "0.0.10")

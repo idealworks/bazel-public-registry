@@ -1,0 +1,4 @@
+module(name = "pybind11", version = "2.13.6.iw.1")
+
+bazel_dep(name = "rules_cc", version = "0.0.10")
+bazel_dep(name = "rules_python", version = "0.36.0")

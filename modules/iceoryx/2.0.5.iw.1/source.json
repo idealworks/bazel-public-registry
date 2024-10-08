@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/eclipse-iceoryx/iceoryx/archive/refs/tags/v2.0.5.tar.gz",
+  "integrity": "sha256-v23nDj7e5xIj+ZOim/9eYa+VzkhxEEkp2L0XKfVEuvs=",
+  "strip_prefix": "iceoryx-2.0.5",
+  "overlay": {
+    "MODULE.bazel": "sha256-WRm6DYbE9tASFBf6yXwJ8lwZdyRCp2Hk33u7mj9AuCc=",
+    "BUILD.bazel": "sha256-RR4Hx4nHcXWCT5gMFzANxkFE0YNS0KCzIwFCRGfSdlw="
+  }
+}

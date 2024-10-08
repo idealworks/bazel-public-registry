@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros/urdfdom_headers/archive/refs/tags/1.0.6.tar.gz",
+  "integrity": "sha256-Gs1QuXb2Qt6dwP3lMuuNd+oJ9N4S6/vZ2IsM0okSeP0=",
+  "strip_prefix": "urdfdom_headers-1.0.6",
+  "overlay": {
+    "MODULE.bazel": "sha256-T1XlPY/hegn6km+pot+OAOjEREM7KRHkdTfgeONWqUk=",
+    "BUILD.bazel": "sha256-p5rFL4QCzngCyvfBuKnkU1NxeLDRfX6SdWt4WnOYYro="
+  }
+}

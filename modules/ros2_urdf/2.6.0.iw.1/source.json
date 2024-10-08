@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/ros2/urdf/archive/refs/tags/2.6.0.tar.gz",
+  "integrity": "sha256-p2LrV9x/YLmtoCQP18YJ8NxQKO8LS2WXLa+R4AnlLPY=",
+  "strip_prefix": "urdf-2.6.0",
+  "patches": {
+    "urdf_plugin_loader_fix.patch": "sha256-In0URnWBNa5UxynWgSqIGBhEKEfanDUcSL8L7K048uU="
+  },
+  "patch_strip": 1,
+  "overlay": {
+    "MODULE.bazel": "sha256-WdLxCReAoIjcrXDVZheLbpdtg+9LdbrN1LS4IkMidl4=",
+    "BUILD.bazel": "sha256-cA18OsSbusqQ0E6H3JDoCqjfduW40jGGSNRBRaLE7Mk="
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros/urdfdom/archive/refs/tags/3.0.2.tar.gz",
+  "integrity": "sha256-EHKyowQpXrKZ7XDZmRTrL7+IQ8Mlfl5R3vxd1FfuYhE=",
+  "strip_prefix": "urdfdom-3.0.2",
+  "overlay": {
+    "MODULE.bazel": "sha256-GHolbN4wxyCqLygdD1aWPa3zRstD0PJGbuKVPcGTYDw=",
+    "BUILD.bazel": "sha256-ULPG/MnB/H93yEMAnd7wpYWZHfZMBihSn/xhRbEslys="
+  }
+}

@@ -1,0 +1,12 @@
+diff --git include/libstatistics_collector/moving_average_statistics/types.hpp include/libstatistics_collector/moving_average_statistics/types.hpp
+index eb58531..be5f2bb 100644
+--- include/libstatistics_collector/moving_average_statistics/types.hpp
++++ include/libstatistics_collector/moving_average_statistics/types.hpp
+@@ -16,6 +16,7 @@
+ #define LIBSTATISTICS_COLLECTOR__MOVING_AVERAGE_STATISTICS__TYPES_HPP_
+ 
+ #include <cmath>
++#include <cstdint>
+ #include <sstream>
+ #include <string>
+ 

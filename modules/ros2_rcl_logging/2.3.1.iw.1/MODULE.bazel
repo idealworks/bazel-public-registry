@@ -1,0 +1,6 @@
+module(name = "ros2_rcl_logging", version = "2.3.1.iw.1")
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "1.0.0.eddy.2")
+bazel_dep(name = "ros2_rcpputils", version = "2.4.3.iw.1")
+bazel_dep(name = "ros2_rcutils", version = "5.1.6.iw.1")
+bazel_dep(name = "spdlog", version = "1.14.1")

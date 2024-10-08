@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros/resource_retriever/archive/refs/tags/3.1.2.tar.gz",
+  "integrity": "sha256-W04UEe2VXAVi9GCdkCUUO/kZnUBcvEcUhLg/PLq1kWI=",
+  "strip_prefix": "resource_retriever-3.1.2",
+  "overlay": {
+    "MODULE.bazel": "sha256-vub8nBlnbrIuNRLLPDO2k9QM7GXe2OIVnH30i/+FSog=",
+    "BUILD.bazel": "sha256-XZ4vyGUrVcl/zjgaXXYPqzmBcooUzlEVfCsXNXJybAs="
+  }
+}

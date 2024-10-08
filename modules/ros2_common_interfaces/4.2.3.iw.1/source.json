@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/common_interfaces/archive/refs/tags/4.2.3.tar.gz",
+  "integrity": "sha256-9L6TQ6TAKPz1QD2QwSC8p4rqG74qBK6YOKf3PDRzZsY=",
+  "strip_prefix": "common_interfaces-4.2.3",
+  "overlay": {
+    "MODULE.bazel": "sha256-Yedu+kDXw55t79bCJmBi0KV6Z+3tMNiEWU4p7xjkXTY=",
+    "BUILD.bazel": "sha256-ojWhKl5XBcn5dW2UHlLV1ElTro2ha1M5sDgY7ScPw7c="
+  }
+}

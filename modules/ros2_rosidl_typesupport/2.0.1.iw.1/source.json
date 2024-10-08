@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/ros2/rosidl_typesupport/archive/refs/tags/2.0.1.tar.gz",
+  "integrity": "sha256-q0tcvi2z8DsukbyZm/YYRntpa7MW+R/GACWQ0AytI/0=",
+  "strip_prefix": "rosidl_typesupport-2.0.1",
+  "patches": {
+    "rosidl_typesupport_generate_true_c_code.patch": "sha256-1IRy2IQWEPxzN51wcmqqpTCE0ErYLI8KTP90n9p2ZOY="
+  },
+  "patch_strip": 1,
+  "overlay": {
+    "MODULE.bazel": "sha256-uJNe02a3S9JBb0iRmVJ40bd2Z2luE8SZA3bnYujw9mQ=",
+    "BUILD.bazel": "sha256-8qOgQsM7Ed9ZH25BBvAgxvwsZSmLgMAeNmOgTBfbdko="
+  }
+}

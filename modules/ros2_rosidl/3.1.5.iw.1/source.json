@@ -1,0 +1,15 @@
+{
+  "url": "https://github.com/ros2/rosidl/archive/refs/tags/3.1.5.tar.gz",
+  "integrity": "sha256-X+9AEuLdXR6mkh2LtnapWAbETxBycJsDcddbJh2BOfg=",
+  "strip_prefix": "rosidl-3.1.5",
+  "patches": {
+    "rosidl_rm_unnecessary_asserts.patch": "sha256-+g0uoO19z/6E5T0LsGBebN0+NL0ihEkIAYR/tvfdjWI="
+  },
+  "patch_strip": 1,
+  "overlay": {
+    "MODULE.bazel": "sha256-rnymgMioHClMM9BWYKqW2IGygO6ResG6dsvusbZb4+A=",
+    "BUILD.bazel": "sha256-NkrslG+q3+ANe+V5R+btyDMK3qzu3QM+WwRArHElxbw=",
+    "requirements.txt": "sha256-tRqxzMmMu9ulmGX0IMKyoEI0PdCoiKVp6qkWFPNHVAg=",
+    "requirements_lock.txt": "sha256-6ALXuNDwxe0VrBdCsQ/Fz9vYvoIS09gV1eMm5Ryde7Q="
+  }
+}

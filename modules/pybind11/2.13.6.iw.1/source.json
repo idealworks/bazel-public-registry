@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/pybind/pybind11/archive/refs/tags/v2.13.6.tar.gz",
+  "integrity": "sha256-4Iy4f0dz2pf6e18DXeh2OrxlbYfVdz5i9toFh9Hw7CA=",
+  "strip_prefix": "pybind11-2.13.6",
+  "overlay": {
+    "MODULE.bazel": "sha256-5wN5exW76oXGTP3JCBxOQZkXi8PY2t3KApBOaqY9Jhk=",
+    "BUILD.bazel": "sha256-/L9SOko2ei5RCY+l7b40PwLD03JBeEdhbaggqFjOdY0="
+  }
+}

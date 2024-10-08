@@ -1,0 +1,11 @@
+module(name = "ros2_image_common", version = "3.1.9.iw.1")
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "1.0.0.eddy.2")
+bazel_dep(name = "ros2_ament_index", version = "1.4.0.iw.1")
+bazel_dep(name = "ros2_common_interfaces", version = "4.2.3.iw.1")
+bazel_dep(name = "ros2_message_filters", version = "4.3.4.iw.1")
+bazel_dep(name = "ros2_pluginlib", version = "5.1.0.iw.1")
+bazel_dep(name = "ros2_rclcpp", version = "16.0.9.iw.1")
+bazel_dep(name = "ros2_rcpputils", version = "2.4.3.iw.1")
+bazel_dep(name = "rules_cc", version = "0.0.10")
+bazel_dep(name = "yaml-cpp", version = "0.8.0")

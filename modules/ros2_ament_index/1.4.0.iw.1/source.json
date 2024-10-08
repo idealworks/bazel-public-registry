@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ament/ament_index/archive/refs/tags/1.4.0.tar.gz",
+  "integrity": "sha256-5miW4lVlNQjLK97Nd4n43VoD19K0od03RFghpWecRHw=",
+  "strip_prefix": "ament_index-1.4.0",
+  "overlay": {
+    "MODULE.bazel": "sha256-nM+5erKiTnph+AOfp11CWhom845Xdla0UdU2KcMcqN0=",
+    "BUILD.bazel": "sha256-qDwV4ONAXiw/H1Zr82ATWOSC5qYgqjVpHutt07TWbFs="
+  }
+}
