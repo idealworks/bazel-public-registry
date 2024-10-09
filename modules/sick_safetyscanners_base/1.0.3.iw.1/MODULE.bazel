@@ -1,0 +1,7 @@
+module(name = "sick_safetyscanners_base", version = "1.0.3.iw.1")
+
+bazel_dep(name = "boost.asio", version = "1.83.0.bcr.1")
+bazel_dep(name = "boost.chrono", version = "1.83.0.bcr.1")
+bazel_dep(name = "boost.lambda", version = "1.83.0.bcr.1")
+bazel_dep(name = "boost.system", version = "1.83.0.bcr.1")
+bazel_dep(name = "boost.thread", version = "1.83.0.bcr.1")

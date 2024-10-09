@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/ros/bond_core/archive/refs/tags/4.1.0.tar.gz",
+  "integrity": "sha256-K5wZKCY9zr8Wgx9d2NcxvGoZsquboUMyMeLYGFTgO7I=",
+  "strip_prefix": "bond_core-4.1.0",
+  "overlay": {
+    "MODULE.bazel": "sha256-4TEgcoIq4U6CQ1iKDVY7Wz/OA1lZ+qx2/bC2Cb1meTw=",
+    "BUILD.bazel": "sha256-SJCL7FUwND8dmTUIgARHd2V6fw7npzaiyLoKSPEfCiA="
+  }
+}
+

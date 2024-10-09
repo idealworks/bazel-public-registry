@@ -1,0 +1,54 @@
+diff --git pcl_conversions/include/pcl_conversions/pcl_conversions.h pcl_conversions/include/pcl_conversions/pcl_conversions.h
+index 4553ae1..ab3bb02 100644
+--- pcl_conversions/include/pcl_conversions/pcl_conversions.h
++++ pcl_conversions/include/pcl_conversions/pcl_conversions.h
+@@ -305,28 +305,40 @@ namespace pcl_conversions {
+   void fromPCL(const pcl::PointIndices &pcl_pi, pcl_msgs::msg::PointIndices &pi)
+   {
+     fromPCL(pcl_pi.header, pi.header);
+-    pi.indices = pcl_pi.indices;
++    pi.indices.reserve(pcl_pi.indices.size());
++    for (size_t i=0 ; i< pcl_pi.indices.size(); i++){
++         pi.indices.push_back(pcl_pi.indices[i]);
++    }
+   }
+ 
+   inline
+   void moveFromPCL(pcl::PointIndices &pcl_pi, pcl_msgs::msg::PointIndices &pi)
+   {
+     fromPCL(pcl_pi.header, pi.header);
+-    pi.indices.swap(pcl_pi.indices);
++    pi.indices.reserve(pcl_pi.indices.size());
++    for (size_t i=0 ; i< pcl_pi.indices.size(); i++){
++         pi.indices.emplace_back(pcl_pi.indices[i]);
++    }
+   }
+ 
+   inline
+   void toPCL(const pcl_msgs::msg::PointIndices &pi, pcl::PointIndices &pcl_pi)
+   {
+     toPCL(pi.header, pcl_pi.header);
+-    pcl_pi.indices = pi.indices;
++    pcl_pi.indices.reserve(pi.indices.size());
++    for (size_t i=0 ; i< pi.indices.size(); i++){
++         pcl_pi.indices.push_back(pi.indices[i]);
++    }
+   }
+ 
+   inline
+   void moveToPCL(pcl_msgs::msg::PointIndices &pi, pcl::PointIndices &pcl_pi)
+   {
+     toPCL(pi.header, pcl_pi.header);
+-    pcl_pi.indices.swap(pi.indices);
++    pcl_pi.indices.reserve(pi.indices.size());
++    for (size_t i=0 ; i< pi.indices.size(); i++){
++         pcl_pi.indices.emplace_back(pi.indices[i]);
++    }
+   }
+ 
+   /** pcl::ModelCoefficients <=> pcl_msgs::ModelCoefficients **/
+@@ -950,3 +962,4 @@ namespace ros
+ **/
+ 
+ #endif /* PCL_CONVERSIONS_H__ */
++

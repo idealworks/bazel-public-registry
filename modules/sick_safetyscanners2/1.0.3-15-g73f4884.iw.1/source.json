@@ -1,0 +1,14 @@
+{
+  "url": "https://github.com/sickag/sick_safetyscanners2/archive/refs/tags/1.0.3.zip",
+  "integrity": "sha256-haAehZurNZPMbDGsGt53DU+QC/XprBUr9LR0LE8gG9M=",
+  "strip_prefix": "sick_safetyscanners2-1.0.3",
+  "patches": {
+    "sick_safetyscanners2-enable-memory-share.patch": "sha256-Dwr4Qdi3oWVW9LQOrwx4LO9FFfeD0C2xtS4RURuWsYs="
+  },
+  "patch_strip": 1,
+  "overlay": {
+    "MODULE.bazel": "sha256-EgCox1Sjb1ou/b9K9cRyx++3QrrmIuUTQPwQ+KuCcSs=",
+    "BUILD.bazel": "sha256-XWAlp4dhLd3W12lyQ+Bk36YsHEsHahGtNV1HtllFLNE="
+  }
+}
+

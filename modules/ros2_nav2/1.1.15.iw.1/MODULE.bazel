@@ -1,0 +1,13 @@
+module(name = "ros2_nav2", version = "1.1.15.iw.1")
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "1.0.0.eddy.2")
+
+bazel_dep(name = "ros2_common_interfaces", version = "4.2.3.iw.1")
+bazel_dep(name = "ros2_diagnostics", version = "3.0.0.17.g9f40278.iw.1")
+bazel_dep(name = "ros2_geometry2", version = "0.25.6.iw.1")
+bazel_dep(name = "ros2_message_filters", version = "4.3.4.iw.1")
+bazel_dep(name = "ros2_rcl_interfaces", version = "1.2.1.iw.1")
+bazel_dep(name = "ros2_rclcpp", version = "16.0.9.iw.1")
+bazel_dep(name = "ros2_pluginlib", version = "5.1.0.iw.1")
+
+bazel_dep(name = "bond", version = "4.1.0.iw.1")

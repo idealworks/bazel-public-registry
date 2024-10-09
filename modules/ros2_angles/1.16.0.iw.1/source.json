@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/ros/angles/archive/refs/tags/1.16.0.zip",
+  "integrity": "sha256-lQ4Kxo0a09lL0ZEnGcCsP+EkRRIsjbH1P99pj8DYo+k=",
+  "strip_prefix": "angles-1.16.0",
+  "overlay": {
+    "MODULE.bazel": "sha256-QAK94NmifOb6I7wceMHb9Ulu973E7lHitDlVu/XZShA=",
+    "BUILD.bazel": "sha256-SuGzTA0naaHTXlqCu6Gp6cacT+vDWbXDOi5hRJ2A1iY="
+  }
+}
+

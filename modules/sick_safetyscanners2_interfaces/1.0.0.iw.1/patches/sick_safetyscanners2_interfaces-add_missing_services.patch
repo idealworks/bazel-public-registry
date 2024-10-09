@@ -1,0 +1,64 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 30b5986..ada78f4 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -36,7 +36,10 @@ rosidl_generate_interfaces(${PROJECT_NAME}
+   "msg/OutputPaths.msg"
+   "msg/RawMicroScanData.msg"
+   "msg/ScanPoint.msg"
++  "srv/ConfigMetadata.srv"
+   "srv/FieldData.srv"
++  "srv/ApplicationName.srv"
++  "srv/TypeCode.srv"
+   DEPENDENCIES sensor_msgs
+  )
+ 
+diff --git a/srv/ApplicationName.srv b/srv/ApplicationName.srv
+new file mode 100644
+index 0000000..7540730
+--- /dev/null
++++ b/srv/ApplicationName.srv
+@@ -0,0 +1,9 @@
++
++---
++
++string version_c_version
++uint8 major_version_number
++uint8 minor_version_number
++uint8 release_version_number
++uint32 name_length
++string application_name
+\ No newline at end of file
+diff --git a/srv/ConfigMetadata.srv b/srv/ConfigMetadata.srv
+new file mode 100644
+index 0000000..67b8f4b
+--- /dev/null
++++ b/srv/ConfigMetadata.srv
+@@ -0,0 +1,14 @@
++
++---
++
++string version_c_version
++uint8 major_version_number
++uint8 minor_version_number
++uint8 release_version_number
++uint16 modification_time_date
++uint32 modification_time_time
++uint16 transfer_time_date
++uint32 transfer_time_time
++uint32 app_checksum
++uint32 overall_checksum
++uint32[] integrity_hash
+diff --git a/srv/TypeCode.srv b/srv/TypeCode.srv
+new file mode 100644
+index 0000000..5084dfc
+--- /dev/null
++++ b/srv/TypeCode.srv
+@@ -0,0 +1,6 @@
++
++---
++
++string type_code
++uint8 interface_type
++float64 max_range
+\ No newline at end of file
