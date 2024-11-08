@@ -1,0 +1,7 @@
+{
+    "type": "git_repository",
+    "integrity": "sha256-F8Un3oCYcDEnJjKTeVRfsvGtzNRpI4qRlk9IUSAssss=",
+    "patch_strip": 0,
+    "remote": "git@github.com:erickj/bazel_json.git",
+    "commit": "e954ef2c28cd92d97304810e8999e1141e2b5cc8"
+}
