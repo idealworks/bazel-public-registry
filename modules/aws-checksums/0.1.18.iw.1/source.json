@@ -1,0 +1,8 @@
+{
+  "url": "https://github.com/awslabs/aws-checksums/archive/refs/tags/v0.1.18.tar.gz",
+  "integrity": "sha256-vbqdCouDMKica4y8ALmqFPQD00SbN/8uDZbWKnMBsu4=",
+  "strip_prefix": "aws-checksums-0.1.18",
+  "overlay": {
+    "BUILD.bazel": "sha256-BqKgEjL/hzeaF3P4qCfNgB1ITHvd/zZppp4tfMOxiQ8="
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/awslabs/aws-c-cal/archive/refs/tags/v0.7.1.tar.gz",
+  "integrity": "sha256-L73ATXLR868ouA/jkX8D8gwKYrwitsezRQSG7py+d/Y=",
+  "strip_prefix": "aws-c-cal-0.7.1",
+  "overlay": {
+    "BUILD.bazel": "sha256-eDqLuOnOSl720zFnfzNLU2ZiIJzkjj2kA9zKKPllh1o=",
+    "bin/BUILD.bazel": "sha256-ccfHtp7rFRJ4NzttkvaGOKgAjhGQSnLVmtfF2snCPxM="
+  }
+}

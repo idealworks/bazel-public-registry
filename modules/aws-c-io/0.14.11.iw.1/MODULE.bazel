@@ -1,0 +1,8 @@
+module(
+    name = "aws-c-io",
+    version = "0.14.11.iw.1",
+)
+
+bazel_dep(name = "aws-c-common", version = "0.9.23.iw.1")
+bazel_dep(name = "aws-c-cal", version = "0.7.1.iw.1")
+bazel_dep(name = "s2n", version = "1.4.17.iw.1")

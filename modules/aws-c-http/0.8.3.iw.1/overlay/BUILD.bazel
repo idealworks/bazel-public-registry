@@ -1,0 +1,20 @@
+cc_library(
+    name = "aws-c-http",
+    srcs = glob([
+        "source/*.c",
+        "include/aws/http/private/*.h",
+    ]),
+    hdrs = glob([
+        "include/aws/http/*.h",
+        "include/aws/http/private/*.def",
+    ]),
+    includes = [
+        "include",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@aws-c-common",
+        "@aws-c-compression",
+        "@aws-c-io",
+    ],
+)

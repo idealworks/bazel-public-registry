@@ -1,0 +1,17 @@
+cc_binary(
+    name = "elastipubsub",
+    srcs = ["elastipubsub/main.c"],
+    deps = ["//:aws-c-mqtt"],
+)
+
+cc_binary(
+    name = "elastipubsub5",
+    srcs = ["elastipubsub5/main.c"],
+    deps = ["//:aws-c-mqtt"],
+)
+
+cc_binary(
+    name = "mqtt5canary",
+    srcs = ["mqtt5canary/main.c"],
+    deps = ["//:aws-c-mqtt"],
+)

@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/awslabs/aws-c-mqtt/archive/refs/tags/v0.10.4.tar.gz",
+  "integrity": "sha256-akFFb57uFdceTi7hYrNUhlgJ8mYg8eblrLI38ZD3fz8=",
+  "strip_prefix": "aws-c-mqtt-0.10.4",
+  "overlay": {
+    "BUILD.bazel": "sha256-W6FpZ6D5buBUh3GtZFHon+GYkVn52PTlmztNI8js1MQ=",
+    "bin/BUILD.bazel": "sha256-KsAaXbzhN72OUk3OjeTX0gykMQNHnLfxvousOcm3/Ec="
+  }
+}

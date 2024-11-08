@@ -1,0 +1,24 @@
+cc_library(
+    name = "s2n",
+    srcs = glob([
+        "crypto/*.c",
+        "error/*.c",
+        "stuffer/*.c",
+        "tls/*.c",
+        "tls/extensions/*.c",
+        "utils/*.c",
+    ]),
+    hdrs = glob([
+        "api/*.h",
+        "api/unstable/*.h",
+        "crypto/*.h",
+        "error/*.h",
+        "stuffer/*.h",
+        "tls/*.h",
+        "tls/extensions/*.h",
+        "utils/*.h",
+    ]),
+    includes = ["api"],
+    visibility = ["//visibility:public"],
+    deps = ["@boringssl//:ssl"],
+)

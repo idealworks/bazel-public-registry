@@ -1,0 +1,8 @@
+{
+  "url": "https://github.com/awslabs/aws-c-s3/archive/refs/tags/v0.6.1.tar.gz",
+  "integrity": "sha256-4lzXz8cxYDNDRCxL1Kd5xj7LEA7Qh+9opeLZflxdU5A=",
+  "strip_prefix": "aws-c-s3-0.6.1",
+  "overlay": {
+    "BUILD.bazel": "sha256-lqiEzMZmfbfn+1rmyullPKhBBc1mWbYdvgCLWOGRl/c="
+  }
+}

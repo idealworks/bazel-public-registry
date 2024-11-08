@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/awslabs/aws-c-common/archive/refs/tags/v0.9.23.tar.gz",
+  "integrity": "sha256-rfg42vamCqMSaFIhBbAyYtdF9Sm8mB06xmVCQTPW+Rs=",
+  "strip_prefix": "aws-c-common-0.9.23",
+  "overlay": {
+    "BUILD.bazel": "sha256-X12TDFFf1Jqf5oxztReqi1ySXu3zKBNqJt3V579SJII=",
+    "bin/system_info/BUILD.bazel": "sha256-swnog29SlEeJmi83BlOvALLpqiX4hdnGEBt9M/hJzlY=",
+    "include/aws/common/config.h": "sha256-GdvV/CCj61y5blQ56bc7C6gzWhuGL46RaWkkobaSxkY="
+  }
+}

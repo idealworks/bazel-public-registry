@@ -1,0 +1,17 @@
+cc_library(
+    name = "aws-c-sdkutils",
+    srcs = glob([
+        "source/*.c",
+        "include/aws/sdkutils/private/*.h",
+    ]),
+    hdrs = glob([
+        "include/aws/sdkutils/*.h",
+    ]),
+    includes = [
+        "include",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@aws-c-common",
+    ],
+)
