@@ -1,0 +1,10 @@
+diff --git a/libarchive_bazel_generic_config.h b/libarchive_bazel_generic_config.h
+index 1d41dc3..5c5bc7a 100644
+--- a/libarchive_bazel_generic_config.h
++++ b/libarchive_bazel_generic_config.h
+@@ -186,3 +186,5 @@
+ #define HAVE_STRUCT_STAT_ST_MTIM_TV_NSEC 1
+ #define HAVE_SYS_XATTR_H 1
+ #endif
++
++#define _GNU_SOURCE 1
