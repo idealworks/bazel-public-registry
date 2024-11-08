@@ -1,0 +1,15 @@
+{
+  "integrity": "sha256-irmKnbNx2CLeCFkISjdadL3H8xyW1nQUdxDPQQG3liE=",
+  "strip_prefix": "pcl-pcl-1.13.1",
+  "url": "https://github.com/PointCloudLibrary/pcl/archive/refs/tags/pcl-1.13.1.tar.gz",
+  "patch_strip": 1,
+  "patches": {
+    "fix_boost_filesystem_1_83_compat.patch": "sha256-OGwRz+muKa6dKcqmWvQdmJ+VlT+ixkccCiGJirjB3uw="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-6SyqLmbfSfufbtkme7erPuV9QoaMHUNEn8GK+TIUvYo=",
+    "BUILD.bazel": "sha256-qbPKlzXTU5+HtGnA4MJ/A2OwCQuS8eJq50G3B1asptU=",
+    "bzl/pcl.bzl": "sha256-g0eAPTgSv6OGF5xiwNXjTEQ2TSwsc6vl5ojzxtDapzc=",
+    "bzl/BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+  }
+}
