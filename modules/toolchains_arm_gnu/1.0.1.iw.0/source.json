@@ -1,0 +1,9 @@
+{
+  "integrity": "sha256-1xHh7t8WEAMoH/WFMNvSSHZsM5DnAD/JAh8VHWhqnT8=",
+  "strip_prefix": "bazel-arm-none-eabi-1.0.2",
+  "url": "https://github.com/EddyGharib/bazel-arm-none-eabi/archive/refs/tags/v1.0.2.tar.gz",
+  "patches": {
+    "module_dot_bazel_version.patch": "sha256-QEQX/7V6wbz2e/ZkHbcCoSjujOTUDaMG5dJTs9dJSLY="
+  },
+  "patch_strip": 1
+}
