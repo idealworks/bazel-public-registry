@@ -7,7 +7,7 @@
     "fix_boost_filesystem_1_83_compat.patch": "sha256-OGwRz+muKa6dKcqmWvQdmJ+VlT+ixkccCiGJirjB3uw="
   },
   "overlay": {
-    "MODULE.bazel": "sha256-6SyqLmbfSfufbtkme7erPuV9QoaMHUNEn8GK+TIUvYo=",
+    "MODULE.bazel": "sha256-R7HALwjFRcgcbh0l9GaQ3s/gGZr2OcwHuMUbJJ2lrtE=",
     "BUILD.bazel": "sha256-qbPKlzXTU5+HtGnA4MJ/A2OwCQuS8eJq50G3B1asptU=",
     "bzl/pcl.bzl": "sha256-g0eAPTgSv6OGF5xiwNXjTEQ2TSwsc6vl5ojzxtDapzc=",
     "bzl/BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
