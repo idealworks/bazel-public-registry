@@ -3,8 +3,7 @@
   "integrity": "sha256-xShpTfK+pCy+YXWjVZDkEwbbKKHKEOR2b6QGJPUgX0I=",
   "strip_prefix": "sick_safetyscanners_base-1.0.3",
   "overlay": {
-    "MODULE.bazel": "sha256-8bupZF2KHIt+4x9hBMXXr70lmtkUQ1H3lOPf1xZmHlU=",
+    "MODULE.bazel": "sha256-B3dlRqBJSsnPW0na39sJ+FQG2ayePi9sq7KuZLp9BBA=",
     "BUILD.bazel": "sha256-70Ro1m7W5ZoqTZwMVWLLnmD3DXAS83GN6dQBJLy7DO0="
   }
 }
-
