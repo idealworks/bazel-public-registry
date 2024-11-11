@@ -3,8 +3,7 @@
   "integrity": "sha256-/sryDvOU/hp6CueyGMh6qzfkYQx461s2DN2cq86f5WE=",
   "strip_prefix": "sick_visionary_cpp_shared-2.5.0",
   "overlay": {
-    "MODULE.bazel": "sha256-otMjBb5OnymG1pGvJ/XJXQao2eV/b+PmN6MGIzcbBwo=",
+    "MODULE.bazel": "sha256-Gg2VRQdnP7uHQaXebYLkl46J9RXOyEHrRCWwuzYXfw8=",
     "BUILD.bazel": "sha256-o+Lk9WxTzSzax6Wl9uw1t1d2sBARhyuPbRZPCTuWzzk="
   }
 }
-
