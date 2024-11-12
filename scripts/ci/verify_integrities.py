@@ -25,7 +25,7 @@ for module in os.listdir("modules"):
                 )
                 if sha_integ_val != calc_integ:
                     print(
-                        f"Mismatch between calc integrity for module: {module}, version: {version}, category: {category} fname: {fname}\n  calculated integ: {calc_integ}\n  expected integ: {sha_integ_val}"
+                        f"Mismatch between calc integrity for module: {module}, version: {version}, category: {category}, fname: {fname}\n  calculated integ: {calc_integ}\n  expected integ: {sha_integ_val}"
                     )
                     mismatch_found = True
 

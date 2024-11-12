@@ -1,0 +1,37 @@
+cc_library(
+    name = "aws-crt-cpp",
+    srcs = glob([
+        "source/*.cpp",
+        "source/auth/*.cpp",
+        "source/cbor/*.cpp",
+        "source/crypto/*.cpp",
+        "source/endpoint/*.cpp",
+        "source/http/*.cpp",
+        "source/io/*.cpp",
+        "source/iot/*.cpp",
+        "source/mqtt/*.cpp",
+        "include/aws/crt/mqtt/private/*.h",
+    ]),
+    hdrs = glob([
+        "include/aws/crt/*.h",
+        "include/aws/crt/auth/*.h",
+        "include/aws/crt/cbor/*.h",
+        "include/aws/crt/crypto/*.h",
+        "include/aws/crt/endpoints/*.h",
+        "include/aws/crt/http/*.h",
+        "include/aws/crt/io/*.h",
+        "include/aws/crt/mqtt/*.h",
+        "include/aws/iot/*.h",
+    ]),
+    includes = [
+        "include",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@aws-c-auth",
+        "@aws-c-event-stream",
+        "@aws-c-io",
+        "@aws-c-mqtt",
+        "@aws-c-s3",
+    ],
+)

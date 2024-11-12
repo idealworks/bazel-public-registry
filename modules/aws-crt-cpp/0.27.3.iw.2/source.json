@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/awslabs/aws-crt-cpp/archive/refs/tags/v0.27.3.tar.gz",
+  "integrity": "sha256-gDTmTC1U5JFDIufdLjBSDNppId9ea9mV5iXoWgb92Zc=",
+  "strip_prefix": "aws-crt-cpp-0.27.3",
+  "overlay": {
+    "BUILD.bazel": "sha256-63Hrld4M3w4WwZANvzp+RVPwtPgFKLnsLqej4q11jpI=",
+    "include/aws/crt/Config.h": "sha256-S+y6drSysTgi6/djilxd52iaQeXKWr7SB5FfdeN4YsM="
+  }
+}
