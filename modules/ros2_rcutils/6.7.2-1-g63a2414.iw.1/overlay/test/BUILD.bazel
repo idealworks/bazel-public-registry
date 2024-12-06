@@ -1,0 +1,87 @@
+cc_library(
+    name = "allocator_testing_utils",
+    hdrs = ["allocator_testing_utils.h"],
+)
+
+cc_library(
+    name = "time_bomb_allocator_testing_utils",
+    hdrs = ["time_bomb_allocator_testing_utils.h"],
+)
+
+COMMON_DEPS = [
+    ":allocator_testing_utils",
+    ":time_bomb_allocator_testing_utils",
+    "@googletest//:gtest_main",
+    "//:rcutils",
+]
+# require osrf_testing_tools_cpp:
+#   test_allocator.cpp
+#   test_error_handling.cpp
+#   test_error_handling_helpers.cpp
+#   test_error_filesystem.cpp
+#   test_logging.cpp
+
+cc_test(
+    name = "test_array_list",
+    srcs = ["test_array_list.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_atomics",
+    srcs = ["test_atomics.c"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_char_array",
+    srcs = ["test_char_array.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_cmdline_parser",
+    srcs = ["test_cmdline_parser.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_env",
+    srcs = ["test_env.cpp"],
+    env = {
+        "HOME": "/tmp",
+        "NORMAL_TEST": "foo",
+    },
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_find",
+    srcs = ["test_find.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_format_string",
+    srcs = ["test_format_string.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_hash_map",
+    srcs = ["test_hash_map.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_isalnum_no_locale",
+    srcs = ["test_isalnum_no_locale.cpp"],
+    deps = COMMON_DEPS,
+)
+
+# failing?
+# cc_test(
+#     name = "test_logging_bad_env",
+#     srcs = ["test_logging_bad_env.cpp"],
+#     deps = COMMON_DEPS,
+# )

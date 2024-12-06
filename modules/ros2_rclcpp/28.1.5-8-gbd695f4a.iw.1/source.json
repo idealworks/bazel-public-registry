@@ -1,0 +1,17 @@
+{
+  "patches": {
+    "rclcpp_ts_libs_ownership.patch": "sha256-yFIDjOh7/tmowFxYinGn43BZW5gVOS1fjRhJ/9wPsSI=",
+    "rclcpp_include_functional_node_parameters.patch": "sha256-ZdR8eiYusUiGUvH0MuRRSAkaxoNoPrLznJqwh9TjUfU=",
+    "rclcpp_fix-component-manager-resource.patch": "sha256-KdSrjRO1HV6lavOinCjByOCdwNyjY5N8mMD3jCqgmR8="
+  },
+  "patch_strip": 1,
+  "overlay": {
+    "MODULE.bazel": "sha256-GcpadJjYCYk35giOSQMXkAlsPfXPGVRXF/+DrG2f8Ys=",
+    "BUILD.bazel": "sha256-K9NcA5NOpvVAxCRjL0ZSzR4BmltKif3hROJ7FPfF+EI=",
+    "requirements.txt": "sha256-GQzV2W/B2yR7dYaKaiXc10FSgLwd4FLENYR7+MJ3Fgo=",
+    "requirements_lock.txt": "sha256-AyRJVClhOREtQF8EgnaIkjx+lKJqoUXd014Bp5fqE5g="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros2/rclcpp.git",
+  "commit": "bd695f4a3b7ea98b3500ec3e1306e31a60abe096"
+}

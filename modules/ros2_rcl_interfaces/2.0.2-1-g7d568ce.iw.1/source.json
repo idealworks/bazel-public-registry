@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-yzHZ0j6EWm+a/JIEyvhoMmPYQAgd7wjhR8WfClb5Xs0=",
+    "BUILD.bazel": "sha256-lJel9U3G8yMF44yXo7Ob+MRFyUKwUOWWHk0JKrzNbFI="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros2/rcl_interfaces.git",
+  "commit": "7d568ce77ac401487d37f62458bfa1c7bb960738"
+}

@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-MdjFBEclOqXNJaBd/3hBbm1iPB3aMQiio4T7w3p3N/I=",
+    "BUILD.bazel": "sha256-ARSmSkUDx6hKbpUVknBohDMdoMwD5Mt4S/xPK6aVri4="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/osrf/osrf_pycommon.git",
+  "commit": "d2757108163af745bdd2dd39e2113b0bbc1d34d6"
+}

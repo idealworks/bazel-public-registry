@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-HeDwuwtl+0ghHaMbG57bANAOzps0ClpksmvReAOKO4k=",
+    "BUILD.bazel": "sha256-rbO/b/dNvuS65LFTRimc/BNKDqatyQRPNeXQ6yIgTuo="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros-tooling/libstatistics_collector.git",
+  "commit": "2a74bedf7fb3aeb011442259a5d63f19ee4501df"
+}

@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-EB1n6GhlGcCYlWXdKGUqyJYKIlSARqpFU9yJeoMpiAY=",
+    "BUILD.bazel": "sha256-ULPG/MnB/H93yEMAnd7wpYWZHfZMBihSn/xhRbEslys="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros/urdfdom.git",
+  "commit": "3f6bf9a608065464bb6c2828af6e96c8f577f2bf"
+}

@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-t9bSbUEa/ooCi2a+5OTkeLmMDgDGO87aI3B6EsgfhFY=",
+    "BUILD.bazel": "sha256-Lb1ZWp5ChmLEshZPLei7L72dJkwQZoLpoWPX6dXaeG8="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/eclipse-cyclonedds/cyclonedds.git",
+  "commit": "76360fb73907ce3dba397e89090a7a4ecf4f1246"
+}

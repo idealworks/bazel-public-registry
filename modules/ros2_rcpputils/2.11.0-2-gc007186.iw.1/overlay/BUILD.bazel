@@ -1,0 +1,12 @@
+""" Builds rcpputils.
+"""
+
+cc_library(
+    name = "rcpputils",
+    srcs = glob(["src/*.cpp"]),
+    hdrs = glob(["include/**/*.hpp"]),
+    includes = ["include"],
+    copts = ["-fPIC"],
+    visibility = ["//visibility:public"],
+    deps = ["@ros2_rcutils//:rcutils"],
+)

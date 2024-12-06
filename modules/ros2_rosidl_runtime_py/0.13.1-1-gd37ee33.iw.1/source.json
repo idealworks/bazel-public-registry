@@ -1,0 +1,11 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-HU0LNj1MmstQp7oFKPAUOZMiRM1P1r1S+wjFJ7SyqaM=",
+    "BUILD.bazel": "sha256-p63DCbIEP/0r9xDKlteHsJlhgc4kmrnCiksossBn3KI=",
+    "requirements.txt": "sha256-4y4ipkM7uTnjiT3Bi4APejtEq+gPPMHKeNQRzsxy984=",
+    "requirements_lock.txt": "sha256-etps1TT4DKYu5s0kVvpjzhiPzsNu57Ov+WP4eSkR+Yw="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros2/rosidl_runtime_py.git",
+  "commit": "d37ee331753c62ca17d9e59e2bd247e52661ac0f"
+}

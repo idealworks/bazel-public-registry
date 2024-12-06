@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-EWx37P0EktAhfACdyccuHTl/ZXbYfVYUToBM+Yszf1g=",
+    "BUILD.bazel": "sha256-y/lTCe1y7dh5fQEaRzX7x2G91CVQbr9ZIHbcTT24KJU="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros2/rcl_logging.git",
+  "commit": "da51595fecb4b914275c2c970076cb605cc08693"
+}

@@ -1,0 +1,15 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-UAG8xcieO1a30wUrq7GyTqkp/+rkZmjJtRq0sJEEaYM=",
+    "BUILD.bazel": "sha256-MpJSeLqamZYazYu5g6V7t/ndQi7PCbEfgn1oTrUXSs0=",
+    "requirements.txt": "sha256-tRqxzMmMu9ulmGX0IMKyoEI0PdCoiKVp6qkWFPNHVAg=",
+    "requirements_lock.txt": "sha256-aLV5LbNMb6pDSmj0HfJ/9UzsRHo7dK9UtJG0r5S14Tc="
+  },
+  "patches": {
+    "rosidl_remove-unnecessary-asserts.patch": "sha256-cOlcPVdEgZoUTPNR2z51FdwzxT7/HJDEQoPKe83sqG8="
+  },
+  "patch_strip": 1,
+  "type": "git_repository",
+  "remote": "https://github.com/ros2/rosidl.git",
+  "commit": "5d916790bbe2f502361b35737f74eda80233019b"
+}

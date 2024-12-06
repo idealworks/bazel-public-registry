@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-p60A/LFhWdXxdslzqRb+r8sfO4+95GoxPmuVhee9WV8=",
+    "BUILD.bazel": "sha256-mlrQqBEvB1Kz34OQrXyrl0XbfwUyhAd9hzQpkLDqOsU="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros/class_loader.git",
+  "commit": "8bad929bd8b2777b8d2b6eff7227b2c5f325b11d"
+}

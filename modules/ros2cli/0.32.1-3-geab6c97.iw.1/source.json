@@ -1,0 +1,11 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-UqNxqCbjjnplwnFmRi+u5vgWg2N8AxacyDaB0SMzAoU=",
+    "BUILD.bazel": "sha256-KzGg65qr6K2qSVJ3vCe62sqSs5WbPrSqk81yOAW3vjA=",
+    "requirements.txt": "sha256-oU5u5m0vc4tsCLUkr9hziGmqsTbTItP5J4/sKR/NjMk=",
+    "requirements_lock.txt": "sha256-eSH1PgZYDWiyEeKMaDzjtTmEWU5CGD5CFt6HavbdIXI="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros2/ros2cli.git",
+  "commit": "eab6c972c31640f91755ce4227d0a8900c57ad86"
+}

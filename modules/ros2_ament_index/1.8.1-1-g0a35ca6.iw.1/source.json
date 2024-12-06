@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-9AmkNdw0901gKljmS4EPCcjZikT7v/veI/oxhVfbt14=",
+    "BUILD.bazel": "sha256-qDwV4ONAXiw/H1Zr82ATWOSC5qYgqjVpHutt07TWbFs="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ament/ament_index.git",
+  "commit": "0a35ca69b3f3514242282e00ac9170e98c078fcd"
+}
