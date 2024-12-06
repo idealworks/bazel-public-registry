@@ -1,0 +1,11 @@
+module(
+    name = "ros2_kdl_parser",
+    version = "2.11.0.iw.1",
+    compatibility_level = 1
+)
+
+bazel_dep(name = "orocos_kdl", version = "1.5.1.40.g507de66.iw.1")
+bazel_dep(name = "ros2_rcutils", version = "6.7.2-1-g63a2414.iw.1")
+bazel_dep(name = "ros2_urdf", version = "2.10.0-1-g4f1fded.iw.1")
+bazel_dep(name = "ros2_urdfdom_headers", version = "1.1.2-1-g1c364b5.iw.1")
+bazel_dep(name = "rules_cc", version = "0.0.10")

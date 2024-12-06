@@ -1,0 +1,10 @@
+module(
+    name = "ros2_urdfdom",
+    version = "4.0.1.iw.1",
+    compatibility_level = 1
+)
+
+bazel_dep(name = "console_bridge", version = "1.7.1-1-g611ceb7.iw.1")
+bazel_dep(name = "ros2_urdfdom_headers", version = "1.1.2-1-g1c364b5.iw.1")
+bazel_dep(name = "rules_cc", version = "0.0.10")
+bazel_dep(name = "tinyxml", version = "2.6.2.iw.1")

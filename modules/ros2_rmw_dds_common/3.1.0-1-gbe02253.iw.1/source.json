@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-+yHb0XcCmaGyjUWyvxI9O93PF67WSYWugM6jOEnQ1Q8=",
+    "BUILD.bazel": "sha256-8YmRZ8iLa0MdQO1kDs2a0501cte+RpzQx47NhL0uErE="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros2/rmw_dds_common.git",
+  "commit": "be02253b7b872bb9223e783421c5deee3269abfe"
+}

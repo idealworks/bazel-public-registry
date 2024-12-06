@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-JyklyMd8vcrxZmkDo6rH8byf1alRGyELjo0gYC3QAIg=",
+    "BUILD.bazel": "sha256-5K6nzxADlbQ6HG9W9FsDFLNAachbXx6wbrIpUttNN2o="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros-perception/image_common.git",
+  "commit": "34ad5dbd4ba9f45553b9b09887c4db39cdf03180"
+}

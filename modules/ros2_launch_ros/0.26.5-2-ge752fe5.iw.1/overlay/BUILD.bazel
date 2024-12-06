@@ -1,0 +1,47 @@
+""" Builds launch_ros.
+"""
+
+load("@rules_python//python:defs.bzl", "py_library")
+load("@ros2_launch_ros_pip_deps//:requirements.bzl", "requirement")
+
+py_library(
+    name = "launch_ros",
+    srcs = glob(["launch_ros/launch_ros/**/*.py"]),
+    imports = ["launch_ros"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@osrf_pycommon",
+        "@ros2_ament_index//:ament_index_python",
+        "@ros2_launch//:launch",
+        "@ros2_rcl_interfaces//:py_composition_interfaces",
+        "@ros2_rcl_interfaces//:py_lifecycle_msgs",
+        "@ros2_rclpy//:rclpy",
+        requirement("pyyaml"),
+    ],
+)
+
+py_library(
+    name = "launch_testing_ros",
+    srcs = glob(["launch_testing_ros/launch_testing_ros/**/*.py"]),
+    imports = ["launch_testing_ros"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":launch_ros",
+        "@ros2_launch//:launch_testing",
+        "@ros2_rclpy//:rclpy",
+    ],
+)
+
+py_library(
+    name = "ros2launch",
+    srcs = glob(["ros2launch/ros2launch/**/*.py"]),
+    imports = ["ros2launch"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":launch_ros",
+        "@ros2_ament_index//:ament_index_python",
+        "@ros2_launch//:launch",
+        "@ros2cli",
+        "@ros2cli//:ros2pkg",
+    ],
+)

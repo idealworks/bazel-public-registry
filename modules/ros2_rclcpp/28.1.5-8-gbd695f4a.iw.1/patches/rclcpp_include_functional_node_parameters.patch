@@ -1,0 +1,12 @@
+diff --git a/rclcpp/include/rclcpp/node_interfaces/node_parameters_interface.hpp b/rclcpp/include/rclcpp/node_interfaces/node_parameters_interface.hpp
+index 301c1e32..cb43ed7f 100644
+--- a/rclcpp/include/rclcpp/node_interfaces/node_parameters_interface.hpp
++++ b/rclcpp/include/rclcpp/node_interfaces/node_parameters_interface.hpp
+@@ -19,6 +19,7 @@
+ #include <map>
+ #include <string>
+ #include <vector>
++#include <functional>
+ 
+ #include "rcl_interfaces/msg/list_parameters_result.hpp"
+ #include "rcl_interfaces/msg/parameter_descriptor.hpp"

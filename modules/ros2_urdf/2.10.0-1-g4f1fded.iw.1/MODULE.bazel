@@ -1,0 +1,12 @@
+module(
+    name = "ros2_urdf",
+    version = "2.10.0-1-g4f1fded.iw.1",
+    compatibility_level = 1
+)
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "1.0.0.eddy.2")
+bazel_dep(name = "ros2_pluginlib", version = "5.4.2-1-gf0c51cc.iw.1")
+bazel_dep(name = "ros2_urdfdom", version = "4.0.1.iw.1")
+bazel_dep(name = "ros2_urdfdom_headers", version = "1.1.2-1-g1c364b5.iw.1")
+bazel_dep(name = "rules_cc", version = "0.0.10")
+bazel_dep(name = "tinyxml2", version = "0.9.1-1-ga852b17.iw.1")

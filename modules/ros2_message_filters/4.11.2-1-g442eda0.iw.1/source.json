@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-tJmcLEayBN6BexhxCDRoxrOuUeOVugbO27PVpHFXoF0=",
+    "BUILD.bazel": "sha256-VtPb/Sfw4hX+LHTwXgXnc7AulskDfMg5edCU0nVLjQg="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros2/message_filters.git",
+  "commit": "442eda0841f09f95248821d2d988a915540e29b4"
+}

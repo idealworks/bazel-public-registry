@@ -1,0 +1,15 @@
+{
+  "patches": {
+    "rosbag2_relax_plugin_errors.patch": "sha256-IsZ2Y83+2T58GRUW5kYtGPQbKSveBUpPLqeS6GHEWf0="
+  },
+  "patch_strip": 1,
+  "overlay": {
+    "MODULE.bazel": "sha256-AP73gFbJVYe8CBxhArXDZX9K2w4EdHXXoKrUYExUXbM=",
+    "BUILD.bazel": "sha256-d2cLPSAfVsN+MFe/TJ0ViKons8nSoP+mrGu8PfACSv4=",
+    "requirements.txt": "sha256-67DhZUXJEb0x7DOs5X3t+EwE5nPS3CjAKQho5K3023c=",
+    "requirements_lock.txt": "sha256-0PgLByyernG60b3j2BtWzjoc2SNP0HlAzvja6+TCGWI="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros2/rosbag2.git",
+  "commit": "6091bc7d4a126a808753d9260f89826fbd6ab98d"
+}

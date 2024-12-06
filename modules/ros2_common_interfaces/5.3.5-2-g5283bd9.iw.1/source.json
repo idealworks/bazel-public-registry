@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-atYHx7CuHeD0L6A4b2+7JJfQROiRREjHpFmx6xuAh6A=",
+    "BUILD.bazel": "sha256-ojWhKl5XBcn5dW2UHlLV1ElTro2ha1M5sDgY7ScPw7c="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros2/common_interfaces.git",
+  "commit": "5283bd97b33584eb2246fc6134b2e948027e1c3c"
+}

@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-QRJPq5ZylWiI3xDuytT0CnU2AIn8unbMuwTboU4EGRI=",
+    "BUILD.bazel": "sha256-rPpmx4uMnGR3gXO26NWXzE49Ku7YQFub026Z/4sYFtA="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros/pluginlib.git",
+  "commit": "f0c51cc78457cbbd0a265620a67506f116c02d6e"
+}

@@ -1,0 +1,27 @@
+module(
+    name = "ros2_rclcpp",
+    version = "28.1.5-8-gbd695f4a.iw.1",
+    compatibility_level = 1
+)
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "1.0.0.eddy.2")
+bazel_dep(name = "ros2_ament_index", version = "1.8.1-1-g0a35ca6.iw.1")
+bazel_dep(name = "ros2_class_loader", version = "2.7.0.iw.1")
+bazel_dep(name = "ros2_libstatistics_collector", version = "1.7.3-1-g2a74bed.iw.1")
+bazel_dep(name = "ros2_rcl", version = "9.2.4-1-gf03e52b.iw.1")
+bazel_dep(name = "ros2_rcl_interfaces", version = "2.0.2-1-g7d568ce.iw.1")
+bazel_dep(name = "ros2_rcpputils", version = "2.11.0-2-gc007186.iw.1")
+bazel_dep(name = "ros2_rcutils", version = "6.7.2-1-g63a2414.iw.1")
+bazel_dep(name = "ros2_rmw", version = "7.3.1-1-gc9dd78a.iw.1")
+bazel_dep(name = "ros2_rosidl", version = "4.6.4-3-g5d91679.iw.1")
+bazel_dep(name = "ros2_rosidl_typesupport", version = "3.2.2-1-gb43c945.iw.1")
+bazel_dep(name = "ros2_tracing", version = "8.2.2-1-g73a7e6d.iw.1")
+bazel_dep(name = "rules_python", version = "0.36.0")
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+    hub_name = "ros2_rclcpp_pip_deps",
+    python_version = "3.10",
+    requirements_lock = "//:requirements_lock.txt",
+)
+use_repo(pip, "ros2_rclcpp_pip_deps")

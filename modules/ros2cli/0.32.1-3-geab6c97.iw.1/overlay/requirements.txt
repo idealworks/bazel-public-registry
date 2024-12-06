@@ -1,0 +1,8 @@
+catkin_pkg
+empy==3.3.4
+netifaces
+numpy
+packaging
+psutil
+pyyaml
+types-setuptools

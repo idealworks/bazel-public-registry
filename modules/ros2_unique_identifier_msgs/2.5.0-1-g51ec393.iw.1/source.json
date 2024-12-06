@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-q19eW8ci2xGX0JywyoCaWorY/4ZlnPRGLIgwNlMAEWc=",
+    "BUILD.bazel": "sha256-nYeblrMSCwKhACdGOy11vFt8AVHd4QrA5KvYvWXu/Qw="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros2/unique_identifier_msgs.git",
+  "commit": "51ec3931400feba6cc0ef0ebd045b5866f63fdd1"
+}

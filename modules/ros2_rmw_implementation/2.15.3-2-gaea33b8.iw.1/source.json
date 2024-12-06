@@ -1,0 +1,13 @@
+{
+  "patches": {
+    "rmw_implementation_library_path.patch": "sha256-alk3ZxxIMjZOIv0u4saqco6InCXCnDLWdq5WJYGXOlU="
+  },
+  "patch_strip": 1,
+  "overlay": {
+    "MODULE.bazel": "sha256-eulnyz78WmA6HJDi4uRz4U0nbz+LdTze0B75ufXybiA=",
+    "BUILD.bazel": "sha256-bgQ9WJ/pZVpm/GLonZIpZ8u7OlcmUVV0XUByLsa2BCQ="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros2/rmw_implementation.git",
+  "commit": "aea33b836c27df6fbcc102ae0781f3109c45215e"
+}

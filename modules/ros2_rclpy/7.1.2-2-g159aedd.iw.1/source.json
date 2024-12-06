@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-Ve2QCFVvpNQrNKuEShKI0R+vWTXz/pUE1DHtIBZv1WU=",
+    "BUILD.bazel": "sha256-/VS5OHGk8aHR8qxgxjgpE3kU/3dkF/HEmzhXmLdIrss="
+  },
+  "type": "git_repository",
+  "remote": "https://github.com/ros2/rclpy.git",
+  "commit": "159aeddb76a80b0ac01e8976ac1d4eb5c3b2459d"
+}
