@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ament/ament_index/archive/refs/tags/1.8.1.tar.gz",
+  "integrity": "sha256-3cigOpvSp648yKac6sp3di2FJK3cLXJgqZJhztQQ8ps=",
+  "strip_prefix": "ament_index-1.8.1",
+  "overlay": {
+    "MODULE.bazel": "sha256-jyYotk7q3fBUt5Ybfd8OkGTI1HpYVRod0aDbhp8JLVk=",
+    "BUILD.bazel": "sha256-qDwV4ONAXiw/H1Zr82ATWOSC5qYgqjVpHutt07TWbFs="
+  }
+}

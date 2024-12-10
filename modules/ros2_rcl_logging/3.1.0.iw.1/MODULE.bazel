@@ -1,13 +1,13 @@
 module(
-    name = "ros2_class_loader",
-    version = "2.7.0.iw.1",
+    name = "ros2_rcl_logging",
+    version = "3.1.0.iw.1",
 )
 
-bazel_dep(name = "console_bridge", version = "1.0.2.iw.1")
+bazel_dep(name = "ros2_rcutils", version = "6.7.2.iw.1")
 bazel_dep(name = "ros2_rcpputils", version = "2.11.0.1.g502858e.iw.1")
-bazel_dep(name = "rules_cc", version = "0.0.10")
+bazel_dep(name = "spdlog", version = "1.15.0.bcr.1")
 
-# needed as rootmodule
+# Used as root module
 bazel_dep(name = "rules_python", version = "1.0.0-rc0")
 
 python = use_extension(

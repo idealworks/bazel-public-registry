@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/rcpputils/archive/502858e3b91081946a9c09eb17a4ed193a0ae826.zip",
+  "integrity": "sha256-XVdTVYFemyWbFYvvkpoJi0TUf1JxZZ4xOFAJDumLSBE=",
+  "strip_prefix": "rcpputils-502858e3b91081946a9c09eb17a4ed193a0ae826",
+  "overlay": {
+    "MODULE.bazel": "sha256-4LZYKOwZkQ9PYldDKnb0m2FUM1hTCe6koQ8Ng66Bq7E=",
+    "BUILD.bazel": "sha256-Myrvs7WelaTGBT3w6zjw1uW20W/pLKZGYOiWsKH5TAE="
+  }
+}
