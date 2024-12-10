@@ -1,4 +1,8 @@
-module(name = "cyclonedds", version = "0.10.5-5-g76360fb7.iw.1")
+module(
+    name = "cyclonedds",
+    version = "0.10.5-5-g76360fb7.iw.1",
+    compatibility_level = 1
+)
 
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "iceoryx", version = "2.0.6-9-gebdf38728.iw.1")

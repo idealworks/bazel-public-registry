@@ -3,7 +3,7 @@
     "MODULE.bazel": "sha256-tJmcLEayBN6BexhxCDRoxrOuUeOVugbO27PVpHFXoF0=",
     "BUILD.bazel": "sha256-VtPb/Sfw4hX+LHTwXgXnc7AulskDfMg5edCU0nVLjQg="
   },
-  "type": "git_repository",
-  "remote": "https://github.com/ros2/message_filters.git",
-  "commit": "442eda0841f09f95248821d2d988a915540e29b4"
+  "url": "https://github.com/ros2/message_filters/archive/442eda0841f09f95248821d2d988a915540e29b4.tar.gz",
+  "strip_prefix": "message_filters-442eda0841f09f95248821d2d988a915540e29b4",
+  "integrity": "sha256-1ImIx9xqz+NW/AWrK2/nJm4wWr3JS1mQOvuZ1Ck3ix0="
 }

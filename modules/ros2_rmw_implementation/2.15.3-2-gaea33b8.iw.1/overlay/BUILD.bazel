@@ -1,9 +1,7 @@
 """ Builds rmw_implementation.
 """
 
-load("@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl", "ros2_cpp_library")
-
-ros2_cpp_library(
+cc_library(
     name = "rmw_implementation",
     srcs = [
         "rmw_implementation/src/functions.cpp",
@@ -24,5 +22,6 @@ ros2_cpp_library(
         "@ros2_rcpputils//:rcpputils",
         "@ros2_rcutils//:rcutils",
         "@ros2_rmw//:rmw",
+        "@ros2_rosidl_dynamic_typesupport//:rosidl_dynamic_typesupport",
     ],
 )

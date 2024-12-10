@@ -7,7 +7,7 @@
     "MODULE.bazel": "sha256-8XEaAbubcC77eEQPI/7wYjL9lhgHtmwyLQ02p0WEwac=",
     "BUILD.bazel": "sha256-cA18OsSbusqQ0E6H3JDoCqjfduW40jGGSNRBRaLE7Mk="
   },
-  "type": "git_repository",
-  "remote": "https://github.com/ros2/urdf.git",
-  "commit": "4f1fded3c9576cd58901959fb9c220fba3065eb9"
+  "url": "https://github.com/ros2/urdf/archive/4f1fded3c9576cd58901959fb9c220fba3065eb9.tar.gz",
+  "strip_prefix": "urdf-4f1fded3c9576cd58901959fb9c220fba3065eb9",
+  "integrity": "sha256-cjAGDsGMsJsWkYTkYvJQnbsTaRa1fGUI9iTbRbbWYH8="
 }

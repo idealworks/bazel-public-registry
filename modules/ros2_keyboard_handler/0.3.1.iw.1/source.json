@@ -3,7 +3,7 @@
     "MODULE.bazel": "sha256-u1g/6qwaPCSl273IOEN9V9brob3LdIcU0k+LaK7oZxw=",
     "BUILD.bazel": "sha256-Y/nCSUM+HRGy6yS5w8+rjrAYrZHGGcyahsreH63n4TI="
   },
-  "type": "git_repository",
-  "remote": "https://github.com/ros-tooling/keyboard_handler.git",
-  "commit": "13072acb5c4c07b3ad220b2bb7bd3f3080824414"
+  "url": "https://github.com/ros-tooling/keyboard_handler/archive/13072acb5c4c07b3ad220b2bb7bd3f3080824414.tar.gz",
+  "strip_prefix": "keyboard_handler-13072acb5c4c07b3ad220b2bb7bd3f3080824414",
+  "integrity": "sha256-tML56gAo77X7S4sqcyGOacx1WYiDHDbZtQywBb04LMY="
 }

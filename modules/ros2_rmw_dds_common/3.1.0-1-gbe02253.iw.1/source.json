@@ -1,9 +1,9 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-+yHb0XcCmaGyjUWyvxI9O93PF67WSYWugM6jOEnQ1Q8=",
-    "BUILD.bazel": "sha256-8YmRZ8iLa0MdQO1kDs2a0501cte+RpzQx47NhL0uErE="
+    "MODULE.bazel": "sha256-Z3Ce8SxyF9r0trlARp1Gw7Stbbh+4D2FNHPSDQlopNE=",
+    "BUILD.bazel": "sha256-vKn+nm1dTt69y9M72wQYaJBsMrzB2UcOHPv/UMd+7Sk="
   },
-  "type": "git_repository",
-  "remote": "https://github.com/ros2/rmw_dds_common.git",
-  "commit": "be02253b7b872bb9223e783421c5deee3269abfe"
+  "url": "https://github.com/ros2/rmw_dds_common/archive/be02253b7b872bb9223e783421c5deee3269abfe.tar.gz",
+  "strip_prefix": "rmw_dds_common-be02253b7b872bb9223e783421c5deee3269abfe",
+  "integrity": "sha256-y0k98ig0iOb7RdDG9auJcVN43kVHUVieCcTzysvH+Go="
 }

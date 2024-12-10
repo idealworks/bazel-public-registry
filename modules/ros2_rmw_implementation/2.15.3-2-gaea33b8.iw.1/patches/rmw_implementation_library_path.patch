@@ -1,5 +1,5 @@
 diff --git a/rmw_implementation/src/functions.cpp b/rmw_implementation/src/functions.cpp
-index 892eb40..fb6e391 100644
+index dceb680..7b53e9c 100644
 --- a/rmw_implementation/src/functions.cpp
 +++ b/rmw_implementation/src/functions.cpp
 @@ -20,7 +20,6 @@

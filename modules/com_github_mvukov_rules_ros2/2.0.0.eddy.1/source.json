@@ -3,6 +3,6 @@
   "integrity": "sha256-JUHGXxMekr5k1Mqf62CwFxYpSXqlZ2LDeAhtVcAH4es=",
   "strip_prefix": "rules_ros2-c69f0a784c2e8e6099635bbe94cf50ba97fe41dc",
   "overlay": {
-    "MODULE.bazel": "sha256-AUCujqOEnEuPlS4OU/6PKyFQA3Nx95Via8Mvo/fFI4g="
+    "MODULE.bazel": "sha256-pAiJ9P4DhJfB3r1k2Yrg2WppGCcgrw5K6HcRJwWvmQ8="
   }
 }

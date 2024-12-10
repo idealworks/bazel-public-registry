@@ -1,9 +1,9 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-8rXWrvukGcc/qzk8OP8vcs9l/wLdEpKUZsMKSJO4BJU=",
+    "MODULE.bazel": "sha256-vne6cm/oBGnCnNMc0w2tVn/+NCuMjHJtheNzYgTWoD4=",
     "BUILD.bazel": "sha256-hlDWKUiIfqjuhN8cqGTmUifJHbrIyXmblqLOXMqVHGs="
   },
-  "type": "git_repository",
-  "remote": "https://github.com/ros2/ament_cmake_ros.git",
-  "commit": "4656ed1c514fa12503a0c01d33fd13d406a5fb74"
+  "url": "https://github.com/ros2/ament_cmake_ros/archive/4656ed1c514fa12503a0c01d33fd13d406a5fb74.tar.gz",
+  "strip_prefix": "ament_cmake_ros-4656ed1c514fa12503a0c01d33fd13d406a5fb74",
+  "integrity": "sha256-SqwFEsynUxGQaOgNa00iaBPQr8/kP1iUJyMPivtvnjQ="
 }

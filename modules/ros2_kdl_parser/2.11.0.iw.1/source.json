@@ -3,7 +3,7 @@
     "MODULE.bazel": "sha256-UPVi2+I/H4avL/M2htM6iGQ/AhW8e2O13x3/7poOptk=",
     "BUILD.bazel": "sha256-VmKJov+Q6PsSYbI+fvyD9vJoqKBdXWf2MMaKKgJ1hGY="
   },
-  "type": "git_repository",
-  "remote": "https://github.com/ros/kdl_parser.git",
-  "commit": "c6f0299344afd1afbeb442fe37e073be69dd5e47"
+  "url": "https://github.com/ros/kdl_parser/archive/c6f0299344afd1afbeb442fe37e073be69dd5e47.tar.gz",
+  "strip_prefix": "kdl_parser-c6f0299344afd1afbeb442fe37e073be69dd5e47",
+  "integrity": "sha256-wirfhPwbJS3RP0QJLq/Jsrycav8RtmH1cXxypHWUe8E="
 }

@@ -3,7 +3,7 @@
     "MODULE.bazel": "sha256-lHp8Y9oRPPnLmd1yqRZ8yI261tVHzQ984GtYhg/+Bdc=",
     "BUILD.bazel": "sha256-XZ4vyGUrVcl/zjgaXXYPqzmBcooUzlEVfCsXNXJybAs="
   },
-  "type": "git_repository",
-  "remote": "https://github.com/ros/resource_retriever.git",
-  "commit": "94da3bd664f207fd405c93c20f88e06837449615"
+  "url": "https://github.com/ros/resource_retriever/archive/94da3bd664f207fd405c93c20f88e06837449615.tar.gz",
+  "strip_prefix": "resource_retriever-94da3bd664f207fd405c93c20f88e06837449615",
+  "integrity": "sha256-3tY3bgh9CdGdL4GsiaF4nde9my/eBBtTVhTvTf60+ac="
 }

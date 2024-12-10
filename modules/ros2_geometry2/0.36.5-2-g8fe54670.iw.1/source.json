@@ -1,9 +1,9 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-ltC9yH5kDGMvUZ/GwsorcDD43cv8zNSrCdv0X+aamYg=",
+    "MODULE.bazel": "sha256-GebQ63iGfHKcO0t0zg10lA9aClOwJvz2QvLcmf6KC2Y=",
     "BUILD.bazel": "sha256-BQ6JBTCr/h9C4aLYCXrvT3cW2GaponOLK1oUYT+MoMQ="
   },
-  "type": "git_repository",
-  "remote": "https://github.com/ros2/geometry2.git",
-  "commit": "8fe54670f38686ae7c16a0a3730fffb60cfca7d4"
+  "url": "https://github.com/ros2/geometry2/archive/8fe54670f38686ae7c16a0a3730fffb60cfca7d4.tar.gz",
+  "strip_prefix": "geometry2-8fe54670f38686ae7c16a0a3730fffb60cfca7d4",
+  "integrity": "sha256-JOD0ve5cAzxhUuS/PdjfKe0BVhACMaIBhlln5pj0g/s="
 }
