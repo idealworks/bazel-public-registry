@@ -1,11 +1,10 @@
 module(
-    name = "ros2_class_loader",
-    version = "2.7.0.iw.1",
+    name = "ros2_rcl_interfaces",
+    version = "2.0.2.iw.1",
 )
 
-bazel_dep(name = "console_bridge", version = "1.0.2.iw.1")
-bazel_dep(name = "ros2_rcpputils", version = "2.11.0.1.g502858e.iw.1")
-bazel_dep(name = "rules_cc", version = "0.0.10")
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "2.0.0.eddy.1")
+bazel_dep(name = "ros2_unique_identifier_msgs", version = "2.5.0.iw.1")
 
 # needed as rootmodule
 bazel_dep(name = "rules_python", version = "1.0.0-rc0")

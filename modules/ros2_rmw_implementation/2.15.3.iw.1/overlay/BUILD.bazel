@@ -1,0 +1,27 @@
+""" Builds rmw_implementation.
+"""
+
+cc_library(
+    name = "rmw_implementation",
+    srcs = [
+        "rmw_implementation/src/functions.cpp",
+        "rmw_implementation/src/functions.hpp",
+        "rmw_implementation/src/visibility_control.h",
+    ],
+    copts = ["-w"],
+    data = [
+        "@ros2_rmw_cyclonedds//:rmw_cyclonedds",
+    ],
+    includes = ["include"],
+    local_defines = [
+        "RMW_LIBRARY_PATH=\\\"$(rootpath @ros2_rmw_cyclonedds//:rmw_cyclonedds)\\\"",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ros2_ament_index//:ament_index_cpp",
+        "@ros2_rcpputils//:rcpputils",
+        "@ros2_rcutils//:rcutils",
+        "@ros2_rmw//:rmw",
+        "@ros2_rosidl_dynamic_typesupport//:rosidl_dynamic_typesupport",
+    ],
+)

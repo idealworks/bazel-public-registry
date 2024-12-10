@@ -1,0 +1,15 @@
+module(name = "ros2_unique_identifier_msgs", version = "2.5.0.iw.1")
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "2.0.0.eddy.1")
+
+# needed as rootmodule
+bazel_dep(name = "rules_python", version = "1.0.0-rc0")
+
+python = use_extension(
+    "@rules_python//python/extensions:python.bzl",
+    "python",
+)
+python.toolchain(
+    is_default = True,
+    python_version = "3.10",
+)

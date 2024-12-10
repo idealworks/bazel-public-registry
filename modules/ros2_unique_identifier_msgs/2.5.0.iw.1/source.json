@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/unique_identifier_msgs/archive/refs/tags/2.5.0.tar.gz",
+  "integrity": "sha256-hI6Z+4E4CaD/QcTfD3W+QqvxP6tA/MjfnejbagCcOTE=",
+  "strip_prefix": "unique_identifier_msgs-2.5.0",
+  "overlay": {
+    "MODULE.bazel": "sha256-faKS/nHDIKQghSbv33dqbgp1sd0g2vHG60Xrb0fioLY=",
+    "BUILD.bazel": "sha256-nYeblrMSCwKhACdGOy11vFt8AVHd4QrA5KvYvWXu/Qw="
+  }
+}

@@ -1,9 +1,0 @@
-{
-  "overlay": {
-    "MODULE.bazel": "sha256-wSSUj22KwgzxNZ5cKAVcf4zABBiDbXDu3ddoKInmjOQ=",
-    "BUILD.bazel": "sha256-RR4Hx4nHcXWCT5gMFzANxkFE0YNS0KCzIwFCRGfSdlw="
-  },
-  "type": "git_repository",
-  "remote": "https://github.com/eclipse-iceoryx/iceoryx.git",
-  "commit": "ebdf38728a29c6a8ee172efc440b8e2f4415ff7a"
-}
