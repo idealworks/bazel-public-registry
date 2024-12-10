@@ -1,15 +1,15 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-UAG8xcieO1a30wUrq7GyTqkp/+rkZmjJtRq0sJEEaYM=",
-    "BUILD.bazel": "sha256-MpJSeLqamZYazYu5g6V7t/ndQi7PCbEfgn1oTrUXSs0=",
+    "requirements_lock.txt": "sha256-aLV5LbNMb6pDSmj0HfJ/9UzsRHo7dK9UtJG0r5S14Tc=",
     "requirements.txt": "sha256-tRqxzMmMu9ulmGX0IMKyoEI0PdCoiKVp6qkWFPNHVAg=",
-    "requirements_lock.txt": "sha256-aLV5LbNMb6pDSmj0HfJ/9UzsRHo7dK9UtJG0r5S14Tc="
+    "BUILD.bazel": "sha256-LTA5OWzzk2UK/DsvjJGQxwi8XOdw577EykpLUOcMM1g=",
+    "MODULE.bazel": "sha256-UAG8xcieO1a30wUrq7GyTqkp/+rkZmjJtRq0sJEEaYM="
   },
   "patches": {
-    "rosidl_remove-unnecessary-asserts.patch": "sha256-cOlcPVdEgZoUTPNR2z51FdwzxT7/HJDEQoPKe83sqG8="
+    "Allow-local-paths-in-IDL-generators.patch": "sha256-HmCDndKgU7IpP6mL3ZKEka0iVl34t4Se9elTRSRH+Ck="
   },
   "patch_strip": 1,
-  "type": "git_repository",
-  "remote": "https://github.com/ros2/rosidl.git",
-  "commit": "5d916790bbe2f502361b35737f74eda80233019b"
+  "url": "https://github.com/ros2/rosidl/archive/5d916790bbe2f502361b35737f74eda80233019b.tar.gz",
+  "strip_prefix": "rosidl-5d916790bbe2f502361b35737f74eda80233019b",
+  "integrity": "sha256-U+ZEd8gx6wKbPsu3KQIBfoZMoN0yD/x9IZdF6Dp6vU8="
 }

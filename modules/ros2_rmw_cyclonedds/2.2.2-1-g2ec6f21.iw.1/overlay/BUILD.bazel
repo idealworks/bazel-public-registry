@@ -1,9 +1,7 @@
 """ Builds rmw_cyclonedds.
 """
 
-load("@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl", "ros2_cpp_binary")
-
-ros2_cpp_binary(
+cc_binary(
     name = "rmw_cyclonedds",
     srcs = glob([
         "rmw_cyclonedds_cpp/include/**/*.h",
@@ -26,6 +24,7 @@ ros2_cpp_binary(
         "@ros2_rosidl//:rosidl_runtime_c",
         "@ros2_rosidl//:rosidl_typesupport_introspection_c",
         "@ros2_rosidl//:rosidl_typesupport_introspection_cpp",
+        "@ros2_rosidl_dynamic_typesupport//:rosidl_dynamic_typesupport",
         "@ros2_tracing//:tracetools",
     ],
 )

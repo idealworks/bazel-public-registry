@@ -5,7 +5,7 @@
     "requirements.txt": "sha256-c90Lr45UONqIFiVKBz7kO2H4ss3vbzk+AFnNvFXLjZw=",
     "requirements_lock.txt": "sha256-BK4V4MFq+CpDEQkvH86d5Ze3asIgGc75TvMT/pritAg="
   },
-  "type": "git_repository",
-  "remote": "https://github.com/ros2/rosidl_python.git",
-  "commit": "f016c30402b3ff4704ef45019bd34c16e09da428"
+  "url": "https://github.com/ros2/rosidl_python/archive/f016c30402b3ff4704ef45019bd34c16e09da428.tar.gz",
+  "strip_prefix": "rosidl_python-f016c30402b3ff4704ef45019bd34c16e09da428",
+  "integrity": "sha256-3Dd3pyK4+bWueIggcFwXnN3xe/bo5W4g8UmgiLiu3bM="
 }

@@ -3,7 +3,7 @@
     "MODULE.bazel": "sha256-EWx37P0EktAhfACdyccuHTl/ZXbYfVYUToBM+Yszf1g=",
     "BUILD.bazel": "sha256-y/lTCe1y7dh5fQEaRzX7x2G91CVQbr9ZIHbcTT24KJU="
   },
-  "type": "git_repository",
-  "remote": "https://github.com/ros2/rcl_logging.git",
-  "commit": "da51595fecb4b914275c2c970076cb605cc08693"
+  "url": "https://github.com/ros2/rcl_logging/archive/da51595fecb4b914275c2c970076cb605cc08693.tar.gz",
+  "strip_prefix": "rcl_logging-da51595fecb4b914275c2c970076cb605cc08693",
+  "integrity": "sha256-jZ20aPqvlnNPTRdFvcMNgbbrjuuwYuE5gMi8Ws1hA6s="
 }

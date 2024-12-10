@@ -1,9 +1,9 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-yzHZ0j6EWm+a/JIEyvhoMmPYQAgd7wjhR8WfClb5Xs0=",
-    "BUILD.bazel": "sha256-lJel9U3G8yMF44yXo7Ob+MRFyUKwUOWWHk0JKrzNbFI="
+    "MODULE.bazel": "sha256-Ya89DkD/SIgT+BBiVfXecLGZHCbbRPU8RlLoZnz7+ks=",
+    "BUILD.bazel": "sha256-XXfKfItvWNcQiUrSHB5FbUn3EOiGMda3IhY8apBSevE="
   },
-  "type": "git_repository",
-  "remote": "https://github.com/ros2/rcl_interfaces.git",
-  "commit": "7d568ce77ac401487d37f62458bfa1c7bb960738"
+  "url": "https://github.com/ros2/rcl_interfaces/archive/7d568ce77ac401487d37f62458bfa1c7bb960738.tar.gz",
+  "strip_prefix": "rcl_interfaces-7d568ce77ac401487d37f62458bfa1c7bb960738",
+  "integrity": "sha256-O3V9q+IJVjEAFGh04JGCcDUSpRP9bS1Cd8RHUVqnwsw="
 }

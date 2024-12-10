@@ -9,7 +9,7 @@
     "bzl/generate_rcutils_logging_macros.py": "sha256-Duv6B/9C+kci461OOHbM8/a9VDlFfKov2eFR0F+kmNA=",
     "bzl/logging_macros.bzl": "sha256-ZWD9prQz8b4tyHdogt7IxGpNJQmllErTJ1nUz4EpXMI="
   },
-  "type": "git_repository",
-  "remote": "https://github.com/ros2/rcutils.git",
-  "commit": "63a24140f136bf6f4c7330534c3a06aec00fd7b3"
+  "url": "https://github.com/ros2/rcutils/archive/63a24140f136bf6f4c7330534c3a06aec00fd7b3.tar.gz",
+  "strip_prefix": "rcutils-63a24140f136bf6f4c7330534c3a06aec00fd7b3",
+  "integrity": "sha256-E2R/+JT32dAowM3f2tYb3SXqgGfJDNSv4r8hLthFXtE="
 }

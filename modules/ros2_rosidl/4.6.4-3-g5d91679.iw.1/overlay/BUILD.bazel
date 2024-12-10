@@ -142,9 +142,10 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-exports_files(
-    srcs = ["rosidl_generator_c/resource/rosidl_generator_c__visibility_control.h.in"],
-)
+exports_files([
+    "rosidl_generator_c/resource/rosidl_generator_c__visibility_control.h.in",
+    "rosidl_generator_cpp/resource/rosidl_generator_cpp__visibility_control.hpp.in",
+])
 
 cc_library(
     name = "rosidl_runtime_cpp",

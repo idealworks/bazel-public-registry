@@ -1,6 +1,7 @@
 module(
     name = "ros2_tracing",
     version = "8.2.2-1-g73a7e6d.iw.1",
+    compatibility_level = 1
 )
 
 bazel_dep(name = "bazel_skylib", version = "1.7.1")

@@ -1,9 +1,0 @@
-{
-  "url": "https://github.com/ros2/rmw/archive/refs/tags/7.3.1.tar.gz",
-  "integrity": "sha256-BujyFtw41xwRl4Sf5hWssEx1p0OlLx5vOq0WMOi4/VE=",
-  "strip_prefix": "rmw-7.3.1",
-  "overlay": {
-    "MODULE.bazel": "sha256-kJ0eJmUN3X7aq6p9ol1+IjMTo5sLGV6bVtnpnuhs0gw=",
-    "BUILD.bazel": "sha256-CxaivMPcq7ZIGx8bs2qEOk4lwxiqO6uGFPKn8ubTBhg="
-  }
-}
