@@ -1,9 +1,0 @@
-{
-  "overlay": {
-    "MODULE.bazel": "sha256-6eJOBEqXRFIgNG+2wjrK09/EUjJeEeCBQXePi0Gb0XI=",
-    "BUILD.bazel": "sha256-AySWmwAt0jDXLLd1NgbpJPwU5mNT9bXOxQE+i4abiS8="
-  },
-  "type": "git_repository",
-  "remote": "https://github.com/ros2/console_bridge_vendor.git",
-  "commit": "611ceb78391dd89ed41061b3d72e391b763b78c3"
-}
