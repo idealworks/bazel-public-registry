@@ -2,11 +2,11 @@
   "overlay": {
     "requirements_lock.txt": "sha256-aLV5LbNMb6pDSmj0HfJ/9UzsRHo7dK9UtJG0r5S14Tc=",
     "requirements.txt": "sha256-tRqxzMmMu9ulmGX0IMKyoEI0PdCoiKVp6qkWFPNHVAg=",
-    "BUILD.bazel": "sha256-LTA5OWzzk2UK/DsvjJGQxwi8XOdw577EykpLUOcMM1g=",
+    "BUILD.bazel": "sha256-WIFzY3lasnap1i0S2rQd8CWV+HfLQKab6C4aRnPlPJU=",
     "MODULE.bazel": "sha256-UAG8xcieO1a30wUrq7GyTqkp/+rkZmjJtRq0sJEEaYM="
   },
   "patches": {
-    "Allow-local-paths-in-IDL-generators.patch": "sha256-HmCDndKgU7IpP6mL3ZKEka0iVl34t4Se9elTRSRH+Ck="
+    "Allow-local-paths-in-IDL-generators.patch": "sha256-eA8O5VbgEAUPdM8dM2O4uFykhLWgYaqn7KyErCEZqZM="
   },
   "patch_strip": 1,
   "url": "https://github.com/ros2/rosidl/archive/5d916790bbe2f502361b35737f74eda80233019b.tar.gz",
