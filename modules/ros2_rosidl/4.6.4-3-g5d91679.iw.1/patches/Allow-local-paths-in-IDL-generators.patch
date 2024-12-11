@@ -1,4 +1,4 @@
-From 97d29511698b6106ce637de88815544529d086ff Mon Sep 17 00:00:00 2001
+From 6aa1daa2155954546e7663c9a4a58a646cf656e3 Mon Sep 17 00:00:00 2001
 From: Efe Mert Demir <efemert.demir@idealworks.com>
 Date: Tue, 10 Dec 2024 15:53:39 +0000
 Subject: [PATCH] Allow local paths in IDL generators
@@ -61,5 +61,5 @@ index c57b701..dd3895e 100644
      assert input_file.suffix == '.srv'
  
 -- 
-2.45.2
+2.47.1
 

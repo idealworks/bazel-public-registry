@@ -111,9 +111,9 @@ py_library(
     visibility = ["//visibility:public"],
     deps = [
         ":rosidl_cmake",
-        ":rosidl_pycommon",
-        ":rosidl_parser",
         ":rosidl_generator_type_description_lib",
+        ":rosidl_parser",
+        ":rosidl_pycommon",
     ],
 )
 
@@ -163,6 +163,7 @@ py_library(
     deps = [
         ":rosidl_cmake",
         ":rosidl_parser",
+        ":rosidl_pycommon",
     ],
 )
 
@@ -282,10 +283,10 @@ py_library(
     visibility = ["//visibility:public"],
     deps = [
         ":rosidl_cmake",
-        ":rosidl_pycommon",
-        ":rosidl_generator_type_description_lib",
         ":rosidl_generator_c_lib",
+        ":rosidl_generator_type_description_lib",
         ":rosidl_parser",
+        ":rosidl_pycommon",
     ],
 )
 
@@ -322,8 +323,10 @@ py_library(
     visibility = ["//visibility:public"],
     deps = [
         ":rosidl_cmake",
+        ":rosidl_generator_c_lib",
         ":rosidl_generator_cpp_lib",
         ":rosidl_parser",
+        ":rosidl_pycommon",
     ],
 )
 
