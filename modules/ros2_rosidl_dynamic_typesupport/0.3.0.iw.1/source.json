@@ -3,7 +3,8 @@
   "integrity": "sha256-+9tXxa8gYxODk2I6XPti2pgjRTkhnpW/bA+YF9TbD2o=",
   "strip_prefix": "rosidl_dynamic_typesupport-0.3.0",
   "overlay": {
-    "MODULE.bazel": "sha256-blN4xnr9G6iVV+b7NYzdxrV0ATBegh8es/LDB13nrs8=",
+    "MODULE.bazel": "sha256-/7zl90l/70lf2u8hQU339f7/xNEB3CreoKwfqHtJakk=",
     "BUILD.bazel": "sha256-8uMmF71d7ZpO9WDET00uRb2oVO+L6rgXnYmJNtomuoo="
   }
 }
+
