@@ -1,0 +1,24 @@
+# NOTE: Even though this is technically a "package", what ros2_rcl_interfaces does
+#       is just grab files from here and include it as if it's part of the package:
+#
+#       https://github.com/ros2/rcl_interfaces/commit/dc0fbaee6a1b8fbc139e1ba266beee52f95380ac
+#
+#       We have to support this by just exporting the action/msg/srv files directly
+#       as filegroups.
+
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "action_files",
+    srcs = glob(["action/*.action"]),
+)
+
+filegroup(
+    name = "msg_files",
+    srcs = glob(["msg/*.msg"]),
+)
+
+filegroup(
+    name = "srv_files",
+    srcs = glob(["srv/*.srv"]),
+)

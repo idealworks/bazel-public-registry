@@ -1,6 +1,6 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-Ya89DkD/SIgT+BBiVfXecLGZHCbbRPU8RlLoZnz7+ks=",
+    "MODULE.bazel": "sha256-PIvKID996uvfVh8gcn/ss+jiYfqLAosaIJm90t1AeQY=",
     "BUILD.bazel": "sha256-XXfKfItvWNcQiUrSHB5FbUn3EOiGMda3IhY8apBSevE="
   },
   "url": "https://github.com/ros2/rcl_interfaces/archive/7d568ce77ac401487d37f62458bfa1c7bb960738.tar.gz",
