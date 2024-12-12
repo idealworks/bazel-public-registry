@@ -28,7 +28,7 @@ cc_library(
 
 cc_library(
     name = "rosidl_runtime_c",
-    srcs = glob(["rosidl_runtime_c/src/*.c"]),
+    srcs = glob(["rosidl_runtime_c/src/**/*.c"]),
     hdrs = glob(["rosidl_runtime_c/include/**/*.h"]),
     copts = ["-fPIC"],
     includes = ["rosidl_runtime_c/include"],
