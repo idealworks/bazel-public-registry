@@ -84,3 +84,13 @@ cc_library(
         "@ros2_rcl_interfaces//:c_lifecycle_msgs",
     ],
 )
+
+cc_test(
+    name = "test_client",
+    srcs = ["rcl/test/rcl/test_client.cpp"] + glob(["rcl/test/rcl/*.hpp"]),
+    includes = ["rcl/test/rcl/"],
+    deps = [
+        ":rcl",
+        "@ros2_rcl_interfaces//:cpp_test_msgs",
+    ],
+)
