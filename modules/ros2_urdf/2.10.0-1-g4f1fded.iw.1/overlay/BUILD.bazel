@@ -1,12 +1,8 @@
 """ Builds urdf.
 """
 
-load("@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl", "ros2_cpp_library")
+load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
 load("@com_github_mvukov_rules_ros2//ros2:plugin.bzl", "ros2_plugin")
-load(
-    "@com_github_mvukov_rules_ros2//third_party:expand_template.bzl",
-    "expand_template",
-)
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
@@ -17,7 +13,7 @@ cc_library(
     deps = ["@ros2_urdfdom_headers//:urdfdom_headers"],
 )
 
-ros2_cpp_library(
+cc_library(
     name = "urdf",
     srcs = ["urdf/src/model.cpp"],
     hdrs = [
@@ -25,10 +21,12 @@ ros2_cpp_library(
         "urdf/include/urdf/visibility_control.hpp",
         ":urdfdom_compatibility_h",
     ],
+    copts = ["-std=c++17"],
     data = [
         ":urdf_xml_parser_plugin",
     ],
     includes = ["urdf/include"],
+    local_defines = ["ROS_PACKAGE_NAME=\\\"urdf\\\""],
     visibility = ["//visibility:public"],
     deps = [
         ":urdf_parser_plugin",
