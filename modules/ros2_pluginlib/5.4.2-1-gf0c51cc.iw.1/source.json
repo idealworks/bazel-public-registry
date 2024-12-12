@@ -1,7 +1,7 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-QRJPq5ZylWiI3xDuytT0CnU2AIn8unbMuwTboU4EGRI=",
-    "BUILD.bazel": "sha256-rPpmx4uMnGR3gXO26NWXzE49Ku7YQFub026Z/4sYFtA="
+    "MODULE.bazel": "sha256-y7dUylgMLjRZ28EqYi5JZAH5ikaUaPNlIS7GOJnTWzE=",
+    "BUILD.bazel": "sha256-16EhzAeUF5OZF75D4osW3W6J41Kn4Xi5CfjxE7FBWpM="
   },
   "url": "https://github.com/ros/pluginlib/archive/f0c51cc78457cbbd0a265620a67506f116c02d6e.tar.gz",
   "strip_prefix": "pluginlib-f0c51cc78457cbbd0a265620a67506f116c02d6e",
