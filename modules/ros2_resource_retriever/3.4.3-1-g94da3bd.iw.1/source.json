@@ -1,6 +1,6 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-lHp8Y9oRPPnLmd1yqRZ8yI261tVHzQ984GtYhg/+Bdc=",
+    "MODULE.bazel": "sha256-HwMyofPai/JnGK5GoqePK3+wgsFBEIoYwE1irZ4DnO8=",
     "BUILD.bazel": "sha256-XZ4vyGUrVcl/zjgaXXYPqzmBcooUzlEVfCsXNXJybAs="
   },
   "url": "https://github.com/ros/resource_retriever/archive/94da3bd664f207fd405c93c20f88e06837449615.tar.gz",
