@@ -88,6 +88,8 @@ filegroup(
 cache_entries = {
     "CMAKE_POSITION_INDEPENDENT_CODE": "ON",  # Must be set!
     "BUILD_SHARED_LIBS": "OFF",
+    # Certain multilib distros install 64-bit binaries to /usr/lib64.
+    "CMAKE_INSTALL_LIBDIR": "lib",
     # CycloneDDS specific options.
     "APPEND_PROJECT_NAME_TO_INCLUDEDIR": "OFF",
     "BUILD_DDSPERF": "OFF",
