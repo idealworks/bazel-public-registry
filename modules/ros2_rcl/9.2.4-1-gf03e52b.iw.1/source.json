@@ -1,7 +1,7 @@
 {
   "overlay": {
     "MODULE.bazel": "sha256-q6cuZnQSiaa0bLJxUe2DnfV+Ks0sqxM8cdpPP0mPwnk=",
-    "BUILD.bazel": "sha256-EsxhxeImZheap+PzMbVmmDGmKrdbyG7WtGDMp4Dv5hM="
+    "BUILD.bazel": "sha256-m2ERM+VG/3jkUGSz0X63UE2mYp2vWtUyxnIUMWQdi5A="
   },
   "url": "https://github.com/ros2/rcl/archive/f03e52beeac6fd9dc24b38f15cd237bb0631f841.tar.gz",
   "strip_prefix": "rcl-f03e52beeac6fd9dc24b38f15cd237bb0631f841",

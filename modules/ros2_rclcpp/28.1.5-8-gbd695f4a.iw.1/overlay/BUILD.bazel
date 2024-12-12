@@ -2,15 +2,15 @@
 """
 
 load(
-    "@com_github_mvukov_rules_ros2//repositories:logging_macros.bzl",
-    "logging_macros",
-)
-load(
     "@com_github_mvukov_rules_ros2//repositories:rclcpp_interfaces.bzl",
     "rclcpp_interfaces",
 )
 load("@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl", "ros2_cpp_binary", "ros2_cpp_library")
 load("@ros2_rclcpp_pip_deps//:requirements.bzl", "requirement")
+load(
+    "@ros2_rcutils//bzl:logging_macros.bzl",
+    "logging_macros",
+)
 load("@rules_python//python:defs.bzl", "py_binary")
 
 _GENERATE_LOGGING_MACROS_PY = "@com_github_mvukov_rules_ros2//repositories:generate_rclcpp_logging_macros.py"
@@ -130,14 +130,10 @@ ros2_cpp_library(
 )
 
 ros2_cpp_library(
-    name = "rclcpp_components",
-    srcs = glob([
-        "rclcpp_components/src/**/*.cpp",
-        "rclcpp_components/src/*.hpp",
-    ]),
+    name = "component_manager",
+    srcs = ["rclcpp_components/src/component_manager.cpp"],
     hdrs = glob([
         "rclcpp_components/include/**/*.hpp",
-        "rclcpp_components/include/**/*.h",
     ]),
     includes = ["rclcpp_components/include"],
     visibility = ["//visibility:public"],
@@ -156,7 +152,7 @@ ros2_cpp_binary(
     linkopts = ["-rdynamic"],
     visibility = ["//visibility:public"],
     deps = [
-        ":rclcpp_components",
+        ":component_manager",
     ],
 )
 
@@ -166,7 +162,6 @@ ros2_cpp_binary(
     linkopts = ["-rdynamic"],
     visibility = ["//visibility:public"],
     deps = [
-        ":rclcpp_components",
+        ":component_manager",
     ],
 )
-
