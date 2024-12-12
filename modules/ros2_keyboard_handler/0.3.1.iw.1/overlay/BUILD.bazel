@@ -1,9 +1,7 @@
 """ Builds keyboard_handler.
 """
 
-load("@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl", "ros2_cpp_library")
-
-ros2_cpp_library(
+cc_library(
     name = "keyboard_handler",
     srcs = [
         "keyboard_handler/src/default_unix_key_map.cpp",
