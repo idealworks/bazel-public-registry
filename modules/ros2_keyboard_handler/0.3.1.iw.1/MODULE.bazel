@@ -1,7 +1,5 @@
 module(
     name = "ros2_keyboard_handler",
     version = "0.3.1.iw.1",
-    compatibility_level = 1
+    compatibility_level = 1,
 )
-
-bazel_dep(name = "com_github_mvukov_rules_ros2", version = "1.0.0.eddy.2")
