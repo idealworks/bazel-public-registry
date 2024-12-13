@@ -1,20 +1,18 @@
 """ Builds rclpy.
 """
 
-load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
-load(
-    "@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl",
-    "ros2_cpp_binary",
-)
 load("@rules_python//python:defs.bzl", "py_library")
 
-ros2_cpp_binary(
+cc_binary(
     name = "rclpy/rclpy/_rclpy_pybind11.so",
     srcs = glob([
         "rclpy/src/rclpy/*.cpp",
         "rclpy/src/rclpy/*.hpp",
     ]),
-    copts = ["-fvisibility=hidden"],
+    copts = [
+        "-fvisibility=hidden",
+        "-std=c++17",
+    ],
     includes = ["rclpy/src"],
     linkopts = [
         "-fvisibility=hidden",
