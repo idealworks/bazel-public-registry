@@ -1,7 +1,22 @@
 """ Builds rclpy.
 """
 
+load("@ros2_rclpy_pip_deps//:requirements.bzl", "requirement")
 load("@rules_python//python:defs.bzl", "py_library")
+load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+
+compile_pip_requirements(
+    name = "python_requirements",
+    extra_args = ["--allow-unsafe"],
+    requirements_in = "//:requirements.txt",
+    requirements_txt = "//:requirements_lock.txt",
+    tags = ["manual"],
+)
+
+exports_files([
+    "requirements.txt",
+    "requirements_lock.txt",
+])
 
 cc_binary(
     name = "rclpy/rclpy/_rclpy_pybind11.so",
@@ -42,6 +57,8 @@ py_library(
         "@ros2_rcl_interfaces//:py_builtin_interfaces",
         "@ros2_rcl_interfaces//:py_rcl_interfaces",
         "@ros2_rcl_interfaces//:py_rosgraph_msgs",
+        "@ros2_rcl_interfaces//:py_type_description_interfaces",
         "@ros2_rpyutils//:rpyutils",
+        requirement("pyyaml"),
     ],
 )
