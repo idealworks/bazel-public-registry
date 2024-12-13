@@ -4,7 +4,6 @@
   "strip_prefix": "navigation2-1.1.15",
   "overlay": {
     "MODULE.bazel": "sha256-GpoMnqhpHHRq9cI8gopHTNey5HgLrhw1PL4O55VR15Y=",
-    "BUILD.bazel": "sha256-tJj5dEfZjXZEljORRrT7ueS7atOAGTChgiw2bZ4WwOY="
+    "BUILD.bazel": "sha256-BzA/OEhTyngZ2tiaOvlOWAdMuDz6ULg4RU6UPtQwa6E="
   }
 }
-
