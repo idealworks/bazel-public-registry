@@ -9,6 +9,9 @@ bazel_dep(name = "ros2_rosidl", version = "4.6.4-3-g5d91679.iw.1")
 bazel_dep(name = "ros2_unique_identifier_msgs", version = "2.5.0-1-g51ec393.iw.1")
 bazel_dep(name = "ros2_test_interface_files", version = "0.11.0-3-g9e328b2.iw.1")
 
+# TODO: Make this a dev_dependency
+bazel_dep(name = "googletest", version = "1.15.2")
+
 # needed as rootmodule
 bazel_dep(name = "rules_python", version = "1.0.0-rc0")
 
