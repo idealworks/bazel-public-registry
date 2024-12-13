@@ -1,7 +1,7 @@
 module(
     name = "ros2_kdl_parser",
     version = "2.11.0.iw.1",
-    compatibility_level = 1
+    compatibility_level = 1,
 )
 
 bazel_dep(name = "orocos_kdl", version = "1.5.1.40.g507de66.iw.1")
