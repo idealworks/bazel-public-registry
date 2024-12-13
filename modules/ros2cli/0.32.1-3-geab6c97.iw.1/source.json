@@ -1,9 +1,13 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-UqNxqCbjjnplwnFmRi+u5vgWg2N8AxacyDaB0SMzAoU=",
-    "BUILD.bazel": "sha256-KzGg65qr6K2qSVJ3vCe62sqSs5WbPrSqk81yOAW3vjA=",
+    "MODULE.bazel": "sha256-+mD81yggeL4X96L7dyZZhLMHhVvmuTAAyYbfdXwEaAI=",
+    "BUILD.bazel": "sha256-vYQoFpN8mWYwk8yBrkkPPMajfSu6kuvHDPj+j2Oh010=",
     "requirements.txt": "sha256-oU5u5m0vc4tsCLUkr9hziGmqsTbTItP5J4/sKR/NjMk=",
-    "requirements_lock.txt": "sha256-eSH1PgZYDWiyEeKMaDzjtTmEWU5CGD5CFt6HavbdIXI="
+    "requirements_lock.txt": "sha256-eSH1PgZYDWiyEeKMaDzjtTmEWU5CGD5CFt6HavbdIXI=",
+    "ros2_cmd.py": "sha256-9+QXGXV6HsjfgwpMUDsDhfDmlhzrnypb2I9GKC9XSug=",
+    "ros2_lifecycle.py": "sha256-UMujmlTfiDllH4CCYQJFcJuiJCJcn+cKXKno2hlbe9o=",
+    "ros2_node.py": "sha256-ZWwhwxbtfglQWkf5aGi7Mz4tBvxxJVjRcMg62eT1Otw=",
+    "ros2_param.py": "sha256-6ggZYPj31fqBYlurzdAs2iUayXru+qHceifFf+hoink="
   },
   "url": "https://github.com/ros2/ros2cli/archive/eab6c972c31640f91755ce4227d0a8900c57ad86.tar.gz",
   "strip_prefix": "ros2cli-eab6c972c31640f91755ce4227d0a8900c57ad86",
