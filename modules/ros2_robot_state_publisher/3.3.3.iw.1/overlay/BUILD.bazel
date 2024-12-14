@@ -1,16 +1,11 @@
 """ Builds robot_state_publisher.
 """
 
-load(
-    "@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl",
-    "ros2_cpp_binary",
-    "ros2_cpp_library",
-)
-
-ros2_cpp_library(
+cc_library(
     name = "robot_state_publisher",
     srcs = glob(["src/*.cpp"]),
     hdrs = glob(["include/robot_state_publisher/*.hpp"]),
+    copts = ["-std=c++17"],
     includes = ["include"],
     visibility = ["//visibility:public"],
     deps = [
@@ -46,9 +41,10 @@ EOL
 """,
 )
 
-ros2_cpp_binary(
+cc_binary(
     name = "robot_state_publisher_node",
     srcs = ["robot_state_publisher_node_cc"],
+    copts = ["-std=c++17"],
     visibility = ["//visibility:public"],
     deps = [":robot_state_publisher"],
 )

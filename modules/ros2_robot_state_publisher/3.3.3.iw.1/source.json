@@ -1,7 +1,7 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-nC9zYxJvmleCSlU8yQYx6NAWeIRjyRujgf8KiaZwPHc=",
-    "BUILD.bazel": "sha256-J/sm244u8lM9fBywGVRAr4dGnOyAeVPUHhOSbzPBydk="
+    "MODULE.bazel": "sha256-nxXDWFCdRgmIyNksogaiHePv7Owc0H1dU8Xg98vEGeU=",
+    "BUILD.bazel": "sha256-nKxIJen2CccW/y1K0Bp37nBONy2+64b/n51N+zCdeWk="
   },
   "url": "https://github.com/ros/robot_state_publisher/archive/e0f77e62457ae01f8dbf3b5c4cc62d15fa36dfad.tar.gz",
   "strip_prefix": "robot_state_publisher-e0f77e62457ae01f8dbf3b5c4cc62d15fa36dfad",
