@@ -102,6 +102,7 @@ cc_library(
     name = "rclcpp_action",
     srcs = glob(["rclcpp_action/src/*.cpp"]),
     hdrs = glob(["rclcpp_action/include/**/*.hpp"]),
+    copts = ["-std=c++17"],
     includes = ["rclcpp_action/include"],
     visibility = ["//visibility:public"],
     deps = [
@@ -121,6 +122,7 @@ cc_library(
         "rclcpp_lifecycle/include/**/*.hpp",
         "rclcpp_lifecycle/include/**/*.h",
     ]),
+    copts = ["-std=c++17"],
     includes = ["rclcpp_lifecycle/include"],
     visibility = ["//visibility:public"],
     deps = [
@@ -132,7 +134,7 @@ cc_library(
 )
 
 cc_library(
-    name = "component_manager",
+    name = "rclcpp_components",
     srcs = ["rclcpp_components/src/component_manager.cpp"],
     hdrs = glob([
         "rclcpp_components/include/**/*.hpp",
@@ -152,19 +154,21 @@ cc_library(
 cc_binary(
     name = "component_container_mt",
     srcs = ["rclcpp_components/src/component_container_mt.cpp"],
+    copts = ["-std=c++17"],
     linkopts = ["-rdynamic"],
     visibility = ["//visibility:public"],
     deps = [
-        ":component_manager",
+        ":rclcpp_components",
     ],
 )
 
 cc_binary(
     name = "component_container",
     srcs = ["rclcpp_components/src/component_container.cpp"],
+    copts = ["-std=c++17"],
     linkopts = ["-rdynamic"],
     visibility = ["//visibility:public"],
     deps = [
-        ":component_manager",
+        ":rclcpp_components",
     ],
 )
