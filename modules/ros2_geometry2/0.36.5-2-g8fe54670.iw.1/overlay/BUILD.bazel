@@ -1,9 +1,4 @@
 load(
-    "@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl",
-    "ros2_cpp_binary",
-    "ros2_cpp_library",
-)
-load(
     "@com_github_mvukov_rules_ros2//ros2:interfaces.bzl",
     "ros2_interface_library",
 )
@@ -25,7 +20,7 @@ ros2_interface_library(
     ],
 )
 
-ros2_cpp_library(
+cc_library(
     name = "tf2",
     srcs = glob([
         "tf2/src/*.cpp",
@@ -41,7 +36,7 @@ ros2_cpp_library(
     ],
 )
 
-ros2_cpp_library(
+cc_library(
     name = "tf2_ros",
     srcs = [
         "tf2_ros/src/buffer.cpp",
@@ -68,6 +63,7 @@ ros2_cpp_library(
         "tf2_ros/include/tf2_ros/transform_listener.h",
         "tf2_ros/include/tf2_ros/visibility_control.h",
     ],
+    copts = ["-std=c++17"],
     includes = ["tf2_ros/include"],
     visibility = ["//visibility:public"],
     deps = [
@@ -80,7 +76,7 @@ ros2_cpp_library(
     ],
 )
 
-ros2_cpp_binary(
+cc_binary(
     name = "static_transform_publisher",
     srcs = [
         "tf2_ros/include/tf2_ros/static_transform_broadcaster_node.hpp",
@@ -89,6 +85,7 @@ ros2_cpp_binary(
         "tf2_ros/src/static_transform_broadcaster_node.cpp",
         "tf2_ros/src/static_transform_broadcaster_program.cpp",
     ],
+    copts = ["-std=c++17"],
     includes = ["tf2_ros/include"],
     visibility = ["//visibility:public"],
     deps = [
@@ -102,9 +99,10 @@ ros2_cpp_binary(
     ],
 )
 
-ros2_cpp_binary(
+cc_binary(
     name = "tf2_echo",
     srcs = ["tf2_ros/src/tf2_echo.cpp"],
+    copts = ["-std=c++17"],
     visibility = ["//visibility:public"],
     deps = [
         ":tf2",
@@ -113,7 +111,7 @@ ros2_cpp_binary(
     ],
 )
 
-ros2_cpp_library(
+cc_library(
     name = "cpp_tf2_sensor_msgs",
     srcs = [
         "tf2_sensor_msgs/include/tf2_sensor_msgs/tf2_sensor_msgs.hpp",
@@ -128,7 +126,7 @@ ros2_cpp_library(
     ],
 )
 
-ros2_cpp_library(
+cc_library(
     name = "tf2_eigen",
     hdrs = ["tf2_eigen/include/tf2_eigen/tf2_eigen.hpp"],
     includes = ["tf2_eigen/include"],
@@ -140,7 +138,7 @@ ros2_cpp_library(
     ],
 )
 
-ros2_cpp_binary(
+cc_binary(
     name = "tf2_py/tf2_py/_tf2_py.so",
     srcs = [
         "tf2_py/src/tf2_py.cpp",
@@ -152,7 +150,7 @@ ros2_cpp_binary(
     ],
 )
 
-ros2_cpp_library(
+cc_library(
     name = "cpp_tf2_geometry_msgs",
     hdrs = ["tf2_geometry_msgs/include/tf2_geometry_msgs/tf2_geometry_msgs.hpp"],
     includes = ["tf2_geometry_msgs/include"],

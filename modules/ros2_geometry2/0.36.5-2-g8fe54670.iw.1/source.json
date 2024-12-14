@@ -1,7 +1,7 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-GebQ63iGfHKcO0t0zg10lA9aClOwJvz2QvLcmf6KC2Y=",
-    "BUILD.bazel": "sha256-fv5zWTopS4SaUU6guAr3pGvlb4vQ1XLGZgXRBa84iPo="
+    "MODULE.bazel": "sha256-5S/VE0u0B/mj2u6oXepOKALDSLUctiFf8Vb7zXsAbaI=",
+    "BUILD.bazel": "sha256-tZ8JkCbD8jps6y+lYSVQDjGKZwQ2WEo4mAvWongmlOs="
   },
   "url": "https://github.com/ros2/geometry2/archive/8fe54670f38686ae7c16a0a3730fffb60cfca7d4.tar.gz",
   "strip_prefix": "geometry2-8fe54670f38686ae7c16a0a3730fffb60cfca7d4",
