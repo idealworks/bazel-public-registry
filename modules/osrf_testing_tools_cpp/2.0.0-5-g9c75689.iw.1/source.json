@@ -1,0 +1,15 @@
+{
+  "url": "https://github.com/osrf/osrf_testing_tools_cpp/archive/ab362a640ef30ca207c04d2c033392bbc6fcdf31.tar.gz",
+  "integrity": "sha256-/15tYkCQqoyXll40qRiSpnNn0lmav8SSRHY9GWnb6Dc=",
+  "strip_prefix": "osrf_testing_tools_cpp-ab362a640ef30ca207c04d2c033392bbc6fcdf31",
+  "overlay": {
+    "bzl/BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+    "bzl/defs.bzl": "sha256-MbXm1JgDbZ4YQJ1Qi+wbqBc9bK9v0lH3ez9g8/9CkMo=",
+    "MODULE.bazel": "sha256-n30xE/FPwMhtALpylOm7h3gR8nhGAzWIWD+QGoGbXDE=",
+    "BUILD.bazel": "sha256-LE2mogWVpqtZksjkz1BW61KFp9FtyyBy9rKUCW/Bu38="
+  },
+  "patches": {
+    "Bump-the-static-allocator-size-for-memory_tools_inte.patch": "sha256-p7Ixtz0/92kiNE1HQgyoN3x5XkR3CfKYNMpA5FsCcyM="
+  },
+  "patch_strip": 1
+}
