@@ -1,0 +1,112 @@
+"Generator tests for ros2_rosidl."
+
+load("@caseyduquettesc_rules_python_pytest//python_pytest:defs.bzl", "py_pytest_test")
+load("@com_github_mvukov_rules_ros2//ros2:interfaces.bzl", "ros2_interface_library")
+load("@ros2_rosidl_pip_deps//:requirements.bzl", "requirement")
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+ros2_interface_library(
+    name = "rosidl_generator_tests",
+    srcs = glob([
+        "msg/*",
+    ]) + [
+        "@ros2_test_interface_files//:action_files",
+        "@ros2_test_interface_files//:msg_files",
+        "@ros2_test_interface_files//:srv_files",
+    ],
+    deps = [
+        "@ros2_rcl_interfaces//:builtin_interfaces",
+        "@ros2_rcl_interfaces//:action_msgs",
+        "@ros2_rcl_interfaces//:service_msgs",
+        "@ros2_unique_identifier_msgs//:unique_identifier_msgs",
+    ],
+)
+
+[
+    cc_test(
+        name = name,
+        srcs = [
+            "test/rosidl_generator_cpp/{}.cpp".format(name)
+        ] + glob([
+            "test/rosidl_generator_cpp/*.hpp",
+        ]),
+        deps = [
+            "@googletest//:gtest",
+            "@googletest//:gtest_main",
+            ":cpp_rosidl_generator_tests",
+        ],
+    )
+    for name in [
+        "test_msg_builder",
+        "test_msg_initialization",
+        "test_srv_initialization",
+        "test_interfaces",
+        "test_msg_datatype",
+        "test_name",
+        "test_traits",
+    ]
+]
+
+cc_test(
+    name = "test_compilation_c",
+    srcs = [
+        "test/rosidl_generator_c/test_compilation.c",
+        "test/rosidl_generator_c/separate_compilation.c",
+    ] + glob([
+        "test/rosidl_generator_c/*.h",
+    ]),
+    deps = [
+        ":c_rosidl_generator_tests",
+    ],
+)
+
+cc_test(
+    name = "test_interfaces_c",
+    srcs = [
+        "test/rosidl_generator_c/test_interfaces.c",
+    ] + glob([
+        "test/rosidl_generator_c/*.h",
+    ]),
+    deps = [
+        ":c_rosidl_generator_tests",
+    ],
+)
+
+cc_test(
+    name = "test_invalid_initialization_c",
+    srcs = [
+        "test/rosidl_generator_c/test_invalid_initialization.c",
+    ] + glob([
+        "test/rosidl_generator_c/*.h",
+    ]),
+    deps = [
+        ":c_rosidl_generator_tests",
+    ],
+)
+
+# TODO: test_type_descriptions_c
+
+filegroup(
+    name = "rosidl_generator_type_description_resource",
+    srcs = glob([
+        "rosidl_generator_type_description/resource/*.schema.json",
+        # Needed for ament to find the "package"
+        "rosidl_generator_type_description/package.xml",
+    ]),
+)
+
+py_pytest_test(
+    name = "test_type_hash_py",
+    # TODO: Broken test, needs ament_index support.
+    tags = ["manual"],
+    size = "small",
+    srcs = ["test/rosidl_generator_type_description/test_type_hash.py"],
+    deps = [
+        "@ros2_ament_index//:ament_index_python",
+        requirement("pytest"),
+        requirement("jsonschema"),
+    ],
+    data = [
+        ":rosidl_generator_type_description_resource",
+    ],
+)

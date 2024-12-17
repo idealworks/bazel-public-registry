@@ -1,12 +1,22 @@
 module(
     name = "ros2_rosidl",
     version = "4.6.4-3-g5d91679.iw.1",
-    compatibility_level = 1
+    compatibility_level = 1,
 )
 
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
-bazel_dep(name = "ros2_rcutils", version = "6.7.2-1-g63a2414.iw.1")
 bazel_dep(name = "rules_python", version = "1.0.0-rc0")
+bazel_dep(name = "rules_cc", version = "0.0.17")
+
+bazel_dep(name = "ros2_rcutils", version = "6.7.2-1-g63a2414.iw.1")
+
+bazel_dep(name = "caseyduquettesc_rules_python_pytest", version = "1.1.1", dev_dependency = True)
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "2.0.0.eddy.1", dev_dependency = True)
+bazel_dep(name = "googletest", version = "1.15.2", dev_dependency = True)
+bazel_dep(name = "ros2_ament_index", version = "1.8.1-1-g0a35ca6.iw.1", dev_dependency = True)
+bazel_dep(name = "ros2_rcl_interfaces", version = "2.0.2-1-g7d568ce.iw.1", dev_dependency = True)
+bazel_dep(name = "ros2_test_interface_files", version = "0.11.0-1-g21bb632.iw.1", dev_dependency = True)
+bazel_dep(name = "ros2_unique_identifier_msgs", version = "2.5.0-1-g51ec393.iw.1", dev_dependency = True)
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 pip.parse(
