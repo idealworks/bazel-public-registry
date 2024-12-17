@@ -123,3 +123,13 @@ cc_test(
         ":c_test_msgs",
     ],
 )
+
+cc_test(
+    name = "test_cpp_type_support",
+    srcs = ["test_msgs/test/test_cpp_type_support.cpp"],
+    deps = [
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        ":cpp_test_msgs",
+    ],
+)
