@@ -51,6 +51,7 @@ cc_library(
     srcs = glob(
         [
             "src/*.c",
+            "src/testing/*.c",
             "src/*.h",
         ],
         exclude = ["src/time_*.c"],
