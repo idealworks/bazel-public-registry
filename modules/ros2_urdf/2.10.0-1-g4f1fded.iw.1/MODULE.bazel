@@ -5,7 +5,7 @@ module(
 )
 
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
-bazel_dep(name = "com_github_mvukov_rules_ros2", version = "1.0.0.eddy.2")
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "2.0.0.eddy.1")
 bazel_dep(name = "ros2_pluginlib", version = "5.4.2-1-gf0c51cc.iw.1")
 bazel_dep(name = "ros2_urdfdom", version = "4.0.1.iw.1")
 bazel_dep(name = "ros2_urdfdom_headers", version = "1.1.2-1-g1c364b5.iw.1")

@@ -1,9 +1,10 @@
 {
   "overlay": {
-    "requirements_lock.txt": "sha256-aLV5LbNMb6pDSmj0HfJ/9UzsRHo7dK9UtJG0r5S14Tc=",
-    "requirements.txt": "sha256-tRqxzMmMu9ulmGX0IMKyoEI0PdCoiKVp6qkWFPNHVAg=",
-    "BUILD.bazel": "sha256-Kk6gmh/1Zz92jmuHb4gfcg4gKZY6uj5y38PR1lNY9JU=",
-    "MODULE.bazel": "sha256-UAG8xcieO1a30wUrq7GyTqkp/+rkZmjJtRq0sJEEaYM="
+    "requirements_lock.txt": "sha256-p3nyMgvWTXGIERHWi5aH9FRqLMhUcy6XUgTcYvWFtuw=",
+    "requirements.txt": "sha256-utfo8dc7cw/hpcekIBzhdJrAzO8VQYeVOZoNK5/Ck48=",
+    "BUILD.bazel": "sha256-TkySAGfWxEHfqIKnfl1evVx8uSCfW2TQRNUWSeTVtok=",
+    "MODULE.bazel": "sha256-B3WaEdyUUa3zFCBm9pUDNf5uId3tznA7wApmbF1Gc1w=",
+    "rosidl_generator_tests/BUILD.bazel": "sha256-1B+UccLjo+J2dC6062SqTI5DZJrNniYALQQxAKMYCtU="
   },
   "patches": {
     "Allow-local-paths-in-IDL-generators.patch": "sha256-eA8O5VbgEAUPdM8dM2O4uFykhLWgYaqn7KyErCEZqZM="

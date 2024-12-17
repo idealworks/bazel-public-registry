@@ -4,7 +4,7 @@
   },
   "patch_strip": 1,
   "overlay": {
-    "MODULE.bazel": "sha256-5IokM4knx3aSoGBn1fZ/x7juzTgxXdWj4bWZbj1DTDI=",
+    "MODULE.bazel": "sha256-/e2J2RmfTRMOTzKcGqbJSXWYRsapR4AeQVfO2P1C+l8=",
     "BUILD.bazel": "sha256-KtGmjSIMvZSWXBKcgeYVkSxKDeJv5CeBePL5t618fns="
   },
   "url": "https://github.com/ros2/rmw_implementation/archive/aea33b836c27df6fbcc102ae0781f3109c45215e.tar.gz",

@@ -1,9 +1,9 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-TwFndByT02D9ubASqBgve5vXcCNbeO1OOVCjfw3s9Ho=",
+    "MODULE.bazel": "sha256-gkJG4x7zYxdi4aRcsiDKWoktY7S8WDiFISzF8i/S1lA=",
     "requirements.txt": "sha256-GQzV2W/B2yR7dYaKaiXc10FSgLwd4FLENYR7+MJ3Fgo=",
     "requirements_lock.txt": "sha256-u9Tn8KpCDH/PS+NRkWW7pW/5GJYi1D2tN7/oZkhb6xw=",
-    "BUILD.bazel": "sha256-CRHpYeQ2Lik9Brq6YTp1iE9wxYk9vFDj33+ABpkGNLs=",
+    "BUILD.bazel": "sha256-3F+SgjZpXl1nqfamOIIbBZUsdnEP5+8p4/zVZRlC50M=",
     "test/BUILD.bazel": "sha256-/G9fNnJs9rBt1yFhcp19aUkxs98FrxwxoMPUmNCh1TY=",
     "bzl/BUILD.bazel": "sha256-o7+DlIXiUurjw+kPFQXRq3ekkRxoS/2W9HAhbSgjEfY=",
     "bzl/generate_rcutils_logging_macros.py": "sha256-Duv6B/9C+kci461OOHbM8/a9VDlFfKov2eFR0F+kmNA=",

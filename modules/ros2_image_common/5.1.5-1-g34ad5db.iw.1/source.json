@@ -1,6 +1,6 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-JyklyMd8vcrxZmkDo6rH8byf1alRGyELjo0gYC3QAIg=",
+    "MODULE.bazel": "sha256-KNfysUv4XquuuvA6GDTVlnoegWggOw9BEKJb9mJBcL8=",
     "BUILD.bazel": "sha256-Zz9aBztTzyT0JBh5nFemP9hAaxhzRuLSOD3aTsOPG88="
   },
   "url": "https://github.com/ros-perception/image_common/archive/34ad5dbd4ba9f45553b9b09887c4db39cdf03180.tar.gz",

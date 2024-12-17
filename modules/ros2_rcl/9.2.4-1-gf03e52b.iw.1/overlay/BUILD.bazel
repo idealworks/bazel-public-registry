@@ -1,6 +1,8 @@
 """ Builds rcl.
 """
 
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
 cc_library(
     name = "rcl_yaml_param_parser",
     srcs = glob([
@@ -85,12 +87,10 @@ cc_library(
     ],
 )
 
-# cc_test(
-#     name = "test_client",
-#     srcs = ["rcl/test/rcl/test_client.cpp"] + glob(["rcl/test/rcl/*.hpp"]),
-#     includes = ["rcl/test/rcl/"],
-#     deps = [
-#         ":rcl",
-#         "@ros2_rcl_interfaces//:cpp_test_msgs",
-#     ],
-# )
+# Some tests need access to these.
+cc_library(
+    name = "rcl_internal_headers",
+    visibility = ["//:__subpackages__"],
+    hdrs = glob(["rcl/src/rcl/*.h"]),
+    includes = ["rcl/src/rcl"],
+)

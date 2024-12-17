@@ -1,2 +1,5 @@
 empy==3.3.4
 lark-parser
+# Needed for tests
+pytest
+jsonschema

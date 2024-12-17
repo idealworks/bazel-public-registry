@@ -1,6 +1,6 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-cCL0U+qb1dc/YR+Ovv8ZjR3En9qMPkm/wiGrvnOJG3o=",
+    "MODULE.bazel": "sha256-xDQKLDgj98xflmcPBv1PZnm7EzkbQFzcsYXJXD5/+8M=",
     "BUILD.bazel": "sha256-64dcmve8t9ZLXIIE1Ezu1VD9DtYm7b9h7S3IjmDyRG8="
   },
   "url": "https://github.com/ros2/rmw_cyclonedds/archive/2ec6f21c2959ee9f5c12ad4a16ad73e1ae0c472b.tar.gz",

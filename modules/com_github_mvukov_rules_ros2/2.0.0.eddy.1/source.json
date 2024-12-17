@@ -1,8 +1,8 @@
 {
-  "url": "https://github.com/eddygharib/rules_ros2/archive/eaae7ba42682e768e75726610e23cd1c4c38a0a3.zip",
-  "integrity": "sha256-Jgs1792hR4ofbW7iegakweD4Ch+c/jPXCdVgIgtsuqk=",
-  "strip_prefix": "rules_ros2-eaae7ba42682e768e75726610e23cd1c4c38a0a3",
+  "url": "https://github.com/eddygharib/rules_ros2/archive/41dd943effe9df3f4120445e8cfd443e50cc3b59.zip",
+  "integrity": "sha256-0JS68INKsTXscM96ZbU2MfSjPZ70Y6AzGdfILE9w3+k=",
+  "strip_prefix": "rules_ros2-41dd943effe9df3f4120445e8cfd443e50cc3b59",
   "overlay": {
-    "MODULE.bazel": "sha256-dJKwHJ4Z7ut07BbyUbM8hCHY6Vi5b4jhwXq41GhQN6c="
+    "MODULE.bazel": "sha256-ACtr2a2bTsmRzTPIwz3reK3DFZ1uQiCd6iJ6B8Kuvqc="
   }
 }

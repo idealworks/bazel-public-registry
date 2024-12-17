@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/Mimick/archive/4dbd495e9f3d87a83c3201ef9d851e85f7133db7.tar.gz",
+  "integrity": "sha256-I24aWbwvmSri20dVIS09xeYa37jCrccNmRyyvScxmpI=",
+  "strip_prefix": "Mimick-4dbd495e9f3d87a83c3201ef9d851e85f7133db7",
+  "overlay": {
+    "MODULE.bazel": "sha256-B90v5ygBxK9JLEzc279l22SRpeqvP6ch256LoSY0M7I=",
+    "BUILD.bazel": "sha256-RnP/91t4Jvtaa8JUejTIx+6tZLB4uEtHN3slcjCKLOs="
+  }
+}

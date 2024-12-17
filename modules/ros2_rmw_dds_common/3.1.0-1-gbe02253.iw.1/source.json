@@ -1,6 +1,6 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-Z3Ce8SxyF9r0trlARp1Gw7Stbbh+4D2FNHPSDQlopNE=",
+    "MODULE.bazel": "sha256-zT3HU0ibdc9+KKRCKoTUnWPp9WkF7A77KrSznSVWdgg=",
     "BUILD.bazel": "sha256-jT9kBdiOXiCUy3u2xt990uVlcKweVQ/lRCihEgD29SM="
   },
   "url": "https://github.com/ros2/rmw_dds_common/archive/be02253b7b872bb9223e783421c5deee3269abfe.tar.gz",

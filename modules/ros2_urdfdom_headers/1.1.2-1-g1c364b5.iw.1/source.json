@@ -1,6 +1,6 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-f0cDVYpp/ackQLSqFAIRJcOsa7eyaZgAOG/1IDyIei8=",
+    "MODULE.bazel": "sha256-fvJrsaBYf4FsjEGJ/MzvLwrBHkQjAiPe3qVcVjD6s94=",
     "BUILD.bazel": "sha256-p5rFL4QCzngCyvfBuKnkU1NxeLDRfX6SdWt4WnOYYro="
   },
   "url": "https://github.com/ros/urdfdom_headers/archive/1c364b5f62b5886ae9849909a7add20fab12c218.tar.gz",

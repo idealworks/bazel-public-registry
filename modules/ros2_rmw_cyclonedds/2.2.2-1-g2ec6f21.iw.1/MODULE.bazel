@@ -1,7 +1,7 @@
 module(
     name = "ros2_rmw_cyclonedds",
     version = "2.2.2-1-g2ec6f21.iw.1",
-    compatibility_level = 1
+    compatibility_level = 1,
 )
 
 bazel_dep(name = "cyclonedds", version = "0.10.5-5-g76360fb7.iw.1")

@@ -1,7 +1,7 @@
 module(
     name = "ros2_rmw",
     version = "7.3.1-1-gc9dd78a.iw.1",
-    compatibility_level = 1
+    compatibility_level = 1,
 )
 
 bazel_dep(name = "ros2_rcutils", version = "6.7.2-1-g63a2414.iw.1")

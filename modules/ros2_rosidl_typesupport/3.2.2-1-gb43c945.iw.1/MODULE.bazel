@@ -1,7 +1,7 @@
 module(
     name = "ros2_rosidl_typesupport",
     version = "3.2.2-1-gb43c945.iw.1",
-    compatibility_level = 1
+    compatibility_level = 1,
 )
 
 bazel_dep(name = "bazel_skylib", version = "1.7.1")

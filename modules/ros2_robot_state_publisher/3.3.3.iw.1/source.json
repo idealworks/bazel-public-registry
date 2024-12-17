@@ -1,6 +1,6 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-nC9zYxJvmleCSlU8yQYx6NAWeIRjyRujgf8KiaZwPHc=",
+    "MODULE.bazel": "sha256-TNU14TVv9BjlW0MhrP9/14MHvjZYmtQ0z/cMRT/UT/k=",
     "BUILD.bazel": "sha256-J/sm244u8lM9fBywGVRAr4dGnOyAeVPUHhOSbzPBydk="
   },
   "url": "https://github.com/ros/robot_state_publisher/archive/e0f77e62457ae01f8dbf3b5c4cc62d15fa36dfad.tar.gz",

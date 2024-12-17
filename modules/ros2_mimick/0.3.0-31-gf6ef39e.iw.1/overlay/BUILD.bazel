@@ -1,0 +1,156 @@
+load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
+load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
+load("@bazel_skylib//lib:selects.bzl", "selects")
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+selects.config_setting_group(
+    name = "linux_x86_64",
+    match_all = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],
+)
+
+selects.config_setting_group(
+    name = "macos_x86_64",
+    match_all = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:macos",
+    ],
+)
+
+selects.config_setting_group(
+    name = "linux_or_macos_x86_64",
+    match_any = [
+        ":linux_x86_64",
+        ":macos_x86_64",
+    ],
+)
+
+expand_template(
+    name = "config",
+    template = "src/config.h.in",
+    out = "src/config.h",
+    substitutions =
+        # Defaults
+        {
+            "cmakedefine": "define",
+
+            "@MMK_MANGLING@": "none",
+
+            "@MMK_ARCH_x86@": "0",
+            "@MMK_ARCH_x86_64@": "0",
+            "@MMK_ARCH_ARM@": "0",
+            "@MMK_ARCH_ARM64@": "0",
+
+            "@MMK_EXE_FMT_ELF@": "0",
+            "@MMK_EXE_FMT_PE@": "0",
+            "@MMK_EXE_FMT_MACH_O@": "0",
+
+            "@HAVE__R_DEBUG@": "0",
+            "@HAVE__DYNAMIC@": "0",
+            "@HAVE_ELF_AUXV_T@": "0",
+            "@HAVE_ELF_AUXINFO@": "0",
+            "@HAVE_MMAP@": "0",
+            "@HAVE_MMAP_MAP_ANONYMOUS@": "0",
+            "@HAVE_MMAP_MAP_ANON@": "0",
+            # This needs to be handled specially because it's checked with #ifdef
+            # instead of #if.
+            "#define HAVE___STDIO_COMMON_VFPRINTF @HAVE___STDIO_COMMON_VFPRINTF@": "",
+        }
+        # Architecture specific
+        | select(
+            {
+                "@platforms//cpu:x86_64": {
+                    "@MMK_ARCH@": "x86_64",
+                    "@MMK_BITS@": "64",
+                    "@MMK_ARCH_x86_64@": "1",
+                },
+                "@platforms//cpu:i386": {
+                    "@MMK_ARCH@": "x86",
+                    "@MMK_BITS@": "32",
+                    "@MMK_ARCH_x86@": "1",
+                },
+                "@platforms//cpu:arm": {
+                    "@MMK_ARCH@": "arm",
+                    "@MMK_BITS@": "32",
+                    "@MMK_ARCH_ARM@": "1",
+                },
+                "@platforms//cpu:arm64": {
+                    "@MMK_ARCH@": "arm64",
+                    "@MMK_BITS@": "64",
+                    "@MMK_ARCH_ARM64@": "1",
+                }
+            },
+            no_match_error = "Mimick only supports x86, x86_64, arm, and arm64.",
+        )
+        # OS specific
+        | select(
+            {
+                "@platforms//os:linux": {
+                    "@MMK_EXE_FMT_ELF@": "1",
+
+                    "@HAVE_MMAP@": "1",
+                    "@HAVE_MMAP_MAP_ANONYMOUS@": "1",
+                    "@HAVE_MMAP_MAP_ANON@": "1",
+
+                    # TODO: Ensure these exist, somehow.
+                    "@HAVE__R_DEBUG@": "1",
+                    "@HAVE__DYNAMIC@": "1",
+                    "@HAVE_ELF_AUXV_T@": "1",
+                    "@HAVE_ELF_AUXINFO@": "1",
+                },
+            },
+            no_match_error = "Currently only Linux is supported."
+        ),
+        # Arch + OS specific
+        # TODO: Set MMK_MANGLING based on the combos.
+)
+
+cc_library(
+    name = "ros2_mimick",
+    visibility = ["//visibility:public"],
+    srcs = [
+        "src/core.c",
+        "src/matcher.c",
+        "src/mock.c",
+        "src/plt.c",
+        "src/stub.c",
+        "src/trampoline.c",
+        "src/verify.c",
+        "src/vitals.c",
+        "src/when.c",
+        # Internal headers
+        "src/common.h",
+        "src/core.h",
+        "src/mock.h",
+        "src/plt.h",
+        "src/stub.h",
+        "src/threadlocal.h",
+        "src/trampoline.h",
+        "src/vitals.h",
+        "src/asm/mangling.h",
+        "src/asm/mangling/none.h",
+        "src/asm/mangling/leading-underscore.h",
+    ] + select({
+        "@platforms//os:linux": ["src/plt-elf.c", "src/plt-elf.h"],
+        "@platforms//os:windows": ["src/plt-pe.c", "src/plt-pe.h"],
+        "@platforms//os:macos": ["src/plt-mach-o.c", "src/plt-mach-o.h"],
+    }) + select({
+        "@platforms//cpu:arm64": ["src/asm/trampoline-aarch64.S"],
+        "@platforms//cpu:arm": ["src/asm/trampoline-arm.S"],
+        ":linux_or_macos_x86_64": ["src/asm/trampoline-x86_64-systemv.S"],
+        # TODO: Support more
+    }) + [":config"],
+    hdrs = glob(["include/mimick/*.h"]),
+    includes = ["include"],
+    copts = [
+        # FIXME: These won't work for Windows.
+        "-Isrc",
+        "-I$(BINDIR)/{}src".format("external/{}/".format(repo_name()) if repo_name() else ""),
+        "-std=c99",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-parameter",
+    ],
+)

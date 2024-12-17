@@ -1,10 +1,10 @@
 module(
     name = "ros2_message_filters",
     version = "4.11.2-1-g442eda0.iw.1",
-    compatibility_level = 1
+    compatibility_level = 1,
 )
 
-bazel_dep(name = "com_github_mvukov_rules_ros2", version = "1.0.0.eddy.2")
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "2.0.0.eddy.1")
 bazel_dep(name = "ros2_rcl_interfaces", version = "2.0.2-1-g7d568ce.iw.1")
 bazel_dep(name = "ros2_rclcpp", version = "28.1.5-8-gbd695f4a.iw.1")
 bazel_dep(name = "ros2_rclpy", version = "7.1.2-2-g159aedd.iw.1")

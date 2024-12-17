@@ -1,6 +1,6 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-f2zwjH0mv547X30DjglfHW3wT2AatUKixtfJ2R+rEjo=",
+    "MODULE.bazel": "sha256-EavsSJWSInsZTL9XofRvfZ4WDHFhx/FU2PHLTbkR+f4=",
     "BUILD.bazel": "sha256-BdQ0SBRPMINZPp0sntEeHvM1QOJxMbV1ysR51LoBJ4w="
   },
   "url": "https://github.com/ros2/common_interfaces/archive/5283bd97b33584eb2246fc6134b2e948027e1c3c.tar.gz",

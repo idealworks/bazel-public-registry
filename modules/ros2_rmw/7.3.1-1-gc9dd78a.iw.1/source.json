@@ -1,6 +1,6 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-1FAsHkEvHc1vGoF1G1jIBW9aAncbI5sNQv3N/w254OQ=",
+    "MODULE.bazel": "sha256-z5/j6Nq3IzauWjI7aKon0yj2MdBD+Husp/j25AvmWJM=",
     "BUILD.bazel": "sha256-CxaivMPcq7ZIGx8bs2qEOk4lwxiqO6uGFPKn8ubTBhg="
   },
   "url": "https://github.com/ros2/rmw/archive/c9dd78a8f2895610fb3fb93809290b3806148b1a.tar.gz",

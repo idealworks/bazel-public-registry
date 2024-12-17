@@ -1,6 +1,6 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-EWx37P0EktAhfACdyccuHTl/ZXbYfVYUToBM+Yszf1g=",
+    "MODULE.bazel": "sha256-BAvKSkOdmvItsvBOoa0I0WV0+jeJlDTE/qznDJuRd9A=",
     "BUILD.bazel": "sha256-y/lTCe1y7dh5fQEaRzX7x2G91CVQbr9ZIHbcTT24KJU="
   },
   "url": "https://github.com/ros2/rcl_logging/archive/da51595fecb4b914275c2c970076cb605cc08693.tar.gz",

@@ -1,0 +1,111 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_binary")
+
+# Google's backward-cpp, used by memory_tools.
+cc_library(
+    name = "bombela-backward-cpp",
+    srcs = ["osrf_testing_tools_cpp/src/memory_tools/vendor/bombela/backward-cpp/backward.cpp"],
+    hdrs = ["osrf_testing_tools_cpp/src/memory_tools/vendor/bombela/backward-cpp/backward.hpp"],
+    includes = ["osrf_testing_tools_cpp/src/memory_tools/vendor/bombela/backward-cpp"],
+    cxxopts = ["-std=c++11"],
+    defines = select(
+        {
+            "@platforms//os:linux": [
+                "BACKWARD_SYSTEM_LINUX=1",
+                # Prefer the unwind library shipped by the compiler (included in
+                # libgcc for GCC, or llvm-libunwind for Clang).
+                "BACKWARD_HAS_UNWIND=1",
+                # Enable the simple backtrace printer.
+                "BACKWARD_HAS_BACKTRACE_SYMBOL=1",
+                # TODO: Build libdw (from elfutils) with Bazel and use it here.
+                # "BACKWARD_HAS_DW=1",
+            ],
+            "@platforms//os:macos": [
+                "BACKWARD_SYSTEM_DARWIN=1",
+                # Prefer the unwind library shipped by the compiler (included in
+                # libgcc for GCC, or llvm-libunwind for Clang).
+                "BACKWARD_HAS_UNWIND=1",
+                # Enable the simple backtrace printer (it's the only one available
+                # on macOS).
+                "BACKWARD_HAS_BACKTRACE_SYMBOL=1",
+            ],
+            "@platforms//os:windows": [
+                "BACKWARD_SYSTEM_WINDOWS=1",
+            ],
+       },
+       no_match_error = "Unsupported platform",
+    ),
+)
+
+cc_library(
+    name = "osrf_testing_tools_cpp",
+    visibility = ["//visibility:public"],
+    hdrs = glob([
+        "osrf_testing_tools_cpp/include/osrf_testing_tools_cpp/*.hpp",
+    ]),
+    includes = [
+        "osrf_testing_tools_cpp/include",
+    ],
+)
+
+cc_library(
+    name = "memory_tools",
+    visibility = ["//visibility:public"],
+    srcs = [
+        # NOTE: These need to be manually included because the memory_tools
+        #       directory contains many source files with "magic" properties.
+        "osrf_testing_tools_cpp/src/memory_tools/custom_memory_functions.cpp",
+        "osrf_testing_tools_cpp/src/memory_tools/implementation_monitoring_override.cpp",
+        "osrf_testing_tools_cpp/src/memory_tools/initialize.cpp",
+        "osrf_testing_tools_cpp/src/memory_tools/is_working.cpp",
+        "osrf_testing_tools_cpp/src/memory_tools/memory_tools_service.cpp",
+        "osrf_testing_tools_cpp/src/memory_tools/monitoring.cpp",
+        "osrf_testing_tools_cpp/src/memory_tools/register_hooks.cpp",
+        "osrf_testing_tools_cpp/src/memory_tools/stack_trace.cpp",
+        "osrf_testing_tools_cpp/src/memory_tools/testing_helpers.cpp",
+        "osrf_testing_tools_cpp/src/memory_tools/verbosity.cpp",
+    ] + glob(["osrf_testing_tools_cpp/src/memory_tools/*.hpp"]),
+    hdrs = glob([
+        "osrf_testing_tools_cpp/include/osrf_testing_tools_cpp/memory_tools/*.hpp",
+    ]),
+    copts = [
+        "-Iosrf_testing_tools_cpp/src/memory_tools",
+    ],
+    cxxopts = ["-std=c++17"],
+    local_defines = [
+        "OSRF_TESTING_TOOLS_CPP_MEMORY_TOOLS_BUILDING_DLL=1",
+    ],
+    deps = [
+        ":bombela-backward-cpp",
+        ":osrf_testing_tools_cpp",
+    ],
+)
+
+# The interpose binary is used to interpose on the memory functions of a target
+# through LD_PRELOAD.
+cc_library(
+    name = "memory_tools_interpose_lib",
+    srcs = [
+        "osrf_testing_tools_cpp/src/memory_tools/memory_tools.cpp",
+    ] + glob([
+        "osrf_testing_tools_cpp/src/memory_tools/*.hpp",
+        "osrf_testing_tools_cpp/src/memory_tools/impl/*.hpp",
+    ]),
+    additional_compiler_inputs = glob([
+        "osrf_testing_tools_cpp/src/memory_tools/impl/*.cpp",
+    ]),
+    cxxopts = ["-std=c++17"],
+    deps = [
+        ":osrf_testing_tools_cpp",
+        ":memory_tools",
+    ],
+    alwayslink = True,
+)
+
+cc_binary(
+    name = "memory_tools_interpose",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":memory_tools_interpose_lib",
+    ],
+    linkshared = True,
+)
