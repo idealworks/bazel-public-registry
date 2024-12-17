@@ -1,0 +1,336 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+load("@osrf_testing_tools_cpp//bzl:defs.bzl", "memory_tools_cc_test")
+
+# TODO: call_for_each_rmw_implementation(test_target)
+# TODO: Tests requiring special handling:
+# - test_context
+# - test_init
+# - test_node
+# - test_guard_condition
+# - test_publisher
+# - test_publisher_wait_all_ack
+# - test_wait
+# - test_rmw_impl_id_check_func
+# - test_network_flow_endpoints
+# - test_service_event_publisher
+# - test_node_type_cache
+# - test_get_type_description_service
+# - test_validate_enclave_name
+# - test_domain_id
+# - test_expand_topic_name
+# - test_security
+# We have @ros2_mimick for mocking, but the problem is that it requires the RCL
+# and RMW libraries to be dynamically linked into the binary with the exact name
+# "librcl.so" and "librmw.so". Bazel generates a unique name for each library
+# unless cc_binary is used, but that causes a linking error, plus we don't want
+# to link dynamically by default. Since we can't set the cc_binary name as we
+# please, I suppose there would need to be a custom Starlark rule to generate
+# the exact binary we need.
+# TODO: test_logging (requires RCL logging implementation)
+# TODO: test_logging_rosout (requires RCL logging implementation)
+# TODO: test_type_description_conversions, test looks broken in Jazzy:
+# https://github.com/ros2/rcl/blob/2a72dbaaf09458a998fad39d898adc9b8a60565a/rcl/test_type_description_conversions.cpp#L69
+# Type supports are now generated through .idl files instead of .msg files.
+
+filegroup(
+    name = "test_resources",
+    srcs = glob([
+        "resources/**/*",
+    ]),
+)
+
+# Not a test; provides context for real tests.
+cc_library(
+    name = "test_context",
+    hdrs = glob([
+        "rcl/*.hpp",
+        "rcl/*.h",
+        "mocking_utils/*.hpp",
+        # Tests include internal headers directly as well...
+    ]),
+    includes = ["rcl"],
+    data = [":test_resources"],
+    deps = [
+         "//:rcl_internal_headers",
+    ],
+    defines = [
+        # https://github.com/bazelbuild/bazel/issues/23516
+        "TEST_RESOURCES_DIRECTORY=\\\"{}rcl/test/resources\\\"".format("external/{}/".format(repo_name()) if repo_name() else ""),
+    ],
+)
+
+cc_library(
+    name = "wait_for_entity_helpers",
+    srcs = ["rcl/wait_for_entity_helpers.cpp"],
+    deps = [
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@ros2_rcutils//:rcutils",
+        "//:rcl",
+        ":test_context",
+    ],
+    local_defines = ["ROS_PACKAGE_NAME=\\\"wait_for_entity_helpers\\\""],
+)
+
+# Actual tests start here.
+
+cc_test(
+    name = "test_client",
+    srcs = ["rcl/test_client.cpp"],
+    deps = [
+        "@ros2_rcl_interfaces//:cpp_test_msgs",
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+cc_test(
+    name = "test_timer",
+    srcs = ["rcl/test_timer.cpp"],
+    deps = [
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+cc_test(
+    name = "test_get_node_names",
+    srcs = ["rcl/test_get_node_names.cpp"],
+    deps = [
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+    tags = ["exclusive"],
+)
+
+cc_test(
+    name = "test_graph",
+    srcs = ["rcl/test_graph.cpp"],
+    deps = [
+        "@ros2_rcl_interfaces//:cpp_test_msgs",
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+    local_defines = ["ROS_PACKAGE_NAME=\\\"test_graph\\\""],
+    # Logging requires a HOME directory to write to.
+    env = {"HOME": "/tmp"},
+    tags = ["exclusive"],
+)
+
+cc_test(
+    name = "test_info_by_topic",
+    srcs = ["rcl/test_info_by_topic.cpp"],
+    deps = [
+        "@ros2_rcl_interfaces//:cpp_test_msgs",
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+        ":wait_for_entity_helpers",
+    ],
+)
+
+cc_test(
+    name = "test_count_matched",
+    srcs = ["rcl/test_count_matched.cpp"],
+    deps = [
+        "@ros2_rcl_interfaces//:cpp_test_msgs",
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+    local_defines = ["ROS_PACKAGE_NAME=\\\"test_count_matched\\\""],
+)
+
+cc_test(
+    name = "test_get_actual_qos",
+    srcs = ["rcl/test_get_actual_qos.cpp"],
+    deps = [
+        "@ros2_rcl_interfaces//:cpp_test_msgs",
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+cc_test(
+    name = "test_remap",
+    srcs = ["rcl/test_remap.cpp"],
+    deps = [
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+cc_test(
+    name = "test_remap_integration",
+    srcs = ["rcl/test_remap_integration.cpp"],
+    deps = [
+        "@ros2_rcl_interfaces//:cpp_test_msgs",
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+cc_test(
+    name = "test_events",
+    srcs = ["rcl/test_events.cpp"],
+    deps = [
+        "@ros2_rcl_interfaces//:cpp_test_msgs",
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+cc_test(
+    name = "test_namespace",
+    srcs = ["rcl/test_namespace.cpp"],
+    deps = [
+        "@ros2_rcl_interfaces//:cpp_test_msgs",
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+cc_test(
+    name = "test_arguments",
+    srcs = ["rcl/test_arguments.cpp"],
+    deps = [
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+memory_tools_cc_test(
+    name = "test_time",
+    srcs = ["rcl/test_time.cpp"],
+    deps = [
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+cc_test(
+    name = "test_lexer",
+    srcs = ["rcl/test_lexer.cpp"],
+    deps = [
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+cc_test(
+    name = "test_lexer_lookahead",
+    srcs = ["rcl/test_lexer_lookahead.cpp"],
+    deps = [
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+cc_test(
+    name = "test_discovery_options",
+    srcs = ["rcl/test_discovery_options.cpp"],
+    deps = [
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+cc_test(
+    name = "test_localhost",
+    srcs = ["rcl/test_localhost.cpp"],
+    deps = [
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+cc_test(
+    name = "test_validate_topic_name",
+    srcs = ["rcl/test_validate_topic_name.cpp"],
+    deps = [
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+cc_test(
+    name = "test_common",
+    srcs = ["rcl/test_common.cpp"],
+    deps = [
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+cc_test(
+    name = "test_subscription_content_filter_options",
+    srcs = ["rcl/test_subscription_content_filter_options.cpp"],
+    deps = [
+        "@ros2_rcl_interfaces//:cpp_test_msgs",
+        "@osrf_testing_tools_cpp//:memory_tools",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
+
+cc_test(
+    name = "test_type_hash",
+    srcs = ["rcl/test_type_hash.cpp"],
+    deps = [
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "//:rcl",
+        ":test_context",
+    ],
+)
