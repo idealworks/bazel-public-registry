@@ -3,7 +3,7 @@
   "integrity": "sha256-It9H9j2R0BSvJnUCnCPag3SFdcEqZIH9o+2SNZB8wlk=",
   "strip_prefix": "orocos_kinematics_dynamics-507de66205e14b12c8c65f25eafc05c4dc66e21e",
   "overlay": {
-    "MODULE.bazel": "sha256-TwJA8SZGoXj2+KedXuKL8/XwR+LlAIQv5tvE1G7V7Z8=",
+    "MODULE.bazel": "sha256-4hfTr/yiQpNalyKkXHh8C56/WSHyPeNGtTGL9JySlLs=",
     "BUILD.bazel": "sha256-uhJb9TDJNUpcvxuUGjica/OIg9uS4ava2gtb1OVEjX8="
   }
 }

@@ -1,6 +1,6 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-tJmcLEayBN6BexhxCDRoxrOuUeOVugbO27PVpHFXoF0=",
+    "MODULE.bazel": "sha256-P8TiBfvLpVze3JXkNiXDQhHHcghNtz1GN15ZJDtaisA=",
     "BUILD.bazel": "sha256-VtPb/Sfw4hX+LHTwXgXnc7AulskDfMg5edCU0nVLjQg="
   },
   "url": "https://github.com/ros2/message_filters/archive/442eda0841f09f95248821d2d988a915540e29b4.tar.gz",

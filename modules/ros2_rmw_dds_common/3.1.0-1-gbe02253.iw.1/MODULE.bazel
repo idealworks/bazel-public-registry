@@ -1,7 +1,7 @@
 module(
     name = "ros2_rmw_dds_common",
     version = "3.1.0-1-gbe02253.iw.1",
-    compatibility_level = 1
+    compatibility_level = 1,
 )
 
 bazel_dep(name = "com_github_mvukov_rules_ros2", version = "2.0.0.eddy.1")
