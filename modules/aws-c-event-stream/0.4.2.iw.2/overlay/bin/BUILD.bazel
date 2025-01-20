@@ -1,0 +1,11 @@
+cc_binary(
+    name = "event_stream_pipe",
+    srcs = ["event_stream_pipe.c"],
+    deps = ["//:aws-c-event-stream"],
+)
+
+cc_binary(
+    name = "event_stream_write_test_case",
+    srcs = ["event_stream_write_test_case.c"],
+    deps = ["//:aws-c-event-stream"],
+)

@@ -1,0 +1,19 @@
+cc_library(
+    name = "aws-c-event-stream",
+    srcs = glob([
+        "source/*.c",
+        "include/aws/event-stream/private/*.h",
+    ]),
+    hdrs = glob([
+        "include/aws/event-stream/*.h",
+    ]),
+    includes = [
+        "include",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@aws-c-common",
+        "@aws-c-io",
+        "@aws-checksums",
+    ],
+)

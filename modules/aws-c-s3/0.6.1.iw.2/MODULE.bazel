@@ -1,0 +1,7 @@
+module(
+    name = "aws-c-s3",
+    version = "0.6.1.iw.2",
+)
+
+bazel_dep(name = "aws-checksums", version = "0.1.18.iw.2")
+bazel_dep(name = "aws-c-auth", version = "0.7.22.iw.2")

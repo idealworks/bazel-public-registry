@@ -1,0 +1,19 @@
+cc_library(
+    name = "aws-c-cal",
+    srcs = glob([
+        "source/*.c",
+        "source/unix/*.c",
+    ]),
+    hdrs = glob([
+        "include/aws/cal/*.h",
+        "include/aws/cal/private/*.h",
+    ]),
+    includes = [
+        "include",
+    ],
+    deps = [
+        "@aws-c-common",
+        "@boringssl//:ssl",
+    ],
+    visibility = ["//visibility:public"],
+)

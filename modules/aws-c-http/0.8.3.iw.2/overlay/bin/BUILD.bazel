@@ -1,0 +1,5 @@
+cc_binary(
+    name = "elasticurl",
+    srcs = ["elasticurl/main.c"],
+    deps = ["//:aws-c-http"],
+)

@@ -1,0 +1,19 @@
+cc_library(
+    name = "aws-c-s3",
+    srcs = glob([
+        "source/*.c",
+        "source/s3_endpoint_resolver/*.c",
+        "include/aws/s3/private/*.h",
+    ]),
+    hdrs = glob([
+        "include/aws/s3/*.h",
+    ]),
+    includes = [
+        "include",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@aws-c-auth",
+        "@aws-checksums",
+    ],
+)
