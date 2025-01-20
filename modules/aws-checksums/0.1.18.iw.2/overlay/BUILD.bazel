@@ -1,0 +1,18 @@
+cc_library(
+    name = "aws-checksums",
+    srcs = glob([
+        "source/*.c",
+        "source/generic/*.c",
+        "include/aws/checksums/private/*.h",
+    ]),
+    hdrs = glob([
+        "include/aws/checksums/*.h",
+    ]),
+    includes = [
+        "include",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@aws-c-common",
+    ],
+)

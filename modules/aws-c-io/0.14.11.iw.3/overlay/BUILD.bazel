@@ -1,0 +1,26 @@
+cc_library(
+    name = "aws-c-io",
+    srcs = glob([
+        "source/*.c",
+        "source/*.h",
+        "source/linux/**/*.c",
+        "source/posix/**/*.c",
+        "source/s2n/**/*.c",
+        "source/pkcs11/**/*.h",
+        "include/aws/io/private/*.h",
+    ]),
+    hdrs = glob([
+        "source/*.h",
+        "include/aws/io/*.h",
+    ]),
+    defines = {
+        "USE_S2N": "ON",
+    },
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@aws-c-cal",
+        "@aws-c-common",
+        "@s2n",
+    ],
+)

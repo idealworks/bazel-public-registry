@@ -1,0 +1,6 @@
+module(
+    name = "aws-c-compression",
+    version = "0.2.18.iw.2",
+)
+
+bazel_dep(name = "aws-c-common", version = "0.9.23.iw.3")
