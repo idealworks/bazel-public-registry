@@ -1,9 +1,7 @@
 {
-  "remote": "git@github.com:hedronvision/bazel-compile-commands-extractor.git",
-  "type": "git_repository",
-  "integrity": "sha256-F8Un3oCYcDEnJjKTeVRfsvGtzNRpI4qRlk9IUSAssss=",
-  "patch_strip": 0,
-  "commit": "4f28899228fb3ad0126897876f147ca15026151e",
+  "url": "https://github.com/hedronvision/bazel-compile-commands-extractor/archive/4f28899228fb3ad0126897876f147ca15026151e.tar.gz",
+  "integrity": "sha256-ZYEiz7HyW+duohKwD16wR9jirci8+SO5GEYfKx43zfI=",
+  "strip_prefix": "bazel-compile-commands-extractor-4f28899228fb3ad0126897876f147ca15026151e",
   "patches": {
     "patches/add_missing_header_extensions.patch": "sha256-/zZwKjlp7IvhdD6cFQgqKBuMCeFJksBI3j6kK6tlttU="
   }
