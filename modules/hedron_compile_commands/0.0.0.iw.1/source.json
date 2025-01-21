@@ -4,6 +4,6 @@
   "strip_prefix": "bazel-compile-commands-extractor-4f28899228fb3ad0126897876f147ca15026151e",
   "patch_strip": 1,
   "patches": {
-    "patches/add_missing_header_extensions.patch": "sha256-/zZwKjlp7IvhdD6cFQgqKBuMCeFJksBI3j6kK6tlttU="
+    "add_missing_header_extensions.patch": "sha256-/zZwKjlp7IvhdD6cFQgqKBuMCeFJksBI3j6kK6tlttU="
   }
 }
