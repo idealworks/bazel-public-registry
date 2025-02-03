@@ -1,0 +1,14 @@
+load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+
+compile_pip_requirements(
+    name = "python_requirements",
+    extra_args = ["--allow-unsafe"],
+    requirements_in = "//third_party:requirements.txt",
+    requirements_txt = "//third_party:requirements_lock.txt",
+    tags = ["manual"],
+)
+
+exports_files([
+    "requirements.txt",
+    "requirements_lock.txt",
+])

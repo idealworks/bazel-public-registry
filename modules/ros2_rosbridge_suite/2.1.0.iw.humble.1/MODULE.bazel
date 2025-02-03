@@ -1,0 +1,25 @@
+module(
+    name = "ros2_rosbridge_suite",
+    version = "2.1.0.iw.humble.1",
+)
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "1.0.0.eddy.2")
+bazel_dep(name = "ros2_rclpy", version = "3.3.13.iw.1")
+bazel_dep(name = "ros2_rosidl", version = "3.1.5.iw.1")
+bazel_dep(name = "ros2_common_interfaces", version = "4.2.3.iw.1")
+bazel_dep(name = "ros2_rcl_interfaces", version = "1.2.1.iw.1")
+bazel_dep(name = "rules_python", version = "0.36.0")
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    configure_coverage_tool = True,
+    python_version = "3.10",
+)
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+    hub_name = "rosbridge_suite_pip_deps",
+    python_version = "3.10",
+    requirements_lock = "//third_party:requirements_lock.txt",
+)
+use_repo(pip, "rosbridge_suite_pip_deps")
