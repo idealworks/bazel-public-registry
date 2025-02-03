@@ -1,0 +1,20 @@
+load("@com_github_mvukov_rules_ros2//ros2:py_defs.bzl", "ros2_py_binary")
+
+py_library(
+    name = "rosbridge_server",
+    srcs = glob(["src/rosbridge_server/*.py"]),
+    imports = ["src"],
+    visibility = ["//visibility:public"],
+)
+
+ros2_py_binary(
+    name = "rosbridge_websocket",
+    srcs = ["scripts/rosbridge_websocket.py"],
+    main = "scripts/rosbridge_websocket.py",
+    deps = [
+        ":rosbridge_server",
+        "//rosbridge_library",
+        "//rosbridge_msgs:py_rosbridge_msgs",
+        "@ros2_rclpy//:rclpy",
+    ],
+)
