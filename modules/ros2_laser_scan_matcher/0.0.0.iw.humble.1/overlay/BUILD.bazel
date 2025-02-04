@@ -1,0 +1,18 @@
+load("@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl", "ros2_cpp_binary")
+
+ros2_cpp_binary(
+    name = "laser_scan_matcher",
+    srcs = [
+        "include/ros2_laser_scan_matcher/laser_scan_matcher.h",
+        "src/laser_scan_matcher.cpp",
+    ],
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_alexkaravaev_csm//:csm",
+        "@ros2_common_interfaces//:cpp_nav_msgs",
+        "@ros2_common_interfaces//:cpp_sensor_msgs",
+        "@ros2_geometry2//:cpp_tf2_geometry_msgs",
+        "@ros2_geometry2//:tf2_ros",
+    ],
+)

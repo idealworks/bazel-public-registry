@@ -1,0 +1,10 @@
+module(
+    name = "ros2_laser_scan_matcher",
+    version = "0.0.0.iw.humble.1",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "1.0.0.eddy.2")
+bazel_dep(name = "ros2_common_interfaces", version = "4.2.3.iw.1")
+bazel_dep(name = "ros2_geometry2", version = "0.25.6.iw.2")
+bazel_dep(name = "com_github_alexkaravaev_csm", version = "1.0.2-13-g0c5fedd.iw.humble.1")
