@@ -11,6 +11,7 @@ ros2_py_binary(
     name = "rosbridge_websocket",
     srcs = ["scripts/rosbridge_websocket.py"],
     main = "scripts/rosbridge_websocket.py",
+    visibility = ["//visibility:public"],
     deps = [
         ":rosbridge_server",
         "//rosbridge_library",

@@ -6,7 +6,7 @@
     "MODULE.bazel": "sha256-WlnfBiqcBdTTluiZ765AWijvaztwZc66sBdhaz1MeMo=",
     "rosbridge_library/BUILD.bazel": "sha256-8Ur4ZB4KNfsYnun7Rw5uoaz/fWOrOiuzMmnoWmcI3xw=",
     "rosbridge_msgs/BUILD.bazel": "sha256-z+cahuXtYk/3sZv1MDzrshG8XgGHuneIlXcoNO/iisc=",
-    "rosbridge_server/BUILD.bazel": "sha256-oQ/GnQm8taTzAgWfhzYaM+jBgW3EPuVxBcKzfM0kmRs=",
+    "rosbridge_server/BUILD.bazel": "sha256-xg6I+V9mB8XPtR4u0RlSNgMFysxTP+3Q4tDOPTjgR3U=",
     "third_party/BUILD.bazel": "sha256-OlYtRCIgv9bbRv3oR6b+gHF6mSxZRsm94Cv3Sg05di4=",
     "third_party/requirements.txt": "sha256-DZUnRz4xiwBAUD6LB87rHxygZ8Z3/V76sZt0TH+vgaU=",
     "third_party/requirements_lock.txt": "sha256-xkzFmpzJVF1Hr66nMJ8wydUrWObEEJtycl69jGes7Po="
