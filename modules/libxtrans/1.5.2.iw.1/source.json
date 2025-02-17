@@ -1,0 +1,9 @@
+{
+  "url": "https://gitlab.freedesktop.org/xorg/lib/libxtrans/-/archive/0dc46e7ed5bdd876467f9dbb314ba6b8094e541b/libxtrans-0dc46e7ed5bdd876467f9dbb314ba6b8094e541b.tar.gz",
+  "integrity": "sha256-rpLr3uzNtLjJNl8KnDajqeBLADDGIdJlEs5EcKaBZQY=",
+  "strip_prefix": "libxtrans-0dc46e7ed5bdd876467f9dbb314ba6b8094e541b",
+  "overlay": {
+    "MODULE.bazel": "sha256-pG4AdsfIE9a4S05sC3bWYbTxzq/7O/SIwYl3nWJ2Zm4=",
+    "BUILD.bazel": "sha256-V7R6/3CjHCKqPJMJ1+7gaKqkHrs91QiN+c8pAz9HzfY="
+  }
+}

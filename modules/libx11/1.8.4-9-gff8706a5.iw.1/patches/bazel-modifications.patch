@@ -1,0 +1,296 @@
+diff --git a/modules/im/ximcp/imLcIm.c b/modules/im/ximcp/imLcIm.c
+index 743df77b..f494dfbe 100644
+--- a/modules/im/ximcp/imLcIm.c
++++ b/modules/im/ximcp/imLcIm.c
+@@ -510,11 +510,10 @@ _XimCreateDefaultTree(
+     Xim		im)
+ {
+     FILE *fp = NULL;
+-    char *name, *tmpname = NULL, *intname;
++    char *name, *tmpname = NULL;
+     char *cachename = NULL;
+     /* Should use getpwent() instead of $HOME (cross-platform?) */
+     char *home = getenv("HOME");
+-    char *cachedir = NULL;
+     char *tmpcachedir = NULL;
+     int   hl = home ? strlen (home) : 0;
+ #ifdef COMPOSECACHE
+@@ -545,9 +544,10 @@ _XimCreateDefaultTree(
+     if (name == (char *) NULL) {
+         tmpname = name = _XlcFileName(im->core.lcd, COMPOSE_FILE);
+     }
+-    intname = name;
+ 
+ #ifdef COMPOSECACHE
++    char *intname = name;
++    char *cachedir = NULL;
+     if (getuid () == euid && getgid () == egid && euid != 0) {
+ 	char *c;
+ 	/* Usage: XCOMPOSECACHE=<cachedir>[=<filename>]
+diff --git a/src/GetColor.c b/src/GetColor.c
+index f38dea9c..734c6695 100644
+--- a/src/GetColor.c
++++ b/src/GetColor.c
+@@ -45,10 +45,6 @@ XColor *exact_def) /* RETURN */
+     xAllocNamedColorReply rep;
+     xAllocNamedColorReq *req;
+ 
+-    XcmsCCC ccc;
+-    XcmsColor cmsColor_exact;
+-    Status ret;
+-
+     if (colorname != NULL && strlen(colorname) >= USHRT_MAX)
+         return (0);
+ 
+@@ -56,16 +52,18 @@ XColor *exact_def) /* RETURN */
+     /*
+      * Let's Attempt to use Xcms and i18n approach to Parse Color
+      */
++  XcmsCCC ccc;
+     if ((ccc = XcmsCCCOfColormap(dpy, cmap)) != (XcmsCCC)NULL) {
+ 	const char *tmpName = colorname;
+ 
++  XcmsColor cmsColor_exact;
+ 	switch (_XcmsResolveColorString(ccc, &tmpName, &cmsColor_exact,
+ 					XcmsRGBFormat)) {
+ 	case XcmsSuccess:
+ 	case XcmsSuccessWithCompression:
+ 	    _XcmsRGB_to_XColor(&cmsColor_exact, exact_def, 1);
+ 	    memcpy((char *)hard_def, (char *)exact_def, sizeof(XColor));
+-	    ret = XAllocColor(dpy, cmap, hard_def);
++	    Status ret = XAllocColor(dpy, cmap, hard_def);
+ 	    exact_def->pixel = hard_def->pixel;
+ 	    return(ret);
+ 	case XcmsFailure:
+diff --git a/src/GetDflt.c b/src/GetDflt.c
+index c9222a2a..3b6e6e28 100644
+--- a/src/GetDflt.c
++++ b/src/GetDflt.c
+@@ -91,10 +91,6 @@ GetHomeDir(
+     else
+ 	*dest = '\0';
+ #else
+-#ifdef X_NEEDS_PWPARAMS
+-    _Xgetpwparams pwparams;
+-#endif
+-    struct passwd *pw;
+     register char *ptr;
+ 
+     if (len <= 0 || dest == NULL)
+@@ -103,17 +99,23 @@ GetHomeDir(
+     if ((ptr = getenv("HOME"))) {
+ 	(void) strncpy(dest, ptr, len-1);
+ 	dest[len-1] = '\0';
+-    } else {
+-	if ((ptr = getenv("USER")))
+-	    pw = _XGetpwnam(ptr,pwparams);
+-	else
+-	    pw = _XGetpwuid(getuid(),pwparams);
+-	if (pw != NULL) {
+-	    (void) strncpy(dest, pw->pw_dir, len-1);
+-	    dest[len-1] = '\0';
+-	} else
+-	    *dest = '\0';
+-    }
++    } 
++  // Remove fallback to user as _XGETpwname references pw_age for some reason?
++ /*  else { */
++/* #ifdef X_NEEDS_PWPARAMS */
++/*     _Xgetpwparams pwparams; */
++/* #endif */
++/*     struct passwd *pw; */
++	/* if ((ptr = getenv("USER"))) */
++	/*     pw = _XGetpwnam(ptr,pwparams); */
++	/* else */
++	/*     pw = _XGetpwuid(getuid(),pwparams); */
++	/* if (pw != NULL) { */
++	/*     (void) strncpy(dest, pw->pw_dir, len-1); */
++	/*     dest[len-1] = '\0'; */
++	/* } else */
++	/*     *dest = '\0'; */
++ /*    } */
+ #endif
+     return dest;
+ }
+diff --git a/src/LookupCol.c b/src/LookupCol.c
+index 3b53bf87..63c9ce71 100644
+--- a/src/LookupCol.c
++++ b/src/LookupCol.c
+@@ -44,8 +44,6 @@ XLookupColor (
+ 	register size_t n;
+ 	xLookupColorReply reply;
+ 	register xLookupColorReq *req;
+-	XcmsCCC ccc;
+-	XcmsColor cmsColor_exact;
+ 
+ 	if (spec == NULL)
+ 		return 0;
+@@ -56,6 +54,8 @@ XLookupColor (
+ 	/*
+ 	 * Let's Attempt to use Xcms and i18n approach to Parse Color
+ 	 */
++    XcmsColor cmsColor_exact;
++    XcmsCCC ccc;
+ 	if ((ccc = XcmsCCCOfColormap(dpy, cmap)) != (XcmsCCC)NULL) {
+ 	    const char *tmpName = spec;
+ 
+diff --git a/src/ParseCol.c b/src/ParseCol.c
+index fcf90692..134727d3 100644
+--- a/src/ParseCol.c
++++ b/src/ParseCol.c
+@@ -43,8 +43,6 @@ XParseColor (
+ 	register size_t n, i;
+ 	int r, g, b;
+ 	char c;
+-	XcmsCCC ccc;
+-	XcmsColor cmsColor;
+ 
+         if (!spec) return(0);
+ 	n = strlen (spec);
+@@ -90,6 +88,8 @@ XParseColor (
+ 	/*
+ 	 * Let's Attempt to use Xcms and i18n approach to Parse Color
+ 	 */
++	XcmsCCC ccc;
++	XcmsColor cmsColor;
+ 	if ((ccc = XcmsCCCOfColormap(dpy, cmap)) != (XcmsCCC)NULL) {
+ 	    const char *tmpName = spec;
+ 
+diff --git a/src/SetStCmap.c b/src/SetStCmap.c
+index 8c3ae6e3..16e8224b 100644
+--- a/src/SetStCmap.c
++++ b/src/SetStCmap.c
+@@ -68,7 +68,6 @@ void XSetStandardColormap(
+     Atom property)		/* XA_RGB_BEST_MAP, etc. */
+ {
+     Screen *sp;
+-    XStandardColormap stdcmap;
+ 
+     sp = _XScreenOfWindow (dpy, w);
+     if (!sp) {
+@@ -76,6 +75,9 @@ void XSetStandardColormap(
+ 	return;
+     }
+ 
++#ifdef XCMS
++    XStandardColormap stdcmap;
++
+     stdcmap.colormap	= cmap->colormap;
+     stdcmap.red_max	= cmap->red_max;
+     stdcmap.red_mult	= cmap->red_mult;
+@@ -87,7 +89,6 @@ void XSetStandardColormap(
+     stdcmap.visualid	= sp->root_visual->visualid;
+     stdcmap.killid	= None;		/* don't know how to kill this one */
+ 
+-#ifdef XCMS
+     XSetRGBColormaps (dpy, w, &stdcmap, 1, property);
+ #endif
+ 
+diff --git a/src/StNColor.c b/src/StNColor.c
+index 743fd4ed..d9f4d901 100644
+--- a/src/StNColor.c
++++ b/src/StNColor.c
+@@ -43,9 +43,6 @@ int flags)  /* DoRed, DoGreen, DoBlue */
+ {
+     unsigned int nbytes;
+     register xStoreNamedColorReq *req;
+-    XcmsCCC ccc;
+-    XcmsColor cmsColor_exact;
+-    XColor scr_def;
+ 
+     if (name != NULL && strlen(name) >= USHRT_MAX)
+         return 0;
+@@ -53,6 +50,9 @@ int flags)  /* DoRed, DoGreen, DoBlue */
+     /*
+      * Let's Attempt to use Xcms approach to Parse Color
+      */
++    XcmsCCC ccc;
++    XcmsColor cmsColor_exact;
++    XColor scr_def;
+     if ((ccc = XcmsCCCOfColormap(dpy, cmap)) != (XcmsCCC)NULL) {
+ 	if (_XcmsResolveColorString(ccc, &name, &cmsColor_exact,
+ 		XcmsRGBFormat) >= XcmsSuccess) {
+diff --git a/src/XlibInt.c b/src/XlibInt.c
+index 297b7711..ec4171a8 100644
+--- a/src/XlibInt.c
++++ b/src/XlibInt.c
+@@ -43,6 +43,7 @@ from The Open Group.
+ #include <X11/Xpoll.h>
+ #include <assert.h>
+ #include <stdio.h>
++#include <sys/ioctl.h>
+ #ifdef WIN32
+ #include <direct.h>
+ #endif
+diff --git a/src/Xrm.c b/src/Xrm.c
+index a8ebf883..275962a8 100644
+--- a/src/Xrm.c
++++ b/src/Xrm.c
+@@ -897,7 +897,7 @@ static void PutEntry(
+ 		    /* bump to loose table, if any */
+ 		    table = *(prev = &table->next);
+ 		    if (!table || table->name != q ||
+-			!quarks[2] != table->leaf)
++			(!quarks[2]) != table->leaf)
+ 			break; /* not found */
+ 		}
+ 	    }
+diff --git a/src/locking.h b/src/locking.h
+index 59fc866e..b64ef730 100644
+--- a/src/locking.h
++++ b/src/locking.h
+@@ -34,8 +34,13 @@ in this Software without prior written authorization from The Open Group.
+ #ifndef _X_locking_H_
+ #define _X_locking_H_
+ 
++#ifndef xmalloc
+ #define xmalloc(s) Xmalloc(s)
++#endif
++
++#ifndef xfree
+ #define xfree(s) Xfree(s)
++#endif
+ #include <X11/Xlib.h>
+ #include <X11/Xlibint.h>
+ #include <X11/Xthreads.h>
+diff --git a/src/xlibi18n/lcCT.c b/src/xlibi18n/lcCT.c
+index 9e797036..37d28716 100644
+--- a/src/xlibi18n/lcCT.c
++++ b/src/xlibi18n/lcCT.c
+@@ -874,7 +874,7 @@ cstoct(
+     State state = (State) conv->state;
+     XlcSide side;
+     unsigned char min_ch = 0, max_ch = 0;
+-    int length, unconv_num;
++    int length/*, unconv_num*/;
+     CTInfo ct_info;
+     XlcCharSet charset;
+     const char *csptr;
+@@ -962,7 +962,7 @@ cstoct(
+     }
+ 
+     /* Actually copy the contents. */
+-    unconv_num = 0;
++    /* unconv_num = 0; */
+     char_size = charset->char_size;
+     if (char_size == 1) {
+ 	while (csstr_len > 0 && ct_len > 0) {
+@@ -978,7 +978,7 @@ cstoct(
+ 			  && (ch == 0x1b)))) {
+                     csptr++;
+                     csstr_len--;
+-		    unconv_num++;
++		    /* unconv_num++; */
+                     continue;
+  		}
+ 	    }
+diff --git a/src/xlibi18n/xim_trans.c b/src/xlibi18n/xim_trans.c
+index 752ae00b..46ad2361 100644
+--- a/src/xlibi18n/xim_trans.c
++++ b/src/xlibi18n/xim_trans.c
+@@ -27,4 +27,4 @@
+ #define XIM_t 1
+ #define TRANS_CLIENT 1
+ 
+-#include <X11/Xtrans/transport.c>
++#include "transport.c"

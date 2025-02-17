@@ -1,0 +1,14 @@
+{
+  "url": "https://github.com/mirror/libX11/archive/ff8706a5eae25b8bafce300527079f68a201d27f.tar.gz",
+  "integrity": "sha256-xuHtKpBvufWr7bnJyO9zUvvmKrZwl8YOg/N82YmVdIk=",
+  "strip_prefix": "libX11-ff8706a5eae25b8bafce300527079f68a201d27f",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-mDkUrr5NcWJ4a71QJPjUiSv9Dffoi4DYLEFqpKIBo2w="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-vnvKJrk1qx22c5Om2WeWOgAoUiMenBKUypz/vl3EIio=",
+    "include/X11/ks_tables.h": "sha256-I9MvdcMO2VfD/HvOrIQTUVdF30p5iE935MxeFiWdmxA=",
+    "BUILD.bazel": "sha256-j/nVh7yrD/PnohOWWzhDe1d1K8HxXb4fhDwfJlwB018="
+  }
+}

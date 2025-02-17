@@ -1,0 +1,16 @@
+exports_files([
+    "transport.c",
+    "Xtrans.c",
+    "Xtranslcl.c",
+    "Xtranssock.c",
+    "Xtransutil.c",
+])
+
+cc_library(
+    name = "libxtrans",
+    hdrs = [
+        "Xtrans.h",
+        "Xtransint.h",
+    ],
+    visibility = ["//visibility:public"],
+)

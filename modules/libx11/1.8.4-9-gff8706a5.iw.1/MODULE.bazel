@@ -1,0 +1,10 @@
+module(
+    name = "libx11",
+    version = "1.8.4-9-gff8706a5.iw.1",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "xorgproto", version = "2024.1-8-g9d5e1d1.iw.1")
+bazel_dep(name = "libxcb", version = "1.17.0-4-gdaf2c53.iw.1")
+bazel_dep(name = "libxtrans", version = "1.5.2.iw.1")
+bazel_dep(name = "libxau", version = "1.0.12.iw.1")

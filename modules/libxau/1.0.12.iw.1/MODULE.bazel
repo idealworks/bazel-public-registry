@@ -1,0 +1,5 @@
+module(
+    name = "libxau",
+    version = "1.0.12.iw.1",
+    compatibility_level = 1,
+)

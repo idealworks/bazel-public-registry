@@ -1,0 +1,13 @@
+cc_library(
+    name = "little_csm",
+    srcs = glob([
+        "src/*.c",
+        "src/*.h",
+    ]),
+    hdrs = glob(["include/*.h"]),
+    includes = [
+        "include",
+        "src",
+    ],
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,25 @@
+diff --git a/src/c_client.py b/src/c_client.py
+index 730393e..660f790 100644
+--- a/src/c_client.py
++++ b/src/c_client.py
+@@ -331,7 +331,10 @@ def c_close(self):
+     _h(' */')
+ 
+     # Write header file
+-    hfile = open('%s.h' % _ns.header, 'w', encoding='UTF-8')
++    out_path_prefix = ""
++    if os.environ.get("OUTPUT_PATH_PREFIX"):
++        out_path_prefix = os.environ.get("OUTPUT_PATH_PREFIX") + "/"
++    hfile = open('{}{}.h'.format(out_path_prefix, _ns.header), 'w', encoding='UTF-8')
+     for list in _hlines:
+         for line in list:
+             hfile.write(line)
+@@ -339,7 +342,7 @@ def c_close(self):
+     hfile.close()
+ 
+     # Write source file
+-    cfile = open('%s.c' % _ns.header, 'w', encoding='UTF-8')
++    cfile = open('{}{}.c'.format(out_path_prefix, _ns.header), 'w', encoding='UTF-8')
+     for list in _clines:
+         for line in list:
+             cfile.write(line)

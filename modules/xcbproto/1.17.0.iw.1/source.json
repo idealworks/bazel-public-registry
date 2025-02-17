@@ -1,0 +1,9 @@
+{
+  "url": "https://gitlab.freedesktop.org/xorg/proto/xcbproto/-/archive/77d7fc04da729ddc5ed4aacf30253726fac24dca/xcbproto-77d7fc04da729ddc5ed4aacf30253726fac24dca.tar.gz",
+  "integrity": "sha256-xDNBqozSjGBEeBaqIdlaHwN9p99029mOeDZKzcH43vs=",
+  "strip_prefix": "xcbproto-77d7fc04da729ddc5ed4aacf30253726fac24dca",
+  "overlay": {
+    "MODULE.bazel": "sha256-+2kDiNUO96Q4k6wezuKZL/yk5Y7SucYQzCbX9FSG8Lk=",
+    "BUILD.bazel": "sha256-0YS5xBrj7YaOHK+03CpfIGRurRn296ROK8e9s7aFfdE="
+  }
+}

@@ -1,0 +1,19 @@
+module(
+    name = "libxcb",
+    version = "1.17.0-4-gdaf2c53.iw.1",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "xorgproto", version = "2024.1-8-g9d5e1d1.iw.1")
+bazel_dep(name = "xcbproto", version = "1.17.0.iw.1")
+bazel_dep(name = "libxau", version = "1.0.12.iw.1")
+bazel_dep(name = "rules_python", version = "1.1.0")
+
+python = use_extension(
+    "@rules_python//python/extensions:python.bzl",
+    "python",
+)
+python.toolchain(
+    is_default = True,
+    python_version = "3.12",
+)
