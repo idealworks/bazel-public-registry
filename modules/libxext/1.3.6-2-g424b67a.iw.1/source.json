@@ -1,0 +1,9 @@
+{
+  "url": "https://gitlab.freedesktop.org/xorg/lib/libxext/-/archive/424b67ad03fafdb0d6caf2e9bf5a103e9717e71f/libxext-424b67ad03fafdb0d6caf2e9bf5a103e9717e71f.tar.gz",
+  "integrity": "sha256-KKqcRPrxcSdfNmDtjBjm2cfnjRDqHhLBxiA4Ge9fDCE=",
+  "strip_prefix": "libxext-424b67ad03fafdb0d6caf2e9bf5a103e9717e71f",
+  "overlay": {
+    "MODULE.bazel": "sha256-g17JNsNSwiWeI3oDVZnArqieOJsBoQ4jM4ka0wdf8NE=",
+    "BUILD.bazel": "sha256-3eYHYiz6aO5KDrvkntNqdTJtqnTiqSBvadr0bBdB/UU="
+  }
+}

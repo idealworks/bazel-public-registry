@@ -1,0 +1,6 @@
+cc_library(
+    name = "xorgproto",
+    hdrs = glob(["include/**/*.h"]),
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+)

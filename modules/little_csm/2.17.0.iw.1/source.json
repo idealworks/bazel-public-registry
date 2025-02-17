@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/mm2/Little-CMS/archive/5176347635785e53ee5cee92328f76fda766ecc6.tar.gz",
+  "integrity": "sha256-VckrJPk5qEk7B/B2vuhJr2VqE8xp8zCBbmk26VsxI5Y=",
+  "strip_prefix": "Little-CMS-5176347635785e53ee5cee92328f76fda766ecc6",
+  "overlay": {
+    "MODULE.bazel": "sha256-GjYbQbmAbQLHjt4GeTfx10n5pIeCSibtER0kp2JKyLU=",
+    "BUILD.bazel": "sha256-4K+8IDfyG+XPGnfKsezFpAx5qvBJu2yKtTR9pYVP77w="
+  }
+}

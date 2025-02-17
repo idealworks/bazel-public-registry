@@ -1,0 +1,5 @@
+module(
+    name = "libxtrans",
+    version = "1.5.2.iw.1",
+    compatibility_level = 1,
+)

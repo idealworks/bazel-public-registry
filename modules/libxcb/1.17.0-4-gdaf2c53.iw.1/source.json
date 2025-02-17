@@ -1,0 +1,15 @@
+{
+  "url": "https://gitlab.freedesktop.org/xorg/lib/libxcb/-/archive/daf2c5397607c32c3814f02831b9c1158fd1e52c/libxcb-daf2c5397607c32c3814f02831b9c1158fd1e52c.tar.gz",
+  "integrity": "sha256-tLRliw1undI7Z/bfiWce3aBTK933WqR2s/ShS4d3JWU=",
+  "strip_prefix": "libxcb-daf2c5397607c32c3814f02831b9c1158fd1e52c",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-25hz6nu2DjdLzEw5iMqTdUIlZP9KqdI3NiTVnX4YfqE="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-I/r8UBEIseEE756GzsjhahVwzuWgFV977m3xNL1N7Ow=",
+    "bazel/generate_c_from_xml.bzl": "sha256-NstrbJSGT/deCkmaBte6CtgX1o8khpZKBBxSK93xJNE=",
+    "bazel/BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+    "BUILD.bazel": "sha256-zvveFolwOHU+UWbY58Mo2wA0pwT5MxT6I9KUnGgTSZc="
+  }
+}

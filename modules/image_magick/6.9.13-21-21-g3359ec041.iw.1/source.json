@@ -1,0 +1,14 @@
+{
+  "url": "https://github.com/ImageMagick/ImageMagick6/archive/3359ec041b023746648f631de07c4d7a63c3bd74.tar.gz",
+  "integrity": "sha256-pl5qEA0jt+gwW2bflGRXz4JQLWxM6TXkPiV++vCfz6c=",
+  "strip_prefix": "ImageMagick6-3359ec041b023746648f631de07c4d7a63c3bd74",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-dTerOXZgj99CelPKLeShzf18eljRZpx0o5pIbGU9f4w="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-C65u/SCLezzi0V10Yukxml4ot82ama8Plg3TciSm5lk=",
+    "magick/magick-baseconfig.h.in": "sha256-lZEsYC2MGgC+LhIRnLljKYQYhE4lB5ehdmUNib288LE=",
+    "BUILD.bazel": "sha256-seaGKwGbBAjrV6Sr2D6f1M57qRcA8EETd7/x5IHbXh4="
+  }
+}

@@ -1,0 +1,21 @@
+cc_library(
+    name = "libxau",
+    srcs = [
+        "AuDispose.c",
+        "AuFileName.c",
+        "AuGetAddr.c",
+        "AuGetBest.c",
+        "AuLock.c",
+        "AuRead.c",
+        "AuUnlock.c",
+        "AuWrite.c",
+        "Autest.c",
+    ],
+    hdrs = [
+        "include/X11/Xauth.h",
+    ],
+    includes = [
+        "include",
+    ],
+    visibility = ["//visibility:public"],
+)
