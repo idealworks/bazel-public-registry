@@ -1,0 +1,9 @@
+{
+  "url": "https://gitlab.freedesktop.org/xorg/lib/libxau/-/archive/a9c65683e68b3a4349afee5d7673b393fb924d2e/libxau-a9c65683e68b3a4349afee5d7673b393fb924d2e.tar.gz",
+  "integrity": "sha256-RMhzO6oEgiLE7kgw/V5T7H9lPujY/Yn5UzlFdOm2p/Q=",
+  "strip_prefix": "libxau-a9c65683e68b3a4349afee5d7673b393fb924d2e",
+  "overlay": {
+    "MODULE.bazel": "sha256-/7zsdXfwWmrMRSum/79cmQgPNY45iGBp3afNLz56BKQ=",
+    "BUILD.bazel": "sha256-vJCpqSMW4TpLyAPUmGKWCQa0pz7DDrall5v+QCpqkaU="
+  }
+}

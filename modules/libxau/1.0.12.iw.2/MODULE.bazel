@@ -1,0 +1,7 @@
+module(
+    name = "libxau",
+    version = "1.0.12.iw.2",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "xorgproto", version = "2024.1-8-g9d5e1d1.iw.2")
