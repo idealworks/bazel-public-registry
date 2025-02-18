@@ -1,0 +1,83 @@
+load("//bazel:generate_c_from_xml.bzl", "generate_c_from_xml")
+
+generate_c_from_xml(
+    name = "gen_sources",
+    srcs = [
+        "@xcbproto//:src/bigreq.xml",
+        # "@xcbproto//:src/composite.xml",
+        # "@xcbproto//:src/damage.xml",
+        # "@xcbproto//:src/dbe.xml",
+        # "@xcbproto//:src/dpms.xml",
+        # "@xcbproto//:src/dri2.xml",
+        # "@xcbproto//:src/dri3.xml",
+        # "@xcbproto//:src/ge.xml",
+        # "@xcbproto//:src/glx.xml",
+        # "@xcbproto//:src/present.xml",
+        # "@xcbproto//:src/randr.xml",
+        # "@xcbproto//:src/record.xml",
+        # "@xcbproto//:src/render.xml",
+        # "@xcbproto//:src/res.xml",
+        # "@xcbproto//:src/screensaver.xml",
+        # "@xcbproto//:src/shape.xml",
+        # "@xcbproto//:src/shm.xml",
+        # "@xcbproto//:src/sync.xml",
+        "@xcbproto//:src/xc_misc.xml",
+        # "@xcbproto//:src/xevie.xml",
+        # "@xcbproto//:src/xf86dri.xml",
+        # "@xcbproto//:src/xf86vidmode.xml",
+        # "@xcbproto//:src/xfixes.xml",
+        # "@xcbproto//:src/xinerama.xml",
+        # "@xcbproto//:src/xinput.xml",
+        # "@xcbproto//:src/xkb.xml",
+        # "@xcbproto//:src/xprint.xml",
+        "@xcbproto//:src/xproto.xml",
+        # "@xcbproto//:src/xselinux.xml",
+        # "@xcbproto//:src/xtest.xml",
+        # "@xcbproto//:src/xv.xml",
+        # "@xcbproto//:src/xvmc.xml",
+    ],
+    lib_man_suffix = "3",
+    package_string = "libxcb",
+    xcb_python_dir = "/usr/share/xcb-proto",
+    xorg_man_page = "xorg.com",
+)
+
+py_binary(
+    name = "c_client",
+    srcs = ["src/c_client.py"],
+    legacy_create_init = False,
+    main = "src/c_client.py",
+    deps = ["@xcbproto//:xcbgen"],
+)
+
+cc_library(
+    name = "libxcb",
+    srcs = [
+        "src/xcb_auth.c",
+        "src/xcb_conn.c",
+        "src/xcb_ext.c",
+        "src/xcb_in.c",
+        "src/xcb_list.c",
+        "src/xcb_out.c",
+        "src/xcb_util.c",
+        "src/xcb_xid.c",
+        ":gen_sources",
+    ],
+    hdrs = [
+        "src/xcb.h",
+        "src/xcbext.h",
+        "src/xcbint.h",
+    ],
+    defines = [
+        "XCB_QUEUE_BUFFER_SIZE=16384",
+        "IOV_MAX=16",
+    ],
+    include_prefix = "xcb",
+    includes = ["src"],
+    strip_include_prefix = "src",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@libxau",
+        "@xorgproto",
+    ],
+)
