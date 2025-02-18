@@ -1,0 +1,7 @@
+module(
+    name = "xorgproto",
+    version = "2024.1-8-g9d5e1d1.iw.2",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "bazel_skylib", version = "1.7.1")

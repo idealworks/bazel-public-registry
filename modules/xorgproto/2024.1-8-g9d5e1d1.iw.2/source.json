@@ -1,0 +1,9 @@
+{
+  "url": "https://gitlab.freedesktop.org/xorg/proto/xorgproto/-/archive/9d5e1d1dc150e0eb3a562020f2069fad7ec9b3a9/xorgproto-9d5e1d1dc150e0eb3a562020f2069fad7ec9b3a9.tar.gz",
+  "integrity": "sha256-BIF5sYUcuZSDnGfOjpm62jyKSyu8OZGoxpNn78IH54w=",
+  "strip_prefix": "xorgproto-9d5e1d1dc150e0eb3a562020f2069fad7ec9b3a9",
+  "overlay": {
+    "MODULE.bazel": "sha256-VUlh/DSVDKgkdgxa8SoiZPJnR0vMqKiw2fH6+7JGO60=",
+    "BUILD.bazel": "sha256-kzVoiueuXeiJKmYmpMC6dt7LnLnFhd3l8qRfgosSBA0="
+  }
+}

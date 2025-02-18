@@ -1,0 +1,17 @@
+load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
+
+expand_template(
+    name = "xpoll_h",
+    out = "include/X11/Xpoll.h",
+    substitutions = {
+        "@USE_FDS_BITS@": "__fds_bits",
+    },
+    template = "include/X11/Xpoll.h.in",
+)
+
+cc_library(
+    name = "xorgproto",
+    hdrs = glob(["include/**/*.h"]) + ["include/X11/Xpoll.h"],
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+)
