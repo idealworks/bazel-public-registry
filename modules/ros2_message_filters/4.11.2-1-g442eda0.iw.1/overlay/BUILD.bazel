@@ -1,10 +1,6 @@
-load(
-    "@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl",
-    "ros2_cpp_library",
-)
 load("@rules_python//python:defs.bzl", "py_library")
 
-ros2_cpp_library(
+cc_library(
     name = "message_filters",
     srcs = glob([
         "src/*.cpp",
