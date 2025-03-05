@@ -95,8 +95,8 @@ ros2_interface_library(
     visibility = ["//visibility:public"],
     deps = [
         ":action_msgs",
-        ":service_msgs",
         ":builtin_interfaces",
+        ":service_msgs",
         "@ros2_unique_identifier_msgs//:unique_identifier_msgs",
     ],
 )
@@ -118,8 +118,8 @@ cc_test(
     name = "test_c_type_support",
     srcs = ["test_msgs/test/test_c_type_support.cpp"],
     deps = [
+        ":c_test_msgs",
         "@googletest//:gtest",
         "@googletest//:gtest_main",
-        ":c_test_msgs",
     ],
 )
