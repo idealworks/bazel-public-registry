@@ -5,7 +5,6 @@ load(
     "@com_github_mvukov_rules_ros2//repositories:rclcpp_interfaces.bzl",
     "rclcpp_interfaces",
 )
-load("@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl", "ros2_cpp_binary", "ros2_cpp_library")
 load("@ros2_rclcpp_pip_deps//:requirements.bzl", "requirement")
 load(
     "@ros2_rcutils//bzl:logging_macros.bzl",
@@ -13,7 +12,7 @@ load(
 )
 load("@rules_python//python:defs.bzl", "py_binary")
 
-_GENERATE_LOGGING_MACROS_PY = "@com_github_mvukov_rules_ros2//repositories:generate_rclcpp_logging_macros.py"
+_GENERATE_LOGGING_MACROS_PY = "//bzl:generate_rclcpp_logging_macros.py"
 
 py_binary(
     name = "generate_logging_macros",
@@ -38,7 +37,7 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-_GENERATE_RCLCPP_INTERFACE_PY = "@com_github_mvukov_rules_ros2//repositories:generate_rclcpp_interface.py"
+_GENERATE_RCLCPP_INTERFACE_PY = "//bzl:generate_rclcpp_interface.py"
 
 py_binary(
     name = "generate_rclcpp_interface",
@@ -59,7 +58,7 @@ rclcpp_interfaces(
     traits_template = "rclcpp/resource/interface_traits.hpp.em",
 )
 
-ros2_cpp_library(
+cc_library(
     name = "rclcpp",
     srcs = glob([
         "rclcpp/src/**/*.cpp",
@@ -69,7 +68,10 @@ ros2_cpp_library(
         ":logging_macros",
         ":rclcpp_interfaces",
     ],
-    copts = ["-w"],
+    copts = [
+        "-w",
+        "-std=c++17",
+    ],
     includes = [
         "include",
         "rclcpp/include",
@@ -96,7 +98,7 @@ ros2_cpp_library(
     ],
 )
 
-ros2_cpp_library(
+cc_library(
     name = "rclcpp_action",
     srcs = glob(["rclcpp_action/src/*.cpp"]),
     hdrs = glob(["rclcpp_action/include/**/*.hpp"]),
@@ -109,7 +111,7 @@ ros2_cpp_library(
     ],
 )
 
-ros2_cpp_library(
+cc_library(
     name = "rclcpp_lifecycle",
     srcs = glob([
         "rclcpp_lifecycle/src/**/*.cpp",
@@ -129,12 +131,13 @@ ros2_cpp_library(
     ],
 )
 
-ros2_cpp_library(
+cc_library(
     name = "component_manager",
     srcs = ["rclcpp_components/src/component_manager.cpp"],
     hdrs = glob([
         "rclcpp_components/include/**/*.hpp",
     ]),
+    copts = ["-std=c++17"],
     includes = ["rclcpp_components/include"],
     visibility = ["//visibility:public"],
     deps = [
@@ -146,7 +149,7 @@ ros2_cpp_library(
     ],
 )
 
-ros2_cpp_binary(
+cc_binary(
     name = "component_container_mt",
     srcs = ["rclcpp_components/src/component_container_mt.cpp"],
     linkopts = ["-rdynamic"],
@@ -156,7 +159,7 @@ ros2_cpp_binary(
     ],
 )
 
-ros2_cpp_binary(
+cc_binary(
     name = "component_container",
     srcs = ["rclcpp_components/src/component_container.cpp"],
     linkopts = ["-rdynamic"],

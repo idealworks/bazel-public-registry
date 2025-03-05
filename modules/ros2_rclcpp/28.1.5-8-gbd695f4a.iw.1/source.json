@@ -7,9 +7,12 @@
   "patch_strip": 1,
   "overlay": {
     "MODULE.bazel": "sha256-GcpadJjYCYk35giOSQMXkAlsPfXPGVRXF/+DrG2f8Ys=",
-    "BUILD.bazel": "sha256-u0ihUnxjBZnPSTD+l5omaCbiDFEWo4y3E7NDRXeKqbo=",
+    "BUILD.bazel": "sha256-CK69cdGzUIavs3ILasbI91Kpe5pdW1N6/JtAjelVSUY=",
     "requirements.txt": "sha256-GQzV2W/B2yR7dYaKaiXc10FSgLwd4FLENYR7+MJ3Fgo=",
-    "requirements_lock.txt": "sha256-AyRJVClhOREtQF8EgnaIkjx+lKJqoUXd014Bp5fqE5g="
+    "requirements_lock.txt": "sha256-AyRJVClhOREtQF8EgnaIkjx+lKJqoUXd014Bp5fqE5g=",
+    "bzl/BUILD.bazel": "sha256-3CXT6PORxeCE7DS35q7KwkeOY7F/ecuGOShCng1BuPw=",
+    "bzl/generate_rclcpp_interface.py": "sha256-xVrDAj7GMIXbpuRYY+f0LRNlVw/foZtFJzwXG9f9F9k=",
+    "bzl/generate_rclcpp_logging_macros.py": "sha256-28hBX7ohFUbte/DZXnDzSRyb4aeVsTVVLlIIBmtExY4="
   },
   "url": "https://github.com/ros2/rclcpp/archive/bd695f4a3b7ea98b3500ec3e1306e31a60abe096.tar.gz",
   "strip_prefix": "rclcpp-bd695f4a3b7ea98b3500ec3e1306e31a60abe096",
