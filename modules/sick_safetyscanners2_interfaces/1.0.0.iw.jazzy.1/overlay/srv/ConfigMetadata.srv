@@ -1,0 +1,14 @@
+
+---
+
+string version_c_version
+uint8 major_version_number
+uint8 minor_version_number
+uint8 release_version_number
+uint16 modification_time_date
+uint32 modification_time_time
+uint16 transfer_time_date
+uint32 transfer_time_time
+uint32 app_checksum
+uint32 overall_checksum
+uint32[] integrity_hash

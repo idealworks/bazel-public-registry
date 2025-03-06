@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/AlexKaravaev/csm/archive/0c5fedd11bc711ed4002c0fff977bc45d08b5d9e.tar.gz",
+  "integrity": "sha256-OIn0lrE49O100YTdVgCGO/LJxletgRmBEaTdK4m7rV8=",
+  "strip_prefix": "csm-0c5fedd11bc711ed4002c0fff977bc45d08b5d9e",
+  "overlay": {
+    "MODULE.bazel": "sha256-SnBgxPznYTuuzpEJmQurKjvcEv6nPvAZYoESgWq+UF0=",
+    "BUILD.bazel": "sha256-NUI9L4WpFgBDWFmjbhhKAiHmOtCJz1nGJRdhfq27wQ4="
+  }
+}

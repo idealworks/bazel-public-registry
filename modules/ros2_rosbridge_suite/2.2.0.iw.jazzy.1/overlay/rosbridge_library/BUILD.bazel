@@ -1,0 +1,12 @@
+py_library(
+    name = "rosbridge_library",
+    srcs = glob(["src/rosbridge_library/**/*.py"]),
+    imports = ["src"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ros2_common_interfaces//:py_std_msgs",
+        "@rosbridge_suite_pip_deps//pillow",
+        "@rosbridge_suite_pip_deps//pymongo",
+        "@rosbridge_suite_pip_deps//tornado",
+    ],
+)

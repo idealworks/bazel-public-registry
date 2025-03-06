@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/ros-perception/perception_pcl/archive/f127921808b1c6fb6237a7e4cf19d16b85a0e43b.tar.gz",
+  "integrity": "sha256-x+Vf6H12o0zH3e8zIsEE4xellodVy/SDKJdNbnzxNM8=",
+  "strip_prefix": "perception_pcl-f127921808b1c6fb6237a7e4cf19d16b85a0e43b",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-3MbgKZY4sYinRskdgQ0/npOFAg+fAF7KFlLJCw8HiPo="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-imL+WSW+3VQNp/FMoRQe7VuMKCXKiqoyQPGV3PqWL5s=",
+    "BUILD.bazel": "sha256-nx4Ry31TdqMvE9cbfiPCJoFXfCD6Zxdnm0rK3TrKnSc="
+  }
+}

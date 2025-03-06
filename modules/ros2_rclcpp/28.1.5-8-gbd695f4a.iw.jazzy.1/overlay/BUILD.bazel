@@ -132,6 +132,23 @@ cc_library(
 )
 
 cc_library(
+    name = "rclcpp_components",
+    hdrs = glob([
+        "rclcpp_components/include/**/*.hpp",
+    ]),
+    copts = ["-std=c++17"],
+    includes = ["rclcpp_components/include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":rclcpp",
+        "@ros2_ament_index//:ament_index_cpp",
+        "@ros2_class_loader//:class_loader",
+        "@ros2_rcl_interfaces//:cpp_composition_interfaces",
+        "@ros2_rcpputils//:rcpputils",
+    ],
+)
+
+cc_library(
     name = "component_manager",
     srcs = ["rclcpp_components/src/component_manager.cpp"],
     hdrs = glob([

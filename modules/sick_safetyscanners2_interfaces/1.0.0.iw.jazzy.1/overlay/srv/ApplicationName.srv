@@ -1,0 +1,9 @@
+
+---
+
+string version_c_version
+uint8 major_version_number
+uint8 minor_version_number
+uint8 release_version_number
+uint32 name_length
+string application_name
