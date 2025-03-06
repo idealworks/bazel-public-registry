@@ -1,9 +1,0 @@
-{
-  "overlay": {
-    "MODULE.bazel": "sha256-6zq3G+Gl6xHzYTtJovQzS9XU4+MLfmqpQvbpxnZROSk=",
-    "BUILD.bazel": "sha256-chqd/ye6hIUNCdcZ3aYaO4fTmydmARROXxYpIDvxM8U="
-  },
-  "url": "https://github.com/ros-tooling/libstatistics_collector/archive/2a74bedf7fb3aeb011442259a5d63f19ee4501df.tar.gz",
-  "strip_prefix": "libstatistics_collector-2a74bedf7fb3aeb011442259a5d63f19ee4501df",
-  "integrity": "sha256-SruqM54BvJdQSUTA9lobgv293PlmV2dppnOw1HXcH0Q="
-}

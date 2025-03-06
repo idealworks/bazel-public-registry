@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-0uHgj1/nLbC8fA0M/FaWwRWSOqjFL2n4Rw/3e5jNEmU=",
+    "BUILD.bazel": "sha256-VmKJov+Q6PsSYbI+fvyD9vJoqKBdXWf2MMaKKgJ1hGY="
+  },
+  "url": "https://github.com/ros/kdl_parser/archive/c6f0299344afd1afbeb442fe37e073be69dd5e47.tar.gz",
+  "strip_prefix": "kdl_parser-c6f0299344afd1afbeb442fe37e073be69dd5e47",
+  "integrity": "sha256-wirfhPwbJS3RP0QJLq/Jsrycav8RtmH1cXxypHWUe8E="
+}

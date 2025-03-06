@@ -1,0 +1,14 @@
+module(
+    name = "ros2_rcl",
+    version = "9.2.4-1-gf03e52b.iw.jazzy.1",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "libyaml", version = "0.2.5")
+bazel_dep(name = "ros2_rcl_interfaces", version = "2.0.2-1-g7d568ce.iw.jazzy.1")
+bazel_dep(name = "ros2_rcl_logging", version = "3.1.0-1-gda51595.iw.jazzy.1")
+bazel_dep(name = "ros2_rcutils", version = "6.7.2-1-g63a2414.iw.jazzy.1")
+bazel_dep(name = "ros2_rmw", version = "7.3.1-1-gc9dd78a.iw.jazzy.1")
+bazel_dep(name = "ros2_rmw_implementation", version = "2.15.3-2-gaea33b8.iw.jazzy.1")
+bazel_dep(name = "ros2_rosidl", version = "4.6.4-3-g5d91679.iw.jazzy.1")
+bazel_dep(name = "ros2_tracing", version = "8.2.2-1-g73a7e6d.iw.jazzy.1")

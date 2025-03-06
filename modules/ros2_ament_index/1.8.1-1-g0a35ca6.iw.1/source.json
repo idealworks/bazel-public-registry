@@ -1,9 +1,0 @@
-{
-  "overlay": {
-    "MODULE.bazel": "sha256-rV1eFkXhiecutXN7kXPySfVOBoPPlY4jOFmheIp9zik=",
-    "BUILD.bazel": "sha256-qDwV4ONAXiw/H1Zr82ATWOSC5qYgqjVpHutt07TWbFs="
-  },
-  "url": "https://github.com/ament/ament_index/archive/0a35ca69b3f3514242282e00ac9170e98c078fcd.tar.gz",
-  "strip_prefix": "ament_index-0a35ca69b3f3514242282e00ac9170e98c078fcd",
-  "integrity": "sha256-qs1SkOMYh9tqc0GpQdX+Yb7cyLJ1MZPzqB9PUjDUv/E="
-}

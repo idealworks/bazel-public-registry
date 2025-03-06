@@ -1,9 +1,0 @@
-{
-  "overlay": {
-    "MODULE.bazel": "sha256-lzcJipIgq+R9iu+ov5mhPZlL3NNhERJ0UkbbWL76hBY=",
-    "BUILD.bazel": "sha256-elYV4oe4ZxWT8cf6HcUvr97MuYl5qi/tz/gBmqLip6w="
-  },
-  "url": "https://github.com/ros/urdfdom/archive/3f6bf9a608065464bb6c2828af6e96c8f577f2bf.tar.gz",
-  "strip_prefix": "urdfdom-3f6bf9a608065464bb6c2828af6e96c8f577f2bf",
-  "integrity": "sha256-Bgo1pbiqYG7YOHydIlsxkjI6lJQw6mvFE7lBVtrKGOI="
-}

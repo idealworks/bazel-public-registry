@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/ros/xacro/archive/refs/tags/2.0.9.tar.gz",
+  "integrity": "sha256-qIAqW0j3R5uuEjjoIqxOu0dmAiHrm8QKYI6JnWDz9+Q=",
+  "strip_prefix": "xacro-2.0.9",
+  "overlay": {
+    "MODULE.bazel": "sha256-EfRzMZwFE8gCTLId/t7mu7CPGqgjqHG1L7n7Fjc2LTY=",
+    "BUILD.bazel": "sha256-jPceIyELcNsqrIRPFsaix3g/WmbPtbk6u3+wQw2SFLk=",
+    "requirements.txt": "sha256-67DhZUXJEb0x7DOs5X3t+EwE5nPS3CjAKQho5K3023c=",
+    "requirements_lock.txt": "sha256-0PgLByyernG60b3j2BtWzjoc2SNP0HlAzvja6+TCGWI=",
+    "bzl/xacro.bzl": "sha256-U6XehDBylfcoJphF9mtl+1K9ME4Fifen2XlTDm3MAnA=",
+    "bzl/BUILD": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+  }
+}

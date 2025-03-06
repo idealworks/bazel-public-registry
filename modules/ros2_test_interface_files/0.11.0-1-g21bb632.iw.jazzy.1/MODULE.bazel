@@ -1,0 +1,5 @@
+module(
+    name = "ros2_test_interface_files",
+    version = "0.11.0-1-g21bb632.iw.jazzy.1",
+    compatibility_level = 1,
+)

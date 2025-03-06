@@ -1,9 +1,0 @@
-{
-  "overlay": {
-    "MODULE.bazel": "sha256-oTv0q1ZUkT4iyw705rDzkz4Dl6gGB5hcKh2FtAyX4nc=",
-    "BUILD.bazel": "sha256-TGAbgy0yu6YT4t/CdyiGgT/tMsz2TM6ba6O/KtfhWI4="
-  },
-  "url": "https://github.com/ros2/message_filters/archive/442eda0841f09f95248821d2d988a915540e29b4.tar.gz",
-  "strip_prefix": "message_filters-442eda0841f09f95248821d2d988a915540e29b4",
-  "integrity": "sha256-1ImIx9xqz+NW/AWrK2/nJm4wWr3JS1mQOvuZ1Ck3ix0="
-}

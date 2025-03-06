@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/eclipse-iceoryx/iceoryx/archive/ebdf38728a29c6a8ee172efc440b8e2f4415ff7a.zip",
+  "integrity": "sha256-GBYmdz25CuRwDTHxsvYa9XBcp4WHAAUSRKIrl2uIkB4=",
+  "strip_prefix": "iceoryx-ebdf38728a29c6a8ee172efc440b8e2f4415ff7a",
+  "overlay": {
+    "MODULE.bazel": "sha256-PI8YvNUmXbIPl3gphxLBrKcDm0lPB76yP170seZ9H18=",
+    "BUILD.bazel": "sha256-RR4Hx4nHcXWCT5gMFzANxkFE0YNS0KCzIwFCRGfSdlw="
+  }
+}

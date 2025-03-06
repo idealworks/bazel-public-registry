@@ -1,9 +1,0 @@
-{
-  "overlay": {
-    "MODULE.bazel": "sha256-xgkvbZ1FC9DJ21md5/evgfwvQaVOxnf9NHNPX+zzOCA=",
-    "BUILD.bazel": "sha256-Myrvs7WelaTGBT3w6zjw1uW20W/pLKZGYOiWsKH5TAE="
-  },
-  "url": "https://github.com/ros2/rcpputils/archive/c0071865cab35d848599bacac9d90c0e2f73545e.tar.gz",
-  "strip_prefix": "rcpputils-c0071865cab35d848599bacac9d90c0e2f73545e",
-  "integrity": "sha256-lGpxX9n9yprqjMXGx460MwSy5GOjJ4o5sr3uOP6yBW0="
-}
