@@ -1,0 +1,6 @@
+
+---
+
+string type_code
+uint8 interface_type
+float64 max_range

@@ -1,0 +1,11 @@
+module(
+    name = "ros2_message_filters",
+    version = "4.11.2-1-g442eda0.iw.jazzy.1",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "ros2_rcl_interfaces", version = "2.0.2-1-g7d568ce.iw.jazzy.1")
+bazel_dep(name = "ros2_rclcpp", version = "28.1.5-8-gbd695f4a.iw.jazzy.1")
+bazel_dep(name = "ros2_rclpy", version = "7.1.2-2-g159aedd.iw.jazzy.1")
+bazel_dep(name = "ros2_rcutils", version = "6.7.2-1-g63a2414.iw.jazzy.1")
+bazel_dep(name = "rules_python", version = "0.36.0")

@@ -1,0 +1,7 @@
+module(
+    name = "com_github_alexkaravaev_csm",
+    version = "1.0.2-13-g0c5fedd.iw.jazzy.1",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "eigen", version = "3.4.0.bcr.1")

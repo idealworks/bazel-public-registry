@@ -1,0 +1,14 @@
+module(
+    name = "ros2_robot_state_publisher",
+    version = "3.3.3.iw.jazzy.1",
+    compatibility_level = 1
+)
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "1.0.0.eddy.2")
+bazel_dep(name = "orocos_kdl", version = "1.5.1.40.g507de66.iw.1")
+bazel_dep(name = "ros2_common_interfaces", version = "5.3.5-2-g5283bd9.iw.jazzy.1")
+bazel_dep(name = "ros2_geometry2", version = "0.36.5-2-g8fe54670.iw.jazzy.1")
+bazel_dep(name = "ros2_kdl_parser", version = "2.11.0.iw.jazzy.1")
+bazel_dep(name = "ros2_rcl_interfaces", version = "2.0.2-1-g7d568ce.iw.jazzy.1")
+bazel_dep(name = "ros2_rclcpp", version = "28.1.5-8-gbd695f4a.iw.jazzy.1")
+bazel_dep(name = "ros2_urdf", version = "2.10.0-1-g4f1fded.iw.jazzy.1")

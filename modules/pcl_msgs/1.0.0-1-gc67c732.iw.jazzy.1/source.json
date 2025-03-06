@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros-perception/pcl_msgs/archive/c67c7323796cf003ad67429186fb8959092ef70d.tar.gz",
+  "integrity": "sha256-tiibhaC4WTKLaVbb6tWddS/F0HFal6T3pLlgBBPOGmQ=",
+  "strip_prefix": "pcl_msgs-c67c7323796cf003ad67429186fb8959092ef70d",
+  "overlay": {
+    "MODULE.bazel": "sha256-uxirBYyFfOIC0YgE9+qqnwMgPL51VKzU3/5MHK/irPw=",
+    "BUILD.bazel": "sha256-1IwrUA5tuUW9/EWDLom7v28ouiCHUwkDTNK4zk2nN7A="
+  }
+}

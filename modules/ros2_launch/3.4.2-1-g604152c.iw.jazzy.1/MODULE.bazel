@@ -1,0 +1,18 @@
+module(
+    name = "ros2_launch",
+    version = "3.4.2-1-g604152c.iw.jazzy.1",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "osrf_pycommon", version = "2.1.4-6-gd275710.iw.jazzy.1")
+bazel_dep(name = "ros2_ament_index", version = "1.8.1-1-g0a35ca6.iw.jazzy.1")
+bazel_dep(name = "rules_python", version = "0.36.0")
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+    hub_name = "ros2_launch_pip_deps",
+    python_version = "3.10",
+    requirements_lock = "//:requirements_lock.txt",
+)
+use_repo(pip, "ros2_launch_pip_deps")
+

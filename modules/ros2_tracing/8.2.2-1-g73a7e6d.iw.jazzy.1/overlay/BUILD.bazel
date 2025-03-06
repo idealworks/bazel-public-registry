@@ -1,0 +1,40 @@
+""" Builds ros2_tracing.
+"""
+
+load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
+
+expand_template(
+    name = "config_h",
+    out = "tracetools/include/tracetools/config.h",
+    substitutions = {
+        "#cmakedefine TRACETOOLS_DISABLED": "/* #cmakedefine TRACETOOLS_DISABLED */",
+        "#cmakedefine TRACETOOLS_TRACEPOINTS_EXCLUDED": "#define TRACETOOLS_TRACEPOINTS_EXCLUDED",
+    },
+    template = "tracetools/include/tracetools/config.h.in",
+)
+
+cc_library(
+    name = "tracetools_c",
+    srcs = [
+        "tracetools/src/tracetools.c",
+    ],
+    hdrs = [
+        "tracetools/include/tracetools/tracetools.h",
+        "tracetools/include/tracetools/visibility_control.hpp",
+        ":config_h",
+    ],
+    includes = ["tracetools/include/"],
+)
+
+cc_library(
+    name = "tracetools",
+    srcs = [
+        "tracetools/src/utils.cpp",
+    ],
+    hdrs = [
+        "tracetools/include/tracetools/utils.hpp",
+    ],
+    includes = ["tracetools/include/"],
+    visibility = ["//visibility:public"],
+    deps = [":tracetools_c"],
+)

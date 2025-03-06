@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/eclipse-cyclonedds/cyclonedds/archive/76360fb73907ce3dba397e89090a7a4ecf4f1246.zip",
+  "integrity": "sha256-4N1LYZATvoDj0zfeTDzet+hPDhxRRVID1xWqTEhR6ns=",
+  "strip_prefix": "cyclonedds-76360fb73907ce3dba397e89090a7a4ecf4f1246",
+  "overlay": {
+    "MODULE.bazel": "sha256-mZfj7jNo21vp4+y7inevRIBL7FqBfa/OGmVFRU/Bb1U=",
+    "BUILD.bazel": "sha256-leSB/rLCvRY+9er/hWAEswIFmzo0h9hrHb9TjWN/xqs="
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-YpjowFHjKnHu/LzIRZuuFVUgdSjzxxGPZ8qDllAVI14=",
+    "BUILD.bazel": "sha256-yJI/Ud64B6LhuuVbPP8SjWW2BK9ft7k7goqFFssO6XA="
+  },
+  "url": "https://github.com/ros-tooling/keyboard_handler/archive/13072acb5c4c07b3ad220b2bb7bd3f3080824414.tar.gz",
+  "strip_prefix": "keyboard_handler-13072acb5c4c07b3ad220b2bb7bd3f3080824414",
+  "integrity": "sha256-tML56gAo77X7S4sqcyGOacx1WYiDHDbZtQywBb04LMY="
+}

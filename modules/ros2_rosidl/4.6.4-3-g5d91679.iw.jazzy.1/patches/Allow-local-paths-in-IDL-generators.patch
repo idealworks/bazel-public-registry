@@ -1,0 +1,65 @@
+From 6aa1daa2155954546e7663c9a4a58a646cf656e3 Mon Sep 17 00:00:00 2001
+From: Efe Mert Demir <efemert.demir@idealworks.com>
+Date: Tue, 10 Dec 2024 15:53:39 +0000
+Subject: [PATCH] Allow local paths in IDL generators
+
+---
+ rosidl_adapter/rosidl_adapter/action/__init__.py | 2 +-
+ rosidl_adapter/rosidl_adapter/msg/__init__.py    | 5 +----
+ rosidl_adapter/rosidl_adapter/srv/__init__.py    | 2 +-
+ 3 files changed, 3 insertions(+), 6 deletions(-)
+
+diff --git a/rosidl_adapter/rosidl_adapter/action/__init__.py b/rosidl_adapter/rosidl_adapter/action/__init__.py
+index 6e8719b..5b9b751 100644
+--- a/rosidl_adapter/rosidl_adapter/action/__init__.py
++++ b/rosidl_adapter/rosidl_adapter/action/__init__.py
+@@ -17,7 +17,7 @@ from rosidl_adapter.resource import expand_template
+ 
+ 
+ def convert_action_to_idl(package_dir, package_name, input_file, output_dir):
+-    assert package_dir.is_absolute()
++    assert str(package_dir) == "." or package_dir.is_absolute()
+     assert not input_file.is_absolute()
+     assert input_file.suffix == '.action'
+ 
+diff --git a/rosidl_adapter/rosidl_adapter/msg/__init__.py b/rosidl_adapter/rosidl_adapter/msg/__init__.py
+index b02b7b5..cecca38 100644
+--- a/rosidl_adapter/rosidl_adapter/msg/__init__.py
++++ b/rosidl_adapter/rosidl_adapter/msg/__init__.py
+@@ -17,19 +17,16 @@ from rosidl_adapter.resource import expand_template
+ 
+ 
+ def convert_msg_to_idl(package_dir, package_name, input_file, output_dir):
+-    assert package_dir.is_absolute()
++    assert str(package_dir) == "." or package_dir.is_absolute()
+     assert not input_file.is_absolute()
+     assert input_file.suffix == '.msg'
+ 
+-    abs_input_file = package_dir / input_file
+-    print(f'Reading input file: {abs_input_file}')
+     abs_input_file = package_dir / input_file
+     content = abs_input_file.read_text(encoding='utf-8')
+     msg = parse_message_string(package_name, input_file.stem, content)
+ 
+     output_file = output_dir / input_file.with_suffix('.idl').name
+     abs_output_file = output_file.absolute()
+-    print(f'Writing output file: {abs_output_file}')
+     data = {
+         'pkg_name': package_name,
+         'relative_input_file': input_file.as_posix(),
+diff --git a/rosidl_adapter/rosidl_adapter/srv/__init__.py b/rosidl_adapter/rosidl_adapter/srv/__init__.py
+index c57b701..dd3895e 100644
+--- a/rosidl_adapter/rosidl_adapter/srv/__init__.py
++++ b/rosidl_adapter/rosidl_adapter/srv/__init__.py
+@@ -17,7 +17,7 @@ from rosidl_adapter.resource import expand_template
+ 
+ 
+ def convert_srv_to_idl(package_dir, package_name, input_file, output_dir):
+-    assert package_dir.is_absolute()
++    assert str(package_dir) == "." or package_dir.is_absolute()
+     assert not input_file.is_absolute()
+     assert input_file.suffix == '.srv'
+ 
+-- 
+2.47.1
+

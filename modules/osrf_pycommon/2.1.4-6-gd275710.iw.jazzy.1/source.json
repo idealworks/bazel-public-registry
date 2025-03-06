@@ -1,0 +1,9 @@
+{
+  "overlay": {
+    "MODULE.bazel": "sha256-59UCnmfuGIOKDL/KiUF5OQNF5176VRR97O4bEdfQ7hk=",
+    "BUILD.bazel": "sha256-ARSmSkUDx6hKbpUVknBohDMdoMwD5Mt4S/xPK6aVri4="
+  },
+  "url": "https://github.com/osrf/osrf_pycommon/archive/d2757108163af745bdd2dd39e2113b0bbc1d34d6.tar.gz",
+  "strip_prefix": "osrf_pycommon-d2757108163af745bdd2dd39e2113b0bbc1d34d6",
+  "integrity": "sha256-IMXQwe8sWGGsU46pZwhtOfeKgg23Z5+LAGRK/Chf/lk="
+}

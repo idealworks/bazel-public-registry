@@ -1,0 +1,19 @@
+load("@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl", "ros2_cpp_binary", "ros2_cpp_library")
+
+ros2_cpp_library(
+    name = "pcl_conversions",
+    hdrs = glob(["pcl_conversions/**/*.hpp"]) + glob(["pcl_conversions/**/*.h"]),
+    includes = ["pcl_conversions/include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@boost.filesystem",
+        "@eigen",
+        "@pcl//:common",
+        "@pcl//:io",
+        "@pcl_msgs//:cpp_pcl_msgs",
+        "@ros2_common_interfaces//:cpp_sensor_msgs",
+        "@ros2_common_interfaces//:cpp_std_msgs",
+        "@ros2_message_filters//:message_filters",
+        "@ros2_rclcpp//:rclcpp",
+    ],
+)
