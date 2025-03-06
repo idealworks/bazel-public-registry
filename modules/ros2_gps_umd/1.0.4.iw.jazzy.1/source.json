@@ -3,7 +3,7 @@
   "integrity": "sha256-ZKlvkwU9DVno/MzOq1QIp9Zm3YE9TBLfE57yTZFvSas=",
   "strip_prefix": "gps_umd-fc782811804fafb12ee479a48a2aa2e9ee942e2d",
   "overlay": {
-    "MODULE.bazel": "sha256-0LT6HmG5lW6fYCtwKHzrcwKDBdXy5gowIfb8/YPYaSI=",
-    "BUILD.bazel": "sha256-+hwyjW9W4M1wcumdPwxs3J6uKP1gk6eyo4+jeBuBBVw="
+    "MODULE.bazel": "sha256-XAU/jwTTL/mi+oFgxQX2AgyDe0ZyjbRr0aQnnp1Rwx8=",
+    "BUILD.bazel": "sha256-9/KRlxvjjM6ZmVJr5nto+0i5Qi2iz/lKklotA50nyXU="
   }
 }
