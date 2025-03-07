@@ -1,6 +1,6 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-2ox1T3qNPC/rVP5Lw9G4++DZXlvgeUoR48ILUuMlSNY=",
+    "MODULE.bazel": "sha256-SBX/b/zXU2VtZTZTdOrf+gMPTSvCrBQyVHmYit4t1NY=",
     "BUILD.bazel": "sha256-BDdROYyzSjGtv9n6bDarAgnCAr+fJB2a1vDwYUSpzJs="
   },
   "url": "https://github.com/ros2/test_interface_files/archive/21bb632b8d61ccaff4730d760f806b67132c3e4b.tar.gz",

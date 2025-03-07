@@ -4,7 +4,7 @@
   },
   "patch_strip": 1,
   "overlay": {
-    "MODULE.bazel": "sha256-2xmGaHB1WqYmXlp5tsODqoQkoH0LRocLSciqXPr31s8=",
+    "MODULE.bazel": "sha256-lUOs+1sX3BnY6MOpypTNddS4UWyswEGyu9l7/S4lW78=",
     "BUILD.bazel": "sha256-kTa//mspqdnxCVsSv7zR+ulicFUE5FrKOCoTT1EbPws="
   },
   "url": "https://github.com/ros2/urdf/archive/4f1fded3c9576cd58901959fb9c220fba3065eb9.tar.gz",
