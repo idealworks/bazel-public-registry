@@ -16,7 +16,7 @@ ros2_cpp_library(
         "@ros2_rclcpp//:rclcpp",
         "@ros2_rclcpp//:rclcpp_components",
         "@ros2_rclcpp//:rclcpp_lifecycle",
-        "@sick_safetyscanners2_interfaces//:cpp_sick_safetyscanners2_interfaces_impl",
+        "@sick_safetyscanners2_interfaces//:cpp_sick_safetyscanners2_interfaces",
         "@sick_safetyscanners_base",
     ],
 )
@@ -46,7 +46,7 @@ ros2_cpp_library(
         "@ros2_rclcpp//:rclcpp",
         "@ros2_rclcpp//:rclcpp_components",
         "@ros2_rclcpp//:rclcpp_lifecycle",
-        "@sick_safetyscanners2_interfaces//:cpp_sick_safetyscanners2_interfaces_impl",
+        "@sick_safetyscanners2_interfaces//:cpp_sick_safetyscanners2_interfaces",
         "@sick_safetyscanners_base",
     ],
 )
