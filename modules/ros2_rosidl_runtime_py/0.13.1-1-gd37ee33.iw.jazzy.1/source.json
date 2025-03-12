@@ -1,9 +1,9 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-9YKwQRkQcDW97UnZqTUN7FW315H4jN+SqdHoEaLAYjM=",
-    "BUILD.bazel": "sha256-p63DCbIEP/0r9xDKlteHsJlhgc4kmrnCiksossBn3KI=",
+    "MODULE.bazel": "sha256-fe0ZeVcl46o3kT1VZ2cnatc+C3ezcnTXCbRwLxAXv6g=",
+    "BUILD.bazel": "sha256-J27ZqaOUZqgBZwDxlDTz3MEGu0wTbWIyvNQUnAn035s=",
     "requirements.txt": "sha256-4y4ipkM7uTnjiT3Bi4APejtEq+gPPMHKeNQRzsxy984=",
-    "requirements_lock.txt": "sha256-etps1TT4DKYu5s0kVvpjzhiPzsNu57Ov+WP4eSkR+Yw="
+    "requirements_lock.txt": "sha256-RZ62YOTl3eDDx4V1+cDZ9bkx0oDjf4wO+BXPaBSZZbQ="
   },
   "url": "https://github.com/ros2/rosidl_runtime_py/archive/d37ee331753c62ca17d9e59e2bd247e52661ac0f.tar.gz",
   "strip_prefix": "rosidl_runtime_py-d37ee331753c62ca17d9e59e2bd247e52661ac0f",

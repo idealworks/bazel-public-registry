@@ -10,13 +10,12 @@ bazel_dep(name = "ros2_launch", version = "3.4.2-1-g604152c.iw.jazzy.1")
 bazel_dep(name = "ros2_rcl_interfaces", version = "2.0.2-1-g7d568ce.iw.jazzy.1")
 bazel_dep(name = "ros2_rclpy", version = "7.1.2-2-g159aedd.iw.jazzy.1")
 bazel_dep(name = "ros2cli", version = "0.32.1-3-geab6c97.iw.jazzy.1")
-bazel_dep(name = "rules_python", version = "0.36.0")
+bazel_dep(name = "rules_python", version = "1.2.0")
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 pip.parse(
     hub_name = "ros2_launch_ros_pip_deps",
-    python_version = "3.10",
+    python_version = "3.12",
     requirements_lock = "//:requirements_lock.txt",
 )
 use_repo(pip, "ros2_launch_ros_pip_deps")
-

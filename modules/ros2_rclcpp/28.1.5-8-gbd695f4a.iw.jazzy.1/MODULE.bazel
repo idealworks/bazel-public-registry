@@ -16,13 +16,12 @@ bazel_dep(name = "ros2_rmw", version = "7.3.1-1-gc9dd78a.iw.jazzy.1")
 bazel_dep(name = "ros2_rosidl", version = "4.6.4-3-g5d91679.iw.jazzy.1")
 bazel_dep(name = "ros2_rosidl_typesupport", version = "3.2.2-1-gb43c945.iw.jazzy.1")
 bazel_dep(name = "ros2_tracing", version = "8.2.2-1-g73a7e6d.iw.jazzy.1")
-bazel_dep(name = "rules_python", version = "0.36.0")
+bazel_dep(name = "rules_python", version = "1.2.0")
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 pip.parse(
     hub_name = "ros2_rclcpp_pip_deps",
-    python_version = "3.10",
+    python_version = "3.12",
     requirements_lock = "//:requirements_lock.txt",
 )
 use_repo(pip, "ros2_rclcpp_pip_deps")
-

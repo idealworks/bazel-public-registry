@@ -1,8 +1,8 @@
 module(
     name = "ros2_ament_index",
     version = "1.8.1-1-g0a35ca6.iw.jazzy.1",
-    compatibility_level = 1
+    compatibility_level = 1,
 )
 
-bazel_dep(name = "rules_cc", version = "0.1.0")
-bazel_dep(name = "rules_python", version = "1.0.0-rc0")
+bazel_dep(name = "rules_cc", version = "0.1.1")
+bazel_dep(name = "rules_python", version = "1.2.0")

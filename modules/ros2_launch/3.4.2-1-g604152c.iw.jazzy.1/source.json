@@ -1,9 +1,9 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-aj4nTmDlkiW7kUTiG6ToYfeBdkQnHk4LCK0RZV3DcEo=",
-    "BUILD.bazel": "sha256-f8e4u5bY/uJ1/TkGuvu1395UScoTQy1hPABUVnH80hQ=",
+    "MODULE.bazel": "sha256-2po30jdiY6oABoXsf3ok6kHEB8RiTOEXxJo4Oy+9sxI=",
+    "BUILD.bazel": "sha256-vjA4uyJ7w6zVuTg4f1G1hbhUbZeCYGIapYxKROQn2ow=",
     "requirements.txt": "sha256-LnUI8HKsScptReMkRWa11/g95p5g9cNPWsvR/lns6Ns=",
-    "requirements_lock.txt": "sha256-MkiCeh8QDDB2S9yh6h98cLfg9xwKD7eG6qV2fKfnE6k="
+    "requirements_lock.txt": "sha256-BtDhHFUpSDGXKVIssLk0Uy3fdLBO4m7nfNKD2QG5i7E="
   },
   "url": "https://github.com/ros2/launch/archive/604152c494707381dc4ca938ad77e1f098372840.tar.gz",
   "strip_prefix": "launch-604152c494707381dc4ca938ad77e1f098372840",

@@ -7,12 +7,12 @@
     "bazel-modifications.patch": "sha256-eLl/B5yQbWzdd62j3BmdWUQYDRpqweHNkKohDDcjgx0="
   },
   "overlay": {
-    "MODULE.bazel": "sha256-UXt7YmgIi5fxC+wBuF6PacjrqGgHhvRA5meQItAiqyA=",
-    "requirements_lock.txt": "sha256-AyRJVClhOREtQF8EgnaIkjx+lKJqoUXd014Bp5fqE5g=",
+    "MODULE.bazel": "sha256-Y6EEWLqjn3eOjWolDCnjIXUIlyq9CCdNRFeZ4qEaNgY=",
+    "requirements_lock.txt": "sha256-1ec/tIlNpO8jWsTN+sSQ1MZBR55rZnszPIx8vEivG1M=",
     "requirements.txt": "sha256-GQzV2W/B2yR7dYaKaiXc10FSgLwd4FLENYR7+MJ3Fgo=",
     "bzl/generate_rclcpp_logging_macros.py": "sha256-28hBX7ohFUbte/DZXnDzSRyb4aeVsTVVLlIIBmtExY4=",
     "bzl/generate_rclcpp_interface.py": "sha256-xVrDAj7GMIXbpuRYY+f0LRNlVw/foZtFJzwXG9f9F9k=",
     "bzl/BUILD.bazel": "sha256-3CXT6PORxeCE7DS35q7KwkeOY7F/ecuGOShCng1BuPw=",
-    "BUILD.bazel": "sha256-cQ3hX6jlOgETaRyYNyPg85JyABmiyV5q6UhuIW7cWO4="
+    "BUILD.bazel": "sha256-JXQxxGOSKkskvv61sQX9tS3VX9+n4HMxDyS42dHtlZ4="
   }
 }

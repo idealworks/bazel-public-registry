@@ -1,6 +1,6 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-u9QU24qYPkG0VgEgZ1CmO4sC55nFwjdvnax7mnCyxgo=",
+    "MODULE.bazel": "sha256-p7w5wgoI/QNyq6jTCi+ycNJlQ+QCPutWXFvNwOG06UE=",
     "requirements.txt": "sha256-GQzV2W/B2yR7dYaKaiXc10FSgLwd4FLENYR7+MJ3Fgo=",
     "requirements_lock.txt": "sha256-u9Tn8KpCDH/PS+NRkWW7pW/5GJYi1D2tN7/oZkhb6xw=",
     "BUILD.bazel": "sha256-CRHpYeQ2Lik9Brq6YTp1iE9wxYk9vFDj33+ABpkGNLs=",

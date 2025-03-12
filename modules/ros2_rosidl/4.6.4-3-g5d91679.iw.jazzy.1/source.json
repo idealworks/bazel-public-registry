@@ -3,7 +3,7 @@
     "requirements_lock.txt": "sha256-aLV5LbNMb6pDSmj0HfJ/9UzsRHo7dK9UtJG0r5S14Tc=",
     "requirements.txt": "sha256-tRqxzMmMu9ulmGX0IMKyoEI0PdCoiKVp6qkWFPNHVAg=",
     "BUILD.bazel": "sha256-Kk6gmh/1Zz92jmuHb4gfcg4gKZY6uj5y38PR1lNY9JU=",
-    "MODULE.bazel": "sha256-kBS9RgCS8isBigwZJ5hw8RUk4CZB3Vsky63SsmjwdC8="
+    "MODULE.bazel": "sha256-Siiz22Ti+erEuUZMqLNkEEayPOvY3KwnWs9tl5S9i3k="
   },
   "patches": {
     "Allow-local-paths-in-IDL-generators.patch": "sha256-eA8O5VbgEAUPdM8dM2O4uFykhLWgYaqn7KyErCEZqZM="

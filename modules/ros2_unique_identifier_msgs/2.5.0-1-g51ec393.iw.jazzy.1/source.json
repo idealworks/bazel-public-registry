@@ -1,6 +1,6 @@
 {
   "overlay": {
-    "MODULE.bazel": "sha256-JLEI9ixclmNKZoAeQoMw9mi2PPN2sNC7ZfWTClr8BEg=",
+    "MODULE.bazel": "sha256-IsN68kTqMZB9jJt9jejWc4MpY5p45sCNLlvOlUNNc/I=",
     "BUILD.bazel": "sha256-tEBDKUgLlWqgeqOoHiQ1IVV43NfV+gPwtQOQE57clNU="
   },
   "url": "https://github.com/ros2/unique_identifier_msgs/archive/51ec3931400feba6cc0ef0ebd045b5866f63fdd1.tar.gz",
