@@ -1,15 +1,15 @@
 {
-  "patches": {
-    "rosbag2_relax_plugin_errors.patch": "sha256-IsZ2Y83+2T58GRUW5kYtGPQbKSveBUpPLqeS6GHEWf0="
-  },
+  "url": "https://github.com/ros2/rosbag2/archive/6091bc7d4a126a808753d9260f89826fbd6ab98d.tar.gz",
+  "integrity": "sha256-dS6yAdMO439+rGjJLsxhHOsXbQQaFzDP3xQXz6Rz7Lk=",
+  "strip_prefix": "rosbag2-6091bc7d4a126a808753d9260f89826fbd6ab98d",
   "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-tMJzraEy/YaJDFsAd63Yiq1Ph52J9YFGhIXyWjekbzw="
+  },
   "overlay": {
     "MODULE.bazel": "sha256-qrdoY2LPibMeSQxyCQS9Ib8J651hbJI4DMFtLEDKZ10=",
-    "BUILD.bazel": "sha256-HP4lSwXDjgCoUPsVE6vmpfgthlreC9C4qAdZjOcQc5Q=",
+    "requirements_lock.txt": "sha256-zN82x5kcl3WgMZH5OtgiOostbJPSwXqmeOhZy/cwL3Q=",
     "requirements.txt": "sha256-67DhZUXJEb0x7DOs5X3t+EwE5nPS3CjAKQho5K3023c=",
-    "requirements_lock.txt": "sha256-zN82x5kcl3WgMZH5OtgiOostbJPSwXqmeOhZy/cwL3Q="
-  },
-  "url": "https://github.com/ros2/rosbag2/archive/6091bc7d4a126a808753d9260f89826fbd6ab98d.tar.gz",
-  "strip_prefix": "rosbag2-6091bc7d4a126a808753d9260f89826fbd6ab98d",
-  "integrity": "sha256-dS6yAdMO439+rGjJLsxhHOsXbQQaFzDP3xQXz6Rz7Lk="
+    "BUILD.bazel": "sha256-mbXllOGnhxSm6YU++z5haz+H4LvSwBTsnL8cKzETpB0="
+  }
 }
