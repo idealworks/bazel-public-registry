@@ -3,7 +3,7 @@
   "integrity": "sha256-38/5O9+R6jJJ13PN+Zo/i93M9HkejJjO/IqjQZnB+4Q=",
   "strip_prefix": "rosbridge_suite-00e30e3e9fc5a77484f7686f4af9a530b3b173eb",
   "overlay": {
-    "MODULE.bazel": "sha256-OLopupiha3a2ACJZtkwB4ji1tmNO0aCT2F7xrFP7iVE=",
+    "MODULE.bazel": "sha256-nnoQh37F1UUaeMEwqM8JgqDz5pKGTEdd9RSKGx8pkuA=",
     "third_party/requirements_lock.txt": "sha256-xkzFmpzJVF1Hr66nMJ8wydUrWObEEJtycl69jGes7Po=",
     "third_party/requirements.txt": "sha256-DZUnRz4xiwBAUD6LB87rHxygZ8Z3/V76sZt0TH+vgaU=",
     "third_party/BUILD.bazel": "sha256-OlYtRCIgv9bbRv3oR6b+gHF6mSxZRsm94Cv3Sg05di4=",
