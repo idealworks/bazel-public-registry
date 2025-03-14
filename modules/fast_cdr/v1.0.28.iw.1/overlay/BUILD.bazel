@@ -1,0 +1,35 @@
+load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
+
+expand_template(
+    name = "config_h",
+    out = "include/fastcdr/config.h",
+    substitutions = {
+        "@PROJECT_VERSION_MAJOR@": "1",
+        "@PROJECT_VERSION_MINOR@": "0",
+        "@PROJECT_VERSION_PATCH@": "28",
+        "@HAVE_CXX11@": "1",
+        "@HAVE_CXX0X@": "1",
+        "@HAVE_CXX_CONSTEXPR@": "1",
+        "@FASTCDR_IS_BIG_ENDIAN_TARGET@": "0",
+        "@FASTCDR_HAVE_FLOAT128@": "0",
+        "@FASTCDR_SIZEOF_LONG_DOUBLE@": "8",
+    },
+    template = "include/fastcdr/config.h.in",
+)
+
+cc_library(
+    name = "fast_cdr",
+    srcs = [
+        "src/cpp/Cdr.cpp",
+        "src/cpp/FastBuffer.cpp",
+        "src/cpp/FastCdr.cpp",
+        "src/cpp/exceptions/BadParamException.cpp",
+        "src/cpp/exceptions/Exception.cpp",
+        "src/cpp/exceptions/NotEnoughMemoryException.cpp",
+    ],
+    hdrs = glob([
+        "include/**/*.h",
+    ]) + [":config_h"],
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+)

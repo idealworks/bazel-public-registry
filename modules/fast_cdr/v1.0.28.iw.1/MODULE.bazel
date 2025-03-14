@@ -1,0 +1,7 @@
+module(
+    name = "fast_cdr",
+    version = "v1.0.28.iw.1",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "bazel_skylib", version = "1.7.1")

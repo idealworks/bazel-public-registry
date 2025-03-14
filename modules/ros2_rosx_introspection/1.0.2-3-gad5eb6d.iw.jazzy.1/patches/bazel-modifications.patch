@@ -1,0 +1,107 @@
+diff --git a/src/ros_parser.cpp b/src/ros_parser.cpp
+index f4cd3c9..c120e9f 100644
+--- a/src/ros_parser.cpp
++++ b/src/ros_parser.cpp
+@@ -111,11 +111,16 @@ bool Parser::deserialize(Span<const uint8_t> buffer, FlatMessage* flat_container
+       auto new_tree_leaf = tree_leaf;
+       new_tree_leaf.node = tree_leaf.node->child(index_s);
+ 
+-      int32_t array_size = field.arraySize();
+-      if (array_size == -1)
++      int32_t maybe_array_size = field.arraySize();
++      uint32_t array_size = 0;
++      if (maybe_array_size <= -1)
+       {
+         array_size = deserializer->deserializeUInt32();
+       }
++      else
++      {
++        array_size = maybe_array_size;
++      }
+       if (field.isArray())
+       {
+         new_tree_leaf.index_array.push_back(0);
+@@ -124,7 +129,7 @@ bool Parser::deserialize(Span<const uint8_t> buffer, FlatMessage* flat_container
+       bool IS_BLOB = false;
+ 
+       // Stop storing it if is NOT a blob and a very large array.
+-      if (array_size > static_cast<int32_t>(_max_array_size))
++      if (array_size > _max_array_size)
+       {
+         if (builtinSize(field_type.typeID()) == 1)
+         {
+@@ -176,9 +181,9 @@ bool Parser::deserialize(Span<const uint8_t> buffer, FlatMessage* flat_container
+       else  // NOT a BLOB
+       {
+         bool DO_STORE_ARRAY = DO_STORE;
+-        for (int i = 0; i < array_size; i++)
++        for (size_t i = 0; i < array_size; i++)
+         {
+-          if (DO_STORE_ARRAY && i >= static_cast<int32_t>(_max_array_size))
++          if (DO_STORE_ARRAY && i >= _max_array_size)
+           {
+             DO_STORE_ARRAY = false;
+           }
+@@ -228,7 +233,7 @@ bool Parser::deserialize(Span<const uint8_t> buffer, FlatMessage* flat_container
+       }
+       index_s++;
+     }  // end for fields
+-  };   // end of lambda
++  };  // end of lambda
+ 
+   // pass the shared_ptr
+   flat_container->schema = _schema;
+@@ -403,7 +408,7 @@ bool Parser::deserializeIntoJson(Span<const uint8_t> buffer, std::string* json_t
+       }
+       index_s++;
+     }  // end for fields
+-  };   // end of lambda
++  };  // end of lambda
+ 
+   FieldLeaf rootnode;
+   rootnode.node = _schema->field_tree.croot();
+@@ -482,7 +487,7 @@ bool Parser::serializeFromJson(const std::string_view json_string,
+       }
+       if (has_json_value && is_fixed_array)
+       {
+-        int actual_size = (*json_value)[field_name.s].GetArray().Size();
++        uint actual_size = (*json_value)[field_name.s].GetArray().Size();
+         if (array_size != actual_size)
+         {
+           throw std::runtime_error(std::string("Fixed array size mismatch in field: ") +
+@@ -492,7 +497,7 @@ bool Parser::serializeFromJson(const std::string_view json_string,
+ 
+       const auto type_id = field_type.typeID();
+ 
+-      for (int i = 0; i < array_size; i++)
++      for (uint i = 0; i < array_size; i++)
+       {
+         // is !has_json_value , we will serialize a zero value
+         rapidjson::Value zero_value = rapidjson::Value(0);
+@@ -553,7 +558,7 @@ bool Parser::serializeFromJson(const std::string_view json_string,
+             uint32_t secs = value_field->GetObject()["secs"].GetInt();
+             serializer->serializeUInt32(secs);
+ 
+-            uint32_t nsecs = value_field->GetObject()["nsecs"].GetInt();
++            // uint32_t nsecs = value_field->GetObject()["nsecs"].GetInt();
+             serializer->serializeUInt32(secs);
+           }
+           break;
+@@ -584,7 +589,7 @@ bool Parser::serializeFromJson(const std::string_view json_string,
+           }
+           break;
+         }  // end switch
+-      }    // end for array
++      }  // end for array
+ 
+       if (field_type.typeID() == OTHER)
+       {
+@@ -592,7 +597,7 @@ bool Parser::serializeFromJson(const std::string_view json_string,
+       }
+       index_s++;
+     }  // end for fields
+-  };   // end of lambda
++  };  // end of lambda
+ 
+   auto root_msg =
+       _schema->field_tree.croot()->value()->getMessagePtr(_schema->msg_library);
