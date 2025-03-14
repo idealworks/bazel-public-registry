@@ -1,9 +1,9 @@
 {
+  "url": "https://github.com/ros-perception/image_common/archive/34ad5dbd4ba9f45553b9b09887c4db39cdf03180.tar.gz",
+  "integrity": "sha256-VmVp2gw3LOCCYNTx28cjY4gdGvyBjfxTRDhucgXPsd4=",
+  "strip_prefix": "image_common-34ad5dbd4ba9f45553b9b09887c4db39cdf03180",
   "overlay": {
     "MODULE.bazel": "sha256-98IjU8Xd7dY7IB38mC+rBdaOo+vy4nzOHygbG8Qb+xI=",
-    "BUILD.bazel": "sha256-Zz9aBztTzyT0JBh5nFemP9hAaxhzRuLSOD3aTsOPG88="
-  },
-  "url": "https://github.com/ros-perception/image_common/archive/34ad5dbd4ba9f45553b9b09887c4db39cdf03180.tar.gz",
-  "strip_prefix": "image_common-34ad5dbd4ba9f45553b9b09887c4db39cdf03180",
-  "integrity": "sha256-VmVp2gw3LOCCYNTx28cjY4gdGvyBjfxTRDhucgXPsd4="
+    "BUILD.bazel": "sha256-p+wI+8fdl6pppr5E8oRyxMf6nZybkyffc5q3qddtXec="
+  }
 }
