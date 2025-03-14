@@ -79,6 +79,7 @@ cc_library(
         "rclcpp/src/**/*.hpp",
     ]),
     hdrs = glob(["rclcpp/include/**/*.hpp"]) + [
+        "rclcpp/include/rclcpp/version.h",
         ":logging_macros",
         ":rclcpp_interfaces",
     ],
