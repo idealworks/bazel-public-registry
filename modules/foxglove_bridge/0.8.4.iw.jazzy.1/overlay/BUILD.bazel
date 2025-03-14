@@ -48,6 +48,7 @@ ros2_cpp_library(
         "@ros2_rclcpp//:rclcpp",
         "@ros2_rclcpp//:rclcpp_components",
         "@ros2_resource_retriever//:resource_retriever",
+        "@ros2_rosx_introspection//:rosx_introspection",
     ],
 )
 
@@ -60,4 +61,3 @@ ros2_cpp_binary(
         "@ros2_rclcpp//:rclcpp",
     ],
 )
-
