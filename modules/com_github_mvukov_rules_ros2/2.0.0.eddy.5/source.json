@@ -1,0 +1,8 @@
+{
+  "url": "https://github.com/EddyGharib/rules_ros2/archive/da583a05f606c42786d0f7a7ed3f072c05bbc036.tar.gz",
+  "integrity": "sha256-sIR2rVa7IUNwP3eFbfbsDYTWxc92xQX6hUYvJCGtdZ0=",
+  "strip_prefix": "rules_ros2-da583a05f606c42786d0f7a7ed3f072c05bbc036",
+  "overlay": {
+    "MODULE.bazel": "sha256-T6RdgIK+r1MdRWec1xeaigckzw8GI3ajPR39AL0OFDY="
+  }
+}
