@@ -8,6 +8,6 @@
   },
   "overlay": {
     "MODULE.bazel": "sha256-imL+WSW+3VQNp/FMoRQe7VuMKCXKiqoyQPGV3PqWL5s=",
-    "BUILD.bazel": "sha256-nx4Ry31TdqMvE9cbfiPCJoFXfCD6Zxdnm0rK3TrKnSc="
+    "BUILD.bazel": "sha256-D8LhKVr19RERiA8E0kf6Rm1yjZIDw53m4EC4okV2IR0="
   }
 }
