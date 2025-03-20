@@ -4,12 +4,13 @@
 cc_binary(
     name = "rmw_cyclonedds",
     srcs = glob([
-        "rmw_cyclonedds_cpp/include/**/*.h",
-        "rmw_cyclonedds_cpp/include/**/*.hpp",
         "rmw_cyclonedds_cpp/src/*.cpp",
         "rmw_cyclonedds_cpp/src/*.hpp",
     ]),
-    copts = ["-fvisibility=hidden", "-fPIC"],
+    copts = [
+        "-fvisibility=hidden",
+        "-fPIC",
+    ],
     includes = ["rmw_cyclonedds_cpp/include"],
     linkopts = ["-fvisibility=hidden"],
     linkshared = True,
