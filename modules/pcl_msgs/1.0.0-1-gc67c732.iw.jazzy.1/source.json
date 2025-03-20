@@ -4,6 +4,6 @@
   "strip_prefix": "pcl_msgs-c67c7323796cf003ad67429186fb8959092ef70d",
   "overlay": {
     "MODULE.bazel": "sha256-uxirBYyFfOIC0YgE9+qqnwMgPL51VKzU3/5MHK/irPw=",
-    "BUILD.bazel": "sha256-1IwrUA5tuUW9/EWDLom7v28ouiCHUwkDTNK4zk2nN7A="
+    "BUILD.bazel": "sha256-cQqRR4BRvfleiYrS+JO8cYwNkpX+jvycqoq06HU+/HM="
   }
 }
