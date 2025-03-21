@@ -1,0 +1,22 @@
+{
+  "url": "https://github.com/systemd/systemd/archive/70bae7648f2c18010187c9cf20093155eaa26029.tar.gz",
+  "integrity": "sha256-342L9XBO15f6EAp5Y01f+MZXOl3ndOIBLd5S4VIB3Ws=",
+  "strip_prefix": "systemd-70bae7648f2c18010187c9cf20093155eaa26029",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-etxY3WK3hJiTJCKKgeY66a5DD5Y4at0yhw19oyBaIIQ="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-sbDvVhmZbJ7S/dyfQRfp7vT0hTMKralvSzXnuSzbsqw=",
+    "version.h": "sha256-9dmbDXWppUe2Lj7ikqZLlViiNnqfOu7RMinZXpOd+J0=",
+    "src/systemd/BUILD.bazel": "sha256-bOq7uTZ9yB8VfbaJW/ZAOwdFiFcyr0fXeZqnb4mQ9L8=",
+    "src/libsystemd/linux/audit.h": "sha256-72/o4D42e3KMxsJJaHQQjigy4Xmjo0M60+0mGLkgwNU=",
+    "src/libsystemd/BUILD.bazel": "sha256-TUu0gLheiMm1gbpXgAD4zkXd3a4aqcC8jMsH6TH1ias=",
+    "src/fundamental/BUILD.bazel": "sha256-vhjg6TFe9rmT+aKCGCTMbLJftQXLj3zhnrP7xWrJIWg=",
+    "src/basic/BUILD.bazel": "sha256-VCwo6oxRt5oWLM7hx709tQOY5gIp0dfafLvd3orAfeE=",
+    "config.h": "sha256-mE/YB1Q2shVMGPI54EMbcAQ2wDbMPc/71kmlXujpHyc=",
+    "bzl/custom_generators.bzl": "sha256-F76xPMyPQvPknZroWnHlVMZ3ON47Qq32ab8+DZ4twd4=",
+    "bzl/BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+    "BUILD.bazel": "sha256-iI0+j41pdKqq/bdAQ26fcHyz28HsX0RNcRSWy/R5Fgo="
+  }
+}
