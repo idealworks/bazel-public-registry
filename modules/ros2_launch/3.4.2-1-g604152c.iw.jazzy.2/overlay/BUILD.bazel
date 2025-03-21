@@ -1,0 +1,80 @@
+""" Builds launch.
+"""
+
+load("@ros2_launch_pip_deps//:requirements.bzl", "requirement")
+load("@rules_python//python:defs.bzl", "py_library")
+load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+
+compile_pip_requirements(
+    name = "python_requirements",
+    extra_args = ["--allow-unsafe"],
+    requirements_in = "//:requirements.txt",
+    requirements_txt = "//:requirements_lock.txt",
+    tags = ["manual"],
+)
+
+exports_files([
+    "requirements.txt",
+    "requirements_lock.txt",
+])
+
+py_library(
+    name = "launch",
+    srcs = glob(["launch/launch/**/*.py"]),
+    data = glob(["launch/share/**"]),
+    imports = ["launch"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@osrf_pycommon",
+        "@ros2_ament_index//:ament_index_python",
+        requirement("lark_parser"),
+    ],
+)
+
+py_library(
+    name = "launch_pytest",
+    srcs = glob(["launch_pytest/launch_pytest/**/*.py"]),
+    imports = ["launch_pytest"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":launch",
+        ":launch_testing",
+        "@osrf_pycommon",
+        "@ros2_ament_index//:ament_index_python",
+        requirement("pytest"),
+        requirement("pyyaml"),
+    ],
+)
+
+py_library(
+    name = "launch_testing",
+    srcs = glob(["launch_testing/launch_testing/**/*.py"]),
+    imports = ["launch_testing"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":launch",
+        "@osrf_pycommon",
+        "@ros2_ament_index//:ament_index_python",
+        requirement("pytest"),
+    ],
+)
+
+py_library(
+    name = "launch_xml",
+    srcs = glob(["launch_xml/launch_xml/**/*.py"]),
+    imports = ["launch_xml"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":launch",
+    ],
+)
+
+py_library(
+    name = "launch_yaml",
+    srcs = glob(["launch_yaml/launch_yaml/**/*.py"]),
+    imports = ["launch_yaml"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":launch",
+    ],
+)

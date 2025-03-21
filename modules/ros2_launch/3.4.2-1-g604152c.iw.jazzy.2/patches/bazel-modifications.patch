@@ -1,0 +1,13 @@
+diff --git a/launch/launch/logging/__init__.py b/launch/launch/logging/__init__.py
+index 207a8ed..c67638c 100644
+--- a/launch/launch/logging/__init__.py
++++ b/launch/launch/logging/__init__.py
+@@ -137,6 +137,8 @@ class LaunchConfig:
+             self._log_dir = _make_unique_log_dir(
+                 base_path=_get_logging_directory()
+             )
++            if os.environ.get("ROS_LOG_SKIP_LATEST_SYMLINK"):
++                return self._log_dir
+             try:
+                 success = _renew_latest_log_dir(log_dir=self._log_dir)
+                 if not success:
