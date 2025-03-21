@@ -16,7 +16,6 @@ ros2_cpp_library(
         "camera_calibration_parsers/src/parse_yml.cpp",
     ]),
     hdrs = glob([
-        "camera_calibration_parsers/include/**/*.h",
         "camera_calibration_parsers/include/**/*.hpp",
     ]),
     includes = ["camera_calibration_parsers/include"],

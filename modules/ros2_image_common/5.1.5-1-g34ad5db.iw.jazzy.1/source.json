@@ -4,6 +4,6 @@
   "strip_prefix": "image_common-34ad5dbd4ba9f45553b9b09887c4db39cdf03180",
   "overlay": {
     "MODULE.bazel": "sha256-98IjU8Xd7dY7IB38mC+rBdaOo+vy4nzOHygbG8Qb+xI=",
-    "BUILD.bazel": "sha256-p+wI+8fdl6pppr5E8oRyxMf6nZybkyffc5q3qddtXec="
+    "BUILD.bazel": "sha256-RDjgVXGljNnWK2AEI6lWmmUFROU0ymukoxboR3CAg6I="
   }
 }
