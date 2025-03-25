@@ -1,0 +1,7 @@
+cc_library(
+    name = "parson",
+    srcs = ["parson.c"],
+    hdrs = ["parson.h"],
+    includes = ["."],
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/kgabis/parson/archive/60c37844d7a1c97547812cac3423d458c73e60f9.tar.gz",
+  "integrity": "sha256-+m/mR36LN9VP3gBlpCsXDu1+LogSF0jdBQ7t0F5W7JM=",
+  "strip_prefix": "parson-60c37844d7a1c97547812cac3423d458c73e60f9",
+  "overlay": {
+    "MODULE.bazel": "sha256-LEm/W6Ekmm1dow4Dz9A6MhQ3zzbmqyT8WUejQlxYmUE=",
+    "BUILD.bazel": "sha256-zjIULtCwAOe3ql+U1TUmnTCTmjmT0ZM7eNC8wUrlXfo="
+  }
+}
