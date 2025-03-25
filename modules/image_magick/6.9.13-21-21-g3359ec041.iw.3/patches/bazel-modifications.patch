@@ -1,0 +1,533 @@
+diff --git a/Magick++/lib/Magick++/Include.h b/Magick++/lib/Magick++/Include.h
+index 92e127684..d42142e36 100644
+--- a/Magick++/lib/Magick++/Include.h
++++ b/Magick++/lib/Magick++/Include.h
+@@ -42,8 +42,8 @@
+ //
+ namespace MagickCore
+ {
+-#include <magick/MagickCore.h>
+-#include <wand/MagickWand.h>
++#include "magick/MagickCore.h"
++#include "wand/MagickWand.h"
+ #undef inline // Remove possible definition from config.h
+ 
+ #undef class
+diff --git a/coders/json.c b/coders/json.c
+index df02d7b65..487b89b2b 100644
+--- a/coders/json.c
++++ b/coders/json.c
+@@ -766,7 +766,7 @@ static ssize_t PrintChannelStatistics(FILE *file,const ChannelType channel,
+       channel_statistics[channel].maxima)),GetMagickPrecision(),scale*
+       ((MagickRealType) QuantumRange-channel_statistics[channel].mean),
+       GetMagickPrecision(),
+-      IsNaN(channel_statistics[channel].standard_deviation) != 0 ?
++      Magick_IsNaN(channel_statistics[channel].standard_deviation) != 0 ?
+       MagickEpsilon : scale*channel_statistics[channel].standard_deviation,
+       GetMagickPrecision(),channel_statistics[channel].kurtosis,
+       GetMagickPrecision(),channel_statistics[channel].skewness,
+@@ -780,7 +780,7 @@ static ssize_t PrintChannelStatistics(FILE *file,const ChannelType channel,
+       (double) ClampToQuantum(scale*channel_statistics[channel].maxima),
+       GetMagickPrecision(),scale*channel_statistics[channel].mean,
+       GetMagickPrecision(),
+-      IsNaN(channel_statistics[channel].standard_deviation) != 0 ?
++      Magick_IsNaN(channel_statistics[channel].standard_deviation) != 0 ?
+       MagickEpsilon : scale*channel_statistics[channel].standard_deviation,
+       GetMagickPrecision(),
+       channel_statistics[channel].kurtosis,GetMagickPrecision(),
+diff --git a/magick/draw.c b/magick/draw.c
+index c8a2f7836..b5426c77d 100644
+--- a/magick/draw.c
++++ b/magick/draw.c
+@@ -2266,7 +2266,7 @@ static MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
+   extent=(double) mvg_info->offset+pad+(PrimitiveExtentPad+1)*quantum;
+   if (extent <= (double) *mvg_info->extent)
+     return(MagickTrue);
+-  if ((extent >= (double) MAGICK_SSIZE_MAX) || (IsNaN(extent) != 0))
++  if ((extent >= (double) MAGICK_SSIZE_MAX) || (Magick_IsNaN(extent) != 0))
+     return(MagickFalse);
+   if (mvg_info->offset > 0)
+     {
+diff --git a/magick/fx.c b/magick/fx.c
+index a026d13ef..5a50cded8 100644
+--- a/magick/fx.c
++++ b/magick/fx.c
+@@ -2269,7 +2269,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
+ 
+           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,expression+3,
+             depth+1,beta,exception);
+-          if (IsNaN(alpha))
++          if (Magick_IsNaN(alpha))
+             FxReturn(alpha);
+           gcd=FxGCD(alpha,*beta,0);
+           FxReturn(gcd);
+@@ -2343,7 +2343,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
+         {
+           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,expression+5,
+             depth+1,beta,exception);
+-          FxReturn((double) !!IsNaN(alpha));
++          FxReturn((double) !!Magick_IsNaN(alpha));
+         }
+       if (LocaleCompare(expression,"i") == 0)
+         FxReturn(FxGetSymbol(fx_info,channel,x,y,expression,depth+1,exception));
+diff --git a/magick/geometry.c b/magick/geometry.c
+index b9f070ce5..83cbf78c0 100644
+--- a/magick/geometry.c
++++ b/magick/geometry.c
+@@ -684,7 +684,7 @@ MagickExport MagickBooleanType IsSceneGeometry(const char *geometry,
+     return(MagickFalse);
+   p=(char *) geometry;
+   value=StringToDouble(geometry,&p);
+-  if (IsNaN(value) != 0)
++  if (Magick_IsNaN(value) != 0)
+     return(MagickFalse);
+   if (value > (double) MAGICK_SSIZE_MAX)
+     return(MagickFalse);
+diff --git a/magick/image-private.h b/magick/image-private.h
+index 040baf0f1..46f14de41 100644
+--- a/magick/image-private.h
++++ b/magick/image-private.h
+@@ -68,7 +68,7 @@ static inline ssize_t CastDoubleToLong(const double x)
+   double
+     value;
+ 
+-  if (IsNaN(x) != 0)
++  if (Magick_IsNaN(x) != 0)
+     {
+       errno=ERANGE;
+       return(0);
+@@ -96,7 +96,7 @@ static inline ssize_t CastDoubleToLong(const double x)
+ 
+ static inline QuantumAny CastDoubleToQuantumAny(const double x)
+ {
+-  if (IsNaN(x) != 0)
++  if (Magick_IsNaN(x) != 0)
+     {
+       errno=ERANGE;
+       return(0);
+@@ -119,7 +119,7 @@ static inline size_t CastDoubleToUnsigned(const double x)
+   double
+     value;
+ 
+-  if (IsNaN(x) != 0)
++  if (Magick_IsNaN(x) != 0)
+     {
+       errno=ERANGE;
+       return(0);
+diff --git a/magick/magick-type.h b/magick/magick-type.h
+index b43a0591b..3577f4a16 100644
+--- a/magick/magick-type.h
++++ b/magick/magick-type.h
+@@ -206,7 +206,7 @@ typedef enum
+ } MagickBooleanType;
+ 
+ /*
+-  The IsNaN test is for special floating point numbers of value Nan (not a
++  The Magick_IsNaN test is for special floating point numbers of value Nan (not a
+   number). NaN's are defined as part of the IEEE standard for floating point
+   number representation, and need to be watched out for. Morphology Kernels
+   often use these special numbers as neighbourhood masks.
+@@ -217,12 +217,12 @@ typedef enum
+   The macros are thus is only true if the value given is NaN.
+ */
+ #if defined(MAGICKCORE_HAVE_ISNAN) && !defined(__cplusplus) && !defined(c_plusplus)
+-#  define IsNaN(a) isnan(a)
++#  define Magick_IsNaN(a) isnan(a)
+ #elif defined(_MSC_VER) && (_MSC_VER >= 1310)
+ #  include <float.h>
+-#  define IsNaN(a) _isnan(a)
++#  define Magick_IsNaN(a) _isnan(a)
+ #else
+-#  define IsNaN(a) ((a) != (a))
++#  define Magick_IsNaN(a) ((a) != (a))
+ #endif
+ #if !defined(INFINITY)
+ #  define INFINITY ((double) -logf(0f))
+diff --git a/magick/morphology.c b/magick/morphology.c
+index e76b365cb..6d603fec0 100644
+--- a/magick/morphology.c
++++ b/magick/morphology.c
+@@ -2394,9 +2394,9 @@ static MagickBooleanType SameKernelInfo(const KernelInfo *kernel1,
+   /* check actual kernel values */
+   for (i=0; i < (kernel1->width*kernel1->height); i++) {
+     /* Test for Nan equivalence */
+-    if ( IsNaN(kernel1->values[i]) && !IsNaN(kernel2->values[i]) )
++    if ( Magick_IsNaN(kernel1->values[i]) && !Magick_IsNaN(kernel2->values[i]) )
+       return MagickFalse;
+-    if ( IsNaN(kernel2->values[i]) && !IsNaN(kernel1->values[i]) )
++    if ( Magick_IsNaN(kernel2->values[i]) && !Magick_IsNaN(kernel1->values[i]) )
+       return MagickFalse;
+     /* Test actual values are equivalent */
+     if ( fabs(kernel1->values[i] - kernel2->values[i]) >= MagickEpsilon )
+@@ -2746,7 +2746,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
+             ** Convolution is simple greyscale channel operation
+             */
+             for (v=0; v < (ssize_t) kernel->height; v++) {
+-              if ( IsNaN(*k) ) continue;
++              if ( Magick_IsNaN(*k) ) continue;
+               result.red     += (*k)*(double) GetPixelRed(k_pixels);
+               result.green   += (*k)*(double) GetPixelGreen(k_pixels);
+               result.blue    += (*k)*(double) GetPixelBlue(k_pixels);
+@@ -2787,7 +2787,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
+             count=0;
+             gamma=0.0;
+             for (v=0; v < (ssize_t) kernel->height; v++) {
+-              if ( IsNaN(*k) ) continue;
++              if ( Magick_IsNaN(*k) ) continue;
+               alpha=QuantumScale*((double) QuantumRange-(double)
+                 GetPixelOpacity(k_pixels));
+               count++;        /* number of alpha values collected */
+@@ -2996,7 +2996,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
+                 */
+                 for (v=0; v < (ssize_t) kernel->height; v++) {
+                   for (u=0; u < (ssize_t) kernel->width; u++, k--) {
+-                    if ( IsNaN(*k) ) continue;
++                    if ( Magick_IsNaN(*k) ) continue;
+                     result.red     += (*k)*(double) k_pixels[u].red;
+                     result.green   += (*k)*(double) k_pixels[u].green;
+                     result.blue    += (*k)*(double) k_pixels[u].blue;
+@@ -3036,7 +3036,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
+                 gamma=0.0;
+                 for (v=0; v < (ssize_t) kernel->height; v++) {
+                   for (u=0; u < (ssize_t) kernel->width; u++, k--) {
+-                    if ( IsNaN(*k) ) continue;
++                    if ( Magick_IsNaN(*k) ) continue;
+                     alpha=QuantumScale*((double) QuantumRange-(double)
+                       k_pixels[u].opacity);
+                     count++;           /* number of alpha values collected */
+@@ -3080,7 +3080,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
+             k_indexes = p_indexes+x;
+             for (v=0; v < (ssize_t) kernel->height; v++) {
+               for (u=0; u < (ssize_t) kernel->width; u++, k++) {
+-                if ( IsNaN(*k) || (*k) < 0.5 ) continue;
++                if ( Magick_IsNaN(*k) || (*k) < 0.5 ) continue;
+                 Minimize(min.red,     (double) k_pixels[u].red);
+                 Minimize(min.green,   (double) k_pixels[u].green);
+                 Minimize(min.blue,    (double) k_pixels[u].blue);
+@@ -3111,7 +3111,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
+             k_indexes = p_indexes+x;
+             for (v=0; v < (ssize_t) kernel->height; v++) {
+               for (u=0; u < (ssize_t) kernel->width; u++, k--) {
+-                if ( IsNaN(*k) || (*k) < 0.5 ) continue;
++                if ( Magick_IsNaN(*k) || (*k) < 0.5 ) continue;
+                 Maximize(max.red,     (double) k_pixels[u].red);
+                 Maximize(max.green,   (double) k_pixels[u].green);
+                 Maximize(max.blue,    (double) k_pixels[u].blue);
+@@ -3145,7 +3145,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
+             k_indexes = p_indexes+x;
+             for (v=0; v < (ssize_t) kernel->height; v++) {
+               for (u=0; u < (ssize_t) kernel->width; u++, k++) {
+-                if ( IsNaN(*k) ) continue;
++                if ( Magick_IsNaN(*k) ) continue;
+                 if ( (*k) > 0.7 )
+                 { /* minimim of foreground pixels */
+                   Minimize(min.red,     (double) k_pixels[u].red);
+@@ -3194,7 +3194,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
+             k_indexes = p_indexes+x;
+             for (v=0; v < (ssize_t) kernel->height; v++) {
+               for (u=0; u < (ssize_t) kernel->width; u++, k++) {
+-                if ( IsNaN(*k) || (*k) < 0.5 ) continue;
++                if ( Magick_IsNaN(*k) || (*k) < 0.5 ) continue;
+                 if ( result.red == 0.0 ||
+                      GetPixelIntensity(image,&(k_pixels[u])) < GetPixelIntensity(result_image,q) ) {
+                   /* copy the whole pixel - no channel selection */
+@@ -3225,7 +3225,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
+             k_indexes = p_indexes+x;
+             for (v=0; v < (ssize_t) kernel->height; v++) {
+               for (u=0; u < (ssize_t) kernel->width; u++, k--) {
+-                if ( IsNaN(*k) || (*k) < 0.5 ) continue; /* boolean kernel */
++                if ( Magick_IsNaN(*k) || (*k) < 0.5 ) continue; /* boolean kernel */
+                 if ( result.red == 0.0 ||
+                      GetPixelIntensity(image,&(k_pixels[u])) > GetPixelIntensity(result_image,q) ) {
+                   /* copy the whole pixel - no channel selection */
+@@ -3268,7 +3268,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
+             k_indexes = p_indexes+x;
+             for (v=0; v < (ssize_t) kernel->height; v++) {
+               for (u=0; u < (ssize_t) kernel->width; u++, k--) {
+-                if ( IsNaN(*k) ) continue;
++                if ( Magick_IsNaN(*k) ) continue;
+                 Minimize(result.red,     (*k)+(double) k_pixels[u].red);
+                 Minimize(result.green,   (*k)+(double) k_pixels[u].green);
+                 Minimize(result.blue,    (*k)+(double) k_pixels[u].blue);
+@@ -3529,7 +3529,7 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
+             k_indexes = p_indexes+x;
+             for (v=0; v <= (ssize_t) offy; v++) {
+               for (u=0; u < (ssize_t) kernel->width; u++, k--) {
+-                if ( IsNaN(*k) ) continue;
++                if ( Magick_IsNaN(*k) ) continue;
+                 Minimize(result.red,     (*k)+(double) k_pixels[u].red);
+                 Minimize(result.green,   (*k)+(double) k_pixels[u].green);
+                 Minimize(result.blue,    (*k)+(double) k_pixels[u].blue);
+@@ -3548,7 +3548,7 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
+             k_indexes = q_indexes-offx;
+               for (u=0; u < (ssize_t) offx; u++, k--) {
+                 if ( x+u-offx < 0 ) continue;  /* off the edge! */
+-                if ( IsNaN(*k) ) continue;
++                if ( Magick_IsNaN(*k) ) continue;
+                 Minimize(result.red,     (*k)+(double) k_pixels[u].red);
+                 Minimize(result.green,   (*k)+(double) k_pixels[u].green);
+                 Minimize(result.blue,    (*k)+(double) k_pixels[u].blue);
+@@ -3572,7 +3572,7 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
+             k_indexes = p_indexes+x;
+             for (v=0; v <= (ssize_t) offy; v++) {
+               for (u=0; u < (ssize_t) kernel->width; u++, k--) {
+-                if ( IsNaN(*k) ) continue;
++                if ( Magick_IsNaN(*k) ) continue;
+                 if( result.opacity > (*k)+(double) k_pixels[u].opacity )
+                   {
+                     SetMagickPixelPacket(image,&k_pixels[u],&k_indexes[u],
+@@ -3589,7 +3589,7 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
+             k_indexes = q_indexes-offx;
+               for (u=0; u < (ssize_t) offx; u++, k--) {
+                 if ( x+u-offx < 0 ) continue;  /* off the edge! */
+-                if ( IsNaN(*k) ) continue;
++                if ( Magick_IsNaN(*k) ) continue;
+                 if( result.opacity > (*k)+(double) k_pixels[u].opacity )
+                   {
+                     SetMagickPixelPacket(image,&k_pixels[u],&k_indexes[u],
+@@ -3729,7 +3729,7 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
+             k_indexes = p_indexes+x;
+             for (v=offy; v < (ssize_t) kernel->height; v++) {
+               for (u=0; u < (ssize_t) kernel->width; u++, k--) {
+-                if ( IsNaN(*k) ) continue;
++                if ( Magick_IsNaN(*k) ) continue;
+                 Minimize(result.red,     (*k)+(double) k_pixels[u].red);
+                 Minimize(result.green,   (*k)+(double) k_pixels[u].green);
+                 Minimize(result.blue,    (*k)+(double) k_pixels[u].blue);
+@@ -3748,7 +3748,7 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
+             k_indexes = q_indexes-offx;
+               for (u=offx+1; u < (ssize_t) kernel->width; u++, k--) {
+                 if ( (x+u-offx) >= (ssize_t)image->columns ) continue;
+-                if ( IsNaN(*k) ) continue;
++                if ( Magick_IsNaN(*k) ) continue;
+                 Minimize(result.red,     (*k)+(double) k_pixels[u].red);
+                 Minimize(result.green,   (*k)+(double) k_pixels[u].green);
+                 Minimize(result.blue,    (*k)+(double) k_pixels[u].blue);
+@@ -3770,7 +3770,7 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
+             k_indexes = p_indexes+x;
+             for (v=offy; v < (ssize_t) kernel->height; v++) {
+               for (u=0; u < (ssize_t) kernel->width; u++, k--) {
+-                if ( IsNaN(*k) ) continue;
++                if ( Magick_IsNaN(*k) ) continue;
+                 if( result.opacity > (*k)+(double) k_pixels[u].opacity )
+                   {
+                     SetMagickPixelPacket(image,&k_pixels[u],&k_indexes[u],
+@@ -3787,7 +3787,7 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
+             k_indexes = q_indexes-offx;
+               for (u=offx+1; u < (ssize_t) kernel->width; u++, k--) {
+                 if ( (x+u-offx) >= (ssize_t)image->columns ) continue;
+-                if ( IsNaN(*k) ) continue;
++                if ( Magick_IsNaN(*k) ) continue;
+                 if( result.opacity > (*k)+(double) k_pixels[u].opacity )
+                   {
+                     SetMagickPixelPacket(image,&k_pixels[u],&k_indexes[u],
+@@ -4837,7 +4837,7 @@ MagickExport void ScaleKernelInfo(KernelInfo *kernel,
+   neg_scale = scaling_factor/neg_scale;
+ 
+   for (i=0; i < (ssize_t) (kernel->width*kernel->height); i++)
+-    if ( ! IsNaN(kernel->values[i]) )
++    if ( ! Magick_IsNaN(kernel->values[i]) )
+       kernel->values[i] *= (kernel->values[i] >= 0) ? pos_scale : neg_scale;
+ 
+   /* convolution output range */
+@@ -4921,7 +4921,7 @@ MagickExport void ShowKernelInfo(const KernelInfo *kernel)
+     for (i=v=0; v < k->height; v++) {
+       (void) FormatLocaleFile(stderr, "%2lu:", (unsigned long) v );
+       for (u=0; u < k->width; u++, i++)
+-        if ( IsNaN(k->values[i]) )
++        if ( Magick_IsNaN(k->values[i]) )
+           (void) FormatLocaleFile(stderr," %*s", GetMagickPrecision()+3, "nan");
+         else
+           (void) FormatLocaleFile(stderr," %*.*lg", GetMagickPrecision()+3,
+@@ -5015,7 +5015,7 @@ MagickExport void ZeroKernelNans(KernelInfo *kernel)
+     ZeroKernelNans(kernel->next);
+ 
+   for (i=0; i < (kernel->width*kernel->height); i++)
+-    if ( IsNaN(kernel->values[i]) )
++    if ( Magick_IsNaN(kernel->values[i]) )
+       kernel->values[i] = 0.0;
+ 
+   return;
+diff --git a/magick/quantize.c b/magick/quantize.c
+index 5c79d99d7..2f63fcb8f 100644
+--- a/magick/quantize.c
++++ b/magick/quantize.c
+@@ -853,7 +853,7 @@ static MagickBooleanType ClassifyImageColors(QCubeInfo *cube_info,
+           error.opacity=QuantumScale*(pixel.opacity-mid.opacity);
+         distance=(double) (error.red*error.red+error.green*error.green+
+           error.blue*error.blue+error.opacity*error.opacity);
+-        if (IsNaN(distance) != 0)
++        if (Magick_IsNaN(distance) != 0)
+           distance=0.0;
+         node_info->quantize_error+=count*sqrt(distance);
+         cube_info->root->quantize_error+=node_info->quantize_error;
+@@ -957,7 +957,7 @@ static MagickBooleanType ClassifyImageColors(QCubeInfo *cube_info,
+           error.opacity=QuantumScale*(pixel.opacity-mid.opacity);
+         distance=(double) (error.red*error.red+error.green*error.green+
+           error.blue*error.blue+error.opacity*error.opacity);
+-        if (IsNaN(distance) != 0)
++        if (Magick_IsNaN(distance) != 0)
+           distance=0.0;
+         node_info->quantize_error+=count*sqrt(distance);
+         cube_info->root->quantize_error+=node_info->quantize_error;
+diff --git a/magick/quantum-private.h b/magick/quantum-private.h
+index 06cb657d5..34d260a63 100644
+--- a/magick/quantum-private.h
++++ b/magick/quantum-private.h
+@@ -331,7 +331,7 @@ static inline QuantumAny ScaleQuantumToAny(const Quantum quantum,
+ #if !defined(MAGICKCORE_HDRI_SUPPORT)
+   return((QuantumAny) ((MagickRealType) range*quantum/QuantumRange));
+ #else
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0f))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0f))
+     return((QuantumAny) 0UL);
+   if ((range*(MagickRealType) quantum/(MagickRealType) QuantumRange) >= 18446744073709551615.0)
+     return((QuantumAny) MagickULLConstant(18446744073709551615));
+@@ -372,7 +372,7 @@ static inline unsigned int ScaleQuantumToLong(const Quantum quantum)
+ #if !defined(MAGICKCORE_HDRI_SUPPORT)
+   return((unsigned int) (16843009UL*quantum));
+ #else
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0))
+     return(0U);
+   if ((16843009.0*quantum) >= 4294967295.0)
+     return(4294967295UL);
+@@ -387,7 +387,7 @@ static inline unsigned int ScaleQuantumToMap(const Quantum quantum)
+ #if !defined(MAGICKCORE_HDRI_SUPPORT)
+   return((unsigned int) quantum);
+ #else
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0))
+     return(0U);
+   return((unsigned int) (quantum+0.5));
+ #endif
+@@ -398,7 +398,7 @@ static inline unsigned short ScaleQuantumToShort(const Quantum quantum)
+ #if !defined(MAGICKCORE_HDRI_SUPPORT)
+   return((unsigned short) (257UL*quantum));
+ #else
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0))
+     return(0);
+   if ((257.0*quantum) >= 65535.0)
+     return(65535);
+@@ -451,7 +451,7 @@ static inline unsigned int ScaleQuantumToLong(const Quantum quantum)
+ #if !defined(MAGICKCORE_HDRI_SUPPORT)
+   return((unsigned int) (65537UL*quantum));
+ #else
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0f))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0f))
+     return(0U);
+   if ((65537.0f*quantum) >= 4294967295.0f)
+     return(4294967295U);
+@@ -466,7 +466,7 @@ static inline unsigned int ScaleQuantumToMap(const Quantum quantum)
+ #if !defined(MAGICKCORE_HDRI_SUPPORT)
+   return((unsigned int) quantum);
+ #else
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0f))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0f))
+     return(0U);
+   return((unsigned int) (quantum+0.5f));
+ #endif
+@@ -477,7 +477,7 @@ static inline unsigned short ScaleQuantumToShort(const Quantum quantum)
+ #if !defined(MAGICKCORE_HDRI_SUPPORT)
+   return((unsigned short) quantum);
+ #else
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0f))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0f))
+     return(0);
+   if (quantum >= 65535.0f)
+     return(65535);
+@@ -522,7 +522,7 @@ static inline unsigned int ScaleQuantumToLong(const Quantum quantum)
+ #if !defined(MAGICKCORE_HDRI_SUPPORT)
+   return((unsigned int) quantum);
+ #else
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0))
+     return(0U);
+   if ((quantum) >= 4294967295.0)
+     return(4294967295);
+@@ -538,7 +538,7 @@ static inline unsigned int ScaleQuantumToMap(const Quantum quantum)
+   return((unsigned int) ((quantum+MagickULLConstant(32768))/
+     MagickULLConstant(65537)));
+ #else
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0))
+     return(0U);
+   return((unsigned int) (quantum/65537.0+0.5));
+ #endif
+@@ -550,7 +550,7 @@ static inline unsigned short ScaleQuantumToShort(const Quantum quantum)
+   return((unsigned short) ((quantum+MagickULLConstant(32768))/
+     MagickULLConstant(65537)));
+ #else
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0))
+     return(0);
+   if ((quantum/65537.0) >= 65535.0)
+     return(65535);
+@@ -593,7 +593,7 @@ static inline unsigned int ScaleQuantumToLong(const Quantum quantum)
+ 
+ static inline unsigned int ScaleQuantumToMap(const Quantum quantum)
+ {
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0))
+     return(0U);
+   if ((quantum/281479271743489.0) >= MaxMap)
+     return((unsigned int) MaxMap);
+@@ -602,7 +602,7 @@ static inline unsigned int ScaleQuantumToMap(const Quantum quantum)
+ 
+ static inline unsigned short ScaleQuantumToShort(const Quantum quantum)
+ {
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0))
+     return(0);
+   if ((quantum/281479271743489.0) >= 65535.0)
+     return(65535);
+diff --git a/magick/quantum.h b/magick/quantum.h
+index cc19e5642..31cfe45e9 100644
+--- a/magick/quantum.h
++++ b/magick/quantum.h
+@@ -90,7 +90,7 @@ static inline Quantum ClampToQuantum(const MagickRealType quantum)
+ #if defined(MAGICKCORE_HDRI_SUPPORT)
+   return((Quantum) quantum);
+ #else
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0))
+     return((Quantum) 0);
+   if (quantum >= (MagickRealType) QuantumRange)
+     return(QuantumRange);
+@@ -104,7 +104,7 @@ static inline unsigned char ScaleQuantumToChar(const Quantum quantum)
+ #if !defined(MAGICKCORE_HDRI_SUPPORT)
+   return((unsigned char) quantum);
+ #else
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0f))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0f))
+     return(0);
+   if (quantum >= 255.0)
+     return(255);
+@@ -117,7 +117,7 @@ static inline unsigned char ScaleQuantumToChar(const Quantum quantum)
+ #if !defined(MAGICKCORE_HDRI_SUPPORT)
+   return((unsigned char) (((quantum+128UL)-((quantum+128UL) >> 8)) >> 8));
+ #else
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0f))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0f))
+     return(0);
+   if ((quantum/257.0f) >= 255.0f)
+     return(255);
+@@ -131,7 +131,7 @@ static inline unsigned char ScaleQuantumToChar(const Quantum quantum)
+   return((unsigned char) ((quantum+MagickULLConstant(8421504))/
+     MagickULLConstant(16843009)));
+ #else
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0))
+     return(0);
+   if ((quantum/16843009.0) >= 255.0)
+     return(255);
+@@ -144,7 +144,7 @@ static inline unsigned char ScaleQuantumToChar(const Quantum quantum)
+ #if !defined(MAGICKCORE_HDRI_SUPPORT)
+   return((unsigned char) (quantum/72340172838076673.0+0.5));
+ #else
+-  if ((IsNaN(quantum) != 0) || (quantum <= 0.0))
++  if ((Magick_IsNaN(quantum) != 0) || (quantum <= 0.0))
+     return(0);
+   if ((quantum/72340172838076673.0) >= 255.0)
+     return(255);
