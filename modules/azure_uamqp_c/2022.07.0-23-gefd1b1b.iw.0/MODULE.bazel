@@ -1,0 +1,7 @@
+module(
+    name = "azure_uamqp_c",
+    version = "2022.07.0-23-gefd1b1b.iw.0",
+)
+
+bazel_dep(name = "azure_c_shared_utility", version = "2022.07.0-92-g772a4f8b.iw.0")
+bazel_dep(name = "azure_macro_utils_c", version = "0.0.0-0-g5926caf4.iw.0")

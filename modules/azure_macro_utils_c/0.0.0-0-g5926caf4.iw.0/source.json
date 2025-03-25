@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/Azure/macro-utils-c/archive/5926caf4e42e98e730e6d03395788205649a3ada.tar.gz",
+  "integrity": "sha256-GyZrTJEzjy82pB8naz0TTmx9qHZNOIKfEYLtuJE7ELA=",
+  "strip_prefix": "macro-utils-c-5926caf4e42e98e730e6d03395788205649a3ada",
+  "overlay": {
+    "MODULE.bazel": "sha256-Ms+fxYBgidAMqzUHmNjWeCmvw7PCNJu37N+HZcNbJx8=",
+    "BUILD.bazel": "sha256-UYG+nI3i+pY3vFtdmelobNAh9H5gQ0QoHQNQUgcYLic="
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/Azure/azure-uamqp-c/archive/efd1b1b8b1e85d471ebd3aa1be062fb1cc6a10a1.tar.gz",
+  "integrity": "sha256-8GVjIbgwd8z/pZUUpO6mQArLSsWgkvfNVLIjK2IuLk8=",
+  "strip_prefix": "azure-uamqp-c-efd1b1b8b1e85d471ebd3aa1be062fb1cc6a10a1",
+  "overlay": {
+    "MODULE.bazel": "sha256-uZSXORKNa4ap/2sXvHdjtNZf3I0BeugV62B5K+nAtf0=",
+    "BUILD.bazel": "sha256-9yRw403bp+tAN5b+z4VULis+V7HQy5jdcs25hfD+2rY="
+  }
+}

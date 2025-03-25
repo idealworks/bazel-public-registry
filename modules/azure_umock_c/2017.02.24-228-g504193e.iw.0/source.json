@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/Azure/umock-c/archive/504193e65d1c2f6eb50c15357167600a296df7ff.tar.gz",
+  "integrity": "sha256-RQCXCUwMLlra3a2G2Pcd5YNzK9jL0jcQWR9op2C1/5I=",
+  "strip_prefix": "umock-c-504193e65d1c2f6eb50c15357167600a296df7ff",
+  "overlay": {
+    "MODULE.bazel": "sha256-pRG+55LdkBTk84dwVhSi3PnJ/gWj+GwnuZX7vy43+Qo=",
+    "BUILD.bazel": "sha256-q3e+M9qKsZjLDbctE1FMs+7UdYPaOEDSNOpsa21mO+s="
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/Azure/azure-iot-sdk-c/archive/97fef570416467598100b782ef27ceadad9ca796.tar.gz",
+  "integrity": "sha256-p3Mfg3y5g4nTpkTWDkqQzu+FWJTA8BU5OvEr25r4SaU=",
+  "strip_prefix": "azure-iot-sdk-c-97fef570416467598100b782ef27ceadad9ca796",
+  "overlay": {
+    "MODULE.bazel": "sha256-84p0JkEhEqi4prkb09jbPsckUFy2YJl3JrZln8S3M4I=",
+    "BUILD.bazel": "sha256-u3wTsKeNwGrmZTqQ0NZ0hdiejZKcWyv8Naa72urIFQg="
+  }
+}

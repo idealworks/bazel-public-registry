@@ -1,0 +1,6 @@
+module(
+    name = "azure_umock_c",
+    version = "2017.02.24-228-g504193e.iw.0",
+)
+
+bazel_dep(name = "azure_macro_utils_c", version = "0.0.0-0-g5926caf4.iw.0")

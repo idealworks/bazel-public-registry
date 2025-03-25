@@ -1,0 +1,15 @@
+cc_library(
+    name = "uamqp",
+    srcs = glob(
+        ["src/*.c"],
+        exclude = ["src/socket_listener_win32.c"],
+    ),
+    hdrs = glob(["inc/**/*.h"]),
+    copts = ["-w"],
+    includes = ["inc/"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@azure_c_shared_utility//:c_utility",
+        "@azure_macro_utils_c",
+    ],
+)

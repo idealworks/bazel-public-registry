@@ -1,0 +1,4 @@
+module(
+    name = "azure_macro_utils_c",
+    version = "0.0.0-0-g5926caf4.iw.0",
+)

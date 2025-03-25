@@ -1,0 +1,8 @@
+module(
+    name = "azure_c_shared_utility",
+    version = "2022.07.0-92-g772a4f8b.iw.0",
+)
+
+bazel_dep(name = "azure_umock_c", version = "2017.02.24-228-g504193e.iw.0")
+bazel_dep(name = "libuuid", version = "2.39.3.bcr.1")
+bazel_dep(name = "boringssl", version = "0.20250311.0")

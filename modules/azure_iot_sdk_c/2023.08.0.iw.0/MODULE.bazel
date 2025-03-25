@@ -1,0 +1,11 @@
+module(
+    name = "azure_iot_sdk_c",
+    version = "2023.08.0.iw.0",
+)
+
+bazel_dep(name = "azure_c_shared_utility", version = "2022.07.0-92-g772a4f8b.iw.0")
+bazel_dep(name = "azure_macro_utils_c", version = "0.0.0-0-g5926caf4.iw.0")
+bazel_dep(name = "azure_uamqp_c", version = "2022.07.0-23-gefd1b1b.iw.0")
+bazel_dep(name = "azure_umqtt_c", version = "2022.07.0-26-g457e5af.iw.0")
+bazel_dep(name = "azure_umock_c", version = "2017.02.24-228-g504193e.iw.0")
+bazel_dep(name = "parson", version = "0.0.0-0-g60c37844.iw.0")

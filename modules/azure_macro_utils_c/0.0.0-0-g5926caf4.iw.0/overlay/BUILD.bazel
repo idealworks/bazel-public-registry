@@ -1,0 +1,6 @@
+cc_library(
+    name = "azure_macro_utils_c",
+    hdrs = glob(["inc/**/*.h"]),
+    includes = ["inc"],
+    visibility = ["//visibility:public"],
+)

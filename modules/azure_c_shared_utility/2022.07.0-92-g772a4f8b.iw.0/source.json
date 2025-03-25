@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/Azure/azure-c-shared-utility/archive/8ee0e5d88d1771d33e36d38d392ec9d9ae13ea55.tar.gz",
+  "integrity": "sha256-fXjWBDo6NhDnnMc0YtU81/U1kK12QOTMFuyh6Oc2tLE=",
+  "strip_prefix": "azure-c-shared-utility-8ee0e5d88d1771d33e36d38d392ec9d9ae13ea55",
+  "overlay": {
+    "MODULE.bazel": "sha256-wIBmSFSFCPs6wBJj6LNut8UKUhAQg4mvxQm+04AVGck=",
+    "BUILD.bazel": "sha256-EwsdD5IR500d9KSG695f+3SznoR7RDara5neUvswkLM="
+  }
+}
