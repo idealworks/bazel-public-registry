@@ -1,0 +1,11 @@
+module(
+    name = "ros2_diagnostics",
+    version = "3.0.0.17.g9f40278.iw.jazzy.0",
+)
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "2.0.0.eddy.7")
+bazel_dep(name = "ros2_common_interfaces", version = "5.3.5-2-g5283bd9.iw.jazzy.1")
+bazel_dep(name = "ros2_pluginlib", version = "5.4.2-1-gf0c51cc.iw.jazzy.1")
+bazel_dep(name = "ros2_rclcpp", version = "28.1.5-8-gbd695f4a.iw.jazzy.1")
+bazel_dep(name = "ros2_rclpy", version = "7.1.2-2-g159aedd.iw.jazzy.1")
+bazel_dep(name = "rules_python", version = "1.2.0")
