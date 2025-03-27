@@ -1,0 +1,56 @@
+diff --git a/third-party/realsense-file/rosbag/rosbag_storage/include/rosbag/bag_player.h b/third-party/realsense-file/rosbag/rosbag_storage/include/rosbag/bag_player.h
+index 852bcff..2d399d6 100644
+--- a/third-party/realsense-file/rosbag/rosbag_storage/include/rosbag/bag_player.h
++++ b/third-party/realsense-file/rosbag/rosbag_storage/include/rosbag/bag_player.h
+@@ -78,7 +78,7 @@ class BagPlayer
+ {
+ public:
+   /* Constructor expecting the filename of a bag */
+-  BagPlayer(const std::string &filename) throw(BagException);
++  BagPlayer(const std::string &filename) /*throw(BagException)*/;
+ 
+   /* Register a callback for a specific topic and type */
+   template<class T>
+diff --git a/third-party/realsense-file/rosbag/rosbag_storage/src/bag.cpp b/third-party/realsense-file/rosbag/rosbag_storage/src/bag.cpp
+index ea5cae0..df3aa6b 100644
+--- a/third-party/realsense-file/rosbag/rosbag_storage/src/bag.cpp
++++ b/third-party/realsense-file/rosbag/rosbag_storage/src/bag.cpp
+@@ -349,7 +349,7 @@ void Bag::startReadingVersion102() {
+         // Read the file header record, which points to the start of the topic indexes
+         readFileHeaderRecord();
+     }
+-    catch (BagFormatException ex) {
++    catch (BagFormatException& ex) {
+         throw BagUnindexedException();
+     }
+ 
+diff --git a/third-party/realsense-file/rosbag/rosbag_storage/src/bag_player.cpp b/third-party/realsense-file/rosbag/rosbag_storage/src/bag_player.cpp
+index eb0c8c4..ca86a9f 100644
+--- a/third-party/realsense-file/rosbag/rosbag_storage/src/bag_player.cpp
++++ b/third-party/realsense-file/rosbag/rosbag_storage/src/bag_player.cpp
+@@ -5,7 +5,7 @@
+ namespace rosbag
+ {
+ 
+-BagPlayer::BagPlayer(const std::string &fname) throw(BagException) {
++BagPlayer::BagPlayer(const std::string &fname) /*throw(BagException)*/ {
+     bag.open(fname, rosbag::bagmode::Read);
+     rs2rosinternal::Time::init();
+     View v(bag);
+diff --git a/third-party/realsense-file/rosbag/rostime/src/time.cpp b/third-party/realsense-file/rosbag/rostime/src/time.cpp
+index 4cf9eff..2a8bd78 100644
+--- a/third-party/realsense-file/rosbag/rostime/src/time.cpp
++++ b/third-party/realsense-file/rosbag/rostime/src/time.cpp
+@@ -95,9 +95,9 @@ namespace rs2rosinternal
+    * (i.e. not exposed to users of the time classes)
+    */
+   void ros_walltime(uint32_t& sec, uint32_t& nsec) 
+-#ifndef WIN32    
+-    throw(NoHighPerformanceTimersException)
+-#endif
++// #ifndef WIN32    
++//     throw(NoHighPerformanceTimersException)
++// #endif
+   {
+ #ifndef WIN32
+ #if HAS_CLOCK_GETTIME
