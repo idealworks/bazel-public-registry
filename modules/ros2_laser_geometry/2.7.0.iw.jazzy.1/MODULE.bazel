@@ -1,0 +1,10 @@
+module(
+    name = "ros2_laser_geometry",
+    version = "2.7.0.iw.jazzy.1",
+)
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "2.0.0.eddy.7")
+bazel_dep(name = "ros2_geometry2", version = "0.36.5-2-g8fe54670.iw.jazzy.1")
+bazel_dep(name = "ros2_common_interfaces", version = "5.3.5-2-g5283bd9.iw.jazzy.1")
+bazel_dep(name = "ros2_rclcpp", version = "28.1.5-8-gbd695f4a.iw.jazzy.1")
+bazel_dep(name = "eigen", version = "3.4.0.bcr.1")

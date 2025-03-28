@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros-perception/laser_geometry/archive/7688a589389d80890204045dbbce20a873675133.tar.gz",
+  "integrity": "sha256-zz2gn8+PtZmRiQEAUd9O9BS2O1MweS89ijJsNCJRges=",
+  "strip_prefix": "laser_geometry-7688a589389d80890204045dbbce20a873675133",
+  "overlay": {
+    "MODULE.bazel": "sha256-7RkVi8FhRWUGcnzXqUwCRufNY0tRSJb1n/5FbOHguXQ=",
+    "BUILD.bazel": "sha256-VBpEgG4Kwd3uSt6aKMB96m9TR/jE9jr9sWvE8fAD77s="
+  }
+}
