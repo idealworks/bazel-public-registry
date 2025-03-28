@@ -1,0 +1,8 @@
+module(
+    name = "lips_hci_ae400_realsense_sdk",
+    version = "2.43.0-v1.0.2.0-9-g2554f30.iw.1",
+)
+
+bazel_dep(name = "libusb", version = "1.0.28")
+bazel_dep(name = "platforms", version = "0.0.11")
+bazel_dep(name = "lz4", version = "1.9.4")

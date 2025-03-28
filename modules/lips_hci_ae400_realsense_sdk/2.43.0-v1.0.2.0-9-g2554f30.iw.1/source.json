@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/lips-hci/ae400-realsense-sdk/archive/2554f30bdcbf71b5b7279fef494176f3fbd6c6c7.tar.gz",
+  "integrity": "sha256-aama89/gDsfOFuxj8RSHcrxsYEAUBMlqqdPEu7fYxaU=",
+  "strip_prefix": "ae400-realsense-sdk-2554f30bdcbf71b5b7279fef494176f3fbd6c6c7",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-ElDqlteUCqXNiwF7RVIqg0yI5zt/5tYMt91YeP1LdTc="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-60wt+IKRH2+wGO4SnSVEJdTgP+osMMP/SvHj0zHID04=",
+    "BUILD.bazel": "sha256-bMMB4RJ2woEoEKXmbRWlP2F2L2ybjp8+fvKWUzn0ggI="
+  }
+}
