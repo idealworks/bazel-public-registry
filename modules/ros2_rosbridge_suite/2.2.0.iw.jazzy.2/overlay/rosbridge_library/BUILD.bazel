@@ -1,0 +1,20 @@
+py_library(
+    name = "rosbridge_library",
+    srcs = glob(["src/rosbridge_library/**/*.py"]),
+    imports = ["src"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ros2_common_interfaces//:py_std_msgs",
+    ] + select({
+        "//:x86_64_build": [
+            "@rosbridge_suite_pip_deps_x86_64//pillow",
+            "@rosbridge_suite_pip_deps_x86_64//pymongo",
+            "@rosbridge_suite_pip_deps_x86_64//tornado",
+        ],
+        "//:aarch64_build": [
+            "@rosbridge_suite_pip_deps_aarch64//pillow",
+            "@rosbridge_suite_pip_deps_aarch64//pymongo",
+            "@rosbridge_suite_pip_deps_aarch64//tornado",
+        ],
+    }),
+)
