@@ -1,0 +1,148 @@
+load("//bzl:config.bzl", "cc_arm_gnu_toolchain_config")
+
+package(default_visibility = ["//visibility:public"])
+
+TOOLCHAIN_NAME = "aarch64_none_linux_gnu"
+
+HOST = "linux_x86_64"
+
+exports_files(glob(
+    ["**"],
+    exclude_directories = 0,
+))
+
+PREFIX = "aarch64-none-linux-gnu"
+
+VERSION = "13.3.1"
+
+TOOLS = [
+    "as",
+    "ar",
+    "c++",
+    "cpp",
+    "g++",
+    "gcc",
+    "gdb",
+    "ld",
+    "nm",
+    "objcopy",
+    "objdump",
+    "readelf",
+    "strip",
+    "size",
+]
+
+# executables.
+[
+    filegroup(
+        name = tool,
+        srcs = ["bin/{}-{}".format(PREFIX, tool)],
+    )
+    for tool in TOOLS
+]
+
+filegroup(
+    name = "include_path",
+    srcs = [
+        "{}/include".format(PREFIX),
+        "lib/gcc/{}/{}/include".format(PREFIX, VERSION),
+        "lib/gcc/{}/{}/include-fixed".format(PREFIX, VERSION),
+        "{}/include/c++/{}".format(PREFIX, VERSION),
+        "{}/include/c++/{}/{}".format(PREFIX, VERSION, PREFIX),
+    ],
+)
+
+filegroup(
+    name = "library_path",
+    srcs = [
+        PREFIX,
+        "{}/lib".format(PREFIX),
+    ],
+)
+
+filegroup(
+    name = "compiler_pieces",
+    srcs = glob([
+        "bin/**",
+        "libexec/**",
+        "{}/**".format(PREFIX),
+        "lib/**",
+        "lib/gcc/{}/**".format(PREFIX),
+    ]),
+)
+
+filegroup(
+    name = "compiler_files",
+    srcs = [":compiler_pieces"],
+)
+
+filegroup(
+    name = "ar_files",
+    srcs = [":compiler_pieces"],
+)
+
+filegroup(
+    name = "linker_files",
+    srcs = [":compiler_pieces"],
+)
+
+filegroup(
+    name = "compiler_components",
+    srcs = [":compiler_pieces"],
+)
+
+filegroup(
+    name = "empty",
+    srcs = [],
+)
+
+cc_arm_gnu_toolchain_config(
+    name = "config_{}_{}".format(TOOLCHAIN_NAME, HOST),
+    abi_version = "gnu",
+    copts = [
+        "-fPIC",
+        "-Werror",
+    ],
+    gcc_repo = "{}_{}".format(TOOLCHAIN_NAME, HOST),
+    gcc_tool = "gcc",
+    gcc_version = "11.3.1",
+    host_system_name = HOST,
+    include_path = [":include_path"],
+    include_std = True,
+    library_path = [":library_path"],
+    linkopts = [
+        "-lc",
+        "-lstdc++",
+    ],
+    toolchain_bins = ":compiler_components",
+    toolchain_identifier = "{}_{}_toolchain".format(TOOLCHAIN_NAME, HOST),
+    toolchain_prefix = "aarch64-none-linux-gnu",
+)
+
+cc_toolchain(
+    name = "cc_toolchain_{}_{}".format(TOOLCHAIN_NAME, HOST),
+    all_files = ":compiler_pieces",
+    ar_files = ":ar_files",
+    compiler_files = ":compiler_files",
+    dwp_files = ":empty",
+    linker_files = ":linker_files",
+    objcopy_files = ":objcopy",
+    strip_files = ":strip",
+    supports_param_files = 0,
+    toolchain_config = ":config_{}_{}".format(TOOLCHAIN_NAME, HOST),
+    toolchain_identifier = HOST,
+)
+
+toolchain(
+    name = "{}_{}".format(TOOLCHAIN_NAME, HOST),
+    exec_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
+    target_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:aarch64",
+    ],
+    toolchain = ":cc_toolchain_{}_{}".format(TOOLCHAIN_NAME, HOST),
+    toolchain_type = "@rules_cc//cc:toolchain_type",
+)
