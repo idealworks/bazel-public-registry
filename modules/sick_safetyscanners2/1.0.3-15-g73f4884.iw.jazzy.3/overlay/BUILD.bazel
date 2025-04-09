@@ -1,0 +1,88 @@
+load("@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl", "ros2_cpp_binary", "ros2_cpp_library")
+
+ros2_cpp_library(
+    name = "sick_safetyscanners2_lib",
+    srcs = [
+        "src/SickSafetyscannersRos2.cpp",
+        "src/utils/MessageCreator.cpp",
+    ],
+    hdrs = glob(["**/*.hpp"]) + glob(["**/*.h"]),
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@boost.chrono",
+        "@boost.date_time",
+        "@boost.system",
+        "@ros2_rclcpp//:rclcpp",
+        "@ros2_rclcpp//:rclcpp_components",
+        "@ros2_rclcpp//:rclcpp_lifecycle",
+        "@sick_safetyscanners2_interfaces//:cpp_sick_safetyscanners2_interfaces",
+        "@sick_safetyscanners_base",
+    ],
+)
+
+ros2_cpp_binary(
+    name = "sick_safetyscanners2",
+    srcs = ["src/sick_safetyscanners2_node.cpp"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":sick_safetyscanners2_lib",
+    ],
+)
+
+cc_binary(
+    name = "sick_safetyscanners2.so",
+    srcs = [
+        "src/SickSafetyscannersRos2.cpp",
+        "src/utils/MessageCreator.cpp",
+    ],
+    linkshared = True,
+    visibility = ["//visibility:public"],
+    deps = [
+        "sick_safetyscanners2_lib",
+    ],
+)
+
+ros2_cpp_library(
+    name = "sick_safetyscanners2_lifecycle_lib",
+    srcs = [
+        "src/SickSafetyscannersLifeCycle.cpp",
+        "src/utils/MessageCreator.cpp",
+    ],
+    hdrs = glob(["**/*.hpp"]) + glob(["**/*.h"]),
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@boost.chrono",
+        "@boost.date_time",
+        "@boost.system",
+        "@ros2_common_interfaces//:cpp_std_srvs",
+        "@ros2_rclcpp//:rclcpp",
+        "@ros2_rclcpp//:rclcpp_components",
+        "@ros2_rclcpp//:rclcpp_lifecycle",
+        "@sick_safetyscanners2_interfaces//:cpp_sick_safetyscanners2_interfaces",
+        "@sick_safetyscanners_base",
+    ],
+)
+
+ros2_cpp_binary(
+    name = "sick_safetyscanners2_lifecycle",
+    srcs = ["src/sick_safetyscanners2_lifecycle_node.cpp"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":sick_safetyscanners2_lifecycle_lib",
+    ],
+)
+
+cc_binary(
+    name = "sick_safetyscanners2_lifecycle.so",
+    srcs = [
+        "src/SickSafetyscannersLifeCycle.cpp",
+        "src/utils/MessageCreator.cpp",
+    ],
+    linkshared = True,
+    visibility = ["//visibility:public"],
+    deps = [
+        "sick_safetyscanners2_lifecycle_lib",
+    ],
+)

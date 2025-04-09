@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/sickag/sick_safetyscanners2/archive/68241383e681a615e7d350f0f4066d1368ce1eae.tar.gz",
+  "integrity": "sha256-FrgUFlrh/vi5ynUdHyhkKsHtJ+T+EWckUcNfp7LrZrg=",
+  "strip_prefix": "sick_safetyscanners2-68241383e681a615e7d350f0f4066d1368ce1eae",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-kf0TgJ7dkEvKqLhbHxnpyp2bnPRzcOqKwqhoDG5HH8Q="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-1kYdT5rGrSIZPDgdCsH996ACl86rI/Yn9tp7+bg1HSs=",
+    "BUILD.bazel": "sha256-5ASZKujygI0PeyKehKYr+JM8ALd6tTZ33e1Wo2XdEFg="
+  }
+}
