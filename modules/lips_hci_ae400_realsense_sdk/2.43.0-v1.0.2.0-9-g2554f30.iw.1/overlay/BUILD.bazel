@@ -69,6 +69,7 @@ cc_library(
     name = "ae400_realsense_sdk",
     srcs = glob(
         [
+            "src/*.cpp",
             "src/**/*.cpp",
             "common/utilities/time/**/*.cpp",
         ],
