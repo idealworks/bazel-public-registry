@@ -1,0 +1,17 @@
+cc_binary(
+    name = "produce_x_platform_fuzz_corpus",
+    srcs = ["produce_x_platform_fuzz_corpus/main.c"],
+    deps = ["//:aws-c-cal"],
+)
+
+cc_binary(
+    name = "run_x_platform_fuzz_corpus",
+    srcs = ["run_x_platform_fuzz_corpus/main.c"],
+    deps = ["//:aws-c-cal"],
+)
+
+cc_binary(
+    name = "sha256_profile",
+    srcs = ["sha256_profile/main.c"],
+    deps = ["//:aws-c-cal"],
+)

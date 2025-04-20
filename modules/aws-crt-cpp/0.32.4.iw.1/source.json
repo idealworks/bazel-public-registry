@@ -1,0 +1,14 @@
+{
+  "url": "https://github.com/awslabs/aws-crt-cpp/archive/f8437df651af0795e024f02a944bd464319220ee.tar.gz",
+  "integrity": "sha256-tifyZo+atRxUwxdTMDYhzlLOzGKO6uybMBao0EUfIvI=",
+  "strip_prefix": "aws-crt-cpp-f8437df651af0795e024f02a944bd464319220ee",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-JUKnr8FN/1v3f5jDeL09+34zjm4LkQ+vxpFz9QTCPhU="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-FUe863jZGGZjjkavRHnaoBnhVHpFUO8FA2hcyngvahs=",
+    "include/aws/crt/Config.h": "sha256-qKtDzX3HTek9k6Fq6WGRusQOmMniy0kwdnJ+mpYuYOY=",
+    "BUILD.bazel": "sha256-GGhliS8p/0j2d2UPiwCWnM/7W4pdD3Dm414mwj0fUeA="
+  }
+}

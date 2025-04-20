@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/awslabs/aws-c-sdkutils/archive/ba6a28fab7ed5d7f1b3b1d12eb672088be093824.tar.gz",
+  "integrity": "sha256-KIp3ZLaU8c5HXF7KaEbRoh1/63fBnOSm6RnU8ObOaRw=",
+  "strip_prefix": "aws-c-sdkutils-ba6a28fab7ed5d7f1b3b1d12eb672088be093824",
+  "overlay": {
+    "MODULE.bazel": "sha256-WKGUJDYUE5oCFKHXRdhK+kdpK2LEqrUWxb/NnbRTISk=",
+    "BUILD.bazel": "sha256-6OX5OB/ssfJTmHd9zHkxfn9a1joE0/K6BkdegFVru8g="
+  }
+}

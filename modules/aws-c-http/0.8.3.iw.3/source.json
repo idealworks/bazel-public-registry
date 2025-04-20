@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/awslabs/aws-c-http/archive/652e2febf2242d6b3562267dc0dd982375ed698e.tar.gz",
+  "integrity": "sha256-+76v6eFUkNkjSzXbT20XtX6EDbppHkZTTfW9LGqwWsM=",
+  "strip_prefix": "aws-c-http-652e2febf2242d6b3562267dc0dd982375ed698e",
+  "overlay": {
+    "MODULE.bazel": "sha256-28MkRzXbYDI2jARfd/4RzbdGoZpg1NCPuRuh8rSurh0=",
+    "bin/BUILD.bazel": "sha256-SjgJeMeb8wM79fO945k+QmaKUArGTepWq1hHuiYBspw=",
+    "BUILD.bazel": "sha256-N9tFtgl9vMn/n9lAHNi6OBKQQ7qXQQEZMAv/3pD+B1U="
+  }
+}

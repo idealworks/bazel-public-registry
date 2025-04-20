@@ -1,0 +1,22 @@
+cc_library(
+    name = "aws-checksums",
+    srcs = glob([
+        "source/*.c",
+        "include/aws/checksums/private/*.h",
+    ]) + select({
+        "@platforms//cpu:arm": glob(["source/arm/*.c"]),
+        "//conditions:default": glob(["source/intel/asm/*.c"]) + [
+            # "source/intel/intrin/crc32c_sse42_avx512.c",
+        ],
+    }),
+    hdrs = glob([
+        "include/aws/checksums/*.h",
+    ]),
+    includes = [
+        "include",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@aws-c-common",
+    ],
+)

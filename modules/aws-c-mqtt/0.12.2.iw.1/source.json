@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/awslabs/aws-c-mqtt/archive/f0cc34cb6f54e050275e3c859594c62776d46d83.tar.gz",
+  "integrity": "sha256-Rdrau3tdEIjFFh+GtKRl8DkRu0XHA7j6cW0OoMDu+p8=",
+  "strip_prefix": "aws-c-mqtt-f0cc34cb6f54e050275e3c859594c62776d46d83",
+  "overlay": {
+    "MODULE.bazel": "sha256-qASvOy2PDdLVYBoxGQ/2fsXH17a0gafXKXuW7qeR2N4=",
+    "bin/BUILD.bazel": "sha256-KsAaXbzhN72OUk3OjeTX0gykMQNHnLfxvousOcm3/Ec=",
+    "BUILD.bazel": "sha256-bKmx+SKcD3EgqzeVyRiCD7QOBhKgFtgNtiOqypsy7es="
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/awslabs/aws-c-io/archive/46974e960ab571c86e0711d4d9445e2e684b53bf.tar.gz",
+  "integrity": "sha256-gr6zivikG4ne355XrChcYNjQN2xUra1lkPe8O3gjDHE=",
+  "strip_prefix": "aws-c-io-46974e960ab571c86e0711d4d9445e2e684b53bf",
+  "overlay": {
+    "MODULE.bazel": "sha256-jIHklBG+CoT6YqD/J0yiVfUEJ9JucFmCFE2iat6WXYw=",
+    "BUILD.bazel": "sha256-bhHCBt5wt+uE5Tnuo1+OYv0677WuXl4WkgeN1hfnFZU="
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/awslabs/aws-c-common/archive/8ae8f48ebddb0ee2624d643952ac33afa5e8859e.tar.gz",
+  "integrity": "sha256-tcFdhhvFxDgj57k/keNEDNIPBBQBnmeoA3OVb/Z/KdM=",
+  "strip_prefix": "aws-c-common-8ae8f48ebddb0ee2624d643952ac33afa5e8859e",
+  "overlay": {
+    "MODULE.bazel": "sha256-LJzinOxMkuVcFNaWN5j3oT/lOgbyI4+TDlMM+q59xi0=",
+    "include/aws/common/config.h": "sha256-GbFQfmGU/tTjUxLLCbuFm/K8IiaFAd4pJcMpMzviXJ8=",
+    "bin/system_info/BUILD.bazel": "sha256-swnog29SlEeJmi83BlOvALLpqiX4hdnGEBt9M/hJzlY=",
+    "BUILD.bazel": "sha256-pRKFosh3/fCwy/H6yNjwYx+tFfTIW/ulwOIMqRm+PDQ="
+  }
+}

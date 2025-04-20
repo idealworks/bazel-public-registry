@@ -1,0 +1,15 @@
+cc_library(
+    name = "aws-c-auth",
+    srcs = glob([
+        "source/*.c",
+        "include/aws/auth/private/*.h",
+    ]),
+    hdrs = glob(["include/aws/auth/*.h"]),
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@aws-c-http",
+        "@aws-c-io",
+        "@aws-c-sdkutils",
+    ],
+)

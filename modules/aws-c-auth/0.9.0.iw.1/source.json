@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/awslabs/aws-c-auth/archive/cd9d6afcd42035d49bb2d0d3bef24b9faed57773.tar.gz",
+  "integrity": "sha256-1pcel5D6Tv4k46mfTlHBmoTgd47Wwyxk+2zYSO3VfFs=",
+  "strip_prefix": "aws-c-auth-cd9d6afcd42035d49bb2d0d3bef24b9faed57773",
+  "overlay": {
+    "MODULE.bazel": "sha256-FJyWJcx+G0keYszGOBqctM9xYszYHVtkTQM0vm+kdBk=",
+    "BUILD.bazel": "sha256-jJKDFRKL7SUDFsZtkAkDNFwVYe6KrvWNtbP6ZjLkp/Y="
+  }
+}

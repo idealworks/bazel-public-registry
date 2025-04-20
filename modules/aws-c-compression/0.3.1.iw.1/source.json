@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/awslabs/aws-c-compression/archive/f951ab2b819fc6993b6e5e6cfef64b1a1554bfc8.tar.gz",
+  "integrity": "sha256-T/cC93RZmBcGHuwXqKkqANk1bgMYnu3mWx9E/TwaGys=",
+  "strip_prefix": "aws-c-compression-f951ab2b819fc6993b6e5e6cfef64b1a1554bfc8",
+  "overlay": {
+    "MODULE.bazel": "sha256-KWnxjYi0FFveY5rmFNrsIY+sozv6GMOVGxj7YFuhYN4=",
+    "BUILD.bazel": "sha256-AQRE1mW+8mcU6b6eRI+3tNLa50BeV26+26umP6Zvmqw="
+  }
+}
