@@ -3,6 +3,7 @@
   "integrity": "sha256-SoGFY9fGY2tbJF9dItTXyAT6M/xOppdunCltJy9JZtM=",
   "strip_prefix": "aws-c-sdkutils-0.1.16",
   "overlay": {
+    "MODULE.bazel": "sha256-JLlZTBER0K4oqyZWuddpWFeTN4YjiGD2+0NMcwjrpU8=",
     "BUILD.bazel": "sha256-6OX5OB/ssfJTmHd9zHkxfn9a1joE0/K6BkdegFVru8g="
   }
 }

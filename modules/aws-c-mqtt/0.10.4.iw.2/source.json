@@ -3,6 +3,7 @@
   "integrity": "sha256-akFFb57uFdceTi7hYrNUhlgJ8mYg8eblrLI38ZD3fz8=",
   "strip_prefix": "aws-c-mqtt-0.10.4",
   "overlay": {
+    "MODULE.bazel": "sha256-mb7dxH7yvUKVLI0s1L5wJeGOqbwfRJDF1rIS/ps659I=",
     "BUILD.bazel": "sha256-W6FpZ6D5buBUh3GtZFHon+GYkVn52PTlmztNI8js1MQ=",
     "bin/BUILD.bazel": "sha256-KsAaXbzhN72OUk3OjeTX0gykMQNHnLfxvousOcm3/Ec="
   }

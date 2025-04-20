@@ -3,6 +3,7 @@
   "integrity": "sha256-UjXNLJJria55Wx5rUVjc5ZjJ55EgIItLzY0ZzgTYaYY=",
   "strip_prefix": "s2n-tls-1.4.17",
   "overlay": {
+    "MODULE.bazel": "sha256-Z6X4njcM+NCeEEuYtoc/b3Jzcfc1wBUPo0YVzvkY2AA=",
     "BUILD.bazel": "sha256-icByBreM87/AMrekltAIXCLQgoJjfUZhPiOgXpeyk7U=",
     "bin/BUILD.bazel": "sha256-fh8nLn+OSlW1g2Pj0YXa3+wPojAM2mTdROK00M+w/Xs="
   }

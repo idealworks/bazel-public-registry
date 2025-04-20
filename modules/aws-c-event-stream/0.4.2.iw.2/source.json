@@ -3,6 +3,7 @@
   "integrity": "sha256-yYuPoFwsoQqs/Ocye5KoRmnC2pXMuOfXs+MoX87Ivu4=",
   "strip_prefix": "aws-c-event-stream-0.4.2",
   "overlay": {
+    "MODULE.bazel": "sha256-5qKD2lhFHoXLAFEe1OJ3yDW/PnEBKVeif/t8UCZzXkg=",
     "BUILD.bazel": "sha256-+VNzqHqHlJw/dvhRfJdqxYV/7KLY0MhcJGl2S3jjAUw=",
     "bin/BUILD.bazel": "sha256-c4TX4vPqZlLv40/xRTq6xZVPGO1PBiwbGmyrvrQy3ao="
   }

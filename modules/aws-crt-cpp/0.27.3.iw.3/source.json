@@ -3,6 +3,7 @@
   "integrity": "sha256-gDTmTC1U5JFDIufdLjBSDNppId9ea9mV5iXoWgb92Zc=",
   "strip_prefix": "aws-crt-cpp-0.27.3",
   "overlay": {
+    "MODULE.bazel": "sha256-o3RR0+NWmZHBJvLcvFS0I0GvJCrncXo3aBf80GGW2Mw=",
     "BUILD.bazel": "sha256-zNkPu37YM4XCn7MtVEz7TswSaMQzDOEWwWqdl4EGt/s=",
     "include/aws/crt/Config.h": "sha256-S+y6drSysTgi6/djilxd52iaQeXKWr7SB5FfdeN4YsM="
   }

@@ -3,6 +3,7 @@
   "integrity": "sha256-rfg42vamCqMSaFIhBbAyYtdF9Sm8mB06xmVCQTPW+Rs=",
   "strip_prefix": "aws-c-common-0.9.23",
   "overlay": {
+    "MODULE.bazel": "sha256-l9ct55MnokNA9p3iXHjK28OG4ZXq5SoPNdSD1f7Ok20=",
     "BUILD.bazel": "sha256-pRKFosh3/fCwy/H6yNjwYx+tFfTIW/ulwOIMqRm+PDQ=",
     "bin/system_info/BUILD.bazel": "sha256-swnog29SlEeJmi83BlOvALLpqiX4hdnGEBt9M/hJzlY=",
     "include/aws/common/config.h": "sha256-GdvV/CCj61y5blQ56bc7C6gzWhuGL46RaWkkobaSxkY="
