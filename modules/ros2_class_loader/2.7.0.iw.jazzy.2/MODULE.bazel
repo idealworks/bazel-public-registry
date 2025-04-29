@@ -1,0 +1,20 @@
+module(
+    name = "ros2_class_loader",
+    version = "2.7.0.iw.jazzy.2",
+)
+
+bazel_dep(name = "console_bridge", version = "1.0.2.iw.1")
+bazel_dep(name = "ros2_rcpputils", version = "2.11.0-2-gc007186.iw.jazzy.1")
+bazel_dep(name = "rules_cc", version = "0.1.1")
+
+# needed as rootmodule
+bazel_dep(name = "rules_python", version = "1.2.0")
+
+python = use_extension(
+    "@rules_python//python/extensions:python.bzl",
+    "python",
+)
+python.toolchain(
+    is_default = True,
+    python_version = "3.12",
+)
