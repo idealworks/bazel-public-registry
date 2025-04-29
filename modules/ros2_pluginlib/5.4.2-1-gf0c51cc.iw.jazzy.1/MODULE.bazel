@@ -5,7 +5,7 @@ module(
 )
 
 bazel_dep(name = "ros2_ament_index", version = "1.8.1-1-g0a35ca6.iw.jazzy.1")
-bazel_dep(name = "ros2_class_loader", version = "2.7.0.iw.jazzy.2")
+bazel_dep(name = "ros2_class_loader", version = "2.7.0.iw.jazzy.1")
 bazel_dep(name = "ros2_rcpputils", version = "2.11.0-2-gc007186.iw.jazzy.1")
 bazel_dep(name = "ros2_rcutils", version = "6.7.2-1-g63a2414.iw.jazzy.1")
 bazel_dep(name = "tinyxml2", version = "10.0.0")
