@@ -1,0 +1,5 @@
+#pragma once
+
+#define RCLCPP_VERSION_MAJOR 28
+#define RCLCPP_VERSION_MINOR 1
+#define RCLCPP_VERSION_PATCH 5

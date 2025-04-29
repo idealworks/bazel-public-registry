@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros/class_loader/archive/refs/tags/2.7.0.tar.gz",
+  "integrity": "sha256-4u5gVBICCzXgYYUbs6+61mFrhWhCFoLzTwkD7Zu1xlc=",
+  "strip_prefix": "class_loader-2.7.0",
+  "overlay": {
+    "MODULE.bazel": "sha256-jYSZGjFUsOpwQiDdqjtM4/hCltmDWmDc13y5RZttKUM=",
+    "BUILD.bazel": "sha256-Ywqq4xO2bQRlEoYr5bJw4FEeYAGWHBgzbjh9u7EGwoI="
+  }
+}
