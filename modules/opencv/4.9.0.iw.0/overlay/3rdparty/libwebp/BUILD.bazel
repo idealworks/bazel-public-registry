@@ -1,0 +1,27 @@
+cc_library(
+    name = "libwebp",
+    srcs = glob([
+        "sharpyuv/*.c",
+        "src/dec/*.c",
+        "src/demux/*.c",
+        "src/dsp/*.c",
+        "src/enc/*.c",
+        "src/mux/*.c",
+        "src/utils/*.c",
+    ]),
+    hdrs = glob([
+        "sharpyuv/*.h",
+        "src/dec/*.h",
+        "src/dsp/*.h",
+        "src/dsp/*.c",
+        "src/enc/*.h",
+        "src/mux/*.h",
+        "src/utils/*.h",
+        "src/webp/*.h",
+    ]),
+    includes = [
+        ".",
+        "src",
+    ],
+    visibility = ["//visibility:public"],
+)

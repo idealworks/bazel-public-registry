@@ -1,0 +1,5 @@
+py_binary(
+    name = "cl_to_cpp",
+    srcs = ["cl2cpp.py"],
+    main = "cl2cpp.py",
+)

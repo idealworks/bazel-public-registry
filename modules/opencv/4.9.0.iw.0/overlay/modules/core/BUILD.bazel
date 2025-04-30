@@ -1,0 +1,187 @@
+load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
+load("//bzl:macros.bzl", "cl_to_cpp", "ocv_dispatched_file")
+
+genrule(
+    name = "data_config_h",
+    outs = ["opencv_data_config.hpp"],
+    cmd = """
+    cat > $@ <<EOF
+#define OPENCV_BUILD_DIR "/does_not_exist"
+#define OPENCV_DATA_BUILD_DIR_SEARCH_PATHS "../"
+EOF
+""",
+)
+
+DISPATCHED_FILES = {
+    "mathfuncs_core": [
+        "SSE2",
+        "AVX",
+        "AVX2",
+        "LASX",
+    ],
+    "stat": [
+        "SSE4_2",
+        "AVX2",
+        "LASX",
+    ],
+    "arithm": [
+        "SSE2",
+        "SSE4_1",
+        "AVX2",
+        "VSX3",
+        "LASX",
+    ],
+    "convert": [
+        "SSE2",
+        "AVX2",
+        "VSX3",
+        # "LASX",
+    ],
+    "convert_scale": [
+        "SSE2",
+        "AVX2",
+        # "LASX",
+    ],
+    "count_non_zero": [
+        "SSE2",
+        "AVX2",
+        # "LASX",
+    ],
+    "has_non_zero": [
+        "SSE2",
+        "AVX2",
+        # "LASX",
+    ],
+    "matmul": [
+        "SSE2",
+        "SSE4_1",
+        "AVX2",
+        "AVX512_SKX",
+        "NEON_DOTPROD",
+        # "LASX",
+    ],
+    "mean": [
+        "SSE2",
+        "AVX2",
+        # "LASX",
+    ],
+    "merge": [
+        "SSE2",
+        "AVX2",
+        # "LASX",
+    ],
+    "split": [
+        "SSE2",
+        "AVX2",
+        # "LASX",
+    ],
+    "sum": [
+        "SSE2",
+        "AVX2",
+        # "LASX",
+    ],
+}
+
+[ocv_dispatched_file(
+    name = filename,
+    optimizations = optimizations,
+) for filename, optimizations in DISPATCHED_FILES.items()]
+
+cl_to_cpp(
+    name = "core_cl_srcs",
+    srcs = glob(["src/opencl/*.cl"]),
+    module_name = "core",
+    output_name = "opencl_kernels_core",
+)
+
+cc_library(
+    name = "core",
+    srcs = glob(
+        [
+            "src/**/*.cpp",
+            "src/**/*.hpp",
+        ],
+    ) + [
+        "opencv_data_config.hpp",
+        "//:version_string_inc",
+    ] + select({
+        "@platforms//cpu:x86_64": [],
+        "//conditions:default": [],
+    }),
+    hdrs = glob([
+        "include/opencv2/*.hpp",
+        "include/opencv2/core/*.hpp",
+        "include/opencv2/core/*.h",
+        "include/opencv2/core/hal/*.hpp",
+        "include/opencv2/core/hal/*.h",
+        "include/opencv2/core/utils/*.hpp",
+        "include/opencv2/core/detail/*.hpp",
+        "include/opencv2/core/opencl/**/*.hpp",
+        "include/opencv2/core/openvx/*.hpp",
+        "include/opencv2/core/private/*.hpp",
+        "include/opencv2/core/parallel/*.hpp",
+        "include/opencv2/core/llapi/*.h",
+    ]) + [
+        ":data_config_h",
+        "//:cv_cpu_config_h",
+    ] + [":{}".format(name) for name in DISPATCHED_FILES.keys()],
+    copts = [
+        "-std=c++20",
+    ] + select({
+        "@platforms//cpu:x86_64": [
+            # "-msse3",
+            # "-msse4",
+            "-mavx2",
+            "-mf16c",
+        ],
+        "//conditions:default": [],
+    }),
+    includes = [
+        ".",
+        "include",
+        "src",
+    ],
+    local_defines = [
+        "__OPENCV_BUILD=1",
+        "HAVE_POSIX_MEMALIGN=1",
+        "PARALLEL_ENABLE_PLUGINS=1",
+        "HAVE_MALLOC_H=1",
+        "HAVE_MEMALIGN=1",
+        "HAVE_MALLOC_H=1",
+    ] + select({
+        "@platforms//cpu:x86_64": [
+            # "HAVE_SSE4_1=1",
+            # "HAVE_AVX=1",
+            # "HAVE_AVX2=1",
+            # "HAVE_SSE2=1",
+        ],
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+    deps = [
+        ":core_cl_srcs",
+        "//:custom_hal",
+        "//:cvconfig",
+        "//:opencv_modules_hpp",
+        "//3rdparty/include/opencl/1.2:CL",
+        "@eigen",
+        "@zlib",
+    ],
+)
+
+cc_library(
+    name = "test_tools",
+    hdrs = ["test/test_precomp.hpp"],
+    includes = ["test"],
+)
+
+# cc_test(
+#     name = "test_async",
+#     srcs = ["test/test_async.cpp"],
+#     deps = [
+#         ":core",
+#         ":test_tools",
+#         "//modules/ts",
+#         "//modules/imgcodecs",
+#     ],
+# )

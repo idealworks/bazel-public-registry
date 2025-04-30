@@ -1,0 +1,94 @@
+load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
+
+expand_template(
+    name = "ilmbaseconfig_h",
+    out = "IlmBaseConfig.h",
+    substitutions = {
+        "#cmakedefine PLATFORM_WINDOWS": "",
+        "#cmakedefine01 ILMBASE_FORCE_CXX03": "",
+        "#cmakedefine01 HAVE_PTHREAD": "#define HAVE_PTHREAD 1",
+        "#cmakedefine01 HAVE_POSIX_SEMAPHORES": "#define HAVE_POSIX_SEMAPHORES 1",
+        "#cmakedefine HAVE_UCONTEXT_H": "#define HAVE_UCONTEXT_H 1",
+        "#cmakedefine01 ILMBASE_HAVE_CONTROL_REGISTER_SUPPORT": "#define ILMBASE_HAVE_CONTROL_REGISTER_SUPPORT 0",
+        "#cmakedefine ILMBASE_HAVE_LARGE_STACK": "#define ILMBASE_HAVE_LARGE_STACK 0",
+        "@ILMBASE_INTERNAL_NAMESPACE_CUSTOM@": "1",
+        "@IMATH_INTERNAL_NAMESPACE@": "Imath_opencv",
+        "@IEX_INTERNAL_NAMESPACE@": "Iex_opencv",
+        "@ILMTHREAD_INTERNAL_NAMESPACE@": "IlmThread_opencv",
+        "@ILMBASE_NAMESPACE_CUSTOM@": "0",
+        "@IMATH_NAMESPACE@": "Imath",
+        "@IEX_NAMESPACE@": "Iex",
+        "@ILMTHREAD_NAMESPACE@": "IlmThread",
+        "@ILMBASE_VERSION_STRING@": "\\\"2.3.0\\\"",
+        "@ILMBASE_PACKAGE_STRING@": "\\\"IlmBase 2.3.0\\\"",
+        "@ILMBASE_VERSION_MAJOR@": "2",
+        "@ILMBASE_VERSION_MINOR@": "3",
+        "@ILMBASE_VERSION_PATCH@": "0",
+    },
+    template = "IlmBaseConfig.h.cmakein",
+)
+
+expand_template(
+    name = "openexrconfig_h",
+    out = "OpenEXRConfig.h",
+    substitutions = {
+        "#cmakedefine OPENEXR_IMF_HAVE_LINUX_PROCFS": "#define OPENEXR_IMF_HAVE_LINUX_PROCFS 1",
+        "#cmakedefine OPENEXR_IMF_HAVE_DARWIN": "",
+        "#cmakedefine OPENEXR_IMF_HAVE_COMPLETE_IOMANIP": "",
+        "#cmakedefine OPENEXR_IMF_HAVE_LARGE_STACK": "",
+        "#cmakedefine OPENEXR_IMF_HAVE_GCC_INLINE_ASM_AVX": "",
+        "#cmakedefine OPENEXR_IMF_HAVE_SYSCONF_NPROCESSORS_ONLN": "#define OPENEXR_IMF_HAVE_SYSCONF_NPROCESSORS_ONLN 1",
+        "@OPENEXR_IMF_INTERNAL_NAMESPACE_CUSTOM@": "1",
+        "@OPENEXR_IMF_INTERNAL_NAMESPACE@": "Imf_3_2",
+        "@OPENEXR_IMF_NAMESPACE_CUSTOM@": "0",
+        "@OPENEXR_IMF_NAMESPACE@": "Imf",
+        "@OPENEXR_VERSION_STRING@": "\\\"2.3.0\\\"",
+        "@OPENEXR_PACKAGE_STRING@": "\\\"OpenEXR 2.3.0\\\"",
+        "@OPENEXR_VERSION_MAJOR@": "2",
+        "@OPENEXR_VERSION_MINOR@": "3",
+        "@OPENEXR_VERSION_PATCH@": "0",
+    },
+    template = "OpenEXRConfig.h.cmakein",
+)
+
+cc_library(
+    name = "ilmimf",
+    srcs = glob(
+        [
+            "Half/half.cpp",
+            "Iex/*.cpp",
+            "IlmThread/*.cpp",
+            "Imath/*.cpp",
+            "IlmImf/*.cpp",
+        ],
+        exclude = [
+            "IlmThread/IlmThreadMutexWin32.cpp",
+            "IlmThread/IlmThreadSemaphoreWin32.cpp",
+            "IlmThread/IlmThreadWin32.cpp",
+        ],
+    ),
+    hdrs = glob([
+        "Half/*.h",
+        "Iex/Iex*.h",
+        "IlmThread/IlmThread*.h",
+        "Imath/Imath*.h",
+        "IlmImf/*.h",
+    ]) + [
+        "IlmBaseConfig.h",
+        "OpenEXRConfig.h",
+    ],
+    copts = [
+        "-Wno-error=unused-function",
+        "-Wno-error=class-memaccess",
+    ],
+    includes = [
+        ".",
+        "Half",
+        "Iex",
+        "IlmImf",
+        "IlmThread",
+        "Imath",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@zlib"],
+)

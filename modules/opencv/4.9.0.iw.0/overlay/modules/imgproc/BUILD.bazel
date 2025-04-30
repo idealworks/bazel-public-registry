@@ -1,0 +1,115 @@
+load("//bzl:macros.bzl", "cl_to_cpp", "ocv_dispatched_file")
+
+DISPATCHED_FILES = {
+    "accum": [
+        "SSE4_1",
+        "AVX",
+        "AVX2",
+    ],
+    "bilateral_filter": [
+        "SSE2",
+        "AVX2",
+    ],
+    "box_filter": [
+        "SSE2",
+        "SSE4_1",
+        "AVX2",
+    ],
+    "filter": [
+        "SSE2",
+        "SSE4_1",
+        "AVX2",
+    ],
+    "color_hsv": [
+        "SSE2",
+        "SSE4_1",
+        "AVX2",
+    ],
+    "color_rgb": [
+        "SSE2",
+        "SSE4_1",
+        "AVX2",
+    ],
+    "color_yuv": [
+        "SSE2",
+        "SSE4_1",
+        "AVX2",
+    ],
+    "median_blur": [
+        "SSE2",
+        "SSE4_1",
+        "AVX2",
+    ],
+    "morph": [
+        "SSE2",
+        "SSE4_1",
+        "AVX2",
+    ],
+    "smooth": [
+        "SSE2",
+        "SSE4_1",
+        "AVX2",
+    ],
+    "sumpixels": [
+        "SSE2",
+        "AVX2",
+        "AVX512_SKX",
+    ],
+}
+
+[ocv_dispatched_file(
+    name = filename,
+    optimizations = optimizations,
+) for filename, optimizations in DISPATCHED_FILES.items()]
+
+cl_to_cpp(
+    name = "imgproc_cl_srcs",
+    srcs = glob(["src/opencl/*.cl"]),
+    module_name = "imgproc",
+    output_name = "opencl_kernels_imgproc",
+)
+
+cc_library(
+    name = "imgproc",
+    srcs = glob(
+        [
+            "src/**/*.cpp",
+            "src/**/*.hpp",
+            "src/**/*.h",
+        ],
+        exclude = [
+            "src/imgwarp.sse4_1.cpp",
+            "src/imgwarp.lasx.cpp",
+            "src/imgwarp.avx2.cpp",
+            "src/resize.sse4_1.cpp",
+            "src/resize.avx2.cpp",
+            "src/resize.lasx.cpp",
+            "src/corner.avx.cpp",
+        ],
+    ),
+    hdrs = glob([
+        "include/opencv2/**/*.hpp",
+        "include/opencv2/**/*.h",
+    ]) + [":{}".format(name) for name in DISPATCHED_FILES.keys()],
+    copts = select({
+        "@platforms//cpu:x86_64": [
+            "-mavx",
+            "-mavx512dq",
+            "-mfma",
+            "-mxop",
+        ],
+        "//conditions:default": [],
+    }),
+    includes = [
+        "include",
+        "src",
+    ],
+    local_defines = [
+        "__OPENCV_BUILD=1",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":imgproc_cl_srcs",
+        "//modules/core",
+    ],
+)
