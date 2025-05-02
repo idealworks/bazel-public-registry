@@ -1,0 +1,34 @@
+module(
+    name = "ros2_rosbag2",
+    version = "0.26.4-26-g6091bc7d.iw.jazzy.2",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "2.0.0.eddy.1")
+bazel_dep(name = "mcap", version = "1.3.0.iw.0")
+bazel_dep(name = "pybind11", version = "2.13.6.iw.1")
+bazel_dep(name = "readerwriterqueue", version = "1.0.6.iw.1")
+bazel_dep(name = "ros2_keyboard_handler", version = "0.3.1.iw.jazzy.1")
+bazel_dep(name = "ros2_pluginlib", version = "5.4.2-1-gf0c51cc.iw.jazzy.1")
+bazel_dep(name = "ros2_rcl_interfaces", version = "2.0.2-1-g7d568ce.iw.jazzy.1")
+bazel_dep(name = "ros2_rclcpp", version = "28.1.5-8-gbd695f4a.iw.jazzy.1")
+bazel_dep(name = "ros2_rcpputils", version = "2.11.0-2-gc007186.iw.jazzy.1")
+bazel_dep(name = "ros2_rcutils", version = "6.7.2-1-g63a2414.iw.jazzy.1")
+bazel_dep(name = "ros2_rmw", version = "7.3.1-1-gc9dd78a.iw.jazzy.1")
+bazel_dep(name = "ros2_rmw_implementation", version = "2.15.3-2-gaea33b8.iw.jazzy.1")
+bazel_dep(name = "ros2_rosidl", version = "4.6.4-3-g5d91679.iw.jazzy.1")
+bazel_dep(name = "ros2_rosidl_typesupport", version = "3.2.2-1-gb43c945.iw.jazzy.1")
+bazel_dep(name = "ros2_rpyutils", version = "0.4.1-1-gff7ebbb.iw.jazzy.1")
+bazel_dep(name = "ros2cli", version = "0.32.1-3-geab6c97.iw.jazzy.1")
+bazel_dep(name = "rules_python", version = "1.2.0")
+bazel_dep(name = "sqlite3", version = "3.42.0.bcr.1")
+bazel_dep(name = "yaml-cpp", version = "0.8.0")
+bazel_dep(name = "zstd", version = "1.5.6")
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+    hub_name = "ros2_rosbag2_pip_deps",
+    python_version = "3.12",
+    requirements_lock = "//:requirements_lock.txt",
+)
+use_repo(pip, "ros2_rosbag2_pip_deps")
