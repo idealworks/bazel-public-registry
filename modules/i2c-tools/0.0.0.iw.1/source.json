@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/mozilla-b2g/i2c-tools/archive/3a8a0c5515b4890dfb412971511c932f31d93d9c.zip",
+  "integrity": "sha256-wa70xYVrwICCuwSLkEXCqggWvDelOHcQ2OzzEZnrdGI=",
+  "strip_prefix": "i2c-tools-3a8a0c5515b4890dfb412971511c932f31d93d9c",
+  "overlay": {
+    "MODULE.bazel": "sha256-q6lxa0ZwRK1nwQlu74rQIBw001enHD8PvsLk2Ym7rmE=",
+    "BUILD.bazel": "sha256-V4JaVBvbFgUjpgAfyv9aakx3POk99T92cgj6F00PnjI="
+  }
+}
+
