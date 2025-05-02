@@ -1,0 +1,191 @@
+diff --git a/rclcpp/include/rclcpp/create_generic_publisher.hpp b/rclcpp/include/rclcpp/create_generic_publisher.hpp
+index 296446f7..f636c7fd 100644
+--- a/rclcpp/include/rclcpp/create_generic_publisher.hpp
++++ b/rclcpp/include/rclcpp/create_generic_publisher.hpp
+@@ -47,15 +47,15 @@ std::shared_ptr<GenericPublisher> create_generic_publisher(
+   const std::string & topic_name,
+   const std::string & topic_type,
+   const rclcpp::QoS & qos,
++  std::shared_ptr<rcpputils::SharedLibrary> ts_lib,
+   const rclcpp::PublisherOptionsWithAllocator<AllocatorT> & options = (
+     rclcpp::PublisherOptionsWithAllocator<AllocatorT>()
+   )
+ )
+ {
+-  auto ts_lib = rclcpp::get_typesupport_library(topic_type, "rosidl_typesupport_cpp");
+   auto pub = std::make_shared<GenericPublisher>(
+     topics_interface->get_node_base_interface(),
+-    std::move(ts_lib),
++    ts_lib,
+     topic_name,
+     topic_type,
+     qos,
+diff --git a/rclcpp/include/rclcpp/create_generic_subscription.hpp b/rclcpp/include/rclcpp/create_generic_subscription.hpp
+index c2549721..637474a5 100644
+--- a/rclcpp/include/rclcpp/create_generic_subscription.hpp
++++ b/rclcpp/include/rclcpp/create_generic_subscription.hpp
+@@ -54,14 +54,12 @@ std::shared_ptr<GenericSubscription> create_generic_subscription(
+   const std::string & topic_type,
+   const rclcpp::QoS & qos,
+   CallbackT && callback,
++  std::shared_ptr<rcpputils::SharedLibrary> ts_lib,
+   const rclcpp::SubscriptionOptionsWithAllocator<AllocatorT> & options = (
+     rclcpp::SubscriptionOptionsWithAllocator<AllocatorT>()
+   )
+ )
+ {
+-  auto ts_lib = rclcpp::get_typesupport_library(
+-    topic_type, "rosidl_typesupport_cpp");
+-
+   auto allocator = options.get_allocator();
+ 
+   using rclcpp::AnySubscriptionCallback;
+@@ -71,7 +69,7 @@ std::shared_ptr<GenericSubscription> create_generic_subscription(
+ 
+   auto subscription = std::make_shared<GenericSubscription>(
+     topics_interface->get_node_base_interface(),
+-    std::move(ts_lib),
++    ts_lib,
+     topic_name,
+     topic_type,
+     qos,
+diff --git a/rclcpp/include/rclcpp/node.hpp b/rclcpp/include/rclcpp/node.hpp
+index 35863abb..bdd704b3 100644
+--- a/rclcpp/include/rclcpp/node.hpp
++++ b/rclcpp/include/rclcpp/node.hpp
+@@ -37,6 +37,8 @@
+ #include "rcl_interfaces/msg/parameter_event.hpp"
+ #include "rcl_interfaces/msg/set_parameters_result.hpp"
+ 
++#include "rcpputils/shared_library.hpp"
++
+ #include "rclcpp/callback_group.hpp"
+ #include "rclcpp/client.hpp"
+ #include "rclcpp/clock.hpp"
+@@ -1633,6 +1635,18 @@ protected:
+ private:
+   RCLCPP_DISABLE_COPY(Node)
+ 
++  std::shared_ptr<rcpputils::SharedLibrary> create_ts_lib(const std::string& topic_type) {
++    std::lock_guard<std::mutex> lock(topic_types_to_ts_libs_mutex_);
++    if (topic_types_to_ts_libs_.count(topic_type) == 0) {
++      topic_types_to_ts_libs_[topic_type] =
++          rclcpp::get_typesupport_library(topic_type, "rosidl_typesupport_cpp");
++    }
++    return topic_types_to_ts_libs_[topic_type];
++  }
++
++  std::map<std::string, std::shared_ptr<rcpputils::SharedLibrary>> topic_types_to_ts_libs_;
++  std::mutex topic_types_to_ts_libs_mutex_;
++
+   rclcpp::node_interfaces::NodeBaseInterface::SharedPtr node_base_;
+   rclcpp::node_interfaces::NodeGraphInterface::SharedPtr node_graph_;
+   rclcpp::node_interfaces::NodeLoggingInterface::SharedPtr node_logging_;
+diff --git a/rclcpp/include/rclcpp/node_impl.hpp b/rclcpp/include/rclcpp/node_impl.hpp
+index d55a23f9..e30089a4 100644
+--- a/rclcpp/include/rclcpp/node_impl.hpp
++++ b/rclcpp/include/rclcpp/node_impl.hpp
+@@ -217,6 +217,7 @@ Node::create_generic_publisher(
+     extend_name_with_sub_namespace(topic_name, this->get_sub_namespace()),
+     topic_type,
+     qos,
++    create_ts_lib(topic_type),
+     options
+   );
+ }
+@@ -236,6 +237,7 @@ Node::create_generic_subscription(
+     topic_type,
+     qos,
+     std::forward<CallbackT>(callback),
++    create_ts_lib(topic_type),
+     options
+   );
+ }
+diff --git a/rclcpp/include/rclcpp/node_interfaces/node_parameters_interface.hpp b/rclcpp/include/rclcpp/node_interfaces/node_parameters_interface.hpp
+index 301c1e32..cb43ed7f 100644
+--- a/rclcpp/include/rclcpp/node_interfaces/node_parameters_interface.hpp
++++ b/rclcpp/include/rclcpp/node_interfaces/node_parameters_interface.hpp
+@@ -19,6 +19,7 @@
+ #include <map>
+ #include <string>
+ #include <vector>
++#include <functional>
+ 
+ #include "rcl_interfaces/msg/list_parameters_result.hpp"
+ #include "rcl_interfaces/msg/parameter_descriptor.hpp"
+diff --git a/rclcpp_components/include/rclcpp_components/component_manager.hpp b/rclcpp_components/include/rclcpp_components/component_manager.hpp
+index 62382842..15f68c92 100644
+--- a/rclcpp_components/include/rclcpp_components/component_manager.hpp
++++ b/rclcpp_components/include/rclcpp_components/component_manager.hpp
+@@ -109,19 +109,6 @@ public:
+   RCLCPP_COMPONENTS_PUBLIC
+   virtual ~ComponentManager();
+ 
+-  /// Return a list of valid loadable components in a given package.
+-  /**
+-   * \param package_name name of the package
+-   * \param resource_index name of the executable
+-   * \throws ComponentManagerException if the resource was not found or a invalid resource entry
+-   * \return a list of component resources
+-   */
+-  RCLCPP_COMPONENTS_PUBLIC
+-  virtual std::vector<ComponentResource>
+-  get_component_resources(
+-    const std::string & package_name,
+-    const std::string & resource_index = "rclcpp_components") const;
+-
+   /// Instantiate a component from a dynamic library.
+   /**
+    * \param resource a component resource (class name + library path)
+diff --git a/rclcpp_components/src/component_manager.cpp b/rclcpp_components/src/component_manager.cpp
+index 7b77af9c..d4dada00 100644
+--- a/rclcpp_components/src/component_manager.cpp
++++ b/rclcpp_components/src/component_manager.cpp
+@@ -74,35 +74,7 @@ ComponentManager::~ComponentManager()
+   }
+ }
+ 
+-std::vector<ComponentManager::ComponentResource>
+-ComponentManager::get_component_resources(
+-  const std::string & package_name, const std::string & resource_index) const
+-{
+-  std::string content;
+-  std::string base_path;
+-  if (
+-    !ament_index_cpp::get_resource(
+-      resource_index, package_name, content, &base_path))
+-  {
+-    throw ComponentManagerException("Could not find requested resource in ament index");
+-  }
+ 
+-  std::vector<ComponentResource> resources;
+-  std::vector<std::string> lines = rcpputils::split(content, '\n', true);
+-  for (const auto & line : lines) {
+-    std::vector<std::string> parts = rcpputils::split(line, ';');
+-    if (parts.size() != 2) {
+-      throw ComponentManagerException("Invalid resource entry");
+-    }
+-
+-    std::string library_path = parts[1];
+-    if (!rcpputils::fs::path(library_path).is_absolute()) {
+-      library_path = base_path + "/" + library_path;
+-    }
+-    resources.push_back({parts[0], library_path});
+-  }
+-  return resources;
+-}
+ 
+ std::shared_ptr<rclcpp_components::NodeFactory>
+ ComponentManager::create_component_factory(const ComponentResource & resource)
+@@ -223,7 +195,10 @@ ComponentManager::on_load_node(
+   (void) request_header;
+ 
+   try {
+-    auto resources = get_component_resources(request->package_name);
++    if (!rcpputils::fs::exists(request->package_name)) {
++      throw ComponentManagerException("Could not find requested resource in ament index");
++    }
++    std::vector<ComponentResource> resources = {{request->plugin_name, request->package_name}};
+ 
+     for (const auto & resource : resources) {
+       if (resource.first != request->plugin_name) {

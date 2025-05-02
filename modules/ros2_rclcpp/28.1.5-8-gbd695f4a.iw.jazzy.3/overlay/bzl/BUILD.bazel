@@ -1,0 +1,4 @@
+exports_files([
+    "generate_rclcpp_interface.py",
+    "generate_rclcpp_logging_macros.py",
+])
