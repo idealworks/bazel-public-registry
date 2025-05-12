@@ -13,6 +13,7 @@ ros2_cpp_binary(
         "@com_github_alexkaravaev_csm//:csm",
         "@ros2_common_interfaces//:cpp_nav_msgs",
         "@ros2_common_interfaces//:cpp_sensor_msgs",
+        "@ros2_common_interfaces//:cpp_std_srvs",
         "@ros2_geometry2//:cpp_tf2_geometry_msgs",
         "@ros2_geometry2//:tf2_ros",
     ],

@@ -1,13 +1,10 @@
 {
-  "url": "ttps://github.com/MarcoMatteoBassa/ros2_laser_scan_matcher/c21b7a51933337863196a72779d72ed20e2c708e.tar.gz",
-  "integrity": "sha256-9G2QlGqAO91GZccfaixYYu4jaggYftqQDmPtYUJ97qM=",
-  "strip_prefix": "ros2_laser_scan_matcher-2dfce211c34dbc30b63d5099b5f3f415312f983c",
+  "url": "https://github.com/MarcoMatteoBassa/ros2_laser_scan_matcher/archive/c21b7a51933337863196a72779d72ed20e2c708e.zip",
+  "integrity": "sha256-ROE0/te3EQ83PfMNRGIbv1WzZcGQCKSkw/Dqort2GYI=",
+  "strip_prefix": "ros2_laser_scan_matcher-c21b7a51933337863196a72779d72ed20e2c708e",
   "patch_strip": 1,
-  "patches": {
-    "bazel-modifications.patch": "sha256-51xFXvh4uM68cggzmF5FF69RW5FamK81RPmyQoa/kzk="
-  },
   "overlay": {
-    "MODULE.bazel": "sha256-vCHsDgDuz2B3qOvzOGak2qq2DzVjgpSIhkPClmSP3TA=",
-    "BUILD.bazel": "sha256-uGar07GnYH/ex7qhSPgkcnZziLo/zg4VUo6mn+Cghd4="
+    "MODULE.bazel": "sha256-X/AsQBlH3ELxRA7G7ndpbRxipl9VMwDWk/do4AGTLpc=",
+    "BUILD.bazel": "sha256-G7lEIf2mVu7VtCGLIW6FiuUrYpzIkiJQLVirRFM99ls="
   }
 }
