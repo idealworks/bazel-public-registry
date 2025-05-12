@@ -1,0 +1,24 @@
+cc_library(
+    name = "aws-c-mqtt",
+    srcs = glob([
+        "source/*.c",
+        "source/request-response/*.c",
+        "source/v5/*.c",
+        "include/aws/mqtt/private/*.h",
+        "include/aws/mqtt/private/request-response/*.h",
+        "include/aws/mqtt/private/v5/*.h",
+    ]),
+    hdrs = glob([
+        "include/aws/mqtt/*.h",
+        "include/aws/mqtt/request-response/*.h",
+        "include/aws/mqtt/v5/*.h",
+    ]),
+    includes = [
+        "include",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@aws-c-common",
+        "@aws-c-http",
+    ],
+)

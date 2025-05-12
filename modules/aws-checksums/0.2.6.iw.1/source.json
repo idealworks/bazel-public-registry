@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/awslabs/aws-checksums/archive/9978ba2c33a7a259c1a6bd0f62abe26827d03b85.tar.gz",
+  "integrity": "sha256-TdUt7Ov+KlRy1NNi/rcyYj/uIvdPbgxYUv/7Z0Mu12U=",
+  "strip_prefix": "aws-checksums-9978ba2c33a7a259c1a6bd0f62abe26827d03b85",
+  "overlay": {
+    "MODULE.bazel": "sha256-KyUR1FxohTEgKSYZM964MT6bqYYbzxr35lxgmDHptwo=",
+    "BUILD.bazel": "sha256-G8E5/TVSV2RTlgiR6Bf74/XpSUasp2gcA1XauVyTuZU="
+  }
+}

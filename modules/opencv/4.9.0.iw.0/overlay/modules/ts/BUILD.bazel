@@ -1,0 +1,16 @@
+cc_library(
+    name = "ts",
+    srcs = glob([
+        "src/*.cpp",
+        "src/*.hpp",
+    ]),
+    hdrs = glob(["include/**/*.hpp"]),
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:opencv_modules_hpp",
+        "//modules/core",
+        "//modules/imgcodecs",
+        "//modules/imgproc",
+    ],
+)

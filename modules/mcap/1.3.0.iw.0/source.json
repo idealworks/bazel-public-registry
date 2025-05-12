@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/foxglove/mcap/archive/f87352f0aaae81628bdd7ffc43f7563f6bd98547.tar.gz",
+  "integrity": "sha256-y/cukBc6JKm5SUoT8oQg/MKF8l/bTwj8HMMNeOM0JTE=",
+  "strip_prefix": "mcap-f87352f0aaae81628bdd7ffc43f7563f6bd98547/cpp/mcap",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-0mqoxCBUiEFNV7epoExwEk+cDpkQY5OlFl2+hGWsVj4="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-+Sss5qvseSpMTuG0RKTE0jWQ+/NQWscGZWTtsjBpnLU=",
+    "BUILD.bazel": "sha256-1DnMY/PhvlyueD/ptCpksasGLuQEaGajVFIlytQAj3w="
+  }
+}

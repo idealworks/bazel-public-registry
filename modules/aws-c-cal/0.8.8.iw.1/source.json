@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/awslabs/aws-c-cal/archive/4805a96e694b07c89889de696418c429151f647a.tar.gz",
+  "integrity": "sha256-8w+Td5FLI95QTTh0QtODa+J9NrUJ6BSsmhWK7eX7sDg=",
+  "strip_prefix": "aws-c-cal-4805a96e694b07c89889de696418c429151f647a",
+  "overlay": {
+    "MODULE.bazel": "sha256-OGpkLfmnD5rECgybf/Qbd8SHzmKwxj5BwY5yA0n94Cc=",
+    "bin/BUILD.bazel": "sha256-LjGx2/KhrSzmzbM9mERm+lWmO24tKkPd9I7g32bTGkM=",
+    "BUILD.bazel": "sha256-dWWYDWFTs2+ZYo+DpDWsmG6k9Ga/g/0PLGAJW6C6l48="
+  }
+}

@@ -1,0 +1,26 @@
+diff --git a/inc/azure_c_shared_utility/crt_abstractions.h b/inc/azure_c_shared_utility/crt_abstractions.h
+index 9aa6fca3..3f195fea 100644
+--- a/inc/azure_c_shared_utility/crt_abstractions.h
++++ b/inc/azure_c_shared_utility/crt_abstractions.h
+@@ -112,7 +112,7 @@ MOCKABLE_FUNCTION(, int, uint64_tToString, char*, destination, size_t, destinati
+ #define ISNAN _isnan
+ #else // _MSC_VER
+ #if defined __STDC_VERSION__
+-#if ((__STDC_VERSION__  == 199901L) || (__STDC_VERSION__ == 201000L) || (__STDC_VERSION__ == 201112L) || (__STDC_VERSION__ == 201710L))
++#if ((__STDC_VERSION__  == 199901L) || (__STDC_VERSION__ == 201000L) || (__STDC_VERSION__ == 201112L) || (__STDC_VERSION__ == 201710L) || (__STDC_VERSION__ == 202311L))
+ /*C99, C11 (including GNU 4.6) or C18 compiler */
+ #define ISNAN isnan
+ #else //  ((__STDC_VERSION__  == 199901L) || (__STDC_VERSION__ == 201000L) || (__STDC_VERSION__ == 201112L) || (__STDC_VERSION__ == 201710L))
+diff --git a/src/crt_abstractions.c b/src/crt_abstractions.c
+index 0bbfa06d..5fc25fe9 100644
+--- a/src/crt_abstractions.c
++++ b/src/crt_abstractions.c
+@@ -255,7 +255,7 @@ int sprintf_s(char* dst, size_t dstSizeInBytes, const char* format, ...)
+         /*not Microsoft compiler... */
+ #if defined (__STDC_VERSION__) || (__cplusplus)
+ #if ( \
+-        ((__STDC_VERSION__  == 199901L) || (__STDC_VERSION__ == 201000L) || (__STDC_VERSION__ == 201112L) || (__STDC_VERSION__ == 201710L)) || \
++        ((__STDC_VERSION__  == 199901L) || (__STDC_VERSION__ == 201000L) || (__STDC_VERSION__ == 201112L) || (__STDC_VERSION__ == 201710L)) || (__STDC_VERSION__ == 202311L) || \
+         (defined __cplusplus) \
+     )
+         /*C99 compiler*/

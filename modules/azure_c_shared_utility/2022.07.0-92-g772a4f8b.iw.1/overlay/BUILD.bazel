@@ -1,0 +1,48 @@
+cc_library(
+    name = "pal",
+    hdrs = glob(["pal/linux/*.h"]),
+    includes = ["pal/linux/"],
+)
+
+cc_library(
+    name = "c_utility",
+    srcs = glob(
+        ["src/*.c"],
+        exclude = [
+            "src/etwxlogging.c",
+            "src/etwlogger_driver.c",
+            "src/logging_stacktrace.c",
+            "src/dns_resolver_ares.c",
+            "src/http_proxy_stub.c",
+        ],
+    ) + [
+        "adapters/agenttime.c",
+        "adapters/httpapi_compact.c",
+        "adapters/linux_time.c",
+        "adapters/linux_time.h",
+        "adapters/lock_pthreads.c",
+        "adapters/platform_linux.c",
+        "adapters/socketio_berkeley.c",
+        "adapters/threadapi_pthreads.c",
+        "adapters/tickcounter_linux.c",
+        "adapters/tlsio_openssl.c",
+        "adapters/x509_openssl.c",
+    ],
+    hdrs = glob(["inc/**/*.h"]),
+    copts = [
+        "-pthread",
+    ],
+    defines = [
+        "USE_OPENSSL",
+        "HAS_STDBOOL",
+    ],
+    includes = ["inc"],
+    linkopts = ["-lpthread"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":pal",
+        "@azure_umock_c//:umock_c",
+        "@boringssl//:ssl",
+        "@libuuid",
+    ],
+)

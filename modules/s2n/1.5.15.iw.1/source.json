@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/awslabs/s2n/archive/bb9c5991877c6a749981204131e6e47845adbe3d.tar.gz",
+  "integrity": "sha256-jTErtmklVi7seC/xhIqJNVPmEUIe5Wb4+CmVOmC44e4=",
+  "strip_prefix": "s2n-tls-bb9c5991877c6a749981204131e6e47845adbe3d",
+  "overlay": {
+    "MODULE.bazel": "sha256-EsRvAyxIS71QnnCk6G5pmuTcfziVk8pDoanHPdWkHOY=",
+    "bin/BUILD.bazel": "sha256-fh8nLn+OSlW1g2Pj0YXa3+wPojAM2mTdROK00M+w/Xs=",
+    "BUILD.bazel": "sha256-Y6RStrLDLUCybD5NwNdnaNJ2rLBtd3bTaPTga/KgtII="
+  }
+}

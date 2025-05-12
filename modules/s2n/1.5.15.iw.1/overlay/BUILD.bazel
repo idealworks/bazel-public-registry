@@ -1,0 +1,39 @@
+cc_library(
+    name = "s2n_core",
+    srcs = glob([
+        "crypto/*.c",
+        "error/*.c",
+        "stuffer/*.c",
+        "tls/*.c",
+        "tls/extensions/*.c",
+        "utils/*.c",
+    ]),
+    hdrs = glob([
+        "api/*.h",
+        "api/unstable/*.h",
+        "crypto/*.h",
+        "error/*.h",
+        "stuffer/*.h",
+        "tls/*.h",
+        "tls/extensions/*.h",
+        "utils/*.h",
+    ]),
+    copts = ["-include utils/s2n_prelude.h"],
+    includes = ["api"],
+    visibility = ["//visibility:public"],
+    deps = ["@boringssl//:ssl"],
+)
+
+cc_library(
+    name = "s2n",
+    hdrs = glob([
+        "api/*.h",
+        "api/unstable/*.h",
+    ]),
+    copts = ["-include utils/s2n_prelude.h"],
+    include_prefix = "s2n",
+    includes = ["api"],
+    strip_include_prefix = "api",
+    visibility = ["//visibility:public"],
+    deps = [":s2n_core"],
+)

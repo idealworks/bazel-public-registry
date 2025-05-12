@@ -1,0 +1,6 @@
+cc_library(
+    name = "CL",
+    hdrs = glob(["CL/*.h"]),
+    includes = ["."],
+    visibility = ["//visibility:public"],
+)

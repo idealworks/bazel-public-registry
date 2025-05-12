@@ -1,0 +1,12 @@
+diff --git a/include/mcap/types.hpp b/include/mcap/types.hpp
+index 1ec25ef47..381fd5824 100644
+--- a/include/mcap/types.hpp
++++ b/include/mcap/types.hpp
+@@ -10,6 +10,7 @@
+ #include <string>
+ #include <unordered_map>
+ #include <vector>
++#include <cstdint>
+ 
+ namespace mcap {
+ 

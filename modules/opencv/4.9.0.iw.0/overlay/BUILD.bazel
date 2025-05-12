@@ -1,0 +1,186 @@
+load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
+
+platform(
+    name = "aarch64",
+    constraint_values = [
+        "@platforms//cpu:arm64",
+        "@platforms//os:linux",
+    ],
+)
+
+cc_library(
+    name = "opencv_modules_hpp",
+    hdrs = ["opencv_modules.hpp"],
+    include_prefix = "opencv2",
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "opencv_all",
+    hdrs = ["opencv.hpp"],
+    include_prefix = "opencv2",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//modules/core",
+        "//modules/imgcodecs",
+        "//modules/imgproc",
+    ],
+)
+
+expand_template(
+    name = "cvconfig_h",
+    out = "cvconfig.h",
+    substitutions = select({
+        "@platforms//cpu:x86_64": {
+            "#cmakedefine HAVE_VA": "#undef HAVE_VA",
+            "#cmakedefine HAVE_VA_INTEL": "#undef HAVE_VA_INTEL",
+        },
+        "//conditions:default": {
+            "#cmakedefine HAVE_VA": "#undef HAVE_VA",
+            "#cmakedefine HAVE_VA_INTEL": "#undef HAVE_VA_INTEL",
+        },
+    }) | {
+        "#cmakedefine BUILD_SHARED_LIBS": "/* #undef BUILD_SHARED_LIBS */",
+        "#cmakedefine CV_ENABLE_INTRINSICS": "#define CV_ENABLE_INTRINSICS",
+        "#cmakedefine CV_DISABLE_OPTIMIZATION": "#define CV_DISABLE_OPTIMIZATION",
+        "#cmakedefine HAVE_CLAMDBLAS": "/* #undef HAVE_CLAMDBLAS */",
+        "#cmakedefine HAVE_CLAMDFFT": "/* #undef HAVE_CLAMDFFT */",
+        "#cmakedefine HAVE_CLP": "/* #undef HAVE_CLP */",
+        "#cmakedefine HAVE_CUDA": "/* #undef HAVE_CUDA */",
+        "#cmakedefine HAVE_CUBLAS": "/* #undef HAVE_CUBLAS */",
+        "#cmakedefine HAVE_CUDNN": "/* #undef HAVE_CUDNN */",
+        "#cmakedefine HAVE_CUFFT": "/* #undef HAVE_CUFFT */",
+        "#cmakedefine HAVE_DIRECTX_NV12": "/* #undef HAVE_DIRECTX_NV12 */",
+        "#cmakedefine HAVE_DIRECTX": "/* #undef HAVE_DIRECTX */",
+        "#cmakedefine HAVE_D3D11": "/* #undef HAVE_D3D11 */",
+        "#cmakedefine HAVE_D3D10": "/* #undef HAVE_D3D10 */",
+        "#cmakedefine HAVE_D3D9": "/* #undef HAVE_D3D9 */",
+        "#cmakedefine HAVE_EIGEN": "#define HAVE_EIGEN",
+        "#cmakedefine HAVE_GDAL": "/* #undef HAVE_GDAL */",
+        "#cmakedefine HAVE_HALIDE": "/* #undef HAVE_HALIDE */",
+        "#cmakedefine HAVE_VULKAN": "/* #undef HAVE_VULKAN */",
+        "#cmakedefine HAVE_INTTYPES_H 1": "/* #undef HAVE_INTTYPES_H  */",
+        "#cmakedefine HAVE_IPP_ICV": "/* #undef HAVE_IPP_ICV */",
+        "#cmakedefine HAVE_IPP_IW_LL": "/* #undef HAVE_IPP_IW_LL */",
+        "#cmakedefine HAVE_IPP_IW": "/* #undef HAVE_IPP_IW */",
+        "#cmakedefine HAVE_IPP": "/* #undef HAVE_IPP */",
+        "#cmakedefine HAVE_OPENJPEG": "#define HAVE_OPENJPEG",
+        "#cmakedefine HAVE_JASPER": "/* #undef HAVE_JASPER */",
+        "#cmakedefine HAVE_AVIF": "/* #undef HAVE_AVIF */",
+        "#cmakedefine HAVE_JPEG": "#define HAVE_JPEG",
+        "#cmakedefine HAVE_GDCM": "/* #undef HAVE_GDCM */",
+        "#cmakedefine HAVE_NVCUVID_HEADER": "/* #undef HAVE_NVCUVID_HEADER */",
+        "#cmakedefine HAVE_NVCUVID": "/* #undef HAVE_NVCUVID */",
+        "#cmakedefine HAVE_DYNLINK_NVCUVID_HEADER": "/* #undef HAVE_DYNLINK_NVCUVID_HEADER */",
+        "#cmakedefine HAVE_NVCUVENC": "/* #undef HAVE_NVCUVENC */",
+        "#cmakedefine HAVE_OPENCL_STATIC": "/* #undef HAVE_OPENCL_STATIC */",
+        "#cmakedefine HAVE_OPENCL_SVM": "/* #undef HAVE_OPENCL_SVM */",
+        "#cmakedefine HAVE_OPENCL_D3D11_NV": "#undef HAVE_OPENCL_D3D11_NV",
+        "#cmakedefine HAVE_OPENCL": "#undef HAVE_OPENCL",
+        "#cmakedefine HAVE_OPENEXR": "#define HAVE_OPENEXR",
+        "#cmakedefine HAVE_OPENGL": "/* #undef HAVE_OPENGL */",
+        "#cmakedefine HAVE_PNG": "#define HAVE_PNG",
+        "#cmakedefine HAVE_SPNG": "/* #undef HAVE_SPNG */",
+        "#cmakedefine HAVE_PTHREAD": "#define HAVE_PTHREAD",
+        "#cmakedefine HAVE_PTHREADS_PF": "#define HAVE_PTHREADS_PF",
+        "#cmakedefine HAVE_TBB": "/* #undef HAVE_TBB */",
+        "#cmakedefine HAVE_HPX": "/* #undef HAVE_HPX */",
+        "#cmakedefine HAVE_TIFF": "#define HAVE_TIFF",
+        "#cmakedefine WORDS_BIGENDIAN": "/* #undef WORDS_BIGENDIAN */",
+        "#cmakedefine HAVE_LAPACK": "/* #undef HAVE_LAPACK */",
+        "#cmakedefine ENABLE_INSTRUMENTATION": "/* #undef ENABLE_INSTRUMENTATION */",
+        "#cmakedefine HAVE_OPENVX": "/* #undef HAVE_OPENVX */",
+        "#cmakedefine OPENCV_TRACE": "#define OPENCV_TRACE",
+        "#cmakedefine HAVE_QUIRC": "/* #undef HAVE_QUIRC */",
+    },
+    template = "cmake/templates/cvconfig.h.in",
+)
+
+expand_template(
+    name = "cv_cpu_config_h",
+    out = "cv_cpu_config.h",
+    substitutions = select({
+        "@platforms//cpu:x86_64": {
+            "@OPENCV_CPU_BASELINE_DEFINITIONS_CONFIGMAKE@": """
+#define CV_CPU_COMPILE_SSE 1
+#define CV_CPU_BASELINE_COMPILE_SSE 1
+#define CV_CPU_COMPILE_SSE2 1
+#define CV_CPU_BASELINE_COMPILE_SSE2 1
+#define CV_CPU_COMPILE_SSE3 1
+#define CV_CPU_BASELINE_COMPILE_SSE3 1
+#define CV_CPU_BASELINE_FEATURES 0 \
+    , CV_CPU_SSE \
+    , CV_CPU_SSE2 \
+    , CV_CPU_SSE3 \
+        """,
+            "@OPENCV_CPU_DISPATCH_DEFINITIONS_CONFIGMAKE@": """
+#define CV_CPU_DISPATCH_COMPILE_SSE4_1 1
+#define CV_CPU_DISPATCH_COMPILE_SSE4_2 1
+#define CV_CPU_DISPATCH_COMPILE_FP16 1
+#define CV_CPU_DISPATCH_COMPILE_AVX 1
+#define CV_CPU_DISPATCH_COMPILE_AVX2 1
+#define CV_CPU_DISPATCH_COMPILE_AVX512_SKX 1
+#define CV_CPU_DISPATCH_FEATURES 0 \
+    , CV_CPU_SSE4_1 \
+    , CV_CPU_SSE4_2 \
+    , CV_CPU_FP16 \
+    , CV_CPU_AVX \
+    , CV_CPU_AVX2 \
+    , CV_CPU_AVX512_SKX \
+
+""",
+        },
+        "//conditions:default": {
+            "@OPENCV_CPU_BASELINE_DEFINITIONS_CONFIGMAKE@": """
+#undef CV_CPU_COMPILE_SSE
+#undef CV_CPU_BASELINE_COMPILE_SSE
+#undef CV_CPU_COMPILE_SSE2
+#undef CV_CPU_BASELINE_COMPILE_SSE2
+#undef CV_CPU_COMPILE_SSE3
+#undef CV_CPU_BASELINE_COMPILE_SSE3
+#define CV_CPU_BASELINE_FEATURES 0
+        """,
+            "@OPENCV_CPU_DISPATCH_DEFINITIONS_CONFIGMAKE@": """
+#undef CV_CPU_DISPATCH_COMPILE_SSE4_1
+#undef CV_CPU_DISPATCH_COMPILE_SSE4_2
+#undef CV_CPU_DISPATCH_COMPILE_FP16
+#undef CV_CPU_DISPATCH_COMPILE_AVX
+#undef CV_CPU_DISPATCH_COMPILE_AVX2
+#undef CV_CPU_DISPATCH_COMPILE_AVX512_SKX
+#define CV_CPU_DISPATCH_FEATURES 0
+""",
+        },
+    }),
+    template = "cmake/templates/cv_cpu_config.h.in",
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "cvconfig",
+    hdrs = ["//:cvconfig_h"],
+    visibility = ["//visibility:public"],
+)
+
+expand_template(
+    name = "custom_hal_h",
+    out = "custom_hal.hpp",
+    substitutions = {
+        "@_hal_includes@": "",
+    },
+    template = "cmake/templates/custom_hal.hpp.in",
+)
+
+cc_library(
+    name = "custom_hal",
+    hdrs = ["//:custom_hal_h"],
+    visibility = ["//visibility:public"],
+)
+
+genrule(
+    name = "version_string_inc",
+    outs = ["version_string.inc"],
+    cmd = """cat <<EOF >$@
+"\\\n"
+EOF""",
+    visibility = ["//visibility:public"],
+)

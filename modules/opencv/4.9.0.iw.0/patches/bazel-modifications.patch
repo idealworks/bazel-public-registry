@@ -1,0 +1,782 @@
+diff --git a/3rdparty/openexr/IlmImf/ImfDeepScanLineInputFile.cpp b/3rdparty/openexr/IlmImf/ImfDeepScanLineInputFile.cpp
+index b4246762a0..6f329f0b39 100644
+--- a/3rdparty/openexr/IlmImf/ImfDeepScanLineInputFile.cpp
++++ b/3rdparty/openexr/IlmImf/ImfDeepScanLineInputFile.cpp
+@@ -1800,7 +1800,7 @@ readSampleCountForLineBlock(InputStreamMutex* streamData,
+ 
+     
+     
+-    if(sampleCountTableDataSize>data->maxSampleCountTableSize)
++    if(sampleCountTableDataSize>static_cast<Int64>(data->maxSampleCountTableSize))
+     {
+         THROW (IEX_NAMESPACE::ArgExc, "Bad sampleCountTableDataSize read from chunk "<< lineBlockId << ": expected " << data->maxSampleCountTableSize << " or less, got "<< sampleCountTableDataSize);
+     }
+@@ -1839,7 +1839,7 @@ readSampleCountForLineBlock(InputStreamMutex* streamData,
+     //
+ 
+ 
+-    if (sampleCountTableDataSize < data->maxSampleCountTableSize)
++    if (sampleCountTableDataSize < static_cast<Int64>(data->maxSampleCountTableSize))
+     {
+         if(!data->sampleCountTableComp)
+         {
+diff --git a/3rdparty/openexr/IlmImf/ImfDeepScanLineOutputFile.cpp b/3rdparty/openexr/IlmImf/ImfDeepScanLineOutputFile.cpp
+index 5fe0be3fda..bdbd9f4d6e 100644
+--- a/3rdparty/openexr/IlmImf/ImfDeepScanLineOutputFile.cpp
++++ b/3rdparty/openexr/IlmImf/ImfDeepScanLineOutputFile.cpp
+@@ -297,8 +297,10 @@ writeLineOffsets (OPENEXR_IMF_INTERNAL_NAMESPACE::OStream &os, const vector<Int6
+ {
+     Int64 pos = os.tellp();
+ 
+-    if (pos == -1)
+-        IEX_NAMESPACE::throwErrnoExc ("Cannot determine current file position (%T).");
++    // NOTE: fix for error: comparison of integer expressions of different signedness:
++    //  'Imath_opencv::Int64' {aka 'long unsigned int'} and 'int' [-Werror=sign-compare]
++    // if (pos == -1)
++    //     IEX_NAMESPACE::throwErrnoExc ("Cannot determine current file position (%T).");
+ 
+     for (unsigned int i = 0; i < lineOffsets.size(); i++)
+         OPENEXR_IMF_INTERNAL_NAMESPACE::Xdr::write <OPENEXR_IMF_INTERNAL_NAMESPACE::StreamIO> (os, lineOffsets[i]);
+diff --git a/3rdparty/openexr/IlmImf/ImfDeepTiledInputFile.cpp b/3rdparty/openexr/IlmImf/ImfDeepTiledInputFile.cpp
+index e34f606d95..05a4ef2040 100644
+--- a/3rdparty/openexr/IlmImf/ImfDeepTiledInputFile.cpp
++++ b/3rdparty/openexr/IlmImf/ImfDeepTiledInputFile.cpp
+@@ -1953,11 +1953,13 @@ DeepTiledInputFile::totalTiles() const
+             
+         case RIPMAP_LEVELS:
+             
+-            for (int i_ly = 0; i_ly < numYLevels (); ++i_ly)
++            // NOTE: Fix for error: this 'for' clause does not guard... [-Werror=misleading-indentation]
++            for (int i_ly = 0; i_ly < numYLevels (); ++i_ly) {
+                 for (int i_lx = 0; i_lx < numXLevels (); ++i_lx)
+                     numAllTiles += numXTiles (i_lx) * numYTiles (i_ly);
+                 
+                 break;
++            }
+             
+         default:
+             
+diff --git a/3rdparty/openexr/IlmImf/ImfDeepTiledOutputFile.cpp b/3rdparty/openexr/IlmImf/ImfDeepTiledOutputFile.cpp
+index ef79135a42..f3f80e94e8 100644
+--- a/3rdparty/openexr/IlmImf/ImfDeepTiledOutputFile.cpp
++++ b/3rdparty/openexr/IlmImf/ImfDeepTiledOutputFile.cpp
+@@ -1465,13 +1465,15 @@ DeepTiledOutputFile::writeTiles (int dx1, int dx2, int dy1, int dy2,
+             swap (dy1, dy2);
+ 
+         int dyStart = dy1;
+-        int dyStop  = dy2 + 1;
++        // NOTE: Fix for error: variable 'dyStop' set but not used [-Werror=unused-but-set-variable]
++        // int dyStop  = dy2 + 1;
+         int dY      = 1;
+ 
+         if (_data->lineOrder == DECREASING_Y)
+         {
+             dyStart = dy2;
+-            dyStop  = dy1 - 1;
++            // NOTE: Fix for error: variable 'dyStop' set but not used [-Werror=unused-but-set-variable]
++            // dyStop  = dy1 - 1;
+             dY      = -1;
+         }
+ 
+diff --git a/3rdparty/openexr/IlmImf/ImfDwaCompressor.cpp b/3rdparty/openexr/IlmImf/ImfDwaCompressor.cpp
+index 7665730a17..f43feb368b 100644
+--- a/3rdparty/openexr/IlmImf/ImfDwaCompressor.cpp
++++ b/3rdparty/openexr/IlmImf/ImfDwaCompressor.cpp
+@@ -272,7 +272,7 @@ struct DwaCompressor::Classifier
+             _suffix = std::string(suffix);
+         }
+ 
+-        if (size < _suffix.length() + 1 + 2*Xdr::size<char>()) 
++        if (size_t(size) < _suffix.length() + 1 + 2*Xdr::size<char>()) 
+             throw IEX_NAMESPACE::InputExc("Error uncompressing DWA data"
+                                 " (truncated rule).");
+ 
+@@ -754,7 +754,7 @@ DwaCompressor::LossyDctDecoderBase::execute ()
+ 
+     currDcComp[0] = (unsigned short *)_packedDc;
+ 
+-    for (unsigned int comp = 1; comp < numComp; ++comp)
++    for (unsigned int comp = 1; comp < static_cast<unsigned int>(numComp); ++comp)
+         currDcComp[comp] = currDcComp[comp - 1] + numBlocksX * numBlocksY;
+ 
+     for (int blocky = 0; blocky < numBlocksY; ++blocky)
+@@ -783,7 +783,7 @@ DwaCompressor::LossyDctDecoderBase::execute ()
+ 
+             bool blockIsConstant = true;
+ 
+-            for (unsigned int comp = 0; comp < numComp; ++comp)
++            for (unsigned int comp = 0; comp < static_cast<unsigned int>(numComp); ++comp)
+             {
+ 
+                 //
+@@ -939,7 +939,7 @@ DwaCompressor::LossyDctDecoderBase::execute ()
+             // If the block has a constant value, just convert the first pixel.
+             //
+ 
+-            for (unsigned int comp = 0; comp < numComp; ++comp)
++            for (unsigned int comp = 0; comp < static_cast<unsigned int>(numComp); ++comp)
+             {
+                 if (!blockIsConstant)
+                 {
+@@ -1137,7 +1137,7 @@ DwaCompressor::LossyDctDecoderBase::execute ()
+     // Convert from HALF XDR back to FLOAT XDR.
+     //
+ 
+-    for (unsigned int chan = 0; chan < numComp; ++chan)
++    for (unsigned int chan = 0; chan < static_cast<unsigned int>(numComp); ++chan)
+     {
+ 
+         if (_type[chan] != FLOAT)
+@@ -2387,11 +2387,11 @@ DwaCompressor::uncompress
+     const char *dataPtr            = inPtr + NUM_SIZES_SINGLE * sizeof(Int64);
+ 
+     /* Both the sum and individual sizes are checked in case of overflow. */
+-    if (inSize < (headerSize + compressedSize) ||
+-        inSize < unknownCompressedSize ||
+-        inSize < acCompressedSize ||
+-        inSize < dcCompressedSize ||
+-        inSize < rleCompressedSize)
++    if (Int64(inSize) < (headerSize + compressedSize) ||
++        Int64(inSize) < unknownCompressedSize ||
++        Int64(inSize) < acCompressedSize ||
++        Int64(inSize) < dcCompressedSize ||
++        Int64(inSize) < rleCompressedSize)
+     {
+         throw IEX_NAMESPACE::InputExc("Error uncompressing DWA data"
+                             "(truncated file).");
+@@ -2423,7 +2423,7 @@ DwaCompressor::uncompress
+                                 " (corrupt header file).");
+ 
+         headerSize += ruleSize;
+-        if (inSize < headerSize + compressedSize)
++        if (Int64(inSize) < headerSize + compressedSize)
+             throw IEX_NAMESPACE::InputExc("Error uncompressing DWA data"
+                                 " (truncated file).");
+ 
+@@ -2446,7 +2446,7 @@ DwaCompressor::uncompress
+     // Allocate _outBuffer, if we haven't done so already
+     //
+ 
+-    if (_maxScanLineSize * numScanLines() > _outBufferSize) 
++    if (size_t(_maxScanLineSize * numScanLines()) > _outBufferSize) 
+     {
+         _outBufferSize = _maxScanLineSize * numScanLines();
+         if (_outBuffer != 0)
+@@ -2596,7 +2596,7 @@ DwaCompressor::uncompress
+ 
+         if (_zip->uncompress
+                     (compressedDcBuf, (int)dcCompressedSize, _packedDcBuffer)
+-            != (int)totalDcUncompressedCount * sizeof (unsigned short))
++            != (int)(totalDcUncompressedCount * sizeof (unsigned short)))
+         {
+             throw IEX_NAMESPACE::BaseExc("DC data corrupt.");
+         }
+@@ -2630,11 +2630,11 @@ DwaCompressor::uncompress
+         if (dstLen != rleUncompressedSize)
+             throw IEX_NAMESPACE::BaseExc("RLE data corrupted");
+ 
+-        if (rleUncompress
++        if (Int64(rleUncompress
+                 ((int)rleUncompressedSize, 
+                  (int)rleRawSize,
+                  (signed char *)_rleBuffer,
+-                 _planarUncBuffer[RLE]) != rleRawSize)
++                 _planarUncBuffer[RLE])) != rleRawSize)
+         {        
+             throw IEX_NAMESPACE::BaseExc("RLE data corrupted");
+         }
+@@ -2998,7 +2998,7 @@ DwaCompressor::initializeBuffers (size_t &outBufferSize)
+ 
+     if (_zip == 0) 
+         _zip = new Zip (maxLossyDctDcSize * numLossyDctChans);
+-    else if (_zip->maxRawSize() < maxLossyDctDcSize * numLossyDctChans)
++    else if (_zip->maxRawSize() < Int64(maxLossyDctDcSize * numLossyDctChans))
+     {
+         delete _zip;
+         _zip = new Zip (maxLossyDctDcSize * numLossyDctChans);
+@@ -3035,7 +3035,7 @@ DwaCompressor::initializeBuffers (size_t &outBufferSize)
+     // to Huffman encoding
+     //
+ 
+-    if (maxLossyDctAcSize * numLossyDctChans > _packedAcBufferSize)
++    if (Int64(maxLossyDctAcSize * numLossyDctChans) > _packedAcBufferSize)
+     {
+         _packedAcBufferSize = maxLossyDctAcSize * numLossyDctChans;
+         if (_packedAcBuffer != 0) 
+@@ -3047,7 +3047,7 @@ DwaCompressor::initializeBuffers (size_t &outBufferSize)
+     // _packedDcBuffer holds one quantized DCT coef per 8x8 block
+     //
+ 
+-    if (maxLossyDctDcSize * numLossyDctChans > _packedDcBufferSize)
++    if (Int64(maxLossyDctDcSize * numLossyDctChans) > _packedDcBufferSize)
+     {
+         _packedDcBufferSize = maxLossyDctDcSize * numLossyDctChans;
+         if (_packedDcBuffer != 0) 
+@@ -3055,7 +3055,7 @@ DwaCompressor::initializeBuffers (size_t &outBufferSize)
+         _packedDcBuffer     = new char[_packedDcBufferSize];
+     }
+ 
+-    if (rleBufferSize > _rleBufferSize) 
++    if (Int64(rleBufferSize) > _rleBufferSize) 
+     {
+         _rleBufferSize = rleBufferSize;
+         if (_rleBuffer != 0) 
+@@ -3116,7 +3116,7 @@ DwaCompressor::initializeBuffers (size_t &outBufferSize)
+ 
+     for (int i = 0; i < NUM_COMPRESSOR_SCHEMES; ++i)
+     {
+-        if (planarUncBufferSize[i] > _planarUncBufferSize[i]) 
++        if (Int64(planarUncBufferSize[i]) > _planarUncBufferSize[i]) 
+         {
+             _planarUncBufferSize[i] = planarUncBufferSize[i];
+             if (_planarUncBuffer[i] != 0) 
+diff --git a/3rdparty/openexr/IlmImf/ImfDwaCompressorSimd.h b/3rdparty/openexr/IlmImf/ImfDwaCompressorSimd.h
+index c14ae7a323..cc4349083d 100644
+--- a/3rdparty/openexr/IlmImf/ImfDwaCompressorSimd.h
++++ b/3rdparty/openexr/IlmImf/ImfDwaCompressorSimd.h
+@@ -101,7 +101,7 @@ class SimdAlignedBuffer64
+ 
+ #if __cplusplus >= 201103L
+         SimdAlignedBuffer64(SimdAlignedBuffer64 &&rhs) noexcept
+-            : _handle(rhs._handle), _buffer(rhs._buffer)
++            : _buffer(rhs._buffer), _handle(rhs._handle)
+         {
+             rhs._handle = nullptr;
+             rhs._buffer = nullptr;
+diff --git a/3rdparty/openexr/IlmImf/ImfFastHuf.cpp b/3rdparty/openexr/IlmImf/ImfFastHuf.cpp
+index e581c0f25a..b4129630b0 100644
+--- a/3rdparty/openexr/IlmImf/ImfFastHuf.cpp
++++ b/3rdparty/openexr/IlmImf/ImfFastHuf.cpp
+@@ -125,7 +125,7 @@ FastHufDecoder::FastHufDecoder
+     const int LONG_ZEROCODE_RUN  = 63;
+     const int SHORTEST_LONG_RUN  = 2 + LONG_ZEROCODE_RUN - SHORT_ZEROCODE_RUN;
+ 
+-    for (Int64 symbol = minSymbol; symbol <= maxSymbol; symbol++)
++    for (Int64 symbol = minSymbol; symbol <= static_cast<Int64>(maxSymbol); symbol++)
+     {
+         if (currByte - table > numBytes)
+         {
+@@ -153,7 +153,7 @@ FastHufDecoder::FastHufDecoder
+             int runLen = readBits (8, currBits, currBitCount, currByte) +
+                          SHORTEST_LONG_RUN;
+ 
+-            if (symbol + runLen > maxSymbol + 1)
++            if (symbol + runLen > static_cast<Int64>(maxSymbol + 1))
+             {
+                 throw IEX_NAMESPACE::InputExc ("Error decoding Huffman table "
+                                                "(Run beyond end of table).");
+@@ -166,7 +166,7 @@ FastHufDecoder::FastHufDecoder
+         {
+             int runLen = codeLen - SHORT_ZEROCODE_RUN + 2;
+ 
+-            if (symbol + runLen > maxSymbol + 1)
++            if (symbol + runLen > static_cast<Int64>(maxSymbol + 1))
+             {
+                 throw IEX_NAMESPACE::InputExc ("Error decoding Huffman table "
+                                                "(Run beyond end of table).");
+@@ -255,7 +255,7 @@ FastHufDecoder::FastHufDecoder
+         int codeLen = *i & 63;
+         int symbol  = *i >> 6;
+ 
+-        if (mapping[codeLen] >= _numSymbols)
++        if (mapping[codeLen] >= static_cast<Int64>(_numSymbols))
+             throw IEX_NAMESPACE::InputExc ("Huffman decode error "
+                                            "(Invalid symbol in header).");
+         
+@@ -395,7 +395,7 @@ FastHufDecoder::buildTables (Int64 *base, Int64 *offset)
+                 _tableCodeLen[i] = codeLen;
+ 
+                 Int64 id = _ljOffset[codeLen] + (value >> (64 - codeLen));
+-                if (id < _numSymbols)
++                if (id < static_cast<Int64>(_numSymbols))
+                 {
+                     _tableSymbol[i] = _idToSymbol[id];
+                 }
+@@ -667,7 +667,7 @@ FastHufDecoder::decode
+             }
+ 
+             Int64 id = _ljOffset[codeLen] + (buffer >> (64 - codeLen));
+-            if (id < _numSymbols)
++            if (id < static_cast<Int64>(_numSymbols))
+             {
+                 symbol = _idToSymbol[id];
+             }
+diff --git a/3rdparty/openexr/IlmImf/ImfHeader.cpp b/3rdparty/openexr/IlmImf/ImfHeader.cpp
+index d6b55f3c47..41fda14dd9 100644
+--- a/3rdparty/openexr/IlmImf/ImfHeader.cpp
++++ b/3rdparty/openexr/IlmImf/ImfHeader.cpp
+@@ -803,7 +803,7 @@ Header::sanityCheck (bool isTiled, bool isMultipartFile) const
+    // (only reachable for unknown types or damaged files: will have thrown earlier
+    //  for regular image types)
+    if( maxImageHeight>0 && maxImageWidth>0 && 
+-       hasChunkCount() && chunkCount()>Int64(maxImageWidth)*Int64(maxImageHeight))
++       hasChunkCount() && Int64(chunkCount())>Int64(maxImageWidth)*Int64(maxImageHeight))
+    {
+        THROW (IEX_NAMESPACE::ArgExc, "chunkCount exceeds maximum area of "
+        << Int64(maxImageWidth)*Int64(maxImageHeight) << " pixels." );
+diff --git a/3rdparty/openexr/IlmImf/ImfMultiPartOutputFile.cpp b/3rdparty/openexr/IlmImf/ImfMultiPartOutputFile.cpp
+index 8260cd223a..5f102c81f2 100644
+--- a/3rdparty/openexr/IlmImf/ImfMultiPartOutputFile.cpp
++++ b/3rdparty/openexr/IlmImf/ImfMultiPartOutputFile.cpp
+@@ -496,10 +496,10 @@ MultiPartOutputFile::Data::writeChunkTableOffsets (vector<OutputPartData*> &part
+     {
+         int chunkTableSize = getChunkOffsetTableSize(parts[i]->header,false);
+ 
+-        Int64 pos = os->tellp();
++        os->tellp();
+ 
+-        if (pos == -1)
+-            IEX_NAMESPACE::throwErrnoExc ("Cannot determine current file position (%T).");
++        // if (pos == -1)
++        //     IEX_NAMESPACE::throwErrnoExc ("Cannot determine current file position (%T).");
+ 
+         parts[i]->chunkOffsetTablePosition = os->tellp();
+ 
+diff --git a/3rdparty/openexr/IlmImf/ImfOutputFile.cpp b/3rdparty/openexr/IlmImf/ImfOutputFile.cpp
+index ff44e66648..8357d79b9b 100644
+--- a/3rdparty/openexr/IlmImf/ImfOutputFile.cpp
++++ b/3rdparty/openexr/IlmImf/ImfOutputFile.cpp
+@@ -255,8 +255,8 @@ writeLineOffsets (OPENEXR_IMF_INTERNAL_NAMESPACE::OStream &os, const vector<Int6
+ {
+     Int64 pos = os.tellp();
+ 
+-    if (pos == -1)
+-	IEX_NAMESPACE::throwErrnoExc ("Cannot determine current file position (%T).");
++ //    if (pos == -1)
++	// IEX_NAMESPACE::throwErrnoExc ("Cannot determine current file position (%T).");
+     
+     for (unsigned int i = 0; i < lineOffsets.size(); i++)
+ 	Xdr::write<StreamIO> (os, lineOffsets[i]);
+diff --git a/3rdparty/openexr/IlmImf/ImfRgbaFile.cpp b/3rdparty/openexr/IlmImf/ImfRgbaFile.cpp
+index c2b604a196..c5d295bf3a 100644
+--- a/3rdparty/openexr/IlmImf/ImfRgbaFile.cpp
++++ b/3rdparty/openexr/IlmImf/ImfRgbaFile.cpp
+@@ -169,7 +169,7 @@ cachePadding (ptrdiff_t size)
+     //
+ 
+     static int LOG2_CACHE_LINE_SIZE = 8;
+-    static const ptrdiff_t CACHE_LINE_SIZE = (1 << LOG2_CACHE_LINE_SIZE);
++    // static const ptrdiff_t CACHE_LINE_SIZE = (1 << LOG2_CACHE_LINE_SIZE);
+ 
+     int i = LOG2_CACHE_LINE_SIZE + 2;
+ 
+diff --git a/3rdparty/openexr/IlmImf/ImfScanLineInputFile.cpp b/3rdparty/openexr/IlmImf/ImfScanLineInputFile.cpp
+index c3eadb7941..fe1119ec0f 100644
+--- a/3rdparty/openexr/IlmImf/ImfScanLineInputFile.cpp
++++ b/3rdparty/openexr/IlmImf/ImfScanLineInputFile.cpp
+@@ -1418,6 +1418,8 @@ ScanLineInputFile::setFrameBuffer (const FrameBuffer &frameBuffer)
+                   case OPENEXR_IMF_INTERNAL_NAMESPACE::UINT :
+                       offset+=2;
+                       break;
++                default:
++                  break;
+               }
+               ++i;
+ 	}
+@@ -1488,6 +1490,8 @@ ScanLineInputFile::setFrameBuffer (const FrameBuffer &frameBuffer)
+                   case OPENEXR_IMF_INTERNAL_NAMESPACE::UINT :
+                       offset+=2;
+                       break;
++                default:
++                break;
+               }
+           }
+           
+diff --git a/3rdparty/openexr/IlmImf/ImfTileOffsets.cpp b/3rdparty/openexr/IlmImf/ImfTileOffsets.cpp
+index b0b40f637c..1fd8cc2408 100644
+--- a/3rdparty/openexr/IlmImf/ImfTileOffsets.cpp
++++ b/3rdparty/openexr/IlmImf/ImfTileOffsets.cpp
+@@ -279,8 +279,8 @@ TileOffsets::writeTo (OPENEXR_IMF_INTERNAL_NAMESPACE::OStream &os) const
+     
+     Int64 pos = os.tellp();
+ 
+-    if (pos == -1)
+-	IEX_NAMESPACE::throwErrnoExc ("Cannot determine current file position (%T).");
++ //    if (pos == -1)
++	// IEX_NAMESPACE::throwErrnoExc ("Cannot determine current file position (%T).");
+ 
+     for (unsigned int l = 0; l < _offsets.size(); ++l)
+ 	for (unsigned int dy = 0; dy < _offsets[l].size(); ++dy)
+diff --git a/3rdparty/openexr/IlmImf/ImfTiledOutputFile.cpp b/3rdparty/openexr/IlmImf/ImfTiledOutputFile.cpp
+index b9572d0bc2..69e2eeb7a7 100644
+--- a/3rdparty/openexr/IlmImf/ImfTiledOutputFile.cpp
++++ b/3rdparty/openexr/IlmImf/ImfTiledOutputFile.cpp
+@@ -1230,13 +1230,13 @@ TiledOutputFile::writeTiles (int dx1, int dx2, int dy1, int dy2,
+             swap (dy1, dy2);
+         
+         int dyStart = dy1;
+-	int dyStop  = dy2 + 1;
++	// int dyStop  = dy2 + 1;
+ 	int dY      = 1;
+     
+         if (_data->lineOrder == DECREASING_Y)
+         {
+             dyStart = dy2;
+-            dyStop  = dy1 - 1;
++            // dyStop  = dy1 - 1;
+             dY      = -1;
+         }
+         
+diff --git a/3rdparty/openexr/IlmThread/IlmThreadPool.cpp b/3rdparty/openexr/IlmThread/IlmThreadPool.cpp
+index 174ab98c46..a4ca753471 100644
+--- a/3rdparty/openexr/IlmThread/IlmThreadPool.cpp
++++ b/3rdparty/openexr/IlmThread/IlmThreadPool.cpp
+@@ -459,7 +459,7 @@ class NullThreadPoolProvider : public ThreadPoolProvider
+ // struct TaskGroup::Data
+ //
+ 
+-TaskGroup::Data::Data (): isEmpty (1), numPending (0)
++TaskGroup::Data::Data (): numPending (0), isEmpty (1)
+ {
+     // empty
+ }
+@@ -552,7 +552,7 @@ TaskGroup::Data::removeTask ()
+ //
+ 
+ ThreadPool::Data::Data ():
+-    provUsers (0), provider (NULL)
++    provider (NULL), provUsers (0)
+ #ifdef ILMBASE_FORCE_CXX03
+     , oldprovider (NULL)
+ #else
+diff --git a/3rdparty/openexr/Imath/ImathFun.cpp b/3rdparty/openexr/Imath/ImathFun.cpp
+index 65cf62024b..e703309d1d 100644
+--- a/3rdparty/openexr/Imath/ImathFun.cpp
++++ b/3rdparty/openexr/Imath/ImathFun.cpp
+@@ -48,7 +48,7 @@ succf (float f)
+     {
+         // Nan or infinity; don't change value.
+     }
+-    else if (u.i == 0x00000000 || u.i == 0x80000000)
++    else if (u.i == 0x00000000 || u.i == static_cast<int>(0x80000000))
+     {
+         // Plus or minus zero.
+ 
+@@ -83,7 +83,7 @@ predf (float f)
+     {
+         // Nan or infinity; don't change value.
+     }
+-    else if (u.i == 0x00000000 || u.i == 0x80000000)
++    else if (u.i == 0x00000000 || u.i == static_cast<int>(0x80000000))
+     {
+         // Plus or minus zero.
+ 
+diff --git a/3rdparty/openexr/Imath/ImathMatrixAlgo.cpp b/3rdparty/openexr/Imath/ImathMatrixAlgo.cpp
+index 0cafd5c060..3f6396872b 100644
+--- a/3rdparty/openexr/Imath/ImathMatrixAlgo.cpp
++++ b/3rdparty/openexr/Imath/ImathMatrixAlgo.cpp
+@@ -115,7 +115,7 @@ procrustesRotationAndTranslation (const Vec3<T>* A, const Vec3<T>* B, const T* w
+ 
+     if (weights == 0)
+     {
+-        for (int i = 0; i < numPoints; ++i)
++        for (size_t i = 0; i < numPoints; ++i)
+         {
+             Acenter += (V3d) A[i];
+             Bcenter += (V3d) B[i];
+@@ -124,7 +124,7 @@ procrustesRotationAndTranslation (const Vec3<T>* A, const Vec3<T>* B, const T* w
+     }
+     else
+     {
+-        for (int i = 0; i < numPoints; ++i)
++        for (size_t i = 0; i < numPoints; ++i)
+         {
+             const double w = weights[i];
+             weightsSum += w;
+@@ -152,12 +152,12 @@ procrustesRotationAndTranslation (const Vec3<T>* A, const Vec3<T>* B, const T* w
+     M33d C (0.0);
+     if (weights == 0)
+     {
+-        for (int i = 0; i < numPoints; ++i)
++        for (size_t i = 0; i < numPoints; ++i)
+             C += outerProduct ((V3d) B[i] - Bcenter, (V3d) A[i] - Acenter);
+     }
+     else
+     {
+-        for (int i = 0; i < numPoints; ++i)
++        for (size_t i = 0; i < numPoints; ++i)
+         {
+             const double w = weights[i];
+             C += outerProduct (w * ((V3d) B[i] - Bcenter), (V3d) A[i] - Acenter);
+@@ -197,12 +197,12 @@ procrustesRotationAndTranslation (const Vec3<T>* A, const Vec3<T>* B, const T* w
+         KahanSum traceATA;
+         if (weights == 0)
+         {
+-            for (int i = 0; i < numPoints; ++i)
++            for (size_t i = 0; i < numPoints; ++i)
+                 traceATA += ((V3d) A[i] - Acenter).length2();
+         }
+         else
+         {
+-            for (int i = 0; i < numPoints; ++i)
++            for (size_t i = 0; i < numPoints; ++i)
+                 traceATA += ((double) weights[i]) * ((V3d) A[i] - Acenter).length2();
+         }
+ 
+diff --git a/3rdparty/zlib/gzlib.c b/3rdparty/zlib/gzlib.c
+index 29fc4486fb..6a515f308a 100644
+--- a/3rdparty/zlib/gzlib.c
++++ b/3rdparty/zlib/gzlib.c
+@@ -4,6 +4,7 @@
+  */
+ 
+ #include "gzguts.h"
++#include "unistd.h"
+ 
+ #if defined(_WIN32) && !defined(__BORLANDC__)
+ #  define LSEEK _lseeki64
+diff --git a/3rdparty/zlib/gzread.c b/3rdparty/zlib/gzread.c
+index 4168cbc887..75a7945d8f 100644
+--- a/3rdparty/zlib/gzread.c
++++ b/3rdparty/zlib/gzread.c
+@@ -4,6 +4,7 @@
+  */
+ 
+ #include "gzguts.h"
++#include "unistd.h"
+ 
+ /* Use read() to load a buffer -- return -1 on error, otherwise 0.  Read from
+    state->fd, and update state->eof, state->err, and state->msg as appropriate.
+diff --git a/3rdparty/zlib/gzwrite.c b/3rdparty/zlib/gzwrite.c
+index 435b4621b5..0a8eac50b3 100644
+--- a/3rdparty/zlib/gzwrite.c
++++ b/3rdparty/zlib/gzwrite.c
+@@ -4,6 +4,7 @@
+  */
+ 
+ #include "gzguts.h"
++#include "unistd.h"
+ 
+ /* Initialize state for writing a gzip file.  Mark initialization by setting
+    state->size to non-zero.  Return -1 on a memory allocation failure, or 0 on
+diff --git a/modules/core/src/rand.cpp b/modules/core/src/rand.cpp
+index 0647c95486..df24e6bc56 100644
+--- a/modules/core/src/rand.cpp
++++ b/modules/core/src/rand.cpp
+@@ -758,16 +758,31 @@ cvRandArr( CvRNG* _rng, CvArr* arr, int disttype, CvScalar param1, CvScalar para
+ {
+     cv::Mat mat = cv::cvarrToMat(arr);
+     // !!! this will only work for current 64-bit MWC RNG !!!
+-    cv::RNG& rng = _rng ? (cv::RNG&)*_rng : cv::theRNG();
++    // cv::RNG& rng = _rng ? (cv::RNG&)*_rng : cv::theRNG();
++    // rng.fill(mat, disttype == CV_RAND_NORMAL ?
++    //     cv::RNG::NORMAL : cv::RNG::UNIFORM, cv::Scalar(param1), cv::Scalar(param2) );
++    // NOTE: Fix for error: 
++    // error: casting 'CvRNG' {aka 'long unsigned int'} to 'cv::RNG&' does not use 'cv::RNG::RNG(uint64
++    // )' [-Werror=cast-user-defined]
++    //  761 |     cv::RNG& rng = _rng ? (cv::RNG&)*_rng : cv::theRNG();
++    cv::RNG rng = _rng ? cv::RNG(*_rng) : cv::theRNG();
+     rng.fill(mat, disttype == CV_RAND_NORMAL ?
+         cv::RNG::NORMAL : cv::RNG::UNIFORM, cv::Scalar(param1), cv::Scalar(param2) );
++    if(_rng) *_rng = rng.state;
+ }
+ 
+ CV_IMPL void cvRandShuffle( CvArr* arr, CvRNG* _rng, double iter_factor )
+ {
+     cv::Mat dst = cv::cvarrToMat(arr);
+-    cv::RNG& rng = _rng ? (cv::RNG&)*_rng : cv::theRNG();
++    // cv::RNG& rng = _rng ? (cv::RNG&)*_rng : cv::theRNG();
++    // cv::randShuffle( dst, iter_factor, &rng );
++    // NOTE:fix for error:
++    //  error: casting 'CvRNG' {aka 'long unsigned int'} to 'cv::RNG&' does not use 'cv::RNG::RNG(uint64
++    // )' [-Werror=cast-user-defined]
++    //   769 |     cv::RNG& rng = _rng ? (cv::RNG&)*_rng : cv::theRNG();
++    cv::RNG rng = _rng ? cv::RNG(*_rng) : cv::theRNG();
+     cv::randShuffle( dst, iter_factor, &rng );
++    if(_rng) *_rng = rng.state;
+ }
+ 
+ #endif  // OPENCV_EXCLUDE_C_API
+diff --git a/modules/imgcodecs/src/grfmt_jpeg2000_openjpeg.cpp b/modules/imgcodecs/src/grfmt_jpeg2000_openjpeg.cpp
+index c5b1a292cc..24488825b2 100644
+--- a/modules/imgcodecs/src/grfmt_jpeg2000_openjpeg.cpp
++++ b/modules/imgcodecs/src/grfmt_jpeg2000_openjpeg.cpp
+@@ -718,7 +718,7 @@ bool Jpeg2KOpjEncoder::write(const Mat& img, const std::vector<int>& params)
+     std::vector<opj_image_cmptparm_t> compparams(channels);
+     for (int i = 0; i < channels; i++) {
+         compparams[i].prec = outPrec;
+-        compparams[i].bpp = outPrec;
++        // compparams[i].bpp = outPrec;
+         compparams[i].sgnd = 0; // unsigned for now
+         compparams[i].dx = parameters.subsampling_dx;
+         compparams[i].dy = parameters.subsampling_dy;
+diff --git a/modules/imgproc/src/color_lab.cpp b/modules/imgproc/src/color_lab.cpp
+index fdf797808a..76cfe456fb 100644
+--- a/modules/imgproc/src/color_lab.cpp
++++ b/modules/imgproc/src/color_lab.cpp
+@@ -2005,14 +2005,14 @@ struct RGB2Lab_f
+                     b_vec0 = v_cvt_f32(i_bvec0); b_vec1 = v_cvt_f32(i_bvec1);
+ 
+                     /* dst[i] = L*100.0f */
+-                    v_float32 v100dBase = vx_setall_f32(100.0f/LAB_BASE);
++                    v_float32 v100dBase = vx_setall_f32(100.0f/static_cast<float>(LAB_BASE));
+                     l_vec0 = v_mul(l_vec0, v100dBase);
+                     l_vec1 = v_mul(l_vec1, v100dBase);
+                     /*
+                     dst[i + 1] = a*256.0f - 128.0f;
+                     dst[i + 2] = b*256.0f - 128.0f;
+                     */
+-                    v_float32 v256dBase = vx_setall_f32(256.0f/LAB_BASE), vm128 = vx_setall_f32(-128.f);
++                    v_float32 v256dBase = vx_setall_f32(256.0f/static_cast<float>(LAB_BASE)), vm128 = vx_setall_f32(-128.f);
+                     a_vec0 = v_fma(a_vec0, v256dBase, vm128);
+                     a_vec1 = v_fma(a_vec1, v256dBase, vm128);
+                     b_vec0 = v_fma(b_vec0, v256dBase, vm128);
+@@ -2030,10 +2030,11 @@ struct RGB2Lab_f
+                 float G = clip(src[1]);
+                 float B = clip(src[bIdx^2]);
+ 
+-                int iR = cvRound(R*LAB_BASE), iG = cvRound(G*LAB_BASE), iB = cvRound(B*LAB_BASE);
++                float lab_base_f = static_cast<float>(LAB_BASE);
++                int iR = cvRound(R*lab_base_f), iG = cvRound(G*lab_base_f), iB = cvRound(B*lab_base_f);
+                 int iL, ia, ib;
+                 trilinearInterpolate(iR, iG, iB, LABLUVLUTs16.RGB2LabLUT_s16, iL, ia, ib);
+-                float L = iL*1.0f/LAB_BASE, a = ia*1.0f/LAB_BASE, b = ib*1.0f/LAB_BASE;
++                float L = iL*1.0f/lab_base_f, a = ia*1.0f/lab_base_f, b = ib*1.0f/lab_base_f;
+ 
+                 dst[i] = L*100.0f;
+                 dst[i + 1] = a*256.0f - 128.0f;
+diff --git a/modules/imgproc/src/drawing.cpp b/modules/imgproc/src/drawing.cpp
+index d69007a320..a543770dba 100644
+--- a/modules/imgproc/src/drawing.cpp
++++ b/modules/imgproc/src/drawing.cpp
+@@ -1026,8 +1026,8 @@ EllipseEx( Mat& img, Point2l center, Size2l axes,
+     for (unsigned int i = 0; i < _v.size(); ++i)
+     {
+         Point2l pt;
+-        pt.x = (int64)cvRound(_v[i].x / XY_ONE) << XY_SHIFT;
+-        pt.y = (int64)cvRound(_v[i].y / XY_ONE) << XY_SHIFT;
++        pt.x = (int64)cvRound(_v[i].x / static_cast<double>(XY_ONE)) << XY_SHIFT;
++        pt.y = (int64)cvRound(_v[i].y / static_cast<double>(XY_ONE)) << XY_SHIFT;
+         pt.x += cvRound(_v[i].x - pt.x);
+         pt.y += cvRound(_v[i].y - pt.y);
+         if (pt != prevPt) {
+@@ -1653,7 +1653,7 @@ static void
+ ThickLine( Mat& img, Point2l p0, Point2l p1, const void* color,
+            int thickness, int line_type, int flags, int shift )
+ {
+-    static const double INV_XY_ONE = 1./XY_ONE;
++    static const double INV_XY_ONE = 1./static_cast<double>(XY_ONE);
+ 
+     p0.x <<= XY_SHIFT - shift;
+     p0.y <<= XY_SHIFT - shift;
+@@ -1989,8 +1989,8 @@ void ellipse(InputOutputArray _img, const RotatedRect& box, const Scalar& color,
+     int _angle = cvRound(box.angle);
+     Point2l center(cvRound(box.center.x),
+                  cvRound(box.center.y));
+-    center.x = (center.x << XY_SHIFT) + cvRound((box.center.x - center.x)*XY_ONE);
+-    center.y = (center.y << XY_SHIFT) + cvRound((box.center.y - center.y)*XY_ONE);
++    center.x = (center.x << XY_SHIFT) + cvRound((box.center.x - center.x)*static_cast<float>(XY_ONE));
++    center.y = (center.y << XY_SHIFT) + cvRound((box.center.y - center.y)*static_cast<float>(XY_ONE));
+     Size2l axes(cvRound(box.size.width),
+               cvRound(box.size.height));
+     axes.width  = (axes.width  << (XY_SHIFT - 1)) + cvRound((box.size.width - axes.width)*(XY_ONE>>1));
+@@ -2308,7 +2308,7 @@ void putText( InputOutputArray _img, const String& text, Point org,
+     scalarToRawData(color, buf, img.type(), 0);
+ 
+     int base_line = -(ascii[0] & 15);
+-    int hscale = cvRound(fontScale*XY_ONE), vscale = hscale;
++    int hscale = cvRound(fontScale*static_cast<double>(XY_ONE)), vscale = hscale;
+ 
+     if( line_type == CV_AA && img.depth() != CV_8U )
+         line_type = 8;
+diff --git a/modules/imgproc/src/generalized_hough.cpp b/modules/imgproc/src/generalized_hough.cpp
+index 5ff9f933ed..e6a827e33d 100644
+--- a/modules/imgproc/src/generalized_hough.cpp
++++ b/modules/imgproc/src/generalized_hough.cpp
+@@ -692,7 +692,7 @@ namespace
+         getContourPoints(edges, dx, dy, points);
+ 
+         features.resize(levels_ + 1);
+-        std::for_each(features.begin(), features.end(), [=](std::vector<Feature>& e) { e.clear(); e.reserve(maxBufferSize_); });
++        std::for_each(features.begin(), features.end(), [maxBufferSize_=maxBufferSize_](std::vector<Feature>& e) { e.clear(); e.reserve(maxBufferSize_); });
+ 
+         for (size_t i = 0; i < points.size(); ++i)
+         {
+diff --git a/modules/imgproc/src/histogram.cpp b/modules/imgproc/src/histogram.cpp
+index 7a52d0f3fe..747fc44f9e 100644
+--- a/modules/imgproc/src/histogram.cpp
++++ b/modules/imgproc/src/histogram.cpp
+@@ -1283,7 +1283,7 @@ void cv::calcHist( InputArrayOfArrays images, const std::vector<int>& channels,
+     CV_OCL_RUN(images.total() == 1 && channels.size() == 1 && images.channels(0) == 1 &&
+                channels[0] == 0 && images.isUMatVector() && mask.empty() && !accumulate &&
+                histSize.size() == 1 && histSize[0] == BINS && ranges.size() == 2 &&
+-               ranges[0] == 0 && ranges[1] == BINS,
++               ranges[0] == 0 && ranges[1] == static_cast<float>(BINS),
+                ocl_calcHist(images, hist))
+ 
+     int i, dims = (int)histSize.size(), rsz = (int)ranges.size(), csz = (int)channels.size();
+diff --git a/modules/imgproc/src/imgwarp.cpp b/modules/imgproc/src/imgwarp.cpp
+index 39f983ae7b..c9857d7fc2 100644
+--- a/modules/imgproc/src/imgwarp.cpp
++++ b/modules/imgproc/src/imgwarp.cpp
+@@ -1244,8 +1244,8 @@ public:
+                         #endif
+                         for( ; x1 < bcols; x1++ )
+                         {
+-                            int sx = cvRound(sX[x1]*INTER_TAB_SIZE);
+-                            int sy = cvRound(sY[x1]*INTER_TAB_SIZE);
++                            int sx = cvRound(sX[x1]*static_cast<float>(INTER_TAB_SIZE));
++                            int sy = cvRound(sY[x1]*static_cast<float>(INTER_TAB_SIZE));
+                             int v = (sy & (INTER_TAB_SIZE-1))*INTER_TAB_SIZE + (sx & (INTER_TAB_SIZE-1));
+                             XY[x1*2] = saturate_cast<short>(sx >> INTER_BITS);
+                             XY[x1*2+1] = saturate_cast<short>(sy >> INTER_BITS);
+@@ -1284,8 +1284,8 @@ public:
+ 
+                         for( ; x1 < bcols; x1++ )
+                         {
+-                            int sx = cvRound(sXY[x1*2]*INTER_TAB_SIZE);
+-                            int sy = cvRound(sXY[x1*2+1]*INTER_TAB_SIZE);
++                            int sx = cvRound(sXY[x1*2]*static_cast<float>(INTER_TAB_SIZE));
++                            int sy = cvRound(sXY[x1*2+1]*static_cast<float>(INTER_TAB_SIZE));
+                             int v = (sy & (INTER_TAB_SIZE-1))*INTER_TAB_SIZE + (sx & (INTER_TAB_SIZE-1));
+                             XY[x1*2] = saturate_cast<short>(sx >> INTER_BITS);
+                             XY[x1*2+1] = saturate_cast<short>(sy >> INTER_BITS);
+@@ -1914,7 +1914,7 @@ void cv::convertMaps( InputArray _map1, InputArray _map2,
+     bool useSSE4_1 = CV_CPU_HAS_SUPPORT_SSE4_1;
+ #endif
+ 
+-    const float scale = 1.f/INTER_TAB_SIZE;
++    const float scale = 1.f/static_cast<float>(INTER_TAB_SIZE);
+     int x, y;
+     for( y = 0; y < size.height; y++ )
+     {
+@@ -1994,8 +1994,8 @@ void cv::convertMaps( InputArray _map1, InputArray _map2,
+                     #endif
+                     for( ; x < size.width; x++ )
+                     {
+-                        int ix = saturate_cast<int>(src1f[x]*INTER_TAB_SIZE);
+-                        int iy = saturate_cast<int>(src2f[x]*INTER_TAB_SIZE);
++                        int ix = saturate_cast<int>(src1f[x]*static_cast<float>(INTER_TAB_SIZE));
++                        int iy = saturate_cast<int>(src2f[x]*static_cast<float>(INTER_TAB_SIZE));
+                         dst1[x*2] = saturate_cast<short>(ix >> INTER_BITS);
+                         dst1[x*2+1] = saturate_cast<short>(iy >> INTER_BITS);
+                         dst2[x] = (ushort)((iy & (INTER_TAB_SIZE-1))*INTER_TAB_SIZE + (ix & (INTER_TAB_SIZE-1)));
+@@ -2058,8 +2058,8 @@ void cv::convertMaps( InputArray _map1, InputArray _map2,
+                     #endif
+                     for( ; x < size.width; x++ )
+                     {
+-                        int ix = saturate_cast<int>(src1f[x*2]*INTER_TAB_SIZE);
+-                        int iy = saturate_cast<int>(src1f[x*2+1]*INTER_TAB_SIZE);
++                        int ix = saturate_cast<int>(src1f[x*2]*static_cast<float>(INTER_TAB_SIZE));
++                        int iy = saturate_cast<int>(src1f[x*2+1]*static_cast<float>(INTER_TAB_SIZE));
+                         dst1[x*2] = saturate_cast<short>(ix >> INTER_BITS);
+                         dst1[x*2+1] = saturate_cast<short>(iy >> INTER_BITS);
+                         dst2[x] = (ushort)((iy & (INTER_TAB_SIZE-1))*INTER_TAB_SIZE + (ix & (INTER_TAB_SIZE-1)));
+@@ -3081,7 +3081,7 @@ void WarpPerspectiveLine_Process_CV_SIMD(const double *M, short* xy, short* alph
+     for( ; x1 < bw; x1++ )
+     {
+         double W = W0 + M[6]*x1;
+-        W = W ? INTER_TAB_SIZE/W : 0;
++        W = W ? static_cast<double>(INTER_TAB_SIZE)/W : 0;
+         double fX = std::max((double)INT_MIN, std::min((double)INT_MAX, (X0 + M[0]*x1)*W));
+         double fY = std::max((double)INT_MIN, std::min((double)INT_MAX, (Y0 + M[3]*x1)*W));
+         int X = saturate_cast<int>(fX);
+@@ -3183,7 +3183,7 @@ public:
+                         for( int x1 = 0; x1 < bw; x1++ )
+                         {
+                             double W = W0 + M[6]*x1;
+-                            W = W ? INTER_TAB_SIZE/W : 0;
++                            W = W ? static_cast<float>(INTER_TAB_SIZE)/W : 0;
+                             double fX = std::max((double)INT_MIN, std::min((double)INT_MAX, (X0 + M[0]*x1)*W));
+                             double fY = std::max((double)INT_MIN, std::min((double)INT_MAX, (Y0 + M[3]*x1)*W));
+                             int X = saturate_cast<int>(fX);

@@ -1,0 +1,10 @@
+module(
+    name = "aws-crt-cpp",
+    version = "0.32.4.iw.1",
+)
+
+bazel_dep(name = "aws-c-auth", version = "0.9.0.iw.1")
+bazel_dep(name = "aws-c-event-stream", version = "0.5.4.iw.1")
+bazel_dep(name = "aws-c-io", version = "0.17.1.iw.1")
+bazel_dep(name = "aws-c-mqtt", version = "0.12.2.iw.1")
+bazel_dep(name = "aws-c-s3", version = "0.7.13.iw.1")

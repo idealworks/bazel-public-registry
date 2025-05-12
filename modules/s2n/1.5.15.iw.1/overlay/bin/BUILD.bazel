@@ -1,0 +1,22 @@
+cc_binary(
+    name = "s2nc",
+    srcs = [
+        "common.c",
+        "common.h",
+        "echo.c",
+        "s2nc.c",
+    ],
+    deps = ["//:s2n"],
+)
+
+cc_binary(
+    name = "s2nd",
+    srcs = [
+        "common.c",
+        "common.h",
+        "echo.c",
+        "https.c",
+        "s2nd.c",
+    ],
+    deps = ["//:s2n"],
+)

@@ -1,0 +1,13 @@
+diff --git a/.gitignore b/.gitignore
+index 61bde0c..94b3fe9 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -9,7 +9,7 @@ build
+ _build_*
+ cmake-build*
+ 
+-include/aws/crt/Config.h
++#include/aws/crt/Config.h
+ 
+ # docs are updated automatically by .github/workflows/docs.yml
+ docs/

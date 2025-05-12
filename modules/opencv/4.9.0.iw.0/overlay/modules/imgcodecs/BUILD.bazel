@@ -1,0 +1,41 @@
+cc_library(
+    name = "imgcodecs",
+    srcs = glob([
+        "src/grfmt*.cpp",
+        "src/grfmt*.hpp",
+    ]) + [
+        "src/bitstrm.cpp",
+        "src/bitstrm.hpp",
+        "src/exif.cpp",
+        "src/exif.hpp",
+        "src/loadsave.cpp",
+        "src/precomp.hpp",
+        "src/rgbe.cpp",
+        "src/rgbe.hpp",
+        "src/utils.cpp",
+        "src/utils.hpp",
+    ],
+    hdrs = glob([
+        "include/opencv2/*.hpp",
+        "include/opencv2/imgcodecs/*.hpp",
+        "include/opencv2/imgcodecs/*.h",
+        "include/opencv2/imgcodecs/legacy/*.h",
+    ]),
+    includes = [
+        "include",
+        "src",
+    ],
+    local_defines = [
+        "__OPENCV_BUILD=1",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//3rdparty/libjpeg",
+        "//3rdparty/libtiff",
+        "//3rdparty/openexr:ilmimf",
+        "//3rdparty/openjpeg",
+        "//modules/core",
+        "//modules/imgproc",
+        "@libpng",
+    ],
+)

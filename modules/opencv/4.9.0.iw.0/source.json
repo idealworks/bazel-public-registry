@@ -1,0 +1,29 @@
+{
+  "url": "https://github.com/opencv/opencv/archive/dad8af6b17f8e60d7b95a1203a1b4d22f56574cf.tar.gz",
+  "integrity": "sha256-exWg7VSQjvYTmgIIcEaSUu9buN1sYbJ+H8le7mCmLUw=",
+  "strip_prefix": "opencv-dad8af6b17f8e60d7b95a1203a1b4d22f56574cf",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-dASkr41pKjIEJ2894qyGvI6TmvglR5hJA5xBkx+TTaw="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-eekJ3JkJx/xmvWPDZzJuJmxn21d/sOsO12OEB/pB5SE=",
+    "opencv_modules.hpp": "sha256-coqTjeJL74G4Fpzb+qOJKzIfSukj9PsdUCpH6xTednA=",
+    "opencv.hpp": "sha256-5RoXF0kCzlhy5PjJdI2hanx1Bpb1rWDbAivnwDW2c5g=",
+    "modules/ts/BUILD.bazel": "sha256-c9QINhNspkjIiREn/0TZgeEcJ6G1Tj6wapS5azlYr+s=",
+    "modules/imgproc/BUILD.bazel": "sha256-BKJt1ZzniqHeRc6GqUnmg+F+L7Rr5GZNc5sSdLo/muM=",
+    "modules/imgcodecs/BUILD.bazel": "sha256-vPqIsenzIBh8DnLjMfVJ6XZjuSlasg+QHY5djgWR1EI=",
+    "modules/core/BUILD.bazel": "sha256-IeNU0faxGdHZZJg6HyYU/Byu4z8P7xc31C0dxuBnGyw=",
+    "bzl/macros.bzl": "sha256-idmMQ2+XUFLIBMD4JXFyBuo1k2MErLwXAQqZuP84Nmk=",
+    "bzl/cl2cpp.py": "sha256-LUvsaJHVFTld1GfgF//qmjOC3+8fVsQMbaFeki8D95M=",
+    "bzl/BUILD.bazel": "sha256-EiSoLFjDHkVE45rw3e/ys/RTUxrjEHxmy28QH+fYnIQ=",
+    "BUILD.bazel": "sha256-fpzOh4shUFblJea5B7I00EZcvWbNykizqjnIOxV4+Vo=",
+    "3rdparty/zlib/BUILD.bazel": "sha256-SXKOYxFwvv+/nvhieH6wIFiPN2E4JyhK/D60r28HDjg=",
+    "3rdparty/openjpeg/BUILD.bazel": "sha256-jDXg3zJ5IsWNCMghAQLYVVliDglNnWasXOMPFaNshUU=",
+    "3rdparty/openexr/BUILD.bazel": "sha256-nObENTrOA5ZOFW2+O65yafZxoeFOE9iXEEkoMO6q3yo=",
+    "3rdparty/libwebp/BUILD.bazel": "sha256-XMzdczhwgff8/CQHMDXlBhLpVUseCL3lxqT0PyRyE4M=",
+    "3rdparty/libtiff/BUILD.bazel": "sha256-dwCLK5JTGY6GjRpkBZ5DowC1luZ8Lge+y5d9w0kPhFA=",
+    "3rdparty/libjpeg/BUILD.bazel": "sha256-EllmRsrqUDr85Kq6YhLLlfTyx6264n9GV0f8qDemTCk=",
+    "3rdparty/include/opencl/1.2/BUILD.bazel": "sha256-3JkiDkepKfwh19LWYsAE/d5ZB/OUluXAZt4nmOrA/JU="
+  }
+}

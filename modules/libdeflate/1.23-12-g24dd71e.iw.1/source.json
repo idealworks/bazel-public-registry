@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ebiggers/libdeflate/archive/24dd71e15deb3e3d90c6904dd53aacf727706adb.tar.gz",
+  "integrity": "sha256-BVZaZh0h404ubteLHZS6tupgEjfXx2rb5+2TDmj6rEc=",
+  "strip_prefix": "libdeflate-24dd71e15deb3e3d90c6904dd53aacf727706adb",
+  "overlay": {
+    "MODULE.bazel": "sha256-Ag/43eJrJx/02Fi1r8U02yvoAtsuIpuuN8j1MRRVRZQ=",
+    "BUILD.bazel": "sha256-XCCi5QR9FZYABbk8MRaayziodq21G1e5fJHkGWoc8uc="
+  }
+}
