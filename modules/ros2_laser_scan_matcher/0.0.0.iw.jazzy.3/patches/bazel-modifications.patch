@@ -1,0 +1,180 @@
+diff --git a/include/ros2_laser_scan_matcher/laser_scan_matcher.h b/include/ros2_laser_scan_matcher/laser_scan_matcher.h
+index c507bd9..74f05b5 100644
+--- a/include/ros2_laser_scan_matcher/laser_scan_matcher.h
++++ b/include/ros2_laser_scan_matcher/laser_scan_matcher.h
+@@ -44,8 +44,9 @@
+ #include <tf2_ros/transform_broadcaster.h>
+ #include <tf2_ros/transform_listener.h>
+ #include <tf2_ros/message_filter.h>
+-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
++#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
+ #include <tf2/utils.h>
++#include "std_srvs/srv/set_bool.hpp"
+ 
+ #include "rclcpp/rclcpp.hpp"
+ 
+@@ -74,12 +75,14 @@ private:
+   tf2::Transform laser_to_base_; 
+   std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
+   rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_publisher_;
++  rclcpp::Service<std_srvs::srv::SetBool>::SharedPtr enable_node_srv_;
+   // Coordinate parameters
+   std::string map_frame_;
+   std::string base_frame_;
+   std::string odom_frame_;
+   std::string laser_frame_;
+   std::string odom_topic_;
++  std::string laser_scan_topic_;
+ 
+   // Keyframe parameters
+   double kf_dist_linear_;
+@@ -99,7 +102,7 @@ private:
+ 
+   sm_params input_;
+   sm_result output_;
+-  LDP prev_ldp_scan_;
++  LDP prev_ldp_scan_{nullptr};
+ 
+   // Grid map parameters
+   double resolution_;
+@@ -107,6 +110,9 @@ private:
+   std::vector<double> a_cos_;
+   std::vector<double> a_sin_;
+ 
++  void subscribeToTopicsCb(
++      const std::shared_ptr<std_srvs::srv::SetBool::Request> request,
++      const std::shared_ptr<std_srvs::srv::SetBool::Response> response);
+ 
+   rclcpp::Time last_icp_time_;
+ 
+diff --git a/src/laser_scan_matcher.cpp b/src/laser_scan_matcher.cpp
+index 2f4b8ac..37ba2c4 100644
+--- a/src/laser_scan_matcher.cpp
++++ b/src/laser_scan_matcher.cpp
+@@ -82,6 +82,8 @@ LaserScanMatcher::LaserScanMatcher() : Node("laser_scan_matcher"), initialized_(
+     "When to generate keyframe scan.");
+   add_parameter("kf_dist_angular", rclcpp::ParameterValue(10.0* (M_PI/180.0)),
+     "When to generate keyframe scan.");
++  add_parameter("laser_scan_topic", rclcpp::ParameterValue(std::string("")),
++                "name of the laser scan topic");
+   
+ 
+ 
+@@ -183,7 +185,9 @@ LaserScanMatcher::LaserScanMatcher() : Node("laser_scan_matcher"), initialized_(
+   add_parameter("use_sigma_weights", rclcpp::ParameterValue(0),
+     " If 1, the field 'readings_sigma' in the second scan is used to weight the correspondence by 1/sigma^2");
+   
++  add_parameter("laser_odom_srv_channel", rclcpp::ParameterValue(std::string{"~/enable_laser_odom"}),"enable node service channel");
+ 
++  auto enable_laser_odom_service_channel = this->get_parameter("laser_odom_srv_channel").as_string();
+   map_frame_  = this->get_parameter("map_frame").as_string();
+   base_frame_ = this->get_parameter("base_frame").as_string();
+   odom_frame_ = this->get_parameter("odom_frame").as_string();
+@@ -192,6 +196,7 @@ LaserScanMatcher::LaserScanMatcher() : Node("laser_scan_matcher"), initialized_(
+   kf_dist_angular_ = this->get_parameter("kf_dist_angular").as_double();
+   odom_topic_   = this->get_parameter("publish_odom").as_string();
+   publish_tf_   = this->get_parameter("publish_tf").as_bool(); 
++  laser_scan_topic_ = this->get_parameter("laser_scan_topic").as_string();
+ 
+   publish_odom_ = (odom_topic_ != "");
+   kf_dist_linear_sq_ = kf_dist_linear_ * kf_dist_linear_;
+@@ -224,8 +229,8 @@ LaserScanMatcher::LaserScanMatcher() : Node("laser_scan_matcher"), initialized_(
+   input_.use_sigma_weights = this->get_parameter("use_sigma_weights").as_int();
+ 
+ 
+-  double transform_publish_period;
+-  double tmp;
++  // double transform_publish_period;
++  // double tmp;
+   
+   // State variables
+ 
+@@ -243,13 +248,18 @@ LaserScanMatcher::LaserScanMatcher() : Node("laser_scan_matcher"), initialized_(
+ 
+ 
+   // Subscribers
+-  this->scan_filter_sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>("scan", rclcpp::SensorDataQoS(), std::bind(&LaserScanMatcher::scanCallback, this, std::placeholders::_1));
++  // this->scan_filter_sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>("scan", rclcpp::SensorDataQoS(), std::bind(&LaserScanMatcher::scanCallback, this, std::placeholders::_1));
+   tf_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
+   if (publish_tf_)
+     tfB_ = std::make_shared<tf2_ros::TransformBroadcaster>(*this);
+   if(publish_odom_){
+     odom_publisher_ = this->create_publisher<nav_msgs::msg::Odometry>(odom_topic_, rclcpp::SystemDefaultsQoS());
+   }
++
++  // Create services
++  enable_node_srv_ = this->create_service<std_srvs::srv::SetBool>(
++      enable_laser_odom_service_channel, bind(&LaserScanMatcher::subscribeToTopicsCb, this,
++                                     std::placeholders::_1, std::placeholders::_2));
+ }
+ 
+ LaserScanMatcher::~LaserScanMatcher()
+@@ -257,6 +267,22 @@ LaserScanMatcher::~LaserScanMatcher()
+ 
+ }
+ 
++void LaserScanMatcher::subscribeToTopicsCb(const std::shared_ptr<std_srvs::srv::SetBool::Request> request, const std::shared_ptr<std_srvs::srv::SetBool::Response> response)
++   {
++  if (request->data)
++  {
++    // Subscribers
++    this->scan_filter_sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>(laser_scan_topic_, rclcpp::SensorDataQoS(), std::bind(&LaserScanMatcher::scanCallback, this, std::placeholders::_1));
++  }
++  else
++  {
++    this->scan_filter_sub_.reset();
++    // reset the previous scan data
++    ld_free(prev_ldp_scan_);
++    prev_ldp_scan_ = nullptr;
++  }
++  response->success = true;
++}
+ 
+ 
+ void LaserScanMatcher::createCache (const sensor_msgs::msg::LaserScan::SharedPtr& scan_msg)
+@@ -282,18 +308,24 @@ void LaserScanMatcher::scanCallback(const sensor_msgs::msg::LaserScan::SharedPtr
+ 
+   if (!initialized_)
+   {
+-    createCache(scan_msg);    // caches the sin and cos of all angles
++    createCache(scan_msg); // caches the sin and cos of all angles
+ 
+     // cache the static tf from base to laser
+     if (!getBaseToLaserTf(laser_frame_))
+     {
+-      RCLCPP_WARN(get_logger(),"Skipping scan");
++      RCLCPP_WARN(get_logger(), "Skipping scan");
+       return;
+     }
+ 
++    initialized_ = true;
++  }
++
++  // Initialize the prev scan data if its not valid
++  if (!prev_ldp_scan_)
++  {
+     laserScanToLDP(scan_msg, prev_ldp_scan_);
+     last_icp_time_ = scan_msg->header.stamp;
+-    initialized_ = true;
++    return;
+   }
+ 
+   LDP curr_ldp_scan;
+@@ -320,7 +352,7 @@ bool LaserScanMatcher::getBaseToLaserTf (const std::string& frame_id)
+       base_to_laser_tf.setRotation(q);
+  
+   }
+-  catch (tf2::TransformException ex)
++  catch (tf2::TransformException& ex)
+   {
+     RCLCPP_INFO(get_logger(),"Could not get initial transform from base to laser frame, %s", ex.what());
+     return false;
+@@ -365,7 +397,7 @@ bool LaserScanMatcher::processScan(LDP& curr_ldp_scan, const rclcpp::Time& time)
+   tf2::Transform pr_ch_l;
+ 
+   double dt = (now() - last_icp_time_).nanoseconds()/1e+9;
+-  double pr_ch_x, pr_ch_y, pr_ch_a;
++  // double pr_ch_x, pr_ch_y, pr_ch_a;
+   
+ 
+   // the predicted change of the laser's position, in the fixed frame
