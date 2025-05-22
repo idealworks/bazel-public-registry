@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/AlexKaravaev/ros2_laser_scan_matcher/archive/2dfce211c34dbc30b63d5099b5f3f415312f983c.tar.gz",
+  "integrity": "sha256-9G2QlGqAO91GZccfaixYYu4jaggYftqQDmPtYUJ97qM=",
+  "strip_prefix": "ros2_laser_scan_matcher-2dfce211c34dbc30b63d5099b5f3f415312f983c",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-jiz5XoDsoQMWGDL0QPojuR3OC2JcqVyXdQf3gM6ICSc="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-XMvp1PL4vxJwD9fdIK5+c0eOlw4VnDQt8l3poyiHw+k=",
+    "BUILD.bazel": "sha256-G7lEIf2mVu7VtCGLIW6FiuUrYpzIkiJQLVirRFM99ls="
+  }
+}
