@@ -1,0 +1,15 @@
+{
+  "url": "https://github.com/PointCloudLibrary/pcl/archive/b3a7428534ba307f40bf7e409d4cc56bb818b907.tar.gz",
+  "integrity": "sha256-h4DKSYdqGQdb7Khb7NRr9gt6rLWnlB8dxUSWF+lVw0s=",
+  "strip_prefix": "pcl-b3a7428534ba307f40bf7e409d4cc56bb818b907",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-meaFxUixDxL5eT2Ulb0fBmvztqrSfqs62U3KwO2TpoU="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-LNk7AfqFNEMhShTs5WHARLlBE82ZFOvFQ7MDoy+PR8A=",
+    "bzl/pcl.bzl": "sha256-GHZ4Ha2o2y94TPyJ62o71z95Gv05Fv4qphgTim7GmuA=",
+    "bzl/BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+    "BUILD.bazel": "sha256-vOb7nzezxeih8AiaPXMAWizDpISfscMgxbF+xkHfOS0="
+  }
+}
