@@ -1,0 +1,5 @@
+module(name = "ros2_demo_nodes_py", version = "0.37.0.iw.1")
+
+bazel_dep(name = "rules_python", version = "0.36.0")
+bazel_dep(name = "ros2_rclpy", version = "7.1.2-2-g159aedd.iw.jazzy.1")
+bazel_dep(name = "ros2_common_interfaces", version = "5.3.5-2-g5283bd9.iw.jazzy.1")

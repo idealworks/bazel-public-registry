@@ -1,0 +1,51 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+
+py_binary(
+    name = "listener_qos",
+    srcs = ["topics/listener_qos.py"],
+    deps = [
+        "@ros2_common_interfaces//:py_std_msgs",
+        "@ros2_rclpy//:rclpy",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "listener",
+    srcs = ["topics/listener.py"],
+    deps = [
+        "@ros2_common_interfaces//:py_std_msgs",
+        "@ros2_rclpy//:rclpy",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "listener_serialized",
+    srcs = ["topics/listener_serialized.py"],
+    deps = [
+        "@ros2_common_interfaces//:py_std_msgs",
+        "@ros2_rclpy//:rclpy",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "talker",
+    srcs = ["topics/talker.py"],
+    deps = [
+        "@ros2_common_interfaces//:py_std_msgs",
+        "@ros2_rclpy//:rclpy",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "talker_qos",
+    srcs = ["topics/talker_qos.py"],
+    deps = [
+        "@ros2_rclpy//:rclpy",
+        "@ros2_common_interfaces//:py_std_msgs",
+    ],
+    visibility = ["//visibility:public"],
+)
