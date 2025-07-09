@@ -1,0 +1,203 @@
+""" Builds ros2cli.
+"""
+
+load("@rules_python//python:defs.bzl", "py_library")
+load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+
+config_setting(
+    name = "x86_64_build",
+    constraint_values = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],
+)
+
+config_setting(
+    name = "aarch64_build",
+    constraint_values = [
+        "@platforms//cpu:aarch64",
+        "@platforms//os:linux",
+    ],
+)
+
+compile_pip_requirements(
+    name = "python_requirements",
+    extra_args = ["--allow-unsafe"],
+    requirements_in = "//:requirements.txt",
+    requirements_txt = "//:requirements_lock.txt",
+    tags = ["manual"],
+)
+
+exports_files([
+    "requirements.txt",
+    "requirements_lock.txt",
+])
+
+py_library(
+    name = "ros2cli",
+    srcs = glob(["ros2cli/ros2cli/**/*.py"]),
+    imports = ["ros2cli"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ros2_rclpy//:rclpy",
+        "@ros2cli_pip_deps_x86_64//netifaces",
+    ] + select({
+        "//:x86_64_build": [
+            "@ros2cli_pip_deps_x86_64//packaging",
+            "@ros2cli_pip_deps_x86_64//psutil",
+            "@ros2cli_pip_deps_x86_64//types_setuptools",
+        ],
+        "//:aarch64_build": [
+            "@ros2cli_pip_deps_aarch64//packaging",
+            "@ros2cli_pip_deps_aarch64//psutil",
+            "@ros2cli_pip_deps_aarch64//types_setuptools",
+        ],
+    }),
+)
+
+py_library(
+    name = "ros2_cmd",
+    srcs = ["ros2_cmd.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ros2cli",
+    ],
+)
+
+py_library(
+    name = "ros2pkg",
+    srcs = glob(["ros2pkg/ros2pkg/**/*.py"]),
+    imports = ["ros2pkg"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ros2_ament_index//:ament_index_python",
+        "@ros2cli_pip_deps_x86_64//empy",
+    ] + select({
+        "//:x86_64_build": [
+            "@ros2cli_pip_deps_x86_64//catkin_pkg",
+            "@ros2cli_pip_deps_x86_64//types_setuptools",
+        ],
+        "//:aarch64_build": [
+            "@ros2cli_pip_deps_aarch64//catkin_pkg",
+            "@ros2cli_pip_deps_aarch64//types_setuptools",
+        ],
+    }),
+)
+
+py_library(
+    name = "ros2topic",
+    srcs = glob(["ros2topic/ros2topic/**/*.py"]),
+    imports = ["ros2topic"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ros2_rclpy//:rclpy",
+        "@ros2_rosidl_runtime_py//:rosidl_runtime_py",
+    ] + select({
+        "//:x86_64_build": [
+            "@ros2cli_pip_deps_x86_64//numpy",
+            "@ros2cli_pip_deps_x86_64//pyyaml",
+        ],
+        "//:aarch64_build": [
+            "@ros2cli_pip_deps_aarch64//numpy",
+            "@ros2cli_pip_deps_aarch64//pyyaml",
+        ],
+    }),
+)
+
+py_library(
+    name = "ros2node",
+    srcs = glob(["ros2node/ros2node/**/*.py"]),
+    imports = ["ros2node"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ros2cli",
+    ],
+)
+
+py_binary(
+    name = "ros2_node",
+    srcs = ["ros2_node.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ros2_cmd",
+        ":ros2node",
+    ],
+)
+
+py_library(
+    name = "ros2service",
+    srcs = glob(["ros2service/ros2service/**/*.py"]),
+    imports = ["ros2service"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ros2cli",
+        "@ros2_rclpy//:rclpy",
+        "@ros2_rosidl_runtime_py//:rosidl_runtime_py",
+    ] + select({
+        "//:x86_64_build": [
+            "@ros2cli_pip_deps_x86_64//pyyaml",
+        ],
+        "//:aarch64_build": [
+            "@ros2cli_pip_deps_aarch64//pyyaml",
+        ],
+    }),
+)
+
+py_library(
+    name = "ros2param",
+    srcs = glob(["ros2param/ros2param/**/*.py"]),
+    imports = ["ros2param"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ros2cli",
+        ":ros2node",
+        ":ros2service",
+        "@ros2_rcl_interfaces//:py_rcl_interfaces",
+        "@ros2_rclpy//:rclpy",
+    ],
+)
+
+py_binary(
+    name = "ros2_param",
+    srcs = ["ros2_param.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ros2_cmd",
+        ":ros2param",
+    ],
+)
+
+py_library(
+    name = "ros2run",
+    srcs = glob(["ros2run/ros2run/**/*.py"]),
+    imports = ["ros2run"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ros2cli",
+        ":ros2pkg",
+    ],
+)
+
+py_library(
+    name = "ros2lifecycle",
+    srcs = glob(["ros2lifecycle/ros2lifecycle/**/*.py"]),
+    imports = ["ros2lifecycle"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ros2cli",
+        ":ros2node",
+        ":ros2service",
+        "@ros2_rcl_interfaces//:py_lifecycle_msgs",
+        "@ros2_rclpy//:rclpy",
+    ],
+)
+
+py_binary(
+    name = "ros2_lifecycle",
+    srcs = ["ros2_lifecycle.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ros2_cmd",
+        "@ros2cli//:ros2lifecycle",
+    ],
+)

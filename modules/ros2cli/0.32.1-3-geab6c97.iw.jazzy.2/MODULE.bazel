@@ -1,0 +1,34 @@
+module(
+    name = "ros2cli",
+    version = "0.32.1-3-geab6c97.iw.jazzy.2",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "platforms", version = "0.0.11")
+bazel_dep(name = "ros2_ament_index", version = "1.8.1-1-g0a35ca6.iw.jazzy.1")
+bazel_dep(name = "ros2_rcl_interfaces", version = "2.0.2-1-g7d568ce.iw.jazzy.1")
+bazel_dep(name = "ros2_rclpy", version = "7.1.2-2-g159aedd.iw.jazzy.1")
+bazel_dep(name = "ros2_rosidl_runtime_py", version = "0.13.1-1-gd37ee33.iw.jazzy.1")
+bazel_dep(name = "rules_python", version = "1.2.0")
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+    hub_name = "ros2cli_pip_deps_x86_64",
+    python_version = "3.12",
+    requirements_lock = "//:requirements_lock.txt",
+)
+use_repo(pip, "ros2cli_pip_deps_x86_64")
+
+pip.parse(
+    download_only = True,
+    extra_pip_args = [
+        "--platform",
+        "linux_x86_64",
+        "--platform",
+        "manylinux2014_aarch64",
+    ],
+    hub_name = "ros2cli_pip_deps_aarch64",
+    python_version = "3.12",
+    requirements_lock = "//:requirements_lock.txt",
+)
+use_repo(pip, "ros2cli_pip_deps_aarch64")
