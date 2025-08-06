@@ -1,0 +1,16 @@
+diff --git a/ros2_foxglove_bridge/src/generic_client.cpp b/ros2_foxglove_bridge/src/generic_client.cpp
+index 7c58801..3315df2 100644
+--- a/ros2_foxglove_bridge/src/generic_client.cpp
++++ b/ros2_foxglove_bridge/src/generic_client.cpp
+@@ -147,9 +147,9 @@ GenericClient::GenericClient(rclcpp::node_interfaces::NodeBaseInterface* nodeBas
+     responseTypeName, TYPESUPPORT_LIB_NAME, *_typeSupportLib);
+ #else
+   _requestTypeSupportHdl =
+-    rclcpp::get_typesupport_handle(requestTypeName, TYPESUPPORT_LIB_NAME, *_typeSupportLib);
++    rclcpp::get_message_typesupport_handle(requestTypeName, TYPESUPPORT_LIB_NAME, *_typeSupportLib);
+   _responseTypeSupportHdl =
+-    rclcpp::get_typesupport_handle(responseTypeName, TYPESUPPORT_LIB_NAME, *_typeSupportLib);
++    rclcpp::get_message_typesupport_handle(responseTypeName, TYPESUPPORT_LIB_NAME, *_typeSupportLib);
+ #endif
+ 
+   rcl_ret_t ret = rcl_client_init(this->get_client_handle().get(), this->get_rcl_node_handle(),
