@@ -1,0 +1,5 @@
+module(
+    name = "libcap",
+    version = "1.2.53-72-g9eb5659.iw.1",
+    compatibility_level = 1,
+)
