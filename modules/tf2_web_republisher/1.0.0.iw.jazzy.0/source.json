@@ -1,0 +1,16 @@
+{
+  "url": "https://github.com/RobotWebTools/tf2_web_republisher/archive/8e7b43e63d8680dc5ef8eecf724ae181148704ad.tar.gz",
+  "integrity": "sha256-lMt694ogDlvmRygdUoUYh05roxjZvLI1Ths2RIzU6yE=",
+  "strip_prefix": "tf2_web_republisher-8e7b43e63d8680dc5ef8eecf724ae181148704ad",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-piVhR1Ug6pKzDsPu05gP7gPsDxZpx7L/CPY7881roIo="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-owr0GaCNuXsKRYJRSvEZaikEOJx90N2LlsigDB1803E=",
+    "tf2_web_republisher_interfaces/BUILD.bazel": "sha256-rIQuqyLhZ6FLyTx31IttQpALegSaZOSLk0JFJVpBHK8=",
+    "tf2_web_republisher/src/tf_web_republisher_exe.cpp": "sha256-nlcMy2YTMYBX9whWovSHevYaQ+hEULUP1/g592oJPUs=",
+    "tf2_web_republisher/BUILD.bazel": "sha256-KehSK/+w0zLCg3tHMaWOUb5WhJ9xTmxN79a3PaBQIgQ=",
+    "BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+  }
+}

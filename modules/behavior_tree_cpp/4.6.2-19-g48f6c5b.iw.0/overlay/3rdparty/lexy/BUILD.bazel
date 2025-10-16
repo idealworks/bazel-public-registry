@@ -1,0 +1,8 @@
+cc_library(
+    name = "lexy",
+    srcs = ["src/input/file.cpp"],
+    hdrs = glob(["include/**/*.hpp"]),
+    defines = ["LEXY_HAS_UNICODE_DATABASE=1"],
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+)

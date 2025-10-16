@@ -1,0 +1,26 @@
+diff --git a/tf2_web_republisher/include/tf2_web_republisher/tf2_web_republisher.hpp b/tf2_web_republisher/include/tf2_web_republisher/tf2_web_republisher.hpp
+index 83ef9ce..6979f9c 100644
+--- a/tf2_web_republisher/include/tf2_web_republisher/tf2_web_republisher.hpp
++++ b/tf2_web_republisher/include/tf2_web_republisher/tf2_web_republisher.hpp
+@@ -45,7 +45,7 @@
+ #include "geometry_msgs/msg/transform_stamped.hpp"
+ #include "rclcpp/rclcpp.hpp"
+ #include "rclcpp_action/rclcpp_action.hpp"
+-#include "tf2/transform_datatypes.hpp"
++#include "tf2/transform_datatypes.h"
+ #include "tf2_ros/buffer.h"
+ #include "tf2_ros/transform_listener.h"
+ #include "tf2_web_republisher_interfaces/action/tf_subscription.hpp"
+diff --git a/tf2_web_republisher/src/tf2_web_republisher.cpp b/tf2_web_republisher/src/tf2_web_republisher.cpp
+index 390ede9..e76f4ab 100644
+--- a/tf2_web_republisher/src/tf2_web_republisher.cpp
++++ b/tf2_web_republisher/src/tf2_web_republisher.cpp
+@@ -42,7 +42,7 @@
+ 
+ #include "geometry_msgs/msg/transform_stamped.hpp"
+ #include "rclcpp_action/rclcpp_action.hpp"
+-#include "tf2/transform_datatypes.hpp"
++#include "tf2/transform_datatypes.h"
+ #include "tf2_ros/buffer.h"
+ #include "tf2_ros/transform_listener.h"
+ #include "tf2_web_republisher_interfaces/action/tf_subscription.hpp"

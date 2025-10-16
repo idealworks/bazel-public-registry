@@ -1,0 +1,108 @@
+diff --git a/src/basic/linux/if.h b/src/basic/linux/if.h
+index b287b2a0bb..ef23ce07f7 100644
+--- a/src/basic/linux/if.h
++++ b/src/basic/linux/if.h
+@@ -212,7 +212,7 @@ struct if_settings {
+ 		fr_proto		*fr;
+ 		fr_proto_pvc		*fr_pvc;
+ 		fr_proto_pvc_info	*fr_pvc_info;
+-		x25_hdlc_proto		*x25;
++		// x25_hdlc_proto		*x25;
+ 
+ 		/* interface settings */
+ 		sync_serial_settings	*sync;
+diff --git a/src/basic/missing_audit.h b/src/basic/missing_audit.h
+index 3f72acf02f..10f1dca967 100644
+--- a/src/basic/missing_audit.h
++++ b/src/basic/missing_audit.h
+@@ -1,8 +1,6 @@
+ /* SPDX-License-Identifier: LGPL-2.1-or-later */
+ #pragma once
+ 
+-#include <linux/audit.h>
+-
+ #if HAVE_AUDIT
+ #  include <libaudit.h>
+ #endif
+diff --git a/src/basic/mountpoint-util.c b/src/basic/mountpoint-util.c
+index e8471d5974..798f8b6112 100644
+--- a/src/basic/mountpoint-util.c
++++ b/src/basic/mountpoint-util.c
+@@ -773,16 +773,16 @@ unsigned long ms_nosymfollow_supported(void) {
+                 return 0;
+         }
+ 
+-        if (mount_setattr(mntfd, "", AT_EMPTY_PATH|AT_RECURSIVE,
+-                          &(struct mount_attr) {
+-                                  .attr_set = MOUNT_ATTR_NOSYMFOLLOW,
+-                          }, sizeof(struct mount_attr)) < 0) {
+-                if (ERRNO_IS_NOT_SUPPORTED(errno))
++        /* if (mount_setattr(mntfd, "", AT_EMPTY_PATH|AT_RECURSIVE, */
++        /*                   &(struct mount_attr) { */
++        /*                           .attr_set = MOUNT_ATTR_NOSYMFOLLOW, */
++        /*                   }, sizeof(struct mount_attr)) < 0) { */
++        /*         if (ERRNO_IS_NOT_SUPPORTED(errno)) */
+                         goto not_supported;
+ 
+                 log_debug_errno(errno, "Failed to set MOUNT_ATTR_NOSYMFOLLOW mount attribute: %m");
+                 return 0;
+-        }
++        /* } */
+ 
+         cache = true;
+         return MS_NOSYMFOLLOW;
+diff --git a/src/basic/namespace-util.c b/src/basic/namespace-util.c
+index 332e8cdfd5..75ed3aae3b 100644
+--- a/src/basic/namespace-util.c
++++ b/src/basic/namespace-util.c
+@@ -573,15 +573,15 @@ int is_idmapping_supported(const char *path) {
+         if (r < 0)
+                 return log_debug_errno(r, "Failed to open mount tree '%s', cannot determine if ID-mapping is supported: %m", path);
+ 
+-        r = RET_NERRNO(mount_setattr(mount_fd, "", AT_EMPTY_PATH,
+-                       &(struct mount_attr) {
+-                                .attr_set = MOUNT_ATTR_IDMAP | MOUNT_ATTR_NOSUID | MOUNT_ATTR_NOEXEC | MOUNT_ATTR_RDONLY | MOUNT_ATTR_NODEV,
+-                                .userns_fd = userns_fd,
+-                        }, sizeof(struct mount_attr)));
+-        if (ERRNO_IS_NEG_NOT_SUPPORTED(r) || ERRNO_IS_NEG_PRIVILEGE(r) || r == -EINVAL)
+-                return false;
+-        if (r < 0)
+-                return log_debug_errno(r, "Failed to set mount attribute to '%s', cannot determine if ID-mapping is supported: %m", path);
+-
+-        return true;
++        /* r = RET_NERRNO(mount_setattr(mount_fd, "", AT_EMPTY_PATH, */
++        /*                &(struct mount_attr) { */
++        /*                         .attr_set = MOUNT_ATTR_IDMAP | MOUNT_ATTR_NOSUID | MOUNT_ATTR_NOEXEC | MOUNT_ATTR_RDONLY | MOUNT_ATTR_NODEV, */
++        /*                         .userns_fd = userns_fd, */
++        /*                 }, sizeof(struct mount_attr))); */
++        /* if (ERRNO_IS_NEG_NOT_SUPPORTED(r) || ERRNO_IS_NEG_PRIVILEGE(r) || r == -EINVAL) */
++        /*         return false; */
++        /* if (r < 0) */
++        return log_debug_errno(r, "Failed to set mount attribute to '%s', cannot determine if ID-mapping is supported: %m", path);
++
++        /* return true; */
+ }
+diff --git a/src/libsystemd/sd-journal/audit-type.c b/src/libsystemd/sd-journal/audit-type.c
+index 122cdf5d3f..771130e5d1 100644
+--- a/src/libsystemd/sd-journal/audit-type.c
++++ b/src/libsystemd/sd-journal/audit-type.c
+@@ -1,5 +1,6 @@
+ /* SPDX-License-Identifier: LGPL-2.1-or-later */
+ 
++#include <linux/audit.h>
+ #include "audit-type.h"
+ #include "missing_audit.h"
+ 
+diff --git a/src/libsystemd/sd-netlink/netlink-types-nfnl.c b/src/libsystemd/sd-netlink/netlink-types-nfnl.c
+index 8ef4d45d42..5d321c2097 100644
+--- a/src/libsystemd/sd-netlink/netlink-types-nfnl.c
++++ b/src/libsystemd/sd-netlink/netlink-types-nfnl.c
+@@ -26,7 +26,7 @@ static const NLAPolicy nfnl_nft_chain_policies[] = {
+         [NFTA_CHAIN_NAME]  = BUILD_POLICY_WITH_SIZE(STRING, NFT_TABLE_MAXNAMELEN - 1),
+         [NFTA_CHAIN_HOOK]  = BUILD_POLICY_NESTED(nfnl_nft_chain_hook),
+         [NFTA_CHAIN_TYPE]  = BUILD_POLICY_WITH_SIZE(STRING, 16),
+-        [NFTA_CHAIN_FLAGS] = BUILD_POLICY(U32),
++        /* [NFTA_CHAIN_FLAGS] = BUILD_POLICY(U32), */
+ };
+ 
+ DEFINE_POLICY_SET(nfnl_nft_chain);

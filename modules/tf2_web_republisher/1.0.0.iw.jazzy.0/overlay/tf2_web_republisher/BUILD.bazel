@@ -1,0 +1,28 @@
+load("@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl", "ros2_cpp_binary", "ros2_cpp_library")
+
+ros2_cpp_library(
+    name = "tf2_web_republisher",
+    srcs = ["src/tf2_web_republisher.cpp"],
+    hdrs = glob(["include/**/*.hpp"]),
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ros2_geometry2//:cpp_tf2_geometry_msgs",
+        "@ros2_geometry2//:tf2",
+        "@ros2_geometry2//:tf2_ros",
+        "@ros2_rclcpp//:rclcpp",
+        "@ros2_rclcpp//:rclcpp_action",
+        "@ros2_rclcpp//:rclcpp_components",
+        "@tf2_web_republisher//tf2_web_republisher_interfaces:cpp_tf2_web_republisher_interfaces",
+    ],
+)
+
+ros2_cpp_binary(
+    name = "tf2_web_republisher_exe",
+    srcs = ["src/tf_web_republisher_exe.cpp"],
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":tf2_web_republisher",
+    ],
+)

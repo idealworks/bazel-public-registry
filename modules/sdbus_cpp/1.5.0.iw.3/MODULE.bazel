@@ -1,0 +1,7 @@
+module(
+    name = "sdbus_cpp",
+    version = "1.5.0.iw.3",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "systemd", version = "257.0.0.iw.2")
