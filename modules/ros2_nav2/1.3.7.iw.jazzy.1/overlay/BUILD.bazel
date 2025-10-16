@@ -21,7 +21,7 @@ ros2_interface_library(
         "@ros2_common_interfaces//:geometry_msgs",
         "@ros2_common_interfaces//:nav_msgs",
         "@ros2_common_interfaces//:std_msgs",
-        "@ros2_geographic_msgs//:geographic_msgs",
+        "@geographic_info//:geographic_msgs",
         "@ros2_rcl_interfaces//:action_msgs",
         "@ros2_rcl_interfaces//:builtin_interfaces",
     ],

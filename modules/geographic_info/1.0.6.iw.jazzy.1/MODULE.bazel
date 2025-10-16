@@ -1,5 +1,5 @@
 module(
-    name = "ros2_geographic_msgs",
+    name = "geographic_info",
     version = "1.0.6.iw.jazzy.1",
 )
 
