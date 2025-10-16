@@ -29,10 +29,12 @@ ros2_interface_library(
 
 ros2_cpp_library(
     name = "nav2_util",
-    srcs = glob(["nav2_util/src/*.cpp"]),
+    srcs = glob([
+        "nav2_util/src/*.cpp",
+        "nav2_util/src/*.hpp",
+    ]),
     hdrs = glob([
         "nav2_util/include/**/*.hpp",
-        "nav2_util/src/*.hpp",
     ]),
     includes = ["nav2_util/include"],
     visibility = ["//visibility:public"],

@@ -4,6 +4,6 @@
   "strip_prefix": "geographic_info-1.0.6",
   "overlay": {
     "MODULE.bazel": "sha256-4R83/NWkAin/AWywOsxX0oYKHSFFhdzP3qUpkMvh6vA=",
-    "BUILD.bazel": "sha256-cJVS18I4suO4WvKitkyglzqIJP7RQM1867dJTtstRoE="
+    "BUILD.bazel": "sha256-rZgmKpGE6hf4yNKjJkACBbux+fVS6xWPhjfmcWV3Ghk="
   }
 }

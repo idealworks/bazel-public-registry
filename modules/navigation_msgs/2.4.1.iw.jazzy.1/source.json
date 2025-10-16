@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros-planning/navigation_msgs/archive/111e0b84c0fb675229fbaec8e7b794f42af145ae.tar.gz",
+  "integrity": "sha256-scHDAN8YrqYVhx+r+yRRPios8VTTDfCAZO2e+87nNyY=",
+  "strip_prefix": "navigation_msgs-111e0b84c0fb675229fbaec8e7b794f42af145ae",
+  "overlay": {
+    "MODULE.bazel": "sha256-UCFG+GWYVC22z7nOA6qEvMmAGeQnwjg8pcmbSom1nU8=",
+    "BUILD.bazel": "sha256-Qxw+j+CoZLkCckrM3gY40rMJXVxoM1tqDVcvUqgHwFU="
+  }
+}
