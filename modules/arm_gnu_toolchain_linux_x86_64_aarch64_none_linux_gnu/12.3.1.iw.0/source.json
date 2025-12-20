@@ -1,5 +1,5 @@
 {
-  "url": "https://developer.arm.com/-/media/Files/downloads/gnu/12.3.rel1/binrel/arm-gnu-toolchain-12.3.rel1-x86_64-aarch64-none-linux-gnu.tar.xz?rev=cf8baa0ef2e54e9286f0409cdda4f66c&hash=E813B503D52B4EF0CBEBEE36300B05049EB6B41F",
+  "url": "https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu/12.3.rel1/binrel/arm-gnu-toolchain-12.3.rel1-x86_64-aarch64-none-linux-gnu.tar.xz",
   "integrity": "sha256-lg7AvOMJUo9gNjnYIo7znm+5GFKJ/0KwGqO03jFazO8=",
   "strip_prefix": "arm-gnu-toolchain-12.3.rel1-x86_64-aarch64-none-linux-gnu",
   "patch_strip": 1,
