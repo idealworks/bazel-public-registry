@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/mendsley/bsdiff/archive/b817e9491cf7b8699c8462ef9e2657ca4ccd7667.tar.gz",
+  "integrity": "sha256-e/BSCFloEZoe9tne34DgsBZp8vOD5hefUQ+FGvLMbpQ=",
+  "strip_prefix": "bsdiff-b817e9491cf7b8699c8462ef9e2657ca4ccd7667",
+  "overlay": {
+    "MODULE.bazel": "sha256-h11PHSQZuZIfiW7ljnYy78UToG5QrbsH9o6/Mu0u9e8=",
+    "BUILD.bazel": "sha256-wgf5edqZOFotGgEgwBdn0yaIoOfmbNzG1i01lE6BEIU="
+  }
+}
