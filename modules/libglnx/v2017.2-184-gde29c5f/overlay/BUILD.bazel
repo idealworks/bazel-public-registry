@@ -1,0 +1,71 @@
+package(default_visibility = ["//visibility:public"])
+
+genrule(
+    name = "config_h",
+    outs = ["config.h"],
+    cmd = "\n".join([
+        "cat > $@ <<'EOF'",
+        "#pragma once",
+        "",
+        "#define HAVE_DECL_RENAMEAT2 1",
+        "#define HAVE_DECL_MEMFD_CREATE 1",
+        "#define HAVE_DECL_COPY_FILE_RANGE 1",
+        "#define HAVE_CLOSE_RANGE 1",
+        "",
+        "/* #undef DISABLE_OTMPFILE */",
+        "",
+        "/* #undef ENABLE_WRPSEUDO_COMPAT */",
+        "EOF",
+    ]),
+)
+
+genrule(
+    name = "libglnx_config_h",
+    outs = ["libglnx-config.h"],
+    cmd = "echo '#include \"config.h\"' > $@",
+)
+
+cc_library(
+    name = "libglnx",
+    srcs = [
+        "glnx-backport-testutils.c",
+        "glnx-backports.c",
+        "glnx-local-alloc.c",
+        "glnx-errors.c",
+        "glnx-console.c",
+        "glnx-dirfd.c",
+        "glnx-fdio.c",
+        "glnx-lockfile.c",
+        "glnx-xattrs.c",
+        "glnx-shutil.c",
+    ],
+    hdrs = [
+        "glnx-macros.h",
+        "glnx-backport-autocleanups.h",
+        "glnx-backport-autoptr.h",
+        "glnx-backport-testutils.h",
+        "glnx-backports.h",
+        "glnx-local-alloc.h",
+        "glnx-errors.h",
+        "glnx-console.h",
+        "glnx-dirfd.h",
+        "glnx-fdio.h",
+        "glnx-lockfile.h",
+        "glnx-missing-syscall.h",
+        "glnx-missing.h",
+        "glnx-xattrs.h",
+        "glnx-shutil.h",
+        "libglnx.h",
+        ":config_h",
+        ":libglnx_config_h",
+    ],
+    copts = [
+        "-I.",
+        "-D_GNU_SOURCE",
+    ],
+    deps = [
+    "@glib//gio:gio",
+    "@glib//glib:glib",
+    "@glib//gio:gio-unix",
+    ],
+)

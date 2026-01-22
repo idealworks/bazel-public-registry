@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/GNOME/libglnx/archive/de29c5f7d9df8d57b4f5caa9920f5d4caa7a8cfc.tar.gz",
+  "integrity": "sha256-yoKds+vo8RsZ1IsQdrml+gzOqK2C4UP2KO/MQMCvT5w=",
+  "strip_prefix": "libglnx-de29c5f7d9df8d57b4f5caa9920f5d4caa7a8cfc",
+  "overlay": {
+    "MODULE.bazel": "sha256-3/d7HhOuL0rla6ZY+Y/9++Sk2rVsM3AcicylP2PwEIY=",
+    "BUILD.bazel": "sha256-lzja1mVugenNMscsELBRmAMsYlmgSBD0GZShKnHGb+o="
+  }
+}
