@@ -1,0 +1,5 @@
+common --enable_bzlmod
+common --registry=file:///home/user/cpp_libs/bazel-public-registry
+common --registry=file:///home/user/bazel-central-registry
+common --registry=https://bcr.bazel.build
+common --lockfile_mode=update
