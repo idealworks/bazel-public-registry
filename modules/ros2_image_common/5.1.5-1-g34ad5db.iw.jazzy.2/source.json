@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/ros-perception/image_common/archive/34ad5dbd4ba9f45553b9b09887c4db39cdf03180.tar.gz",
+  "integrity": "sha256-VmVp2gw3LOCCYNTx28cjY4gdGvyBjfxTRDhucgXPsd4=",
+  "strip_prefix": "image_common-34ad5dbd4ba9f45553b9b09887c4db39cdf03180",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-fN4Ki6/iErjBiNt23F7CAto9oDTF0hXgjNFlD0uDGwo="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-mbnx/BOe1zONkSzaNmjRMcWWig0asmFf53+dqcXraEY=",
+    "BUILD.bazel": "sha256-RDjgVXGljNnWK2AEI6lWmmUFROU0ymukoxboR3CAg6I="
+  }
+}

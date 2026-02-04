@@ -1,0 +1,38 @@
+diff --git a/image_transport/src/camera_subscriber.cpp b/image_transport/src/camera_subscriber.cpp
+index 3075564..3d88753 100644
+--- a/image_transport/src/camera_subscriber.cpp
++++ b/image_transport/src/camera_subscriber.cpp
+@@ -57,6 +57,16 @@ struct CameraSubscriber::Impl
+     unsubscribed_(false),
+     image_received_(0), info_received_(0), both_received_(0)
+   {
++    if(!node->has_parameter("disable_sync_warnings")) {
++      node->declare_parameter<bool>("disable_sync_warnings", false);
++    }
++    node->get_parameter("disable_sync_warnings", disable_warnings_);
++    if(!disable_warnings_) {
++      RCLCPP_INFO(
++        logger_,
++        "[image_transport] Synchronization warning is enabled. "
++        "If your image and camera_info topics are not synchronized, you will see warnings every 10s.");
++    }
+   }
+ 
+   ~Impl()
+@@ -81,7 +91,7 @@ struct CameraSubscriber::Impl
+   void checkImagesSynchronized()
+   {
+     int threshold = 3 * both_received_;
+-    if (image_received_ > threshold || info_received_ > threshold) {
++    if (!disable_warnings_ && (image_received_ > threshold || info_received_ > threshold)) {
+       RCLCPP_WARN(
+         logger_,
+         "[image_transport] Topics '%s' and '%s' do not appear to be synchronized. "
+@@ -104,6 +114,7 @@ struct CameraSubscriber::Impl
+   // For detecting when the topics aren't synchronized
+   std::shared_ptr<rclcpp::TimerBase> check_synced_timer_;
+   int image_received_, info_received_, both_received_;
++  bool disable_warnings_{false};
+ };
+ 
+ CameraSubscriber::CameraSubscriber(
