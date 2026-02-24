@@ -16,6 +16,7 @@ LIBOSTREE_PUBLIC_HEADERS = [
     "src/libostree/ostree-repo-file.h",
     "src/libostree/ostree-diff.h",
     "src/libostree/ostree-gpg-verify-result.h",
+    "src/libostree/ostree-gpg-verifier.h",
     "src/libostree/ostree-sepolicy.h",
     "src/libostree/ostree-sysroot.h",
     "src/libostree/ostree-sysroot-upgrader.h",
@@ -31,6 +32,7 @@ LIBOSTREE_PUBLIC_HEADERS = [
     "src/libostree/ostree-repo-finder-override.h",
     "src/libostree/ostree-kernel-args.h",
     "src/libostree/ostree-sign.h",
+    "src/libostree/ostree-sign-dummy.h",
     "src/libostree/ostree-sign-ed25519.h",
 ]
 
@@ -60,8 +62,8 @@ genrule(
     name = "generate_ostree_enumtypes_h",
     srcs = ["src/libostree/ostree-enumtypes.h.template"] + ENUM_TYPES,
     outs = ["src/libostree/ostree-enumtypes.h"],
-    tools = ["@glib//gobject:glib_mkenums"],
     cmd = "$(location @glib//gobject:glib_mkenums) --template $(location src/libostree/ostree-enumtypes.h.template) $(locations src/libostree/ostree-fetcher.h) > $@.tmp && mv $@.tmp $@",
+    tools = ["@glib//gobject:glib_mkenums"],
 )
 
 genrule(
@@ -71,15 +73,15 @@ genrule(
         ":generate_ostree_enumtypes_h",
     ] + ENUM_TYPES,
     outs = ["src/libostree/ostree-enumtypes.c"],
-    tools = ["@glib//gobject:glib_mkenums"],
     cmd = "$(location @glib//gobject:glib_mkenums) --template $(location src/libostree/ostree-enumtypes.c.template) $(locations src/libostree/ostree-fetcher.h) > $@.tmp && mv $@.tmp $@",
+    tools = ["@glib//gobject:glib_mkenums"],
 )
 
 filegroup(
     name = "ostree_enumtypes",
     srcs = [
-        "src/libostree/ostree-enumtypes.h",
         "src/libostree/ostree-enumtypes.c",
+        "src/libostree/ostree-enumtypes.h",
     ],
 )
 
@@ -113,6 +115,7 @@ OSTREE_SRCS = [
     "src/libostree/ostree-repo-prune.c",
     "src/libostree/ostree-repo-refs.c",
     "src/libostree/ostree-repo-verity.c",
+    "src/libostree/ostree-gpg-verifier.c",
     "src/libostree/ostree-repo-traverse.c",
     "src/libostree/ostree-repo-file.c",
     "src/libostree/ostree-repo-file-enumerator.c",
@@ -141,66 +144,10 @@ OSTREE_SRCS = [
     "src/libostree/ostree-repo-finder-mount.c",
     "src/libostree/ostree-repo-finder-override.c",
     "src/libostree/ostree-kernel-args.c",
-]
-
-OSTREE_HEADERS = []
-
-OSTREE_LIBSOUP_CLIENT_CERTS_SRCS = [
-    "src/libostree/ostree-tls-cert-interaction.c",
-]
-
-OSTREE_AVAHI_SRCS = [
-    "src/libostree/ostree-repo-finder-avahi-parser.c",
-]
-
-OSTREE_GPGME_SRCS = [
-    "src/libostree/ostree-gpg-verifier.c",
     "src/libostree/ostree-gpg-verify-result.c",
+    "src/libostree/ostree-sign.c",
+    "src/libostree/ostree-sign-dummy.c",
 ]
-
-OSTREE_GPGME_DUMMY_SRCS = [
-    "src/libostree/ostree-gpg-verify-result-dummy.c",
-]
-
-config_setting(
-    name = "use_libarchive",
-    values = {"define": "use_libarchive=true"},
-)
-
-config_setting(
-    name = "have_libsoup_client_certs",
-    values = {"define": "have_libsoup_client_certs=true"},
-)
-
-config_setting(
-    name = "use_avahi",
-    values = {"define": "use_avahi=true"},
-)
-
-config_setting(
-    name = "use_gpgme",
-    values = {"define": "use_gpgme=true"},
-)
-
-config_setting(
-    name = "use_curl_or_soup",
-    values = {"define": "use_curl_or_soup=true"},
-)
-
-config_setting(
-    name = "use_curl",
-    values = {"define": "use_curl=true"},
-)
-
-config_setting(
-    name = "use_libsoup3",
-    values = {"define": "use_libsoup3=true"},
-)
-
-config_setting(
-    name = "use_libsoup",
-    values = {"define": "use_libsoup=true"},
-)
 
 OSTREE_FETCHER_COMMON_SRCS = [
     "src/libostree/ostree-fetcher-util.c",
@@ -209,40 +156,48 @@ OSTREE_FETCHER_COMMON_SRCS = [
 ]
 
 OSTREE_FETCHER_CURL_SRCS = ["src/libostree/ostree-fetcher-curl.c"]
-OSTREE_FETCHER_SOUP3_SRCS = ["src/libostree/ostree-fetcher-soup3.c"]
-OSTREE_FETCHER_SOUP2_SRCS = ["src/libostree/ostree-fetcher-soup.c"]
-
-OSTREE_SIGNING_SRCS = [
-    "src/libostree/ostree-sign.c",
-    "src/libostree/ostree-sign-dummy.c",
-    "src/libostree/ostree-sign-ed25519.c",
-]
 
 OSTREE_LIBARCHIVE_SRCS = ["src/libostree/ostree-libarchive-input-stream.c"]
-OSTREE_LIBSOUP_CLIENT_CERTS_SRCS = ["src/libostree/ostree-tls-cert-interaction.c"]
-OSTREE_AVAHI_SRCS = ["src/libostree/ostree-repo-finder-avahi-parser.c"]
-OSTREE_GPGME_SRCS = [
-    "src/libostree/ostree-gpg-verifier.c",
-    "src/libostree/ostree-gpg-verify-result.c",
-]
-OSTREE_GPGME_DUMMY_SRCS = ["src/libostree/ostree-gpg-verify-result-dummy.c"]
 
-OSTREE_FETCHER_COMMON_SRCS = [
-    "src/libostree/ostree-fetcher-util.c",
-    "src/libostree/ostree-fetcher-uri.c",
-    "src/libostree/ostree-metalink.c",
-]
-
+# genrule(
+#     name = "generate_ostree_version_h",
+#     outs = ["src/libostree/ostree-version.h"],
+#     cmd = """
+# cat > $@ <<'EOF'
+# #pragma once
+# #define OSTREE_VERSION "2024.5"
+# #define OSTREE_VERSION_MAJOR 2024
+# #define OSTREE_VERSION_MINOR 5
+# #define OSTREE_VERSION_MICRO 0
+# EOF
+# """,
+# )
 genrule(
     name = "generate_ostree_version_h",
     outs = ["src/libostree/ostree-version.h"],
     cmd = """
 cat > $@ <<'EOF'
 #pragma once
-#define OSTREE_VERSION "2024.5"
-#define OSTREE_VERSION_MAJOR 2024
-#define OSTREE_VERSION_MINOR 5
-#define OSTREE_VERSION_MICRO 0
+#define OSTREE_YEAR_VERSION (2024)
+#define OSTREE_RELEASE_VERSION (5)
+
+#define OSTREE_VERSION (2024.5)
+#define OSTREE_VERSION_S "2024.5"
+
+#define OSTREE_ENCODE_VERSION(year,release) \
+        ((year) << 16 | (release))
+
+#define OSTREE_VERSION_HEX \
+        (OSTREE_ENCODE_VERSION (OSTREE_YEAR_VERSION, OSTREE_RELEASE_VERSION))
+
+#define OSTREE_CHECK_VERSION(year,release)   \
+        (OSTREE_YEAR_VERSION > (year) || \
+         (OSTREE_YEAR_VERSION == (year) && OSTREE_RELEASE_VERSION >= (release)))
+
+#ifndef __GI_SCANNER__
+#define OSTREE_BUILT_FEATURES ""
+#endif
+
 EOF
 """,
 )
@@ -250,9 +205,15 @@ EOF
 LIBOTCORE_HEADERS = glob(
     ["src/libotcore/*.h"],
 )
+
 LIBOTUTIL_HEADERS = glob(
     ["src/libotutil/*.h"],
 )
+
+LIBOTCORE_SRCS = glob(["src/libotcore/*.c"])
+
+LIBOTUTIL_SRCS = glob(["src/libotutil/*.c"])
+
 SWITCHROOT_HEADERS = glob(
     ["src/switchroot/*.h"],
 )
@@ -262,25 +223,18 @@ LIBOSTREE_PRIVATE_HEADERS = glob(
     exclude = LIBOSTREE_PUBLIC_HEADERS + LIBOSTREE_PUBLIC_BUILT_HEADERS,
 )
 
-
 cc_library(
     name = "ostree",
     srcs = (
-        OSTREE_SRCS
-        + [":generate_ostree_enumtypes_c"] + OSTREE_LIBARCHIVE_SRCS + OSTREE_FETCHER_CURL_SRCS
+        OSTREE_SRCS + [
+            ":generate_ostree_enumtypes_c",
+        ] + OSTREE_LIBARCHIVE_SRCS + OSTREE_FETCHER_CURL_SRCS + OSTREE_FETCHER_COMMON_SRCS + LIBOTCORE_SRCS + LIBOTUTIL_SRCS
     ),
     hdrs = LIBOSTREE_PUBLIC_HEADERS + [
         ":generate_ostree_enumtypes_h",
         ":generate_ostree_version_h",
         # ":generate_config_h",
-    ]+ LIBOTUTIL_HEADERS+LIBOTCORE_HEADERS+ SWITCHROOT_HEADERS,
-    textual_hdrs = LIBOSTREE_PRIVATE_HEADERS,
-    includes = [
-        "src/libostree",
-        "src/libotutil",
-        "src/libotcore",
-        "src/switchroot",
-    ],
+    ] + LIBOTUTIL_HEADERS + LIBOTCORE_HEADERS + SWITCHROOT_HEADERS,
     copts = [
         "-fvisibility=hidden",
         "-D_OSTREE_PUBLIC=__attribute__((visibility(\\\"default\\\")))",
@@ -300,13 +254,25 @@ cc_library(
         "-DPACKAGE_NAME=\\\"ostree\\\"",
         "-DPACKAGE_VERSION=\\\"2024.5\\\"",
     ],
+    includes = [
+        "src/libostree",
+        "src/libotcore",
+        "src/libotutil",
+        "src/switchroot",
+    ],
+    linkopts = [
+        "-lgpgme",
+        "-lgpg-error",
+        "-lassuan",
+    ],
+    textual_hdrs = LIBOSTREE_PRIVATE_HEADERS,
     deps = [
-        "@libglnx//:libglnx",
-        "@bsdiff//:bsdiff_lib",
-        "@glib//glib:glib",
-        "@glib//gio:gio",
         ":bupsplit",
+        "@bsdiff//:bsdiff_lib",
         "@curl",
+        "@glib//gio",
+        "@glib//glib",
         "@libarchive//libarchive:archive",
+        "@libglnx",
     ],
 )

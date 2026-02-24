@@ -141,6 +141,19 @@ index cfe1f652..1c34a977 100644
  #include <ot-checksum-utils.h>
  
  #undef G_LOG_DOMAIN
+diff --git a/src/libotutil/ot-variant-builder.c b/src/libotutil/ot-variant-builder.c
+index 68b3a3be..13c1ef40 100644
+--- a/src/libotutil/ot-variant-builder.c
++++ b/src/libotutil/ot-variant-builder.c
+@@ -21,7 +21,7 @@
+ 
+ #include "config.h"
+ 
+-#include "libglnx/libglnx.h"
++#include "libglnx.h"
+ #include "ot-variant-builder.h"
+ 
+ /*****************************************************************************************
 diff --git a/src/libotutil/otutil.h b/src/libotutil/otutil.h
 index 27f84103..0263405e 100644
 --- a/src/libotutil/otutil.h

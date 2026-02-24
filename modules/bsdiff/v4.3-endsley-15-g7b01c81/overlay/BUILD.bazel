@@ -10,7 +10,6 @@ cc_library(
         "bsdiff.h",
         "bspatch.h",
     ],
-    strip_include_prefix = ".",
     include_prefix = "bsdiff",
 )
 
@@ -18,12 +17,18 @@ cc_binary(
     name = "bsdiff",
     srcs = ["bsdiff.c"],
     copts = ["-DBSDIFF_EXECUTABLE"],
-    deps = [":bsdiff_lib","@bzip2//:bz2",],
+    deps = [
+        ":bsdiff_lib",
+        "@bzip2//:bz2",
+    ],
 )
 
 cc_binary(
     name = "bspatch",
     srcs = ["bspatch.c"],
     copts = ["-DBSPATCH_EXECUTABLE"],
-    deps = [":bsdiff_lib","@bzip2//:bz2",],
+    deps = [
+        ":bsdiff_lib",
+        "@bzip2//:bz2",
+    ],
 )

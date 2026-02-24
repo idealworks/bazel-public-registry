@@ -7,7 +7,8 @@
     "bazel-modifications.patch": "sha256-JkThyS0UoIJZpp5LMNXJVmP2xG2I9+5eDPDYJCU3sjM="
   },
   "overlay": {
-    "MODULE.bazel": "sha256-3/d7HhOuL0rla6ZY+Y/9++Sk2rVsM3AcicylP2PwEIY=",
-    "BUILD.bazel": "sha256-lzja1mVugenNMscsELBRmAMsYlmgSBD0GZShKnHGb+o="
+    "MODULE.bazel": "sha256-TNUU0m64Aj4zxQBTQCqVHeKayAxBBtZtt9uxbxKGPT4=",
+    "libglnx-config.h": "sha256-L4YmzywcajhTsG89AbiTP7qAivrpXNmAXBj/l4GSGMs=",
+    "BUILD.bazel": "sha256-b2UlmIBHbq92lqdbqikRYCQKUvUKjH9T20k6PMWwtas="
   }
 }
