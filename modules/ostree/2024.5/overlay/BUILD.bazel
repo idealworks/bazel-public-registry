@@ -1,6 +1,19 @@
+load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
+
 package(
     default_visibility = ["//visibility:public"],
 )
+
+OSTREE_YEAR_VERSION = 2024
+
+OSTREE_RELEASE_VERSION = 5
+
+OSTREE_VERSION = "{}.{}".format(
+    OSTREE_YEAR_VERSION,
+    OSTREE_RELEASE_VERSION,
+)
+
+OSTREE_FEATURES = "inode64 initial-var libcurl libarchive gpgme p2p"
 
 LIBOSTREE_PUBLIC_HEADERS = [
     "src/libostree/ostree.h",
@@ -34,10 +47,6 @@ LIBOSTREE_PUBLIC_HEADERS = [
     "src/libostree/ostree-sign.h",
     "src/libostree/ostree-sign-dummy.h",
     "src/libostree/ostree-sign-ed25519.h",
-]
-
-LIBOSTREE_PUBLIC_BUILT_HEADERS = [
-    "src/libostree/ostree-version.h",
 ]
 
 ENUM_TYPES = [
@@ -165,62 +174,44 @@ OSTREE_LIBARCHIVE_SRCS = ["src/libostree/ostree-libarchive-input-stream.c"]
 #     cmd = """
 # cat > $@ <<'EOF'
 # #pragma once
-# #define OSTREE_VERSION "2024.5"
-# #define OSTREE_VERSION_MAJOR 2024
-# #define OSTREE_VERSION_MINOR 5
-# #define OSTREE_VERSION_MICRO 0
+# #define OSTREE_YEAR_VERSION ({year})
+# #define OSTREE_RELEASE_VERSION ({release})
+
+# #define OSTREE_VERSION ({version})
+# #define OSTREE_VERSION_S "{version}"
+
+# #define OSTREE_ENCODE_VERSION(year,release) \
+#         ((year) << 16 | (release))
+
+# #define OSTREE_VERSION_HEX \
+#         (OSTREE_ENCODE_VERSION (OSTREE_YEAR_VERSION, OSTREE_RELEASE_VERSION))
+
+# #define OSTREE_CHECK_VERSION(year,release)   \
+#         (OSTREE_YEAR_VERSION > (year) || \
+#          (OSTREE_YEAR_VERSION == (year) && OSTREE_RELEASE_VERSION >= (release)))
+
+# #ifndef __GI_SCANNER__
+# #define OSTREE_BUILT_FEATURES ""
+# #endif
+
 # EOF
-# """,
+# """.format(
+#         release = OSTREE_RELEASE_VERSION,
+#         version = OSTREE_VERSION,
+#         year = OSTREE_YEAR_VERSION,
+#     ),
 # )
-genrule(
+
+expand_template(
     name = "generate_ostree_version_h",
-    outs = ["src/libostree/ostree-version.h"],
-    cmd = """
-cat > $@ <<'EOF'
-#pragma once
-#define OSTREE_YEAR_VERSION (2024)
-#define OSTREE_RELEASE_VERSION (5)
-
-#define OSTREE_VERSION (2024.5)
-#define OSTREE_VERSION_S "2024.5"
-
-#define OSTREE_ENCODE_VERSION(year,release) \
-        ((year) << 16 | (release))
-
-#define OSTREE_VERSION_HEX \
-        (OSTREE_ENCODE_VERSION (OSTREE_YEAR_VERSION, OSTREE_RELEASE_VERSION))
-
-#define OSTREE_CHECK_VERSION(year,release)   \
-        (OSTREE_YEAR_VERSION > (year) || \
-         (OSTREE_YEAR_VERSION == (year) && OSTREE_RELEASE_VERSION >= (release)))
-
-#ifndef __GI_SCANNER__
-#define OSTREE_BUILT_FEATURES ""
-#endif
-
-EOF
-""",
-)
-
-LIBOTCORE_HEADERS = glob(
-    ["src/libotcore/*.h"],
-)
-
-LIBOTUTIL_HEADERS = glob(
-    ["src/libotutil/*.h"],
-)
-
-LIBOTCORE_SRCS = glob(["src/libotcore/*.c"])
-
-LIBOTUTIL_SRCS = glob(["src/libotutil/*.c"])
-
-SWITCHROOT_HEADERS = glob(
-    ["src/switchroot/*.h"],
-)
-
-LIBOSTREE_PRIVATE_HEADERS = glob(
-    ["src/libostree/*.h"],
-    exclude = LIBOSTREE_PUBLIC_HEADERS + LIBOSTREE_PUBLIC_BUILT_HEADERS,
+    out = "src/libostree/ostree-version.h",
+    substitutions = {
+        "@YEAR_VERSION@": str(OSTREE_YEAR_VERSION),
+        "@RELEASE_VERSION@": str(OSTREE_RELEASE_VERSION),
+        "@VERSION@": OSTREE_VERSION,
+        "@OSTREE_FEATURES@": OSTREE_FEATURES,
+    },
+    template = "src/libostree/ostree-version.h.in",
 )
 
 cc_library(
@@ -228,13 +219,26 @@ cc_library(
     srcs = (
         OSTREE_SRCS + [
             ":generate_ostree_enumtypes_c",
-        ] + OSTREE_LIBARCHIVE_SRCS + OSTREE_FETCHER_CURL_SRCS + OSTREE_FETCHER_COMMON_SRCS + LIBOTCORE_SRCS + LIBOTUTIL_SRCS
+        ] + OSTREE_LIBARCHIVE_SRCS +
+        OSTREE_FETCHER_CURL_SRCS +
+        OSTREE_FETCHER_COMMON_SRCS + glob([
+            "src/libotcore/*.c",
+        ]) + glob([
+            "src/libotutil/*.c",
+        ])
     ),
-    hdrs = LIBOSTREE_PUBLIC_HEADERS + [
-        ":generate_ostree_enumtypes_h",
-        ":generate_ostree_version_h",
-        # ":generate_config_h",
-    ] + LIBOTUTIL_HEADERS + LIBOTCORE_HEADERS + SWITCHROOT_HEADERS,
+    hdrs = (
+        LIBOSTREE_PUBLIC_HEADERS + [
+            ":generate_ostree_enumtypes_h",
+            ":generate_ostree_version_h",
+        ] + glob([
+            "src/libotutil/*.h",
+        ]) + glob([
+            "src/libotcore/*.h",
+        ]) + glob([
+            "src/switchroot/*.h",
+        ])
+    ),
     copts = [
         "-fvisibility=hidden",
         "-D_OSTREE_PUBLIC=__attribute__((visibility(\\\"default\\\")))",
@@ -252,7 +256,7 @@ cc_library(
         "-DHAVE_CURL=1",
         "-DHAVE_LIBARCHIVE=1",
         "-DPACKAGE_NAME=\\\"ostree\\\"",
-        "-DPACKAGE_VERSION=\\\"2024.5\\\"",
+        "-DPACKAGE_VERSION=\\\"{}\\\"".format(OSTREE_VERSION),
     ],
     includes = [
         "src/libostree",
@@ -265,7 +269,10 @@ cc_library(
         "-lgpg-error",
         "-lassuan",
     ],
-    textual_hdrs = LIBOSTREE_PRIVATE_HEADERS,
+    textual_hdrs = glob(
+        ["src/libostree/*.h"],
+        exclude = LIBOSTREE_PUBLIC_HEADERS + ["src/libostree/ostree-version.h"],
+    ),
     deps = [
         ":bupsplit",
         "@bsdiff//:bsdiff_lib",
