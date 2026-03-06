@@ -1,0 +1,6 @@
+module(
+    name = "bsdiff",
+    version = "v4.3-endsley-15-g7b01c81",
+)
+
+bazel_dep(name = "bzip2", version = "1.0.8.bcr.3")

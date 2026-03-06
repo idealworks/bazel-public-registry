@@ -1,0 +1,34 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "bsdiff_lib",
+    srcs = [
+        "bsdiff.c",
+        "bspatch.c",
+    ],
+    hdrs = [
+        "bsdiff.h",
+        "bspatch.h",
+    ],
+    include_prefix = "bsdiff",
+)
+
+cc_binary(
+    name = "bsdiff",
+    srcs = ["bsdiff.c"],
+    copts = ["-DBSDIFF_EXECUTABLE"],
+    deps = [
+        ":bsdiff_lib",
+        "@bzip2//:bz2",
+    ],
+)
+
+cc_binary(
+    name = "bspatch",
+    srcs = ["bspatch.c"],
+    copts = ["-DBSPATCH_EXECUTABLE"],
+    deps = [
+        ":bsdiff_lib",
+        "@bzip2//:bz2",
+    ],
+)

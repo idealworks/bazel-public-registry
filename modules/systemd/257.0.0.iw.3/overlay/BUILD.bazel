@@ -1,0 +1,26 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+
+py_binary(
+    name = "generate_gperfs",
+    srcs = ["tools/generate-gperfs.py"],
+    main = "tools/generate-gperfs.py",
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "config_h",
+    hdrs = ["config.h"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "config_h_file",
+    srcs = ["config.h"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "version_h",
+    hdrs = ["version.h"],
+    visibility = ["//visibility:public"],
+)
