@@ -1,0 +1,15 @@
+{
+  "url": "https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu/12.3.rel1/binrel/arm-gnu-toolchain-12.3.rel1-x86_64-aarch64-none-linux-gnu.tar.xz",
+  "integrity": "sha256-lg7AvOMJUo9gNjnYIo7znm+5GFKJ/0KwGqO03jFazO8=",
+  "strip_prefix": "arm-gnu-toolchain-12.3.rel1-x86_64-aarch64-none-linux-gnu",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-OWv1RdnYJPu5X/gFA9XsFKwDtW5tEaif6DByHLwS5WQ="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-bsTZDs0zU3cx4327bkkdSPAAaVkwbc44IQDGIHl4G0Q=",
+    "bzl/config.bzl": "sha256-q3vm9YqkDUTP6hWX1w1aN/GoXhnz1/XRdSNDz8BLj7o=",
+    "bzl/BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+    "BUILD.bazel": "sha256-j2IVZoy5LFKiiQmGdoSDlixKUDnjy3gkbN4v1QmvvUQ="
+  }
+}
