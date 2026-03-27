@@ -1,0 +1,76 @@
+package(default_visibility = ["//visibility:public"])
+
+LIBASSUAN_VERSION = "3.0.2"
+
+LIBASSUAN_VERSION_NUMBER = "0x030002"
+
+cc_binary(
+    name = "mkheader",
+    srcs = ["src/mkheader.c"],
+)
+
+genrule(
+    name = "gen_assuan_h",
+    srcs = [
+        "src/assuan.h.in",
+        "src/posix-includes.inc.h",
+        "src/w32-includes.inc.h",
+        "src/posix-types.inc.h",
+        "src/w32-types.inc.h",
+        "src/posix-fd-t.inc.h",
+        "src/w32-fd-t.inc.h",
+        "src/posix-sock-nonce.inc.h",
+        "src/w32-sock-nonce.inc.h",
+    ],
+    outs = ["src/assuan.h"],
+    cmd = "$(location :mkheader) linux-gnu $(location src/assuan.h.in) {} {} > $@".format(
+        LIBASSUAN_VERSION,
+        LIBASSUAN_VERSION_NUMBER,
+    ),
+    tools = [":mkheader"],
+)
+
+cc_library(
+    name = "libassuan",
+    srcs = [
+        "src/assuan.c",
+        "src/assuan-buffer.c",
+        "src/assuan-error.c",
+        "src/assuan-handler.c",
+        "src/assuan-inquire.c",
+        "src/assuan-io.c",
+        "src/assuan-listen.c",
+        "src/assuan-logging.c",
+        "src/assuan-pipe-connect.c",
+        "src/assuan-pipe-server.c",
+        "src/assuan-socket.c",
+        "src/assuan-socket-connect.c",
+        "src/assuan-socket-server.c",
+        "src/assuan-uds.c",
+        "src/client.c",
+        "src/context.c",
+        "src/conversion.c",
+        "src/debug.c",
+        "src/funopen.c",
+        "src/server.c",
+        "src/system.c",
+        "src/system-posix.c",
+        "src/sysutils.c",
+    ],
+    hdrs = [
+        "src/assuan-defs.h",
+        "src/config.h",
+        "src/debug.h",
+        ":gen_assuan_h",
+    ],
+    includes = [
+        "src",
+    ],
+    local_defines = [
+        "HAVE_CONFIG_H",
+        "_GNU_SOURCE",
+    ],
+    deps = [
+        "@libgpg-error",
+    ],
+)

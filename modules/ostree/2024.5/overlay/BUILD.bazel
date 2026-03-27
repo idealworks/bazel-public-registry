@@ -215,6 +215,13 @@ expand_template(
 )
 
 cc_library(
+    name = "ext2fs_stub",
+    hdrs = ["ext2fs/ext2_fs.h"],
+    include_prefix = "ext2fs",
+    strip_include_prefix = "ext2fs",
+)
+
+cc_library(
     name = "ostree",
     srcs = (
         OSTREE_SRCS + [
@@ -264,22 +271,26 @@ cc_library(
         "src/libotutil",
         "src/switchroot",
     ],
-    linkopts = [
-        "-lgpgme",
-        "-lgpg-error",
-        "-lassuan",
-    ],
+    # linkopts = [
+    #     "-lgpgme",
+    #     "-lgpg-error",
+    #     "-lassuan",
+    # ],
     textual_hdrs = glob(
         ["src/libostree/*.h"],
         exclude = LIBOSTREE_PUBLIC_HEADERS + ["src/libostree/ostree-version.h"],
     ),
     deps = [
         ":bupsplit",
+        ":ext2fs_stub",
         "@bsdiff//:bsdiff_lib",
         "@curl",
         "@glib//gio",
         "@glib//glib",
+        "@gpgme",
         "@libarchive//libarchive:archive",
+        "@libassuan",
         "@libglnx",
+        "@libgpg-error",
     ],
 )

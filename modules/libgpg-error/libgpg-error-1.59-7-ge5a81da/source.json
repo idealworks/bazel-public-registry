@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/gpg/libgpg-error/archive/e5a81daca8e0a8238b74ba6cb0e2738d1f60444a.tar.gz",
+  "integrity": "sha256-DBGukyUo4S+hB5rYWbQXQ6zcISt7kqxl2CEG4/PXmDk=",
+  "strip_prefix": "libgpg-error-e5a81daca8e0a8238b74ba6cb0e2738d1f60444a",
+  "overlay": {
+    "MODULE.bazel": "sha256-KIiBUl6aT3mGPqtwq4GqTvIDIERm3xTnLKvYZzY9TeU=",
+    "src/config.h": "sha256-i1Mw8O8UaXPufUFmXmSErHxZ2thyDezSHRhKVQajE5Q=",
+    "BUILD.bazel": "sha256-Dufwys4jG4lffu1QZKH4CPXxyJWm8z6U4YXp0usCRmc="
+  }
+}
