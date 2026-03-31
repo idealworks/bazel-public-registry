@@ -24,3 +24,15 @@ cc_library(
         "@spdlog",
     ],
 )
+
+cc_library(
+    name = "rcl_logging_noop",
+    srcs = glob(["rcl_logging_noop/src/rcl_logging_noop/*.cpp"]),
+    copts = ["-std=c++17"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":rcl_logging_interface",
+        "@ros2_rcpputils//:rcpputils",
+        "@ros2_rcutils//:rcutils",
+    ],
+)
