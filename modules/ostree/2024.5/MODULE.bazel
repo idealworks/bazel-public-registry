@@ -7,16 +7,12 @@ module(
 bazel_dep(name = "glib", version = "2.82.2.iw.1")
 bazel_dep(name = "libglnx", version = "v2017.2-184-gde29c5f")
 bazel_dep(name = "bsdiff", version = "v4.3-endsley-15-g7b01c81")
-
 bazel_dep(name = "bzip2", version = "1.0.8.bcr.3")
 bazel_dep(name = "rules_python", version = "0.40.0")
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
 bazel_dep(name = "rules_cc", version = "0.0.2")
 bazel_dep(name = "libarchive", version = "3.8.1")
 bazel_dep(name = "curl", version = "8.11.0.bcr.2")
-
 bazel_dep(name = "libgpg-error", version = "libgpg-error-1.59-7-ge5a81da")
-
 bazel_dep(name = "libassuan", version = "libassuan-3.0.2-16-ge71eb3e")
-
 bazel_dep(name = "gpgme", version = "gpgme-2.0.1-28-g53c8f291")

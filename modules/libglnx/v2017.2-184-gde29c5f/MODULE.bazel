@@ -2,4 +2,5 @@ module(
     name = "libglnx",
     version = "v2017.2-184-gde29c5f",
 )
+
 bazel_dep(name = "glib", version = "2.82.2.bcr.8")

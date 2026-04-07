@@ -3,7 +3,7 @@
   "integrity": "sha256-/bKqVygGJdl7ZQewr9hyOcMLG36mK+dj5MbeN3ms8QY=",
   "strip_prefix": "libassuan-e71eb3ec615e5c4a2dd8b5ecd068c3a9f6547a47",
   "overlay": {
-    "MODULE.bazel": "sha256-2xBC/tFubJ9KSfWPMGLLvQItOOLTHWQsJjL099WjzX4=",
+    "MODULE.bazel": "sha256-2/R/Be/9ewlheh6/zyyxpAc8a3azLQOwIABWTK8fKXI=",
     "src/config.h": "sha256-zeyFzuPS1DA5JFXXXuz3AFx5tiaFAox/nij5AU2Xwn4=",
     "BUILD.bazel": "sha256-IgE8BNg3Je0RPsUYnnZFWBQvr6JfD9XN7l1nmRbOUqM="
   }

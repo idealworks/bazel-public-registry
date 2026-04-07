@@ -155,7 +155,10 @@ INCLUDE_PREFIX = REPO_ROOT if REPO_ROOT else "."
 [cc_test(
     name = test_name,
     size = "small",
-    srcs = [test_name + ".c", "testutils.h"] + [
+    srcs = [
+        test_name + ".c",
+        "testutils.h",
+    ] + [
         "//glib:all_hdrs",
     ],
     copts = [
