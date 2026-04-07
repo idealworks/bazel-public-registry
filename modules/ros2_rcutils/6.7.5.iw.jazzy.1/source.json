@@ -1,0 +1,19 @@
+{
+  "url": "https://github.com/ros2/rcutils/archive/2b6bdcc007d4647b57731cbe7a1ff9477569a679.tar.gz",
+  "integrity": "sha256-VjgiDRy8csBEKI6oB3pt5N8S0BGwdh7oq9mESzFOwbg=",
+  "strip_prefix": "rcutils-2b6bdcc007d4647b57731cbe7a1ff9477569a679",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-MmCTgVg/7L0SpQJwndTAbKlIww5AsCSE2BDfzybmUU4="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-Pc0USsqyhfBT0xeDpMcg1flqz9OwmgaQ+yvNRJgxD1c=",
+    "test/BUILD.bazel": "sha256-JiAQcm1VTfiZS5TQ/uKCrcnUmbX041mCs04NXRWi9Tg=",
+    "requirements_lock.txt": "sha256-u9Tn8KpCDH/PS+NRkWW7pW/5GJYi1D2tN7/oZkhb6xw=",
+    "requirements.txt": "sha256-GQzV2W/B2yR7dYaKaiXc10FSgLwd4FLENYR7+MJ3Fgo=",
+    "bzl/logging_macros.bzl": "sha256-ZWD9prQz8b4tyHdogt7IxGpNJQmllErTJ1nUz4EpXMI=",
+    "bzl/generate_rcutils_logging_macros.py": "sha256-Duv6B/9C+kci461OOHbM8/a9VDlFfKov2eFR0F+kmNA=",
+    "bzl/BUILD.bazel": "sha256-o7+DlIXiUurjw+kPFQXRq3ekkRxoS/2W9HAhbSgjEfY=",
+    "BUILD.bazel": "sha256-iilCuYHawqbxdmybh6UrK666S0HtO9Ogi5A8pY0imHo="
+  }
+}

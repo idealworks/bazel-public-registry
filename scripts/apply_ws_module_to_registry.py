@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/bin/python
 import argparse
 import base64
 import hashlib
@@ -77,7 +77,11 @@ def safe_download_archive_url(download_dir: Path, remote_url):
         with open(download_dir / out_filename, "wb") as fp:
             for chunk in resp.iter_content(chunk_size=8192):
                 if (time.time() - last_print_time) > 5:
-                    print("Download progress: {:.2f}%: {}/{}".format(cur_size / total_size * 100, cur_size, total_size))
+                    print(
+                        "Download progress: {:.2f}%: {}/{}".format(
+                            cur_size / total_size * 100, cur_size, total_size
+                        )
+                    )
                     last_print_time = time.time()
                 cur_size += len(chunk)
                 fp.write(chunk)
@@ -96,9 +100,13 @@ def git_remote_to_source_data(git_remote, commit_hash):
     # url: "https://gitlab.freedesktop.org/xorg/lib/libxtrans/-/archive/0dc46e7ed5bdd876467f9dbb314ba6b8094e541b/libxtrans-0dc46e7ed5bdd876467f9dbb314ba6b8094e541b.tar.gz"
     # prefix: "libxtrans-0dc46e7ed5bdd876467f9dbb314ba6b8094e541b"
     if "gitlab" in git_remote:
-        match = re.search(r"(?P<domain>[\w\.-]+)/(?P<repo>[\w\-/]+)(?=\.git$)", git_remote)
+        match = re.search(
+            r"(?P<domain>[\w\.-]+)/(?P<repo>[\w\-/]+)(?=\.git$)", git_remote
+        )
         repo_name = match.group("repo").split("/")[-1]
-        archive_url = git_remote.replace(".git", f"/-/archive/{commit_hash}/{repo_name}-{commit_hash}.tar.gz")
+        archive_url = git_remote.replace(
+            ".git", f"/-/archive/{commit_hash}/{repo_name}-{commit_hash}.tar.gz"
+        )
         strip_prefix = f"{repo_name}-{commit_hash}"
         return SourceData(archive_url, strip_prefix)
     if "github" in git_remote:
@@ -114,7 +122,9 @@ def git_remote_to_source_data(git_remote, commit_hash):
     # prefix: "libcap-9eb56596eef5e55a596aa97ecaf8466ea559d05c"
     if "git.kernel.org" in git_remote:
         repo_name = git_remote.replace(".git", "").split("/")[-1]
-        mod_git_remote = git_remote.replace("https://git.kernel.org", "https://web.git.kernel.org")
+        mod_git_remote = git_remote.replace(
+            "https://git.kernel.org", "https://web.git.kernel.org"
+        )
         archive_url = f"{mod_git_remote}/snapshot/{repo_name}-{commit_hash}.tar.gz"
         strip_prefix = f"{repo_name}-{commit_hash}"
         return SourceData(archive_url, strip_prefix)
@@ -168,8 +178,12 @@ class ModuleInformation:
         ).stdout.strip()
         return git_remote_to_source_data(git_remote, git_commit_hash)
 
-    def update_to_registry(self, registry_path: Path, force_url="", force_strip_prefix=""):
-        mod_path = registry_path / "modules" / self.dec.header.name / self.dec.header.version
+    def update_to_registry(
+        self, registry_path: Path, force_url="", force_strip_prefix=""
+    ):
+        mod_path = (
+            registry_path / "modules" / self.dec.header.name / self.dec.header.version
+        )
         mod_path.mkdir(parents=True, exist_ok=True)
         # Get the exact tag of the repo in the workspace and check that the tag in MODULE.bazel starts with it
         if not force_url:
@@ -182,7 +196,9 @@ class ModuleInformation:
                     text=True,
                 ).stdout.strip()
             except subprocess.SubprocessError:
-                raise subprocess.SubprocessError(f"Unable to run git describe in {self.dec.header.name}")
+                raise subprocess.SubprocessError(
+                    f"Unable to run git describe in {self.dec.header.name}"
+                )
             if git_rev[0].isdigit():
                 verify_git_tag_matched_module(git_rev, self.dec.header, self.ws_path)
 
@@ -210,7 +226,9 @@ class ModuleInformation:
 
         # Copy MODULE.bazel to overlay, symlink it and remove it from statuses
         shutil.copy(self.ws_path / "MODULE.bazel", mod_path)
-        overlay_json_content = {"MODULE.bazel": generate_integrity(mod_path / "MODULE.bazel")}
+        overlay_json_content = {
+            "MODULE.bazel": generate_integrity(mod_path / "MODULE.bazel")
+        }
         if not (mod_path / "overlay" / "MODULE.bazel").exists():
             os.symlink("../MODULE.bazel", mod_path / "overlay" / "MODULE.bazel")
         git_status = [entry for entry in git_status if entry != "A  MODULE.bazel"]
@@ -229,12 +247,16 @@ class ModuleInformation:
                 # File is added, add it to overlay
                 (mod_path / "overlay" / fpath).parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy(self.ws_path / fpath, mod_path / "overlay" / fpath)
-                overlay_json_content[entry[3:]] = generate_integrity(mod_path / "overlay" / fpath)
+                overlay_json_content[entry[3:]] = generate_integrity(
+                    mod_path / "overlay" / fpath
+                )
             elif entry.startswith("M "):
                 # File is modified, add it to patch
                 modified_files.append(fpath)
             else:
-                raise ValueError(f"File '{entry[3:]}' not added in module {self.ws_path}, either add or reset it")
+                raise ValueError(
+                    f"File '{entry[3:]}' not added in module {self.ws_path}, either add or reset it"
+                )
 
         # Create patch based on modified files and add it's integrity to source_json_content
         if modified_files:
@@ -275,7 +297,10 @@ def parse_module_file(file_path: Path) -> ModuleDeclaration:
     )
 
     bazel_dep_pattern = re.compile(
-        r"bazel_dep\(\s*" r'name\s*=\s*"(?P<name>[^"]+)",\s*' r'version\s*=\s*"(?P<version>[^"]+)"\s*' r"\)",
+        r"bazel_dep\(\s*"
+        r'name\s*=\s*"(?P<name>[^"]+)",\s*'
+        r'version\s*=\s*"(?P<version>[^"]+)"\s*'
+        r"\)",
         re.DOTALL,
     )
 
@@ -301,13 +326,17 @@ def parse_module_file(file_path: Path) -> ModuleDeclaration:
             name=match.group("name"),
             version=match.group("version"),
             compatibility_level=(
-                int(match.group("compatibility_level")) if match.group("compatibility_level") else None
+                int(match.group("compatibility_level"))
+                if match.group("compatibility_level")
+                else None
             ),
         )
 
     # Parse bazel_dep(...) entries
     for match in bazel_dep_pattern.finditer(content):
-        bazel_deps.append(BazelDep(name=match.group("name"), version=match.group("version")))
+        bazel_deps.append(
+            BazelDep(name=match.group("name"), version=match.group("version"))
+        )
 
     # Parse local_path_override(...) entries
     for match in local_path_override_pattern.finditer(content):
@@ -334,9 +363,13 @@ def find_files(filename, search_dir):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Creates a registry entry for all the modules in a workspace")
-    parser.add_argument("workspace_path", help="Registry to add the modules to", type=str)
-    parser.add_argument("registry_path", help="Registry to add the modules to", type=str)
+    parser = argparse.ArgumentParser(
+        description="Creates a registry entry for all the modules in a workspace"
+    )
+    parser.add_argument("workspace_path", help="Path to the module workspace", type=str)
+    parser.add_argument(
+        "registry_path", help="Registry to add the modules to", type=str
+    )
     parser.add_argument(
         "-u",
         "--url",
@@ -363,7 +396,9 @@ if __name__ == "__main__":
         module_info = ModuleInformation(module_dec, module_path.parent)
         # Sanity check that the modules do not reference local_path_overrides
         if module_dec.has_local_path_overrides():
-            raise ValueError(f"Module {module_dec.header.name} has local_path_override inside, make sure to remove it")
+            raise ValueError(
+                f"Module {module_dec.header.name} has local_path_override inside, make sure to remove it"
+            )
         all_module_infos.append(module_info)
 
     # Remove the child modules from the list (example modules)
@@ -386,13 +421,20 @@ if __name__ == "__main__":
     # Check that the modules in the ws reference eachother
     for module_info in all_module_infos:
         for dep in module_info.dec.bazel_deps:
-            dep_module_dec = module_declarations_get_with_name(all_module_infos, dep.name)
-            if dep_module_dec is not None and dep_module_dec.header.version != dep.version:
+            dep_module_dec = module_declarations_get_with_name(
+                all_module_infos, dep.name
+            )
+            if (
+                dep_module_dec is not None
+                and dep_module_dec.header.version != dep.version
+            ):
                 raise ValueError(
                     f"Module {module_info.dec.header.name} references dependency {dep.name} with version {dep.version} but the version in the workspace is {dep_module_dec.header.version}"
                 )
 
-    all_ws_module_names = [module_info.dec.header.name for module_info in all_module_infos]
+    all_ws_module_names = [
+        module_info.dec.header.name for module_info in all_module_infos
+    ]
 
     to_be_processed = all_module_infos.copy()
     already_processed = []
@@ -400,12 +442,16 @@ if __name__ == "__main__":
         processed_module_infos_copy = to_be_processed.copy()
         while len(processed_module_infos_copy) != 0:
             maybe_processed_module = processed_module_infos_copy.pop()
-            if maybe_processed_module.dec.all_deps_processed(all_ws_module_names, already_processed):
-                maybe_processed_module.update_to_registry(Path(args.registry_path), args.url, args.strip_prefix)
+            if maybe_processed_module.dec.all_deps_processed(
+                all_ws_module_names, already_processed
+            ):
+                maybe_processed_module.update_to_registry(
+                    Path(args.registry_path), args.url, args.strip_prefix
+                )
                 already_processed.append(maybe_processed_module.dec.header.name)
                 to_be_processed = [
                     module_info
                     for module_info in to_be_processed
-                    if module_info.dec.header.name != maybe_processed_module.dec.header.name
+                    if module_info.dec.header.name
+                    != maybe_processed_module.dec.header.name
                 ]
- 

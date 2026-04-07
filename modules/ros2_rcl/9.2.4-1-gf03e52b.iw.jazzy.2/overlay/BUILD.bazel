@@ -1,6 +1,16 @@
 """ Builds rcl.
 """
 
+config_setting(
+    name = "use_rcl_logging_spdlog",
+    values = {"define": "rcl_logging_impl=spdlog"},
+)
+
+config_setting(
+    name = "use_rcl_logging_noop",
+    values = {"define": "rcl_logging_impl=noop"},
+)
+
 cc_library(
     name = "rcl_yaml_param_parser",
     srcs = glob([
@@ -36,12 +46,15 @@ cc_library(
         ":rcl_yaml_param_parser",
         "@ros2_rcl_interfaces//:c_rcl_interfaces",
         "@ros2_rcl_interfaces//:c_type_description_interfaces",
-        "@ros2_rcl_logging//:rcl_logging_spdlog",
         "@ros2_rcutils//:rcutils",
         "@ros2_rmw_implementation//:rmw_implementation",
         "@ros2_rosidl//:rosidl_runtime_c",
         "@ros2_tracing//:tracetools",
-    ],
+    ] + select({
+        ":use_rcl_logging_spdlog": ["@ros2_rcl_logging//:rcl_logging_spdlog"],
+        ":use_rcl_logging_noop": ["@ros2_rcl_logging//:rcl_logging_noop"],
+        "//conditions:default": ["@ros2_rcl_logging//:rcl_logging_spdlog"],
+    }),
 )
 
 cc_library(

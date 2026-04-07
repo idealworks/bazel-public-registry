@@ -1,0 +1,72 @@
+diff --git a/launch/launch/actions/execute_local.py b/launch/launch/actions/execute_local.py
+index 487ae90..2915346 100644
+--- a/launch/launch/actions/execute_local.py
++++ b/launch/launch/actions/execute_local.py
+@@ -88,7 +88,7 @@ class ExecuteLocal(Action):
+             'sigkill_timeout', default=5),
+         emulate_tty: bool = False,
+         output: SomeSubstitutionsType = 'log',
+-        output_format: Text = '[{this.process_description.final_name}] {line}',
++        output_format: Text = '{line}',
+         cached_output: bool = False,
+         log_cmd: bool = False,
+         on_exit: Optional[Union[
+diff --git a/launch/launch/logging/__init__.py b/launch/launch/logging/__init__.py
+index 207a8ed..79b7fe2 100644
+--- a/launch/launch/logging/__init__.py
++++ b/launch/launch/logging/__init__.py
+@@ -100,6 +100,11 @@ def _renew_latest_log_dir(*, log_dir):
+     return True
+ 
+ 
++def _is_disk_logging_disabled() -> bool:
++    """Return True when launch logging to disk is disabled via environment."""
++    return os.environ.get('ROS_LOG_DISABLE_TO_DISK') not in (None, '')
++
++
+ class LaunchConfig:
+     """Launch Logging Configuration class."""
+ 
+@@ -133,10 +138,14 @@ class LaunchConfig:
+     @property
+     def log_dir(self):
+         """Get the current log directory, generating it if necessary."""
++        if _is_disk_logging_disabled():
++            return _get_logging_directory()
+         if self._log_dir is None:
+             self._log_dir = _make_unique_log_dir(
+                 base_path=_get_logging_directory()
+             )
++            if os.environ.get("ROS_LOG_SKIP_LATEST_SYMLINK"):
++                return self._log_dir
+             try:
+                 success = _renew_latest_log_dir(log_dir=self._log_dir)
+                 if not success:
+@@ -316,10 +325,18 @@ class LaunchConfig:
+         See launch_config() documentation for application wide log file
+         logging configuration.
+ 
++        If the environment variable ``ROS_LOG_DISABLE_TO_DISK`` is set to a
++        non-empty value, a no-op NullHandler is returned and no log directory
++        or file is created.
++
+         :param: file_name of the log file whose handler is to be retrieved.
+         :return: the logging handler associated to the file (always the same
+         once constructed).
+         """
++        if _is_disk_logging_disabled():
++            if file_name not in self.file_handlers:
++                self.file_handlers[file_name] = handlers.NullHandler()
++            return self.file_handlers[file_name]
+         if file_name not in self.file_handlers:
+             file_path = self.get_log_file_path(file_name)
+             factory = self.log_handler_factory
+@@ -334,7 +351,7 @@ launch_config = LaunchConfig()
+ 
+ def log_launch_config(*, logger=logging.root):
+     """Log logging configuration details relevant for a user with the given logger."""
+-    if any(launch_config.file_handlers):
++    if not _is_disk_logging_disabled() and any(launch_config.file_handlers):
+         logger.info('All log files can be found below {}'.format(launch_config.log_dir))
+     logger.info('Default logging verbosity is set to {}'.format(logging.getLevelName(
+         logging.root.getEffectiveLevel()

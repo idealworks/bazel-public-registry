@@ -1,0 +1,22 @@
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+
+py_library(
+    name = "version",
+    srcs = ["version.py"],
+    imports = ["."],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "add_module_to_ws",
+    srcs = ["add_module_to_ws.py"],
+    deps = [":version"],
+)
+
+py_binary(
+    name = "apply_ws_module_to_registry",
+    srcs = ["apply_ws_module_to_registry.py"],
+    deps = [
+        "@iw_bpr_deps//requests",
+    ],
+)
