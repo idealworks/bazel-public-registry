@@ -262,6 +262,7 @@ cc_library(
         "-DPKGLIBEXECDIR=\\\"/usr/libexec\\\"",
         "-DHAVE_CURL=1",
         "-DHAVE_LIBARCHIVE=1",
+        "-DHAVE_LIBCURL_OR_LIBSOUP=1",
         "-DPACKAGE_NAME=\\\"ostree\\\"",
         "-DPACKAGE_VERSION=\\\"{}\\\"".format(OSTREE_VERSION),
     ],

@@ -9,6 +9,6 @@
   "overlay": {
     "MODULE.bazel": "sha256-S6PvuBDNpaBRuN8rZruQOofQafMRIioycTicG9FLmBw=",
     "ext2fs/ext2_fs.h": "sha256-wwjUlkgZjR+pEUmNR/to9YUKFGzEAZR1jSIbmWPs9mg=",
-    "BUILD.bazel": "sha256-OW/BohAS3q9BQ7t8zBgp6uUXOEiv3qIpJNDeJBjiHyg="
+    "BUILD.bazel": "sha256-giO5ReZvGe3/LAQVKCmHiErRYJ531v+T7c7WE7g1Zcs="
   }
 }
