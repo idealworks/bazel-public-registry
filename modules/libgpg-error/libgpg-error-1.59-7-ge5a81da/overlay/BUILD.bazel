@@ -1,0 +1,159 @@
+package(default_visibility = ["//visibility:public"])
+
+LIBGPG_ERROR_VERSION = "1.59.7"
+
+LIBGPG_ERROR_VERSION_NUMBER = "0x015907"
+
+HOST_TRIPLET = "aarch64-unknown-linux-gnu"
+
+cc_binary(
+    name = "mkheader",
+    srcs = ["src/mkheader.c"],
+)
+
+genrule(
+    name = "gen_err_sources_h",
+    srcs = [
+        "src/mkstrtable.awk",
+        "src/err-sources.h.in",
+    ],
+    outs = ["src/err-sources.h"],
+    cmd = "awk -f $(location src/mkstrtable.awk) -v textidx=3 $(location src/err-sources.h.in) > $@",
+)
+
+genrule(
+    name = "gen_err_codes_h",
+    srcs = [
+        "src/mkstrtable.awk",
+        "src/err-codes.h.in",
+    ],
+    outs = ["src/err-codes.h"],
+    cmd = "awk -f $(location src/mkstrtable.awk) -v textidx=3 $(location src/err-codes.h.in) > $@",
+)
+
+genrule(
+    name = "gen_code_to_errno_h",
+    srcs = [
+        "src/mkerrnos.awk",
+        "src/errnos.in",
+    ],
+    outs = ["src/code-to-errno.h"],
+    cmd = "awk -f $(location src/mkerrnos.awk) $(location src/errnos.in) > $@",
+)
+
+genrule(
+    name = "gen_mkerrcodes_h",
+    srcs = [
+        "src/errnos.in",
+        "src/mkerrcodes1.awk",
+        "src/mkerrcodes.awk",
+    ],
+    outs = ["src/mkerrcodes.h"],
+    cmd = """
+      awk -f $(location src/mkerrcodes1.awk) $(location src/errnos.in) > $(@D)/_mkerrcodes.h && \
+      cpp -P $(@D)/_mkerrcodes.h | grep GPG_ERR_ | awk -f $(location src/mkerrcodes.awk) > $@ && \
+      rm -f $(@D)/_mkerrcodes.h
+    """,
+)
+
+cc_binary(
+    name = "mkerrcodes",
+    srcs = [
+        "src/mkerrcodes.c",
+        ":gen_mkerrcodes_h",
+    ],
+    includes = [
+        "src",
+    ],
+)
+
+genrule(
+    name = "gen_code_from_errno_h",
+    srcs = ["src/mkerrcodes2.awk"],
+    outs = ["src/code-from-errno.h"],
+    cmd = "$(location :mkerrcodes) | awk -f $(location src/mkerrcodes2.awk) > $@",
+    tools = [":mkerrcodes"],
+)
+
+genrule(
+    name = "gen_gpg_error_h",
+    srcs = [
+        "src/gpg-error.h.in",
+        "src/err-sources.h.in",
+        "src/err-codes.h.in",
+        "src/errnos.in",
+        "src/w32-add.h",
+        "src/syscfg/lock-obj-pub.aarch64-unknown-linux-gnu.h",
+        ":gen_err_sources_h",
+        ":gen_err_codes_h",
+        "src/config.h",
+    ],
+    outs = ["src/gpg-error.h"],
+    cmd = "\"$(location :mkheader)\" --cross " +
+          HOST_TRIPLET + " " +
+          "\"$(location src/gpg-error.h.in)\" " +
+          "\"$(location src/config.h)\" " +
+          LIBGPG_ERROR_VERSION + " " +
+          LIBGPG_ERROR_VERSION_NUMBER + " > \"$@\"",
+    tools = [":mkheader"],
+)
+
+genrule(
+    name = "gen_gpgrt_h",
+    srcs = [":gen_gpg_error_h"],
+    outs = ["src/gpgrt.h"],
+    cmd = "cp $(location :gen_gpg_error_h) $@",
+)
+
+cc_library(
+    name = "libgpg-error",
+    srcs = [
+        "src/argparse.c",
+        "src/b64dec.c",
+        "src/b64enc.c",
+        "src/code-from-errno.c",
+        "src/code-to-errno.c",
+        "src/estream.c",
+        "src/estream-printf.c",
+        "src/init.c",
+        "src/logging.c",
+        "src/name-value.c",
+        "src/posix-lock.c",
+        "src/posix-thread.c",
+        "src/spawn-posix.c",
+        "src/strerror.c",
+        "src/stringutils.c",
+        "src/strlist.c",
+        "src/strsource.c",
+        "src/syscall-clamp.c",
+        "src/sysutils.c",
+        "src/version.c",
+        "src/visibility.c",
+    ],
+    hdrs = [
+        "src/config.h",
+        "src/estream-printf.h",
+        "src/gettext.h",
+        "src/gpgrt-int.h",
+        "src/init.h",
+        "src/lock.h",
+        "src/posix-lock-obj.h",
+        "src/protos.h",
+        "src/thread.h",
+        "src/visibility.h",
+        ":gen_code_from_errno_h",
+        ":gen_code_to_errno_h",
+        ":gen_err_codes_h",
+        ":gen_err_sources_h",
+        ":gen_gpg_error_h",
+        ":gen_gpgrt_h",
+    ],
+    copts = [
+        "-DLOCALEDIR=\\\"/usr/share/locale\\\"",
+        "-DSYSCONFDIR=\\\"/etc\\\"",
+    ],
+    includes = [
+        "src",
+    ],
+    local_defines = ["HAVE_CONFIG_H"],
+)

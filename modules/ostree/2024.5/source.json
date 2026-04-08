@@ -1,0 +1,14 @@
+{
+  "url": "https://github.com/DespinaRizk/ostree/archive/f3b66e8c2db4953c14cef048f59a39c039d53433.tar.gz",
+  "integrity": "sha256-xTSpGkH9wzpV3eBUCbF0z+bbBajaf6Rt4zK46IYP+aU=",
+  "strip_prefix": "ostree-f3b66e8c2db4953c14cef048f59a39c039d53433",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-iaQBiAMXa9RonaMjNYvxEvgeEZzteR+/ivOZsZE39RI="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-LGp2Uzmo9r+PeYJv4GjFCCYIEQTNBvB/EZuNLsLsA1g=",
+    "ext2fs/ext2_fs.h": "sha256-wwjUlkgZjR+pEUmNR/to9YUKFGzEAZR1jSIbmWPs9mg=",
+    "BUILD.bazel": "sha256-giO5ReZvGe3/LAQVKCmHiErRYJ531v+T7c7WE7g1Zcs="
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/gpg/gpgme/archive/53c8f29125ff9664120879b78fb11a6e766f89f4.tar.gz",
+  "integrity": "sha256-v1Lb7WYGgCNECoK89od2JD7xLsx90x365eS9jaJA8Vs=",
+  "strip_prefix": "gpgme-53c8f29125ff9664120879b78fb11a6e766f89f4",
+  "overlay": {
+    "MODULE.bazel": "sha256-MmrdtoFtOmfJBLX4yFCl+A8C4G2PqL7ry3pEIf/c6Mc=",
+    "BUILD.bazel": "sha256-MdjF1RXuwzKXQ7PGPKEgqffWDJs/OlNKmTxTpogYlMU=",
+    "conf/config.h": "sha256-86Gloo91EwpsG0WPzzaIFfQlNGQgexYi9LwLHmzY280="
+  }
+}

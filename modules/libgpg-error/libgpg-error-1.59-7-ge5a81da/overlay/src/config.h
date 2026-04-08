@@ -1,0 +1,68 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#define PACKAGE "libgpg-error"
+#define PACKAGE_NAME "libgpg-error"
+#define PACKAGE_VERSION "1.59.7"
+#define VERSION "1.59.7"
+
+#define BUILD_REVISION "e5a81da"
+#define BUILD_COMMITID "e5a81daca8e0a8238b74ba6cb0e2738d1f60444a"
+#define BUILD_TIMESTAMP "<none>"
+
+#define HAVE_STDINT_H 1
+#define HAVE_INTTYPES_H 1
+#define HAVE_SYS_TYPES_H 1
+#define HAVE_SYS_STAT_H 1
+#define HAVE_UNISTD_H 1
+#define HAVE_LOCALE_H 1
+#define HAVE_POLL_H 1
+#define HAVE_SYS_TIME_H 1
+#define HAVE_SYS_SOCKET_H 1
+#define HAVE_SYS_UIO_H 1
+#define HAVE_FCNTL_H 1
+#define HAVE_SYS_SELECT_H 1
+#define HAVE_PTHREAD_H 1
+#define HAVE_ARGP_H 1
+
+#define HAVE_FSEEKO 1
+#define HAVE_GETGID 1
+#define HAVE_GETEGID 1
+#define HAVE_NANOSLEEP 1
+#define HAVE_SETLOCALE 1
+#define HAVE_TIMEGM 1
+#define HAVE_STPCPY 1
+#define HAVE_CLOSEFROM 1
+#define HAVE_GETPWNAM 1
+#define HAVE_PTHREAD_ATFORK 1
+
+#define HAVE_TLS 1
+
+#define HAVE_SYS_GETTID 1
+
+#define USE_POSIX_THREADS 1
+#define _REENTRANT 1
+
+#define SIZEOF_INT 4
+#define SIZEOF_LONG 8
+#define SIZEOF_UNSIGNED_LONG 8
+#define SIZEOF_VOID_P 8
+
+#define HAVE_LONG_LONG_INT 1
+#define HAVE_LONG_DOUBLE 1
+#define HAVE_INTMAX_T 1
+#define HAVE_UINTMAX_T 1
+#define HAVE_PTRDIFF_T 1
+
+#define USE_LINUX_GETDENTS 1
+
+#define GPGRT_ENABLE_ES_MACROS 1
+#define GPGRT_ENABLE_ARGPARSE_MACROS 1
+#define GPGRT_ENABLE_LOG_MACROS 1
+
+#define _ESTREAM_PRINTF_EXTRA_INCLUDE "gpg-error.h"
+
+#define REPLACEMENT_FOR_OFF_T "off_t"
+#define REPLACEMENT_FOR_SSIZE_T "ssize_t"
+
+#endif /* CONFIG_H */

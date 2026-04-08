@@ -1,0 +1,8 @@
+module(
+    name = "gpgme",
+    version = "gpgme-2.0.1-28-g53c8f291",
+)
+
+bazel_dep(name = "libgpg-error", version = "libgpg-error-1.59-7-ge5a81da")
+bazel_dep(name = "libassuan", version = "libassuan-3.0.2-16-ge71eb3e")
+bazel_dep(name = "bazel_skylib", version = "1.7.1")

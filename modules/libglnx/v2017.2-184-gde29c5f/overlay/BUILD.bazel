@@ -1,0 +1,45 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "libglnx",
+    srcs = [
+        "glnx-backport-testutils.c",
+        "glnx-backports.c",
+        "glnx-console.c",
+        "glnx-dirfd.c",
+        "glnx-errors.c",
+        "glnx-fdio.c",
+        "glnx-local-alloc.c",
+        "glnx-lockfile.c",
+        "glnx-shutil.c",
+        "glnx-xattrs.c",
+    ],
+    hdrs = [
+        "glnx-backport-autocleanups.h",
+        "glnx-backport-autoptr.h",
+        "glnx-backport-testutils.h",
+        "glnx-backports.h",
+        "glnx-console.h",
+        "glnx-dirfd.h",
+        "glnx-errors.h",
+        "glnx-fdio.h",
+        "glnx-local-alloc.h",
+        "glnx-lockfile.h",
+        "glnx-macros.h",
+        "glnx-missing.h",
+        "glnx-missing-syscall.h",
+        "glnx-shutil.h",
+        "glnx-xattrs.h",
+        "libglnx.h",
+        "libglnx-config.h",
+    ],
+    copts = [
+        "-I.",
+        "-D_GNU_SOURCE",
+    ],
+    deps = [
+        "@glib//gio",
+        "@glib//gio:gio-unix",
+        "@glib//glib",
+    ],
+)

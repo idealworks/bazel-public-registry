@@ -1,0 +1,243 @@
+diff --git a/glnx-backport-autocleanups.h b/glnx-backport-autocleanups.h
+index 9b15ee4..e25fff5 100644
+--- a/glnx-backport-autocleanups.h
++++ b/glnx-backport-autocleanups.h
+@@ -20,7 +20,7 @@
+ 
+ #pragma once
+ 
+-#include <glnx-backport-autoptr.h>
++#include "glnx-backport-autoptr.h"
+ 
+ #if !GLIB_CHECK_VERSION(2, 43, 4)
+ 
+diff --git a/glnx-console.h b/glnx-console.h
+index 3d94895..1afe7ba 100644
+--- a/glnx-console.h
++++ b/glnx-console.h
+@@ -21,7 +21,7 @@
+ 
+ #pragma once
+ 
+-#include <glnx-backport-autocleanups.h>
++#include "glnx-backport-autocleanups.h"
+ 
+ G_BEGIN_DECLS
+ 
+diff --git a/glnx-dirfd.c b/glnx-dirfd.c
+index b78e2df..5f0e59c 100644
+--- a/glnx-dirfd.c
++++ b/glnx-dirfd.c
+@@ -23,11 +23,11 @@
+ 
+ #include <string.h>
+ 
+-#include <glnx-dirfd.h>
+-#include <glnx-fdio.h>
+-#include <glnx-errors.h>
+-#include <glnx-local-alloc.h>
+-#include <glnx-shutil.h>
++#include "glnx-dirfd.h"
++#include "glnx-fdio.h"
++#include "glnx-errors.h"
++#include "glnx-local-alloc.h"
++#include "glnx-shutil.h"
+ 
+ /**
+  * glnx_opendirat_with_errno:
+diff --git a/glnx-dirfd.h b/glnx-dirfd.h
+index 1960820..0bdc757 100644
+--- a/glnx-dirfd.h
++++ b/glnx-dirfd.h
+@@ -21,9 +21,9 @@
+ 
+ #pragma once
+ 
+-#include <glnx-backport-autocleanups.h>
+-#include <glnx-macros.h>
+-#include <glnx-errors.h>
++#include "glnx-backport-autocleanups.h"
++#include "glnx-macros.h"
++#include "glnx-errors.h"
+ #include <limits.h>
+ #include <dirent.h>
+ #include <sys/stat.h>
+diff --git a/glnx-errors.c b/glnx-errors.c
+index cb0df13..fcd210c 100644
+--- a/glnx-errors.c
++++ b/glnx-errors.c
+@@ -21,8 +21,8 @@
+ 
+ #include "libglnx-config.h"
+ 
+-#include <glnx-backport-autocleanups.h>
+-#include <glnx-errors.h>
++#include "glnx-backport-autocleanups.h"
++#include "glnx-errors.h"
+ 
+ /* Set @error with G_IO_ERROR/G_IO_ERROR_FAILED.
+  *
+diff --git a/glnx-errors.h b/glnx-errors.h
+index 1d7b5cd..2f5e9dc 100644
+--- a/glnx-errors.h
++++ b/glnx-errors.h
+@@ -21,7 +21,7 @@
+ 
+ #pragma once
+ 
+-#include <glnx-backport-autocleanups.h>
++#include "glnx-backport-autocleanups.h"
+ #include <errno.h>
+ 
+ G_BEGIN_DECLS
+diff --git a/glnx-fdio.c b/glnx-fdio.c
+index 3d9f9a7..e453ce2 100644
+--- a/glnx-fdio.c
++++ b/glnx-fdio.c
+@@ -33,14 +33,14 @@
+ #include <sys/sendfile.h>
+ #include <errno.h>
+ 
+-#include <glnx-fdio.h>
+-#include <glnx-dirfd.h>
+-#include <glnx-errors.h>
+-#include <glnx-xattrs.h>
+-#include <glnx-backport-autoptr.h>
+-#include <glnx-backports.h>
+-#include <glnx-local-alloc.h>
+-#include <glnx-missing.h>
++#include "glnx-fdio.h"
++#include "glnx-dirfd.h"
++#include "glnx-errors.h"
++#include "glnx-xattrs.h"
++#include "glnx-backport-autoptr.h"
++#include "glnx-backports.h"
++#include "glnx-local-alloc.h"
++#include "glnx-missing.h"
+ 
+ /* The standardized version of BTRFS_IOC_CLONE */
+ #ifndef FICLONE
+diff --git a/glnx-fdio.h b/glnx-fdio.h
+index af53479..181af43 100644
+--- a/glnx-fdio.h
++++ b/glnx-fdio.h
+@@ -21,7 +21,7 @@
+ 
+ #pragma once
+ 
+-#include <glnx-backport-autocleanups.h>
++#include "glnx-backport-autocleanups.h"
+ #include <gio/gfiledescriptorbased.h>
+ #include <limits.h>
+ #include <dirent.h>
+@@ -33,8 +33,8 @@
+ // For dirname(), and previously basename()
+ #include <libgen.h>
+ 
+-#include <glnx-macros.h>
+-#include <glnx-errors.h>
++#include "glnx-macros.h"
++#include "glnx-errors.h"
+ 
+ G_BEGIN_DECLS
+ 
+diff --git a/glnx-shutil.c b/glnx-shutil.c
+index 5a6fd7c..c1566ad 100644
+--- a/glnx-shutil.c
++++ b/glnx-shutil.c
+@@ -23,10 +23,10 @@
+ 
+ #include <string.h>
+ 
+-#include <glnx-shutil.h>
+-#include <glnx-errors.h>
+-#include <glnx-fdio.h>
+-#include <glnx-local-alloc.h>
++#include "glnx-shutil.h"
++#include "glnx-errors.h"
++#include "glnx-fdio.h"
++#include "glnx-local-alloc.h"
+ 
+ static gboolean
+ unlinkat_allow_noent (int dfd,
+diff --git a/glnx-shutil.h b/glnx-shutil.h
+index 6a00312..3099281 100644
+--- a/glnx-shutil.h
++++ b/glnx-shutil.h
+@@ -21,7 +21,7 @@
+ 
+ #pragma once
+ 
+-#include <glnx-dirfd.h>
++#include "glnx-dirfd.h"
+ 
+ G_BEGIN_DECLS
+ 
+diff --git a/glnx-xattrs.c b/glnx-xattrs.c
+index 84fd609..7d56f1d 100644
+--- a/glnx-xattrs.c
++++ b/glnx-xattrs.c
+@@ -24,10 +24,10 @@
+ #include <string.h>
+ #include <stdio.h>
+ 
+-#include <glnx-macros.h>
+-#include <glnx-xattrs.h>
+-#include <glnx-errors.h>
+-#include <glnx-local-alloc.h>
++#include "glnx-macros.h"
++#include "glnx-xattrs.h"
++#include "glnx-errors.h"
++#include "glnx-local-alloc.h"
+ 
+ static GVariant *
+ variant_new_ay_bytes (GBytes *bytes)
+diff --git a/glnx-xattrs.h b/glnx-xattrs.h
+index b028850..be2fc64 100644
+--- a/glnx-xattrs.h
++++ b/glnx-xattrs.h
+@@ -21,7 +21,7 @@
+ 
+ #pragma once
+ 
+-#include <glnx-backport-autocleanups.h>
++#include "glnx-backport-autocleanups.h"
+ #include <limits.h>
+ #include <dirent.h>
+ #include <sys/stat.h>
+diff --git a/libglnx.h b/libglnx.h
+index 63d73ad..fca3390 100644
+--- a/libglnx.h
++++ b/libglnx.h
+@@ -25,18 +25,18 @@
+ 
+ G_BEGIN_DECLS
+ 
+-#include <glnx-macros.h>
+-#include <glnx-missing.h>
+-#include <glnx-local-alloc.h>
+-#include <glnx-backport-autocleanups.h>
+-#include <glnx-backport-testutils.h>
+-#include <glnx-backports.h>
+-#include <glnx-lockfile.h>
+-#include <glnx-errors.h>
+-#include <glnx-dirfd.h>
+-#include <glnx-shutil.h>
+-#include <glnx-xattrs.h>
+-#include <glnx-console.h>
+-#include <glnx-fdio.h>
++#include "glnx-macros.h"
++#include "glnx-missing.h"
++#include "glnx-local-alloc.h"
++#include "glnx-backport-autocleanups.h"
++#include "glnx-backport-testutils.h"
++#include "glnx-backports.h"
++#include "glnx-lockfile.h"
++#include "glnx-errors.h"
++#include "glnx-dirfd.h"
++#include "glnx-shutil.h"
++#include "glnx-xattrs.h"
++#include "glnx-console.h"
++#include "glnx-fdio.h"
+ 
+ G_END_DECLS

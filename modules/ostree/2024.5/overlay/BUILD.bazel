@@ -1,0 +1,297 @@
+load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
+
+package(
+    default_visibility = ["//visibility:public"],
+)
+
+OSTREE_YEAR_VERSION = 2024
+
+OSTREE_RELEASE_VERSION = 5
+
+OSTREE_VERSION = "{}.{}".format(
+    OSTREE_YEAR_VERSION,
+    OSTREE_RELEASE_VERSION,
+)
+
+OSTREE_FEATURES = "inode64 initial-var libcurl libarchive gpgme p2p"
+
+LIBOSTREE_PUBLIC_HEADERS = [
+    "src/libostree/ostree.h",
+    "src/libostree/ostree-async-progress.h",
+    "src/libostree/ostree-autocleanups.h",
+    "src/libostree/ostree-content-writer.h",
+    "src/libostree/ostree-core.h",
+    "src/libostree/ostree-dummy-enumtypes.h",
+    "src/libostree/ostree-mutable-tree.h",
+    "src/libostree/ostree-repo.h",
+    "src/libostree/ostree-repo-os.h",
+    "src/libostree/ostree-types.h",
+    "src/libostree/ostree-repo-file.h",
+    "src/libostree/ostree-diff.h",
+    "src/libostree/ostree-gpg-verify-result.h",
+    "src/libostree/ostree-gpg-verifier.h",
+    "src/libostree/ostree-sepolicy.h",
+    "src/libostree/ostree-sysroot.h",
+    "src/libostree/ostree-sysroot-upgrader.h",
+    "src/libostree/ostree-deployment.h",
+    "src/libostree/ostree-bootconfig-parser.h",
+    "src/libostree/ostree-repo-deprecated.h",
+    "src/libostree/ostree-ref.h",
+    "src/libostree/ostree-remote.h",
+    "src/libostree/ostree-repo-finder.h",
+    "src/libostree/ostree-repo-finder-avahi.h",
+    "src/libostree/ostree-repo-finder-config.h",
+    "src/libostree/ostree-repo-finder-mount.h",
+    "src/libostree/ostree-repo-finder-override.h",
+    "src/libostree/ostree-kernel-args.h",
+    "src/libostree/ostree-sign.h",
+    "src/libostree/ostree-sign-dummy.h",
+    "src/libostree/ostree-sign-ed25519.h",
+]
+
+ENUM_TYPES = [
+    "src/libostree/ostree-fetcher.h",
+]
+
+cc_library(
+    name = "bupsplit",
+    srcs = [
+        "src/libostree/bupsplit.c",
+    ],
+    hdrs = [
+        "src/libostree/bupsplit.h",
+    ],
+    includes = [
+        "src/libostree",
+    ],
+    visibility = ["//visibility:private"],
+)
+
+genrule(
+    name = "generate_ostree_enumtypes_h",
+    srcs = ["src/libostree/ostree-enumtypes.h.template"] + ENUM_TYPES,
+    outs = ["src/libostree/ostree-enumtypes.h"],
+    cmd = "$(location @glib//gobject:glib_mkenums) --template $(location src/libostree/ostree-enumtypes.h.template) $(locations src/libostree/ostree-fetcher.h) > $@.tmp && mv $@.tmp $@",
+    tools = ["@glib//gobject:glib_mkenums"],
+)
+
+genrule(
+    name = "generate_ostree_enumtypes_c",
+    srcs = [
+        "src/libostree/ostree-enumtypes.c.template",
+        ":generate_ostree_enumtypes_h",
+    ] + ENUM_TYPES,
+    outs = ["src/libostree/ostree-enumtypes.c"],
+    cmd = "$(location @glib//gobject:glib_mkenums) --template $(location src/libostree/ostree-enumtypes.c.template) $(locations src/libostree/ostree-fetcher.h) > $@.tmp && mv $@.tmp $@",
+    tools = ["@glib//gobject:glib_mkenums"],
+)
+
+filegroup(
+    name = "ostree_enumtypes",
+    srcs = [
+        "src/libostree/ostree-enumtypes.c",
+        "src/libostree/ostree-enumtypes.h",
+    ],
+)
+
+OSTREE_SRCS = [
+    "src/libostree/ostree-async-progress.c",
+    "src/libostree/ostree-cmd-private.c",
+    "src/libostree/ostree-core.c",
+    "src/libostree/ostree-date-utils.c",
+    "src/libostree/ostree-dummy-enumtypes.c",
+    "src/libostree/ostree-checksum-input-stream.c",
+    "src/libostree/ostree-chain-input-stream.c",
+    "src/libostree/ostree-content-writer.c",
+    "src/libostree/ostree-lzma-common.c",
+    "src/libostree/ostree-lzma-compressor.c",
+    "src/libostree/ostree-lzma-decompressor.c",
+    "src/libostree/ostree-rollsum.c",
+    "src/libostree/ostree-varint.c",
+    "src/libostree/ostree-linuxfsutil.c",
+    "src/libostree/ostree-diff.c",
+    "src/libostree/ostree-mutable-tree.c",
+    "src/libostree/ostree-ref.c",
+    "src/libostree/ostree-remote.c",
+    "src/libostree/ostree-repo-os.c",
+    "src/libostree/ostree-repo.c",
+    "src/libostree/ostree-repo-checkout.c",
+    "src/libostree/ostree-repo-commit.c",
+    "src/libostree/ostree-repo-composefs.c",
+    "src/libostree/ostree-repo-pull.c",
+    "src/libostree/ostree-repo-pull-verify.c",
+    "src/libostree/ostree-repo-libarchive.c",
+    "src/libostree/ostree-repo-prune.c",
+    "src/libostree/ostree-repo-refs.c",
+    "src/libostree/ostree-repo-verity.c",
+    "src/libostree/ostree-gpg-verifier.c",
+    "src/libostree/ostree-repo-traverse.c",
+    "src/libostree/ostree-repo-file.c",
+    "src/libostree/ostree-repo-file-enumerator.c",
+    "src/libostree/ostree-sepolicy.c",
+    "src/libostree/ostree-sysroot.c",
+    "src/libostree/ostree-sysroot-cleanup.c",
+    "src/libostree/ostree-sysroot-deploy.c",
+    "src/libostree/ostree-sysroot-upgrader.c",
+    "src/libostree/ostree-impl-system-generator.c",
+    "src/libostree/ostree-bootconfig-parser.c",
+    "src/libostree/ostree-deployment.c",
+    "src/libostree/ostree-bootloader.c",
+    "src/libostree/ostree-bootloader-aboot.c",
+    "src/libostree/ostree-bootloader-grub2.c",
+    "src/libostree/ostree-bootloader-zipl.c",
+    "src/libostree/ostree-bootloader-syslinux.c",
+    "src/libostree/ostree-bootloader-uboot.c",
+    "src/libostree/ostree-repo-static-delta-core.c",
+    "src/libostree/ostree-repo-static-delta-processing.c",
+    "src/libostree/ostree-repo-static-delta-compilation.c",
+    "src/libostree/ostree-repo-static-delta-compilation-analysis.c",
+    "src/libostree/ostree-bloom.c",
+    "src/libostree/ostree-repo-finder.c",
+    "src/libostree/ostree-repo-finder-avahi.c",
+    "src/libostree/ostree-repo-finder-config.c",
+    "src/libostree/ostree-repo-finder-mount.c",
+    "src/libostree/ostree-repo-finder-override.c",
+    "src/libostree/ostree-kernel-args.c",
+    "src/libostree/ostree-gpg-verify-result.c",
+    "src/libostree/ostree-sign.c",
+    "src/libostree/ostree-sign-dummy.c",
+]
+
+OSTREE_FETCHER_COMMON_SRCS = [
+    "src/libostree/ostree-fetcher-util.c",
+    "src/libostree/ostree-fetcher-uri.c",
+    "src/libostree/ostree-metalink.c",
+]
+
+OSTREE_FETCHER_CURL_SRCS = ["src/libostree/ostree-fetcher-curl.c"]
+
+OSTREE_LIBARCHIVE_SRCS = ["src/libostree/ostree-libarchive-input-stream.c"]
+
+# genrule(
+#     name = "generate_ostree_version_h",
+#     outs = ["src/libostree/ostree-version.h"],
+#     cmd = """
+# cat > $@ <<'EOF'
+# #pragma once
+# #define OSTREE_YEAR_VERSION ({year})
+# #define OSTREE_RELEASE_VERSION ({release})
+
+# #define OSTREE_VERSION ({version})
+# #define OSTREE_VERSION_S "{version}"
+
+# #define OSTREE_ENCODE_VERSION(year,release) \
+#         ((year) << 16 | (release))
+
+# #define OSTREE_VERSION_HEX \
+#         (OSTREE_ENCODE_VERSION (OSTREE_YEAR_VERSION, OSTREE_RELEASE_VERSION))
+
+# #define OSTREE_CHECK_VERSION(year,release)   \
+#         (OSTREE_YEAR_VERSION > (year) || \
+#          (OSTREE_YEAR_VERSION == (year) && OSTREE_RELEASE_VERSION >= (release)))
+
+# #ifndef __GI_SCANNER__
+# #define OSTREE_BUILT_FEATURES ""
+# #endif
+
+# EOF
+# """.format(
+#         release = OSTREE_RELEASE_VERSION,
+#         version = OSTREE_VERSION,
+#         year = OSTREE_YEAR_VERSION,
+#     ),
+# )
+
+expand_template(
+    name = "generate_ostree_version_h",
+    out = "src/libostree/ostree-version.h",
+    substitutions = {
+        "@YEAR_VERSION@": str(OSTREE_YEAR_VERSION),
+        "@RELEASE_VERSION@": str(OSTREE_RELEASE_VERSION),
+        "@VERSION@": OSTREE_VERSION,
+        "@OSTREE_FEATURES@": OSTREE_FEATURES,
+    },
+    template = "src/libostree/ostree-version.h.in",
+)
+
+cc_library(
+    name = "ext2fs_stub",
+    hdrs = ["ext2fs/ext2_fs.h"],
+    include_prefix = "ext2fs",
+    strip_include_prefix = "ext2fs",
+)
+
+cc_library(
+    name = "ostree",
+    srcs = (
+        OSTREE_SRCS + [
+            ":generate_ostree_enumtypes_c",
+        ] + OSTREE_LIBARCHIVE_SRCS +
+        OSTREE_FETCHER_CURL_SRCS +
+        OSTREE_FETCHER_COMMON_SRCS + glob([
+            "src/libotcore/*.c",
+        ]) + glob([
+            "src/libotutil/*.c",
+        ])
+    ),
+    hdrs = (
+        LIBOSTREE_PUBLIC_HEADERS + [
+            ":generate_ostree_enumtypes_h",
+            ":generate_ostree_version_h",
+        ] + glob([
+            "src/libotutil/*.h",
+        ]) + glob([
+            "src/libotcore/*.h",
+        ]) + glob([
+            "src/switchroot/*.h",
+        ])
+    ),
+    copts = [
+        "-fvisibility=hidden",
+        "-D_OSTREE_PUBLIC=__attribute__((visibility(\\\"default\\\")))",
+        "-D_GNU_SOURCE",
+        "-DSHORTENED_SYSCONFDIR=\\\"etc\\\"",
+        "-DSYSCONFDIR=\\\"/etc\\\"",
+        "-DDATADIR=\\\"/usr/share\\\"",
+        "-DLIBEXECDIR=\\\"/usr/libexec\\\"",
+        "-DLOCALEDIR=\\\"/usr/share/locale\\\"",
+        "-DTARGET_PREFIX=\\\"/usr\\\"",
+        "-DG_LOG_DOMAIN=\\\"OSTree\\\"",
+        "-DGRUB2_MKCONFIG_PATH=\\\"grub2-mkconfig\\\"",
+        "-DOSTREE_COMPILATION",
+        "-DPKGLIBEXECDIR=\\\"/usr/libexec\\\"",
+        "-DHAVE_CURL=1",
+        "-DHAVE_LIBARCHIVE=1",
+        "-DHAVE_LIBCURL_OR_LIBSOUP=1",
+        "-DPACKAGE_NAME=\\\"ostree\\\"",
+        "-DPACKAGE_VERSION=\\\"{}\\\"".format(OSTREE_VERSION),
+    ],
+    includes = [
+        "src/libostree",
+        "src/libotcore",
+        "src/libotutil",
+        "src/switchroot",
+    ],
+    # linkopts = [
+    #     "-lgpgme",
+    #     "-lgpg-error",
+    #     "-lassuan",
+    # ],
+    textual_hdrs = glob(
+        ["src/libostree/*.h"],
+        exclude = LIBOSTREE_PUBLIC_HEADERS + ["src/libostree/ostree-version.h"],
+    ),
+    deps = [
+        ":bupsplit",
+        ":ext2fs_stub",
+        "@bsdiff//:bsdiff_lib",
+        "@curl",
+        "@glib//gio",
+        "@glib//glib",
+        "@gpgme",
+        "@libarchive//libarchive:archive",
+        "@libassuan",
+        "@libglnx",
+        "@libgpg-error",
+    ],
+)
