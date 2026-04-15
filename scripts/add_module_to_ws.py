@@ -35,6 +35,12 @@ if __name__ == "__main__":
     parser.add_argument(
         "-v", "--version", help="workspace to add the module to", type=str, default=""
     )
+    parser.add_argument(
+        "--tag-prefix",
+        help="Prefix to be set in front of the tag value in the module (used if the repo tagging is different than the module version)",
+        type=str,
+        default="",
+    )
     args = parser.parse_args()
 
     mod_version = args.version
@@ -64,7 +70,11 @@ if __name__ == "__main__":
 
     workspace_path = Path(args.workspace_path) / repo_url.split("/")[-1]
     subprocess.run(
-        ["git", "checkout", source_cnt["strip_prefix"].split("-")[-1]],
+        [
+            "git",
+            "checkout",
+            args.tag_prefix + source_cnt["strip_prefix"].split("-")[-1],
+        ],
         cwd=workspace_path,
         check=True,
         capture_output=True,
