@@ -1,0 +1,13 @@
+diff --git a/include/behaviortree_cpp/utils/timer_queue.h b/include/behaviortree_cpp/utils/timer_queue.h
+index 9132277b..92a3bf3f 100644
+--- a/include/behaviortree_cpp/utils/timer_queue.h
++++ b/include/behaviortree_cpp/utils/timer_queue.h
+@@ -193,7 +193,7 @@ private:
+       // timers
+       checkWork();
+     }
+-
++    checkWork();
+     // If we are shutting down, we should not have any items left,
+     // since the shutdown cancels all items
+     assert(m_items.size() == 0);
