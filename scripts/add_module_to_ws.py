@@ -1,24 +1,136 @@
 #!/bin/env python
+
+"""Adds a module to a workspace for local modifications"""
+
+import tarfile
+import zipfile
 import argparse
 import json
 import os
-import re
 import shutil
-import subprocess
 from pathlib import Path
+import subprocess
 
-from version import Version
+from version import get_latest_version
+from utils import download_direct_link_with_progress
+
+TARRABLE_EXTENSIONS = [".gz", ".xz", ".bz2", ".tar"]
 
 
-def get_latest_version(module_path):
-    all_versions = [
-        f for f in os.listdir(module_path) if (Path(module_path) / Path(f)).is_dir()
-    ]
-    all_versions = [Version.parse(version) for version in all_versions]
-    all_versions.sort()
-    if not all_versions:
-        raise ValueError("No versions found in module")
-    return all_versions[-1]
+def is_tarrable(path: Path):
+    """Returns whether the suffix of path declares it as tar extractable"""
+    return any(path.suffix == tar_ext for tar_ext in TARRABLE_EXTENSIONS)
+
+
+def add_module_to_ws(
+    module_name,
+    registry_path: Path,
+    workspace_path: Path,
+    mod_version="",
+):
+    """Adds the module to a workable workspace and sets it up for editing"""
+    workspace_path.mkdir(exist_ok=True)
+    if not mod_version:
+        mod_version = get_latest_version(f"{registry_path}/modules/{module_name}")
+    print(f"Using version {mod_version} from module {module_name}")
+    mod_path = Path(f"{registry_path}/modules/{module_name}/{mod_version}")
+
+    with open(mod_path / "source.json", "r", encoding="utf-8") as fp:
+        source_cnt = json.load(fp)
+
+    if source_cnt.get("type", "") == "git_repository":
+        repo_url = source_cnt["remote"]
+        target_dir = workspace_path / repo_url.split("/")[-1].replace(".git", "")
+        subprocess.run(
+            ["git", "clone", repo_url],
+            cwd=workspace_path,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            [
+                "git",
+                "checkout",
+                source_cnt["commit"],
+            ],
+            cwd=target_dir,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+
+    elif "url" in source_cnt:
+        storage_dir = workspace_path / "__storage"
+        storage_dir.mkdir(exist_ok=True)
+        url = source_cnt["url"]
+        target_tarfile = storage_dir / url.split("/")[-1]
+        if not target_tarfile.exists():
+            print(f"Downloading {url}...")
+            download_direct_link_with_progress(url, target_tarfile)
+
+        if is_tarrable(target_tarfile):
+            with tarfile.open(target_tarfile, "r") as tar:
+                tar.extractall(workspace_path)
+                target_dir = workspace_path / os.path.commonprefix(
+                    [member.name for member in tar.getmembers()]
+                )
+        elif target_tarfile.suffix == ".zip":
+            with zipfile.ZipFile(target_tarfile, "r") as zip_ref:
+                zip_ref.extractall(workspace_path)
+                target_dir = workspace_path / os.path.commonprefix(
+                    [f.filename for f in zip_ref.infolist()]
+                )
+        else:
+            raise ValueError(
+                f"Unable to extract {target_tarfile}, unknown extension {target_tarfile.suffix}"
+            )
+
+        subprocess.run(
+            ["git", "init"],
+            cwd=target_dir,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            ["git", "add", "-A"],
+            cwd=target_dir,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        status = subprocess.run(
+            ["git", "commit", "-m", "Initial Commit"],
+            cwd=target_dir,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        if status.returncode != 0:
+            raise ValueError(
+                f"Failed to commit to {target_dir}: code: {status.returncode}, stderr: {status.stderr}"
+            )
+    else:
+        raise ValueError("Source url of package is not a github link")
+
+    for overlay_file in source_cnt.get("overlay", {}).keys():
+        (target_dir / Path(overlay_file).parent).mkdir(exist_ok=True)
+        shutil.copy(
+            mod_path / "overlay" / overlay_file,
+            target_dir / Path(overlay_file).parent,
+        )
+
+    for patch_file in source_cnt.get("patches", {}).keys():
+        status = subprocess.run(
+            ["git", "apply", mod_path.absolute() / "patches" / patch_file],
+            cwd=target_dir,
+            capture_output=True,
+            check=False,
+            text=True,
+        )
+        if status.returncode != 0:
+            print(f"Error running patch {patch_file}: {status.stderr}")
 
 
 if __name__ == "__main__":
@@ -35,65 +147,10 @@ if __name__ == "__main__":
     parser.add_argument(
         "-v", "--version", help="workspace to add the module to", type=str, default=""
     )
-    parser.add_argument(
-        "--tag-prefix",
-        help="Prefix to be set in front of the tag value in the module (used if the repo tagging is different than the module version)",
-        type=str,
-        default="",
-    )
     args = parser.parse_args()
-
-    mod_version = args.version
-    if not mod_version:
-        mod_version = get_latest_version(
-            f"{args.registry_path}/modules/{args.module_name}"
-        )
-    print(f"Using version {mod_version} from module")
-    mod_path = Path(f"{args.registry_path}/modules/{args.module_name}/{mod_version}")
-
-    with open(mod_path / "source.json", "r") as fp:
-        source_cnt = json.load(fp)
-
-    match = re.match(r"(https://github\.com/[^/]+/[^/]+)/", source_cnt["url"])
-
-    if not match:
-        raise ValueError("Source url of package is not a github link")
-
-    repo_url = match.group(1)
-    subprocess.run(
-        ["git", "clone", repo_url],
-        cwd=args.workspace_path,
-        check=True,
-        capture_output=True,
-        text=True,
+    add_module_to_ws(
+        args.module_name,
+        Path(args.registry_path),
+        Path(args.workspace_path),
+        args.version,
     )
-
-    workspace_path = Path(args.workspace_path) / repo_url.split("/")[-1]
-    subprocess.run(
-        [
-            "git",
-            "checkout",
-            args.tag_prefix + source_cnt["strip_prefix"].split("-")[-1],
-        ],
-        cwd=workspace_path,
-        check=True,
-        capture_output=True,
-        text=True,
-    )
-
-    for overlay_file in source_cnt["overlay"].keys():
-        (workspace_path / Path(overlay_file).parent).mkdir(exist_ok=True)
-        shutil.copy(
-            mod_path / "overlay" / overlay_file,
-            workspace_path / Path(overlay_file).parent,
-        )
-
-    for patch_file in source_cnt.get("patches", {}).keys():
-        status = subprocess.run(
-            ["git", "apply", mod_path.absolute() / "patches" / patch_file],
-            cwd=workspace_path,
-            capture_output=True,
-            text=True,
-        )
-        if status.returncode != 0:
-            print(f"Error running patch {patch_file}: {status.stderr}")
