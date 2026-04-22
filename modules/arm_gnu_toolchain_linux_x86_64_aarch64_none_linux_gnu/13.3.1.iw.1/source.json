@@ -1,0 +1,15 @@
+{
+  "url": "https://developer.arm.com/-/media/Files/downloads/gnu/13.3.rel1/binrel/arm-gnu-toolchain-13.3.rel1-x86_64-aarch64-none-linux-gnu.tar.xz",
+  "integrity": "sha256-Mi8LRIL8DZ+gu0aBNIQfCNjFVMVP9aopoTp6JL9+HrU=",
+  "strip_prefix": "arm-gnu-toolchain-13.3.rel1-x86_64-aarch64-none-linux-gnu",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-bKaSpxnyVdisiLgdaUG/eP8QhfrP0Y6M64WXdKv50+A="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-ga5smzQ/x/jIbVhZaiVdnYkVTO+NCGKw/FTghYGbVRU=",
+    "bzl/config.bzl": "sha256-q3vm9YqkDUTP6hWX1w1aN/GoXhnz1/XRdSNDz8BLj7o=",
+    "bzl/BUILD.bazel": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+    "BUILD.bazel": "sha256-nXJ7ON1rylcCpvSq0jnsngvKEC0VGHcAlv+1xObiFsM="
+  }
+}
