@@ -1,0 +1,11 @@
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+
+py_binary(
+    name = "bootstrap_arm_toolchain",
+    srcs = ["bootstrap_arm_toolchain.py"],
+    data = glob(["template/*.tpl"]),
+    deps = [
+        "//scripts:utils",
+        "@iw_bpr_deps//requests",
+    ],
+)
