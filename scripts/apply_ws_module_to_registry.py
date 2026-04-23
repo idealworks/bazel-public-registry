@@ -1,4 +1,7 @@
 #!/bin/python
+
+"""Applies a workspace from a module to a registry"""
+
 import argparse
 import base64
 import hashlib
@@ -7,12 +10,11 @@ import os
 import re
 import shutil
 import subprocess
-import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional
 
-import requests
+from utils import download_direct_link_with_progress
 
 
 def generate_integrity(fpath: Path):
@@ -60,32 +62,6 @@ class ModuleDeclaration:
             if bazel_dep.name in ws_modules and bazel_dep.name not in processed_deps:
                 return False
         return True
-
-
-def safe_download_archive_url(download_dir: Path, remote_url):
-    resp = requests.get(remote_url, stream=True)
-    if resp.status_code != 200:
-        raise ValueError(f"Cannot download '{remote_url}' to '{download_dir}': {resp}")
-
-    total_size = int(resp.headers.get("content-length", 1))
-
-    out_filename = remote_url.split("/")[-1]
-
-    cur_size = 0
-    last_print_time = time.time()
-    if not (download_dir / out_filename).exists():
-        with open(download_dir / out_filename, "wb") as fp:
-            for chunk in resp.iter_content(chunk_size=8192):
-                if (time.time() - last_print_time) > 5:
-                    print(
-                        "Download progress: {:.2f}%: {}/{}".format(
-                            cur_size / total_size * 100, cur_size, total_size
-                        )
-                    )
-                    last_print_time = time.time()
-                cur_size += len(chunk)
-                fp.write(chunk)
-    return out_filename
 
 
 @dataclass
@@ -216,7 +192,8 @@ class ModuleInformation:
             source_info = self.source_data_from_git_repo()
         workdir = Path("/tmp") / "apply_ws_module_to_registry"
         workdir.mkdir(parents=True, exist_ok=True)
-        filename = safe_download_archive_url(workdir, source_info.archive_url)
+        filename = workdir / source_info.archive_url.split("/")[-1]
+        download_direct_link_with_progress(source_info.archive_url, filename)
         url_integrity = generate_integrity(workdir / filename)
 
         git_status = [entry for entry in git_status if entry != ""]

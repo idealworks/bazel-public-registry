@@ -7,16 +7,39 @@ py_library(
     visibility = ["//visibility:public"],
 )
 
+py_library(
+    name = "utils",
+    srcs = ["utils.py"],
+    imports = ["."],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "@iw_bpr_deps//requests",
+    ],
+)
+
 py_binary(
     name = "add_module_to_ws",
     srcs = ["add_module_to_ws.py"],
-    deps = [":version"],
+    deps = [
+        ":utils",
+        ":version",
+    ],
 )
 
 py_binary(
     name = "apply_ws_module_to_registry",
     srcs = ["apply_ws_module_to_registry.py"],
     deps = [
-        "@iw_bpr_deps//requests",
+        ":utils",
+    ],
+)
+
+py_binary(
+    name = "create_workspace",
+    srcs = ["create_workspace.py"],
+    deps = [
+        ":add_module_to_ws",
     ],
 )

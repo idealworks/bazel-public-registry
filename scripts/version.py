@@ -6,6 +6,19 @@ import unittest
 from dataclasses import dataclass
 from itertools import zip_longest
 from typing import ClassVar
+from pathlib import Path
+
+
+def get_latest_version(module_path):
+    """sort all the dirs under a module path to retrieve the latest version"""
+    all_versions = [
+        f for f in os.listdir(module_path) if (Path(module_path) / Path(f)).is_dir()
+    ]
+    all_versions = [Version.parse(version) for version in all_versions]
+    all_versions.sort()
+    if not all_versions:
+        raise ValueError("No versions found in module")
+    return all_versions[-1]
 
 
 @dataclass(frozen=True)
