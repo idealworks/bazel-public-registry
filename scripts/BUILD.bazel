@@ -31,6 +31,15 @@ py_binary(
     srcs = ["apply_ws_module_to_registry.py"],
     deps = [
         ":utils",
-        "@iw_bpr_deps//requests",
+    ],
+)
+
+py_binary(
+    name = "create_workspace",
+    srcs = ["create_workspace.py"],
+    data = [],
+    deps = [
+        ":add_module_to_ws",
+        ":utils",
     ],
 )
