@@ -1,0 +1,16 @@
+name: Pull Request Pipeline
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  validations:
+    name: Validations run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Verify integrities
+        run: ./scripts/ci/verify_integrities.py
