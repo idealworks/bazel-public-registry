@@ -1,0 +1,1101 @@
+diff --git a/include/sick_safetyscanners2/SickSafetyscannersLifeCycle.hpp b/include/sick_safetyscanners2/SickSafetyscannersLifeCycle.hpp
+index fa6b429..8e5c6e6 100644
+--- a/include/sick_safetyscanners2/SickSafetyscannersLifeCycle.hpp
++++ b/include/sick_safetyscanners2/SickSafetyscannersLifeCycle.hpp
+@@ -41,6 +41,9 @@
+ 
+ #include <sick_safetyscanners2_interfaces/msg/extended_laser_scan.hpp>
+ #include <sick_safetyscanners2_interfaces/msg/output_paths.hpp>
++#include <sick_safetyscanners2_interfaces/srv/config_metadata.hpp>
++#include <sick_safetyscanners2_interfaces/srv/application_name.hpp>
++#include <sick_safetyscanners2_interfaces/srv/type_code.hpp>
+ #include <sick_safetyscanners2_interfaces/srv/field_data.hpp>
+ 
+ #include <sick_safetyscanners2/utils/Conversions.h>
+@@ -55,6 +58,7 @@
+ 
+ #include <rclcpp/rclcpp.hpp>
+ #include <sensor_msgs/msg/laser_scan.hpp>
++#include <std_srvs/srv/trigger.hpp>
+ 
+ #include <string>
+ 
+@@ -62,13 +66,18 @@ namespace sick {
+ 
+ class SickSafetyscannersLifeCycle : public rclcpp_lifecycle::LifecycleNode
+ {
++
++using ConfigMetadata = sick_safetyscanners2_interfaces::srv::ConfigMetadata;
++using FieldData = sick_safetyscanners2_interfaces::srv::FieldData;
++using ApplicationName = sick_safetyscanners2_interfaces::srv::ApplicationName;
++using TypeCode = sick_safetyscanners2_interfaces::srv::TypeCode;
++
+ public:
+   /*!
+    * \brief Constructor of the ROS2 Node handling the Communication of the Sick Safetyscanner
+    */
+ 
+-  explicit SickSafetyscannersLifeCycle(const std::string& node_name,
+-                                       bool intra_process_comms = false);
++  explicit SickSafetyscannersLifeCycle(const rclcpp::NodeOptions& options);
+ 
+   rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
+   on_configure(const rclcpp_lifecycle::State&);
+@@ -93,7 +102,12 @@ private:
+     sick_safetyscanners2_interfaces::msg::RawMicroScanData>::SharedPtr m_raw_data_publisher;
+ 
+   // Services
+-  rclcpp::Service<sick_safetyscanners2_interfaces::srv::FieldData>::SharedPtr m_field_data_service;
++  rclcpp::Service<ConfigMetadata>::SharedPtr m_config_metadata_service;
++  rclcpp::Service<FieldData>::SharedPtr m_field_data_service;
++  rclcpp::Service<ApplicationName>::SharedPtr m_application_name_service;
++  rclcpp::Service<TypeCode>::SharedPtr m_type_code_service;
++  rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr m_serial_number_service;
++  rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr m_firmware_version_service;
+   // Parameters
+   OnSetParametersCallbackHandle::SharedPtr m_param_callback;
+   rcl_interfaces::msg::SetParametersResult
+@@ -122,6 +136,8 @@ private:
+   bool m_use_sick_angles;
+   float m_angle_offset;
+   bool m_use_pers_conf;
++  bool publish_output_paths_{false};
++  bool publish_raw_msg_{true};
+ 
+   // TODO diagnostics?
+   // TODO dynamic reconfigure?
+@@ -134,10 +150,35 @@ private:
+   // Callback function passed to the device for handling the received packages
+   void receiveUDPPaket(const sick::datastructure::Data& data);
+ 
++  // Callback function to retrieve configuration metadata
++  bool getConfigMetadata(
++    const std::shared_ptr<ConfigMetadata::Request> request,
++    std::shared_ptr<ConfigMetadata::Response> response);
++
++  // Callback function to retrieve application name
++  bool getApplicationName(
++    const std::shared_ptr<ApplicationName::Request> request,
++    std::shared_ptr<ApplicationName::Response> response);
++
++  // Callback function to retrieve type code
++  bool getTypeCode(
++    const std::shared_ptr<TypeCode::Request> request,
++    std::shared_ptr<TypeCode::Response> response);
++
++  // Callback function to retrieve serial number
++  bool getSerialNumber(
++    const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
++    std::shared_ptr<std_srvs::srv::Trigger::Response> response);
++
++  // Callback function to retrieve firmware version
++  bool getFirmwareVersion(
++    const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
++    std::shared_ptr<std_srvs::srv::Trigger::Response> response);
++
+   // Methods Triggering COLA2 calls towards the sensor
+   bool getFieldData(
+-    const std::shared_ptr<sick_safetyscanners2_interfaces::srv::FieldData::Request> request,
+-    std::shared_ptr<sick_safetyscanners2_interfaces::srv::FieldData::Response> response);
++    const std::shared_ptr<FieldData::Request> request,
++    std::shared_ptr<FieldData::Response> response);
+   void readPersistentConfig();
+   void readTypeCodeSettings();
+ };
+diff --git a/include/sick_safetyscanners2/SickSafetyscannersRos2.h b/include/sick_safetyscanners2/SickSafetyscannersRos2.h
+index 8753f1c..453ec79 100644
+--- a/include/sick_safetyscanners2/SickSafetyscannersRos2.h
++++ b/include/sick_safetyscanners2/SickSafetyscannersRos2.h
+@@ -41,6 +41,9 @@
+ 
+ #include <sick_safetyscanners2_interfaces/msg/extended_laser_scan.hpp>
+ #include <sick_safetyscanners2_interfaces/msg/output_paths.hpp>
++#include <sick_safetyscanners2_interfaces/srv/config_metadata.hpp>
++#include <sick_safetyscanners2_interfaces/srv/application_name.hpp>
++#include <sick_safetyscanners2_interfaces/srv/type_code.hpp>
+ #include <sick_safetyscanners2_interfaces/srv/field_data.hpp>
+ 
+ #include <sick_safetyscanners2/utils/Conversions.h>
+@@ -48,6 +51,7 @@
+ 
+ #include <rclcpp/rclcpp.hpp>
+ #include <sensor_msgs/msg/laser_scan.hpp>
++#include <std_srvs/srv/trigger.hpp>
+ 
+ #include <string>
+ 
+@@ -55,11 +59,17 @@ namespace sick {
+ 
+ class SickSafetyscannersRos2 : public rclcpp::Node
+ {
++
++using ConfigMetadata = sick_safetyscanners2_interfaces::srv::ConfigMetadata;
++using FieldData = sick_safetyscanners2_interfaces::srv::FieldData;
++using ApplicationName = sick_safetyscanners2_interfaces::srv::ApplicationName;
++using TypeCode = sick_safetyscanners2_interfaces::srv::TypeCode;
++
+ public:
+   /*!
+    * \brief Constructor of the ROS2 Node handling the Communication of the Sick Safetyscanner
+    */
+-  SickSafetyscannersRos2();
++  SickSafetyscannersRos2(const rclcpp::NodeOptions& options);
+ 
+ private:
+   // Publishers
+@@ -72,7 +82,12 @@ private:
+     m_raw_data_publisher;
+ 
+   // Services
+-  rclcpp::Service<sick_safetyscanners2_interfaces::srv::FieldData>::SharedPtr m_field_data_service;
++  rclcpp::Service<ConfigMetadata>::SharedPtr m_config_metadata_service;
++  rclcpp::Service<FieldData>::SharedPtr m_field_data_service;
++  rclcpp::Service<ApplicationName>::SharedPtr m_application_name_service;
++  rclcpp::Service<TypeCode>::SharedPtr m_type_code_service;
++  rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr m_serial_number_service;
++  rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr m_firmware_version_service;
+ 
+   // Parameters
+   OnSetParametersCallbackHandle::SharedPtr m_param_callback;
+@@ -102,6 +117,8 @@ private:
+   bool m_use_sick_angles;
+   float m_angle_offset;
+   bool m_use_pers_conf;
++  bool publish_output_paths_{false};
++  bool publish_raw_msg_{false};
+ 
+   // TODO diagnostics?
+   // TODO dynamic reconfigure?
+@@ -114,10 +131,35 @@ private:
+   // Callback function passed to the device for handling the received packages
+   void receiveUDPPaket(const sick::datastructure::Data& data);
+ 
++  // Callback function to retrieve configuration metadata
++  bool getConfigMetadata(
++    const std::shared_ptr<ConfigMetadata::Request> request,
++    std::shared_ptr<ConfigMetadata::Response> response);
++
++  // Callback function to retrieve application name
++  bool getApplicationName(
++    const std::shared_ptr<ApplicationName::Request> request,
++    std::shared_ptr<ApplicationName::Response> response);
++    
++  // Callback function to retrieve type code
++  bool getTypeCode(
++    const std::shared_ptr<TypeCode::Request> request,
++    std::shared_ptr<TypeCode::Response> response);
++
++  // Callback function to retrieve serial number
++  bool getSerialNumber(
++    const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
++    std::shared_ptr<std_srvs::srv::Trigger::Response> response);
++
++  // Callback function to retrieve firmware version
++  bool getFirmwareVersion(
++    const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
++    std::shared_ptr<std_srvs::srv::Trigger::Response> response);
++
+   // Methods Triggering COLA2 calls towards the sensor
+   bool getFieldData(
+-    const std::shared_ptr<sick_safetyscanners2_interfaces::srv::FieldData::Request> request,
+-    std::shared_ptr<sick_safetyscanners2_interfaces::srv::FieldData::Response> response);
++    const std::shared_ptr<FieldData::Request> request,
++    std::shared_ptr<FieldData::Response> response);
+   void readPersistentConfig();
+   void readTypeCodeSettings();
+ };
+diff --git a/include/sick_safetyscanners2/utils/MessageCreator.h b/include/sick_safetyscanners2/utils/MessageCreator.h
+index 8d7dbbb..70a0547 100644
+--- a/include/sick_safetyscanners2/utils/MessageCreator.h
++++ b/include/sick_safetyscanners2/utils/MessageCreator.h
+@@ -103,7 +103,8 @@ public:
+    * \returns The constructed extended LaserScan Message
+    */
+   sick_safetyscanners2_interfaces::msg::ExtendedLaserScan
+-  createExtendedLaserScanMsg(const sick::datastructure::Data& data, rclcpp::Time now);
++  createExtendedLaserScanMsg(const sick::datastructure::Data& data,
++                             const sensor_msgs::msg::LaserScan &scan_msg);
+ 
+ 
+   /*!
+diff --git a/src/SickSafetyscannersLifeCycle.cpp b/src/SickSafetyscannersLifeCycle.cpp
+index 5900a68..579323d 100644
+--- a/src/SickSafetyscannersLifeCycle.cpp
++++ b/src/SickSafetyscannersLifeCycle.cpp
+@@ -34,13 +34,13 @@
+ 
+ #include <sick_safetyscanners2/SickSafetyscannersLifeCycle.hpp>
+ 
++#include "rclcpp_components/register_node_macro.hpp"
++
+ namespace sick {
+ 
+ 
+-SickSafetyscannersLifeCycle::SickSafetyscannersLifeCycle(const std::string& node_name,
+-                                                         bool intra_process_comms)
+-  : rclcpp_lifecycle::LifecycleNode(
+-      node_name, rclcpp::NodeOptions().use_intra_process_comms(intra_process_comms))
++SickSafetyscannersLifeCycle::SickSafetyscannersLifeCycle(const rclcpp::NodeOptions& options)
++  : rclcpp_lifecycle::LifecycleNode("SickSafetyscannersLifecycle", options)
+   , m_time_offset(0.0)
+   , m_range_min(0.0)
+   , m_range_max(0.0)
+@@ -77,13 +77,32 @@ SickSafetyscannersLifeCycle::on_configure(const rclcpp_lifecycle::State&)
+   m_raw_data_publisher =
+     this->create_publisher<sick_safetyscanners2_interfaces::msg::RawMicroScanData>("raw_data", 1);
+ 
++  m_config_metadata_service =
++    this->create_service<sick_safetyscanners2_interfaces::srv::ConfigMetadata>("config_metadata",
++    std::bind(&SickSafetyscannersLifeCycle::getConfigMetadata,
++      this, std::placeholders::_1, std::placeholders::_2));
+   m_field_data_service = this->create_service<sick_safetyscanners2_interfaces::srv::FieldData>(
+     "field_data",
+     std::bind(&SickSafetyscannersLifeCycle::getFieldData,
+               this,
+               std::placeholders::_1,
+               std::placeholders::_2));
+-
++  m_application_name_service =
++    this->create_service<sick_safetyscanners2_interfaces::srv::ApplicationName>("application_name",
++    std::bind(&SickSafetyscannersLifeCycle::getApplicationName,
++      this, std::placeholders::_1, std::placeholders::_2));
++  m_type_code_service =
++    this->create_service<sick_safetyscanners2_interfaces::srv::TypeCode>("type_code",
++    std::bind(&SickSafetyscannersLifeCycle::getTypeCode,
++      this, std::placeholders::_1, std::placeholders::_2));
++  m_serial_number_service =
++    this->create_service<std_srvs::srv::Trigger>("serial_number",
++    std::bind(&SickSafetyscannersLifeCycle::getSerialNumber,
++      this, std::placeholders::_1, std::placeholders::_2));
++  m_firmware_version_service =
++    this->create_service<std_srvs::srv::Trigger>("firmware_version",
++    std::bind(&SickSafetyscannersLifeCycle::getFirmwareVersion,
++      this, std::placeholders::_1, std::placeholders::_2));
+ 
+   // Bind callback
+   std::function<void(const sick::datastructure::Data&)> callback =
+@@ -122,15 +141,16 @@ rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn
+ SickSafetyscannersLifeCycle::on_activate(const rclcpp_lifecycle::State&)
+ {
+   RCLCPP_INFO(this->get_logger(), "on_activate()...");
+-  // Start async receiving and processing of sensor data
+-  m_device->run();
+-  m_device->changeSensorSettings(m_communications_settings);
+ 
+   m_laser_scan_publisher->on_activate();
+   m_extended_laser_scan_publisher->on_activate();
+   m_output_paths_publisher->on_activate();
+   m_raw_data_publisher->on_activate();
+ 
++  // Start async receiving and processing of sensor data
++  m_device->run();
++  m_device->changeSensorSettings(m_communications_settings);
++
+   RCLCPP_INFO(this->get_logger(), "Node activated, device is running...");
+ 
+   return rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn::SUCCESS;
+@@ -212,6 +232,8 @@ void SickSafetyscannersLifeCycle::initialize_parameters()
+   this->declare_parameter<bool>("application_io_data", true);
+   this->declare_parameter<bool>("use_persistent_config", false);
+   this->declare_parameter<float>("min_intensities", 0.f);
++  publish_output_paths_ = declare_parameter<bool>("publish_output_paths", publish_output_paths_);
++  publish_raw_msg_ = declare_parameter<bool>("publish_raw_msg", publish_raw_msg_);
+ }
+ 
+ void SickSafetyscannersLifeCycle::load_parameters()
+@@ -465,22 +487,49 @@ void SickSafetyscannersLifeCycle::receiveUDPPaket(const sick::datastructure::Dat
+   if (!data.getMeasurementDataPtr()->isEmpty() && !data.getDerivedValuesPtr()->isEmpty() &&
+       m_msg_creator)
+   {
+-    auto scan = m_msg_creator->createLaserScanMsg(data, this->now());
+-    m_laser_scan_publisher->publish(scan);
+-
+-    sick_safetyscanners2_interfaces::msg::ExtendedLaserScan extended_scan =
+-      m_msg_creator->createExtendedLaserScanMsg(data, this->now());
+-
+-    m_extended_laser_scan_publisher->publish(extended_scan);
+-
+-    auto output_paths = m_msg_creator->createOutputPathsMsg(data);
+-    m_output_paths_publisher->publish(output_paths);
++    auto output_scan = std::make_unique<sensor_msgs::msg::LaserScan>(
++      m_msg_creator->createLaserScanMsg(data, now()));
++    auto output_extended_scan = std::make_unique<sick_safetyscanners2_interfaces::msg::ExtendedLaserScan>(
++      m_msg_creator->createExtendedLaserScanMsg(data, *output_scan));
++
++    m_laser_scan_publisher->publish(std::move(output_scan));
++    m_extended_laser_scan_publisher->publish(std::move(output_extended_scan));
++
++    if (publish_output_paths_) {
++      auto output_paths = std::make_unique<sick_safetyscanners2_interfaces::msg::OutputPaths>(
++        m_msg_creator->createOutputPathsMsg(data));
++      m_output_paths_publisher->publish(std::move(output_paths));
++    }
++  }
++  if (publish_raw_msg_) {
++    auto raw_msg = std::make_unique<sick_safetyscanners2_interfaces::msg::RawMicroScanData>(
++      m_msg_creator->createRawDataMsg(data));
++    m_raw_data_publisher->publish(std::move(raw_msg));
+   }
+-
+-  auto raw_msg = m_msg_creator->createRawDataMsg(data);
+-  m_raw_data_publisher->publish(raw_msg);
+ }
+ 
++bool SickSafetyscannersLifeCycle::getConfigMetadata(
++  const std::shared_ptr<sick_safetyscanners2_interfaces::srv::ConfigMetadata::Request> request,
++  std::shared_ptr<sick_safetyscanners2_interfaces::srv::ConfigMetadata::Response> response)
++{
++  // Suppress warning of unused request variable due to empty request fields
++  (void)request;
++
++  auto metadata = sick::datastructure::ConfigMetadata();
++  m_device->requestConfigMetadata(metadata);
++  response->version_c_version = metadata.getVersionCVersion();
++  response->major_version_number = metadata.getVersionMajorVersionNumber();
++  response->minor_version_number = metadata.getVersionMinorVersionNumber();
++  response->release_version_number = metadata.getVersionReleaseNumber();
++  response->modification_time_date = metadata.getModificationTimeDate();
++  response->modification_time_time = metadata.getModificationTimeTime();
++  response->transfer_time_date = metadata.getTransferTimeDate();
++  response->transfer_time_time = metadata.getTransferTimeTime();
++  response->app_checksum = metadata.getAppChecksum();
++  response->overall_checksum = metadata.getOverallChecksum();
++  response->integrity_hash = metadata.getIntegrityHash();
++  return true;
++}
+ 
+ bool SickSafetyscannersLifeCycle::getFieldData(
+   const std::shared_ptr<sick_safetyscanners2_interfaces::srv::FieldData::Request> request,
+@@ -537,5 +586,71 @@ bool SickSafetyscannersLifeCycle::getFieldData(
+   return true;
+ }
+ 
++bool SickSafetyscannersLifeCycle::getApplicationName(
++  const std::shared_ptr<sick_safetyscanners2_interfaces::srv::ApplicationName::Request> request,
++  std::shared_ptr<sick_safetyscanners2_interfaces::srv::ApplicationName::Response> response)
++{
++  // Suppress warning of unused request variable due to empty request fields
++  (void)request;
++
++  auto app_name = sick::datastructure::ApplicationName();
++  m_device->requestApplicationName(app_name);
++  response->version_c_version = app_name.getVersionCVersion();
++  response->major_version_number = app_name.getVersionMajorVersionNumber();
++  response->minor_version_number = app_name.getVersionMinorVersionNumber();
++  response->release_version_number = app_name.getVersionReleaseNumber();
++  response->name_length = app_name.getNameLength();
++  response->application_name = app_name.getApplicationName();
++
++  return true;
++}
++
++bool SickSafetyscannersLifeCycle::getTypeCode(
++  const std::shared_ptr<sick_safetyscanners2_interfaces::srv::TypeCode::Request> request,
++  std::shared_ptr<sick_safetyscanners2_interfaces::srv::TypeCode::Response> response)
++{
++  // Suppress warning of unused request variable due to empty request fields
++  (void)request;
++
++  auto type_code = sick::datastructure::TypeCode();
++  m_device->requestTypeCode(type_code);
++  response->type_code = type_code.getTypeCode();
++  response->interface_type = type_code.getInterfaceType();
++  response->max_range = type_code.getMaxRange();
++
++  return true;
++}
++
++bool SickSafetyscannersLifeCycle::getSerialNumber(
++  const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
++  std::shared_ptr<std_srvs::srv::Trigger::Response> response)
++{
++  // Suppress warning of unused request variable due to empty request fields
++  (void)request;
++
++  auto serial_number = sick::datastructure::SerialNumber();
++  m_device->requestSerialNumber(serial_number);
++  response->message = serial_number.getSerialNumber();
++  response->success = true;
++
++  return true;
++}
++
++bool SickSafetyscannersLifeCycle::getFirmwareVersion(
++  const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
++  std::shared_ptr<std_srvs::srv::Trigger::Response> response)
++{
++  // Suppress warning of unused request variable due to empty request fields
++  (void)request;
++
++  auto firmware_version = sick::datastructure::FirmwareVersion();
++  m_device->requestFirmwareVersion(firmware_version);
++  response->message = firmware_version.getFirmwareVersion();
++  response->success = true;
++
++  return true;
++}
+ 
+ } // namespace sick
++
++RCLCPP_COMPONENTS_REGISTER_NODE(sick::SickSafetyscannersLifeCycle)
+diff --git a/src/SickSafetyscannersRos2.cpp b/src/SickSafetyscannersRos2.cpp
+index b72d63c..2cc4cfd 100644
+--- a/src/SickSafetyscannersRos2.cpp
++++ b/src/SickSafetyscannersRos2.cpp
+@@ -34,16 +34,20 @@
+ 
+ #include <sick_safetyscanners2/SickSafetyscannersRos2.h>
+ 
++#include <thread>
++
++#include "rclcpp_components/register_node_macro.hpp"
++#include "sick_safetyscanners_base/Exceptions.h"
++
+ namespace sick {
+ 
+-SickSafetyscannersRos2::SickSafetyscannersRos2()
+-  : Node("SickSafetyscannersRos2")
+-  , m_time_offset(0.0)
+-  , m_range_min(0.0)
+-  , m_range_max(0.0)
+-  , m_angle_offset(-90.0)
+-  , m_use_pers_conf(false)
+-{
++SickSafetyscannersRos2::SickSafetyscannersRos2(const rclcpp::NodeOptions& options)
++    : Node("SickSafetyscannersRos2", options),
++      m_time_offset(0.0),
++      m_range_min(0.0),
++      m_range_max(0.0),
++      m_angle_offset(-90.0),
++      m_use_pers_conf(false) {
+   RCLCPP_INFO(this->get_logger(), "Initializing SickSafetyscannersRos2 Node");
+ 
+   // read parameters!
+@@ -53,7 +57,7 @@ SickSafetyscannersRos2::SickSafetyscannersRos2()
+ 
+   // Dynamic Parameter Change client
+   m_param_callback = add_on_set_parameters_callback(
+-    std::bind(&SickSafetyscannersRos2::parametersCallback, this, std::placeholders::_1));
++      std::bind(&SickSafetyscannersRos2::parametersCallback, this, std::placeholders::_1));
+ 
+   // TODO reconfigure?
+   // TODO diagnostics
+@@ -61,33 +65,53 @@ SickSafetyscannersRos2::SickSafetyscannersRos2()
+   // init publishers and services
+   m_laser_scan_publisher = this->create_publisher<sensor_msgs::msg::LaserScan>("scan", 1);
+   m_extended_laser_scan_publisher =
+-    this->create_publisher<sick_safetyscanners2_interfaces::msg::ExtendedLaserScan>("extended_scan",
+-                                                                                    1);
++      this->create_publisher<sick_safetyscanners2_interfaces::msg::ExtendedLaserScan>(
++          "extended_scan", 1);
+   m_output_paths_publisher =
+-    this->create_publisher<sick_safetyscanners2_interfaces::msg::OutputPaths>("output_paths", 1);
++      this->create_publisher<sick_safetyscanners2_interfaces::msg::OutputPaths>("output_paths", 1);
+   m_raw_data_publisher =
+-    this->create_publisher<sick_safetyscanners2_interfaces::msg::RawMicroScanData>("raw_data", 1);
++      this->create_publisher<sick_safetyscanners2_interfaces::msg::RawMicroScanData>("raw_data", 1);
+ 
++  m_config_metadata_service =
++      this->create_service<sick_safetyscanners2_interfaces::srv::ConfigMetadata>(
++          "config_metadata", std::bind(&SickSafetyscannersRos2::getConfigMetadata, this,
++                                 std::placeholders::_1, std::placeholders::_2));
+   m_field_data_service = this->create_service<sick_safetyscanners2_interfaces::srv::FieldData>(
+-    "field_data",
+-    std::bind(
+-      &SickSafetyscannersRos2::getFieldData, this, std::placeholders::_1, std::placeholders::_2));
++      "field_data", std::bind(&SickSafetyscannersRos2::getFieldData, this, std::placeholders::_1,
++                        std::placeholders::_2));
++  m_application_name_service =
++      this->create_service<sick_safetyscanners2_interfaces::srv::ApplicationName>(
++          "application_name", std::bind(&SickSafetyscannersRos2::getApplicationName, this,
++                                  std::placeholders::_1, std::placeholders::_2));
++  m_type_code_service = this->create_service<sick_safetyscanners2_interfaces::srv::TypeCode>(
++      "type_code", std::bind(&SickSafetyscannersRos2::getTypeCode, this, std::placeholders::_1,
++                       std::placeholders::_2));
++  m_serial_number_service = this->create_service<std_srvs::srv::Trigger>(
++      "serial_number", std::bind(&SickSafetyscannersRos2::getSerialNumber, this,
++                           std::placeholders::_1, std::placeholders::_2));
++  m_firmware_version_service = this->create_service<std_srvs::srv::Trigger>(
++      "firmware_version", std::bind(&SickSafetyscannersRos2::getFirmwareVersion, this,
++                              std::placeholders::_1, std::placeholders::_2));
+ 
+   // Bind callback
+   std::function<void(const sick::datastructure::Data&)> callback =
+-    std::bind(&SickSafetyscannersRos2::receiveUDPPaket, this, std::placeholders::_1);
+-
++      std::bind(&SickSafetyscannersRos2::receiveUDPPaket, this, std::placeholders::_1);
+ 
+   // Create a sensor instance
+-  if (m_communications_settings.host_ip.is_multicast())
+-  {
+-    m_device = std::make_unique<sick::AsyncSickSafetyScanner>(
+-      m_sensor_ip, tcp_port, m_communications_settings, m_interface_ip, callback);
+-  }
+-  else
+-  {
+-    m_device = std::make_unique<sick::AsyncSickSafetyScanner>(
+-      m_sensor_ip, tcp_port, m_communications_settings, callback);
++  while (true) {
++    try {
++      if (m_communications_settings.host_ip.is_multicast()) {
++        m_device = std::make_unique<sick::AsyncSickSafetyScanner>(
++            m_sensor_ip, tcp_port, m_communications_settings, m_interface_ip, callback);
++      } else {
++        m_device = std::make_unique<sick::AsyncSickSafetyScanner>(
++            m_sensor_ip, tcp_port, m_communications_settings, callback);
++      }
++      break;
++    } catch (const std::exception& e) {
++      LOG_WARN("Failed to create AsyncSickSafetyScanner instance: %s. Retrying...", e.what());
++      std::this_thread::sleep_for(std::chrono::milliseconds(200));
++    }
+   }
+ 
+   RCLCPP_INFO(this->get_logger(), "Communication to Sensor set up");
+@@ -95,13 +119,12 @@ SickSafetyscannersRos2::SickSafetyscannersRos2()
+   // Read sensor specific configurations
+   readTypeCodeSettings();
+ 
+-  if (m_use_pers_conf)
+-  {
++  if (m_use_pers_conf) {
+     readPersistentConfig();
+   }
+ 
+   m_msg_creator = std::make_unique<sick::MessageCreator>(
+-    m_frame_id, m_time_offset, m_range_min, m_range_max, m_angle_offset, m_min_intensities);
++      m_frame_id, m_time_offset, m_range_min, m_range_max, m_angle_offset, m_min_intensities);
+ 
+   // Start async receiving and processing of sensor data
+   m_device->run();
+@@ -110,27 +133,24 @@ SickSafetyscannersRos2::SickSafetyscannersRos2()
+   RCLCPP_INFO(this->get_logger(), "Node Configured and running");
+ }
+ 
+-void SickSafetyscannersRos2::readTypeCodeSettings()
+-{
++void SickSafetyscannersRos2::readTypeCodeSettings() {
+   RCLCPP_INFO(this->get_logger(), "Reading Type code settings");
+   sick::datastructure::TypeCode type_code;
+   m_device->requestTypeCode(type_code);
+   m_communications_settings.e_interface_type = type_code.getInterfaceType();
+-  m_range_min                                = 0.1;
+-  m_range_max                                = type_code.getMaxRange();
++  m_range_min = 0.1;
++  m_range_max = type_code.getMaxRange();
+ }
+ 
+-void SickSafetyscannersRos2::readPersistentConfig()
+-{
++void SickSafetyscannersRos2::readPersistentConfig() {
+   RCLCPP_INFO(this->get_logger(), "Reading Persistent Configuration");
+   sick::datastructure::ConfigData config_data;
+   m_device->requestPersistentConfig(config_data);
+   m_communications_settings.start_angle = config_data.getStartAngle();
+-  m_communications_settings.end_angle   = config_data.getEndAngle();
++  m_communications_settings.end_angle = config_data.getEndAngle();
+ }
+ 
+-void SickSafetyscannersRos2::initialize_parameters()
+-{
++void SickSafetyscannersRos2::initialize_parameters() {
+   this->declare_parameter<std::string>("frame_id", "scan");
+   this->declare_parameter<std::string>("sensor_ip", "192.168.1.11");
+   this->declare_parameter<std::string>("host_ip", "192.168.1.9");
+@@ -141,7 +161,7 @@ void SickSafetyscannersRos2::initialize_parameters()
+   this->declare_parameter<int>("skip", 0);
+   this->declare_parameter<double>("angle_start", 0.0);
+   this->declare_parameter<double>("angle_end", 0.0);
+-  this->declare_parameter<double>("time_offset", 0.0); // TODO
++  this->declare_parameter<double>("time_offset", 0.0);  // TODO
+   this->declare_parameter<bool>("general_system_state", true);
+   this->declare_parameter<bool>("derived_settings", true);
+   this->declare_parameter<bool>("measurement_data", true);
+@@ -149,10 +169,11 @@ void SickSafetyscannersRos2::initialize_parameters()
+   this->declare_parameter<bool>("application_io_data", true);
+   this->declare_parameter<bool>("use_persistent_config", false);
+   this->declare_parameter<float>("min_intensities", 0.f);
++  publish_output_paths_ = declare_parameter<bool>("publish_output_paths", publish_output_paths_);
++  publish_raw_msg_ = declare_parameter<bool>("publish_raw_msg", publish_raw_msg_);
+ }
+ 
+-void SickSafetyscannersRos2::load_parameters()
+-{
++void SickSafetyscannersRos2::load_parameters() {
+   rclcpp::Logger node_logger = this->get_logger();
+ 
+   this->get_parameter<std::string>("frame_id", m_frame_id);
+@@ -203,18 +224,14 @@ void SickSafetyscannersRos2::load_parameters()
+   RCLCPP_INFO(node_logger, "angle_end: %f", angle_end);
+ 
+   // Included check before calculations to prevent rounding errors while calculating
+-  if (angle_start == angle_end)
+-  {
++  if (angle_start == angle_end) {
+     m_communications_settings.start_angle = sick::radToDeg(0);
+-    m_communications_settings.end_angle   = sick::radToDeg(0);
+-  }
+-  else
+-  {
++    m_communications_settings.end_angle = sick::radToDeg(0);
++  } else {
+     m_communications_settings.start_angle = sick::radToDeg(angle_start) - m_angle_offset;
+-    m_communications_settings.end_angle   = sick::radToDeg(angle_end) - m_angle_offset;
++    m_communications_settings.end_angle = sick::radToDeg(angle_end) - m_angle_offset;
+   }
+ 
+-
+   this->get_parameter<double>("time_offset", m_time_offset);
+   RCLCPP_INFO(node_logger, "time_offset: %f", m_time_offset);
+ 
+@@ -239,9 +256,9 @@ void SickSafetyscannersRos2::load_parameters()
+   this->get_parameter<bool>("application_io_data", application_io_data);
+   RCLCPP_INFO(node_logger, "application_io_data: %s", btoa(application_io_data).c_str());
+ 
+-  m_communications_settings.features = sick::SensorDataFeatures::toFeatureFlags(
+-    general_system_state, derived_settings, measurement_data, intrusion_data, application_io_data);
+-
++  m_communications_settings.features =
++      sick::SensorDataFeatures::toFeatureFlags(general_system_state, derived_settings,
++          measurement_data, intrusion_data, application_io_data);
+ 
+   this->get_parameter<bool>("use_persistent_config", m_use_pers_conf);
+   RCLCPP_INFO(node_logger, "use_persistent_config: %s", btoa(m_use_pers_conf).c_str());
+@@ -250,197 +267,176 @@ void SickSafetyscannersRos2::load_parameters()
+   RCLCPP_INFO(node_logger, "min_intensities: %f", m_min_intensities);
+ }
+ 
+-rcl_interfaces::msg::SetParametersResult
+-SickSafetyscannersRos2::parametersCallback(std::vector<rclcpp::Parameter> parameters)
+-{
++rcl_interfaces::msg::SetParametersResult SickSafetyscannersRos2::parametersCallback(
++    std::vector<rclcpp::Parameter> parameters) {
+   rcl_interfaces::msg::SetParametersResult result;
+-  result.successful         = true;
+-  result.reason             = "";
++  result.successful = true;
++  result.reason = "";
+   bool update_sensor_config = false;
+ 
+-  for (auto param : parameters)
+-  {
++  for (auto param : parameters) {
+     {
+       std::stringstream ss;
+       ss << "{" << param.get_name() << ", " << param.value_to_string() << "}";
+       RCLCPP_INFO(this->get_logger(), "Got parameter: '%s'", ss.str().c_str());
+ 
+-      if (!param.get_name().compare("frame_id"))
+-      {
++      if (!param.get_name().compare("frame_id")) {
+         m_frame_id = param.value_to_string();
+-      }
+-      else if (!param.get_name().compare("host_ip"))
+-      {
++      } else if (!param.get_name().compare("host_ip")) {
+         m_communications_settings.host_ip =
+-          boost::asio::ip::address_v4::from_string(param.value_to_string());
++            boost::asio::ip::address_v4::from_string(param.value_to_string());
+         update_sensor_config = true;
+-      }
+-      else if (!param.get_name().compare("host_udp_port"))
+-      {
++      } else if (!param.get_name().compare("host_udp_port")) {
+         m_communications_settings.host_udp_port = param.as_int();
+-        update_sensor_config                    = true;
+-      }
+-      else if (!param.get_name().compare("channel"))
+-      {
++        update_sensor_config = true;
++      } else if (!param.get_name().compare("channel")) {
+         m_communications_settings.channel = param.as_int();
+-        update_sensor_config              = true;
+-      }
+-      else if (!param.get_name().compare("channel_enabled"))
+-      {
++        update_sensor_config = true;
++      } else if (!param.get_name().compare("channel_enabled")) {
+         m_communications_settings.enabled = param.as_bool();
+-        update_sensor_config              = true;
+-      }
+-      else if (!param.get_name().compare("skip"))
+-      {
++        update_sensor_config = true;
++      } else if (!param.get_name().compare("skip")) {
+         m_communications_settings.publishing_frequency = skipToPublishFrequency(param.as_int());
+-        update_sensor_config                           = true;
+-      }
+-      else if (!param.get_name().compare("angle_start"))
+-      {
++        update_sensor_config = true;
++      } else if (!param.get_name().compare("angle_start")) {
+         // TODO cleanup
+         double angle_start = param.as_double();
+         double angle_end;
+         this->get_parameter<double>("angle_end", angle_end);
+-        if (angle_start == angle_end)
+-        {
++        if (angle_start == angle_end) {
+           m_communications_settings.start_angle = sick::radToDeg(0);
+-          m_communications_settings.end_angle   = sick::radToDeg(0);
+-        }
+-        else
+-        {
++          m_communications_settings.end_angle = sick::radToDeg(0);
++        } else {
+           m_communications_settings.start_angle = sick::radToDeg(angle_start) - m_angle_offset;
+-          m_communications_settings.end_angle   = sick::radToDeg(angle_end) - m_angle_offset;
++          m_communications_settings.end_angle = sick::radToDeg(angle_end) - m_angle_offset;
+         }
+         update_sensor_config = true;
+-      }
+-      else if (!param.get_name().compare("angle_end"))
+-      {
++      } else if (!param.get_name().compare("angle_end")) {
+         // TODO cleanup
+         double angle_end = param.as_double();
+         double angle_start;
+         this->get_parameter<double>("angle_start", angle_start);
+-        if (angle_start == angle_end)
+-        {
++        if (angle_start == angle_end) {
+           m_communications_settings.start_angle = sick::radToDeg(0);
+-          m_communications_settings.end_angle   = sick::radToDeg(0);
+-        }
+-        else
+-        {
++          m_communications_settings.end_angle = sick::radToDeg(0);
++        } else {
+           m_communications_settings.start_angle = sick::radToDeg(angle_start) - m_angle_offset;
+-          m_communications_settings.end_angle   = sick::radToDeg(angle_end) - m_angle_offset;
++          m_communications_settings.end_angle = sick::radToDeg(angle_end) - m_angle_offset;
+         }
+         update_sensor_config = true;
+-      }
+-      else if (!param.get_name().compare("time_offset"))
+-      {
++      } else if (!param.get_name().compare("time_offset")) {
+         m_time_offset = param.as_double();
+-      }
+-      else if (!param.get_name().compare("general_system_state"))
+-      {
++      } else if (!param.get_name().compare("general_system_state")) {
+         // TODO improve
+         m_communications_settings.features =
+-          (m_communications_settings.features & ~(1UL << 0)) | (param.as_bool() << 0);
++            (m_communications_settings.features & ~(1UL << 0)) | (param.as_bool() << 0);
+         update_sensor_config = true;
+-      }
+-      else if (!param.get_name().compare("derived_settings"))
+-      {
++      } else if (!param.get_name().compare("derived_settings")) {
+         m_communications_settings.features =
+-          (m_communications_settings.features & ~(1UL << 1)) | (param.as_bool() << 1);
++            (m_communications_settings.features & ~(1UL << 1)) | (param.as_bool() << 1);
+         update_sensor_config = true;
+-      }
+-      else if (!param.get_name().compare("measurement_data"))
+-      {
++      } else if (!param.get_name().compare("measurement_data")) {
+         m_communications_settings.features =
+-          (m_communications_settings.features & ~(1UL << 2)) | (param.as_bool() << 2);
++            (m_communications_settings.features & ~(1UL << 2)) | (param.as_bool() << 2);
+         update_sensor_config = true;
+-      }
+-      else if (!param.get_name().compare("intrusion_data"))
+-      {
++      } else if (!param.get_name().compare("intrusion_data")) {
+         m_communications_settings.features =
+-          (m_communications_settings.features & ~(1UL << 3)) | (param.as_bool() << 3);
++            (m_communications_settings.features & ~(1UL << 3)) | (param.as_bool() << 3);
+         update_sensor_config = true;
+-      }
+-      else if (!param.get_name().compare("application_io_data"))
+-      {
++      } else if (!param.get_name().compare("application_io_data")) {
+         m_communications_settings.features =
+-          (m_communications_settings.features & ~(1UL << 4)) | (param.as_bool() << 4);
++            (m_communications_settings.features & ~(1UL << 4)) | (param.as_bool() << 4);
+         update_sensor_config = true;
+-      }
+-      else if (!param.get_name().compare("min_intensities"))
+-      {
++      } else if (!param.get_name().compare("min_intensities")) {
+         m_min_intensities = param.as_double();
+-      }
+-      else
+-      {
++      } else {
+         result.successful = false;
+-        result.reason     = "Parameter is not dynamic reconfigurable";
+-        RCLCPP_WARN(this->get_logger(),
+-                    "Parameter %s not dynamically reconfigurable",
+-                    param.get_name().c_str());
++        result.reason = "Parameter is not dynamic reconfigurable";
++        RCLCPP_WARN(this->get_logger(), "Parameter %s not dynamically reconfigurable",
++            param.get_name().c_str());
+       }
+     }
+   }
+-  if (update_sensor_config)
+-  {
++  if (update_sensor_config) {
+     m_device->changeSensorSettings(m_communications_settings);
+   }
+   m_msg_creator = std::make_unique<sick::MessageCreator>(
+-    m_frame_id, m_time_offset, m_range_min, m_range_max, m_angle_offset, m_min_intensities);
++      m_frame_id, m_time_offset, m_range_min, m_range_max, m_angle_offset, m_min_intensities);
+   return result;
+ }
+ 
+-
+-void SickSafetyscannersRos2::receiveUDPPaket(const sick::datastructure::Data& data)
+-{
+-  if (!m_msg_creator)
+-  {
++void SickSafetyscannersRos2::receiveUDPPaket(const sick::datastructure::Data& data) {
++  if (!m_msg_creator) {
+     RCLCPP_WARN(get_logger(),
+-                "Received UDPP packet before all objects were instantiated, ignoring this packet.");
++        "Received UDPP packet before all objects were instantiated, ignoring this packet.");
+     return;
+   }
+ 
+   if (!data.getMeasurementDataPtr()->isEmpty() && !data.getDerivedValuesPtr()->isEmpty() &&
+-      m_msg_creator)
+-  {
+-    auto scan = m_msg_creator->createLaserScanMsg(data, this->now());
+-    m_laser_scan_publisher->publish(scan);
+-
+-    sick_safetyscanners2_interfaces::msg::ExtendedLaserScan extended_scan =
+-      m_msg_creator->createExtendedLaserScanMsg(data, this->now());
+-
+-    m_extended_laser_scan_publisher->publish(extended_scan);
+-
+-    auto output_paths = m_msg_creator->createOutputPathsMsg(data);
+-    m_output_paths_publisher->publish(output_paths);
++      m_msg_creator) {
++    auto output_scan = std::make_unique<sensor_msgs::msg::LaserScan>(
++        m_msg_creator->createLaserScanMsg(data, now()));
++    auto output_extended_scan =
++        std::make_unique<sick_safetyscanners2_interfaces::msg::ExtendedLaserScan>(
++            m_msg_creator->createExtendedLaserScanMsg(data, *output_scan));
++
++    m_laser_scan_publisher->publish(std::move(output_scan));
++    m_extended_laser_scan_publisher->publish(std::move(output_extended_scan));
++
++    if (publish_output_paths_) {
++      auto output_paths = std::make_unique<sick_safetyscanners2_interfaces::msg::OutputPaths>(
++          m_msg_creator->createOutputPathsMsg(data));
++      m_output_paths_publisher->publish(std::move(output_paths));
++    }
++  }
++  if (publish_raw_msg_) {
++    auto raw_msg = std::make_unique<sick_safetyscanners2_interfaces::msg::RawMicroScanData>(
++        m_msg_creator->createRawDataMsg(data));
++    m_raw_data_publisher->publish(std::move(raw_msg));
+   }
+-
+-  auto raw_msg = m_msg_creator->createRawDataMsg(data);
+-  m_raw_data_publisher->publish(raw_msg);
+ }
+ 
++bool SickSafetyscannersRos2::getConfigMetadata(
++    const std::shared_ptr<sick_safetyscanners2_interfaces::srv::ConfigMetadata::Request> request,
++    std::shared_ptr<sick_safetyscanners2_interfaces::srv::ConfigMetadata::Response> response) {
++  // Suppress warning of unused request variable due to empty request fields
++  (void)request;
++
++  auto metadata = sick::datastructure::ConfigMetadata();
++  m_device->requestConfigMetadata(metadata);
++  response->version_c_version = metadata.getVersionCVersion();
++  response->major_version_number = metadata.getVersionMajorVersionNumber();
++  response->minor_version_number = metadata.getVersionMinorVersionNumber();
++  response->release_version_number = metadata.getVersionReleaseNumber();
++  response->modification_time_date = metadata.getModificationTimeDate();
++  response->modification_time_time = metadata.getModificationTimeTime();
++  response->transfer_time_date = metadata.getTransferTimeDate();
++  response->transfer_time_time = metadata.getTransferTimeTime();
++  response->app_checksum = metadata.getAppChecksum();
++  response->overall_checksum = metadata.getOverallChecksum();
++  response->integrity_hash = metadata.getIntegrityHash();
++  return true;
++}
+ 
+ bool SickSafetyscannersRos2::getFieldData(
+-  const std::shared_ptr<sick_safetyscanners2_interfaces::srv::FieldData::Request> request,
+-  std::shared_ptr<sick_safetyscanners2_interfaces::srv::FieldData::Response> response)
+-{
++    const std::shared_ptr<sick_safetyscanners2_interfaces::srv::FieldData::Request> request,
++    std::shared_ptr<sick_safetyscanners2_interfaces::srv::FieldData::Response> response) {
+   // Suppress warning of unused request variable due to empty request fields
+   (void)request;
+ 
+   std::vector<sick::datastructure::FieldData> fields;
+   m_device->requestFieldData(fields);
+ 
+-  for (size_t i = 0; i < fields.size(); i++)
+-  {
++  for (size_t i = 0; i < fields.size(); i++) {
+     sick::datastructure::FieldData field = fields.at(i);
+     sick_safetyscanners2_interfaces::msg::Field field_msg;
+ 
+-    field_msg.start_angle        = degToRad(field.getStartAngle() + m_angle_offset);
++    field_msg.start_angle = degToRad(field.getStartAngle() + m_angle_offset);
+     field_msg.angular_resolution = degToRad(field.getAngularBeamResolution());
+-    field_msg.protective_field   = field.getIsProtectiveField();
++    field_msg.protective_field = field.getIsProtectiveField();
+ 
+     std::vector<uint16_t> ranges = field.getBeamDistances();
+-    for (size_t j = 0; j < ranges.size(); j++)
+-    {
++    for (size_t j = 0; j < ranges.size(); j++) {
+       field_msg.ranges.push_back(static_cast<float>(ranges.at(j)) * 1e-3);
+     }
+ 
+@@ -451,20 +447,17 @@ bool SickSafetyscannersRos2::getFieldData(
+   m_device->requestDeviceName(device_name);
+   response->device_name = device_name.getDeviceName();
+ 
+-
+   std::vector<sick::datastructure::MonitoringCaseData> monitoring_cases;
+   m_device->requestMonitoringCases(monitoring_cases);
+ 
+-  for (size_t i = 0; i < monitoring_cases.size(); i++)
+-  {
++  for (size_t i = 0; i < monitoring_cases.size(); i++) {
+     sick::datastructure::MonitoringCaseData monitoring_case_data = monitoring_cases.at(i);
+     sick_safetyscanners2_interfaces::msg::MonitoringCase monitoring_case_msg;
+ 
+     monitoring_case_msg.monitoring_case_number = monitoring_case_data.getMonitoringCaseNumber();
+-    std::vector<uint16_t> mon_fields           = monitoring_case_data.getFieldIndices();
+-    std::vector<bool> mon_fields_valid         = monitoring_case_data.getFieldsValid();
+-    for (size_t j = 0; j < mon_fields.size(); j++)
+-    {
++    std::vector<uint16_t> mon_fields = monitoring_case_data.getFieldIndices();
++    std::vector<bool> mon_fields_valid = monitoring_case_data.getFieldsValid();
++    for (size_t j = 0; j < mon_fields.size(); j++) {
+       monitoring_case_msg.fields.push_back(mon_fields.at(j));
+       monitoring_case_msg.fields_valid.push_back(mon_fields_valid.at(j));
+     }
+@@ -474,5 +467,66 @@ bool SickSafetyscannersRos2::getFieldData(
+   return true;
+ }
+ 
++bool SickSafetyscannersRos2::getApplicationName(
++    const std::shared_ptr<sick_safetyscanners2_interfaces::srv::ApplicationName::Request> request,
++    std::shared_ptr<sick_safetyscanners2_interfaces::srv::ApplicationName::Response> response) {
++  // Suppress warning of unused request variable due to empty request fields
++  (void)request;
++
++  auto app_name = sick::datastructure::ApplicationName();
++  m_device->requestApplicationName(app_name);
++  response->version_c_version = app_name.getVersionCVersion();
++  response->major_version_number = app_name.getVersionMajorVersionNumber();
++  response->minor_version_number = app_name.getVersionMinorVersionNumber();
++  response->release_version_number = app_name.getVersionReleaseNumber();
++  response->name_length = app_name.getNameLength();
++  response->application_name = app_name.getApplicationName();
++
++  return true;
++}
++
++bool SickSafetyscannersRos2::getTypeCode(
++    const std::shared_ptr<sick_safetyscanners2_interfaces::srv::TypeCode::Request> request,
++    std::shared_ptr<sick_safetyscanners2_interfaces::srv::TypeCode::Response> response) {
++  // Suppress warning of unused request variable due to empty request fields
++  (void)request;
++
++  auto type_code = sick::datastructure::TypeCode();
++  m_device->requestTypeCode(type_code);
++  response->type_code = type_code.getTypeCode();
++  response->interface_type = type_code.getInterfaceType();
++  response->max_range = type_code.getMaxRange();
++
++  return true;
++}
++
++bool SickSafetyscannersRos2::getSerialNumber(
++    const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
++    std::shared_ptr<std_srvs::srv::Trigger::Response> response) {
++  // Suppress warning of unused request variable due to empty request fields
++  (void)request;
++
++  auto serial_number = sick::datastructure::SerialNumber();
++  m_device->requestSerialNumber(serial_number);
++  response->message = serial_number.getSerialNumber();
++  response->success = true;
++
++  return true;
++}
++
++bool SickSafetyscannersRos2::getFirmwareVersion(
++    const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
++    std::shared_ptr<std_srvs::srv::Trigger::Response> response) {
++  // Suppress warning of unused request variable due to empty request fields
++  (void)request;
++
++  auto firmware_version = sick::datastructure::FirmwareVersion();
++  m_device->requestFirmwareVersion(firmware_version);
++  response->message = firmware_version.getFirmwareVersion();
++  response->success = true;
++
++  return true;
++}
+ 
+-} // namespace sick
++}  // namespace sick
++RCLCPP_COMPONENTS_REGISTER_NODE(sick::SickSafetyscannersRos2)
+diff --git a/src/sick_safetyscanners2_lifecycle_node.cpp b/src/sick_safetyscanners2_lifecycle_node.cpp
+index c1a9cbd..6f28312 100644
+--- a/src/sick_safetyscanners2_lifecycle_node.cpp
++++ b/src/sick_safetyscanners2_lifecycle_node.cpp
+@@ -43,13 +43,12 @@ int main(int argc, char** argv)
+   (void)argc;
+   (void)argv;
+ 
+-
+   setvbuf(stdout, NULL, _IONBF, BUFSIZ);
+ 
+   rclcpp::init(argc, argv);
+   rclcpp::executors::SingleThreadedExecutor exe;
+   std::shared_ptr<sick::SickSafetyscannersLifeCycle> nh_ =
+-    std::make_shared<sick::SickSafetyscannersLifeCycle>("SickSafetyscannersLifecycle");
++    std::make_shared<sick::SickSafetyscannersLifeCycle>(rclcpp::NodeOptions());
+ 
+   exe.add_node(nh_->get_node_base_interface());
+   exe.spin();
+diff --git a/src/sick_safetyscanners2_node.cpp b/src/sick_safetyscanners2_node.cpp
+index 2ad2d64..b52539a 100644
+--- a/src/sick_safetyscanners2_node.cpp
++++ b/src/sick_safetyscanners2_node.cpp
+@@ -45,9 +45,8 @@ int main(int argc, char** argv)
+   (void)argc;
+   (void)argv;
+ 
+-
+   rclcpp::init(argc, argv);
+-  rclcpp::spin(std::make_shared<sick::SickSafetyscannersRos2>());
++  rclcpp::spin(std::make_shared<sick::SickSafetyscannersRos2>(rclcpp::NodeOptions()));
+   rclcpp::shutdown();
+   return 0;
+ }
+diff --git a/src/utils/MessageCreator.cpp b/src/utils/MessageCreator.cpp
+index 85c14ef..3c9b5ab 100644
+--- a/src/utils/MessageCreator.cpp
++++ b/src/utils/MessageCreator.cpp
+@@ -145,11 +145,11 @@ MessageCreator::createOutputPathsMsg(const sick::datastructure::Data& data)
+ }
+ 
+ sick_safetyscanners2_interfaces::msg::ExtendedLaserScan
+-MessageCreator::createExtendedLaserScanMsg(const sick::datastructure::Data& data, rclcpp::Time now)
++MessageCreator::createExtendedLaserScanMsg(const sick::datastructure::Data& data,
++                                           const sensor_msgs::msg::LaserScan &scan_msg)
+ {
+-  sensor_msgs::msg::LaserScan scan = createLaserScanMsg(data, now);
+   sick_safetyscanners2_interfaces::msg::ExtendedLaserScan msg;
+-  msg.laser_scan = scan;
++  msg.laser_scan = scan_msg;
+ 
+   std::vector<sick::datastructure::ScanPoint> scan_points =
+     data.getMeasurementDataPtr()->getScanPointsVector();
