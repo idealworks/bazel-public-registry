@@ -1,0 +1,48 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "example_pingpong_helper",
+    srcs = ["src/example_pingpong_helper.c"],
+    hdrs = ["src/example_pingpong_helper.h"],
+    includes = ["src"],
+    local_defines = ["ROS_PACKAGE_NAME=\"rclc_examples\""],
+    deps = [
+        "//rclc",
+        "@ros2_common_interfaces//:cpp_std_msgs",
+        "@ros2_rcl//:rcl",
+    ],
+)
+
+[
+    cc_binary(
+        name = name,
+        srcs = [
+            "src/{}.cpp".format(name) if name in ["example_pingpong"] else "src/{}.c".format(name),
+        ],
+        local_defines = ["ROS_PACKAGE_NAME=\\\"rclc_examples\\\""],
+        deps = [
+            ":example_pingpong_helper",
+            "//rclc",
+            "//rclc_lifecycle",
+            "//rclc_parameter",
+            "@ros2_example_interfaces//:cpp_example_interfaces",
+            "@ros2_rcl//:rcl",
+        ],
+    )
+    for name in [
+        "example_action_client",
+        "example_action_server",
+        "example_client_node",
+        "example_executor_only_rcl",
+        "example_executor_trigger",
+        "example_executor",
+        "example_lifecycle_node",
+        "example_parameter_server",
+        "example_pingpong",
+        "example_service_node",
+        "example_short_timer_long_subscription",
+        "example_sub_context",
+    ]
+]

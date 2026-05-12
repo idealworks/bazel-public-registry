@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/example_interfaces/archive/3fac5497d76b1425cfbd556d3010f33d905d5f73.tar.gz",
+  "integrity": "sha256-W7aYYsx9rK20+0tHFuK9CVNtcSC5LMK9TIxOQyh0IBE=",
+  "strip_prefix": "example_interfaces-3fac5497d76b1425cfbd556d3010f33d905d5f73",
+  "overlay": {
+    "MODULE.bazel": "sha256-giUT4TIc+yVmSeS5J0JYAJu9gJh1auj3R5rkZRoL6TY=",
+    "BUILD.bazel": "sha256-kHat8nxLHgMTJM/uRWcc+eEihkYNDWL5/ZhYYlE864w="
+  }
+}
