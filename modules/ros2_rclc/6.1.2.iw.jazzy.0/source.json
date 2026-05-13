@@ -1,0 +1,12 @@
+{
+  "url": "https://github.com/ros2/rclc/archive/45ef3de567588652c7f05017a91ea29921dd6862.tar.gz",
+  "integrity": "sha256-6ykSsqgDjk0Q6gRW0bKCFvKtpQAk6Qy9u+clUvo7Ne0=",
+  "strip_prefix": "rclc-45ef3de567588652c7f05017a91ea29921dd6862",
+  "overlay": {
+    "MODULE.bazel": "sha256-Q+D5Va6CQ+ug7vIPaaFoGlCvyLjjrHlJCLtWbK4iXM4=",
+    "rclc_parameter/BUILD.bazel": "sha256-IANNPtR7RwNKVQpE+enZOAGgzgWhYEsou7FKC2906jU=",
+    "rclc_lifecycle/BUILD.bazel": "sha256-lAm2AlhVYNIpx15A35HJN9z2p05bDKPvltQJNDoU7+4=",
+    "rclc_examples/BUILD.bazel": "sha256-cc1kCXkgu5XvGz50FRw7m1sfaxPGevGm5T/M5cuWXfU=",
+    "rclc/BUILD.bazel": "sha256-PYZnlIXQBVOBYR/dEPv2yLaTzSxQxrTfYWm5mJHIiCY="
+  }
+}
