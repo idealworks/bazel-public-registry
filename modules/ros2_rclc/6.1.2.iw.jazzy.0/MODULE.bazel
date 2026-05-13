@@ -1,0 +1,20 @@
+module(
+    name = "ros2_rclc",
+    version = "6.1.2.iw.jazzy.0",
+    compatibility_level = 0,
+)
+
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "2.0.0.eddy.7")
+bazel_dep(name = "rules_cc", version = "0.2.18")
+bazel_dep(name = "ros2_rcutils", version = "6.7.2-1-g63a2414.iw.jazzy.1")
+bazel_dep(name = "ros2_rcl", version = "9.2.4-1-gf03e52b.iw.jazzy.2")
+bazel_dep(name = "ros2_common_interfaces", version = "5.3.5-2-g5283bd9.iw.jazzy.1")
+bazel_dep(name = "ros2_example_interfaces", version = "0.12.0-1-g3fac549")
+bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
+bazel_dep(name = "rules_python", version = "1.5.1")
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    configure_coverage_tool = True,
+    python_version = "3.12",
+)

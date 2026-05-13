@@ -1,0 +1,31 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "rclc_lifecycle",
+    srcs = ["src/rclc_lifecycle/rclc_lifecycle.c"],
+    hdrs = glob(["include/**/*.h"]),
+    defines = ["RCLC_LIFECYCLE_MAX_STRING_LENGTH=20"],
+    includes = ["include"],
+    local_defines = ["ROS_PACKAGE_NAME=\\\"rclc_lifecycle\\\""],
+    deps = [
+        "//rclc",
+        "@ros2_common_interfaces//:cpp_std_msgs",
+        "@ros2_rcl//:rcl",
+        "@ros2_rcl//:rcl_lifecycle",
+        "@ros2_rcutils//:rcutils",
+    ],
+)
+
+cc_test(
+    name = "test_lifecycle",
+    srcs = ["test/test_lifecycle.cpp"],
+    includes = ["src/rcl"],
+    local_defines = ["ROS_PACKAGE_NAME=\\\"rclc_lifecycle\\\""],
+    deps = [
+        ":rclc_lifecycle",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+    ],
+)

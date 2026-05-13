@@ -1,0 +1,22 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "rclc_parameter",
+    srcs = glob(["src/**/*.c"]),
+    hdrs = glob([
+        "src/**/*.h",
+        "include/**/*.h",
+    ]),
+    defines = ["RCLC_PARAMETER_MAX_STRING_LENGTH=50"],
+    includes = [
+        "include",
+        "src",
+    ],
+    local_defines = ["ROS_PACKAGE_NAME=\\\"rclc_parameter\\\""],
+    deps = [
+        "//rclc",
+        "@ros2_rcl//:rcl",
+    ],
+)

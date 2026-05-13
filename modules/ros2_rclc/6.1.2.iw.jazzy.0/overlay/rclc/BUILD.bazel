@@ -1,0 +1,36 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "rclc",
+    srcs = [
+        "src/rclc/action_client.c",
+        "src/rclc/action_goal_handle.c",
+        "src/rclc/action_server.c",
+        "src/rclc/client.c",
+        "src/rclc/executor.c",
+        "src/rclc/executor_handle.c",
+        "src/rclc/init.c",
+        "src/rclc/node.c",
+        "src/rclc/publisher.c",
+        "src/rclc/service.c",
+        "src/rclc/sleep.c",
+        "src/rclc/subscription.c",
+        "src/rclc/timer.c",
+    ] + glob([
+        "src/**/*.h",
+    ]),
+    hdrs = glob([
+        "include/**/*.h",
+    ]),
+    includes = [
+        "include",
+    ],
+    local_defines = ["ROS_PACKAGE_NAME=\\\"rclc\\\""],
+    deps = [
+        "@ros2_rcl//:rcl",
+        "@ros2_rcl//:rcl_action",
+        "@ros2_rcutils//:rcutils",
+    ],
+)
