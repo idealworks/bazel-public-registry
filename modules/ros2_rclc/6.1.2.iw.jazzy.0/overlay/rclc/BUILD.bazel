@@ -18,14 +18,14 @@ cc_library(
         "src/rclc/sleep.c",
         "src/rclc/subscription.c",
         "src/rclc/timer.c",
-    ],
+    ] + glob([
+        "src/**/*.h",
+    ]),
     hdrs = glob([
         "include/**/*.h",
-        "src/**/*.h",
     ]),
     includes = [
         "include",
-        "src",
     ],
     local_defines = ["ROS_PACKAGE_NAME=\\\"rclc\\\""],
     deps = [

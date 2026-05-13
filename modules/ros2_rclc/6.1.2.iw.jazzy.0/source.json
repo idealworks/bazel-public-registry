@@ -7,6 +7,6 @@
     "rclc_parameter/BUILD.bazel": "sha256-IANNPtR7RwNKVQpE+enZOAGgzgWhYEsou7FKC2906jU=",
     "rclc_lifecycle/BUILD.bazel": "sha256-lAm2AlhVYNIpx15A35HJN9z2p05bDKPvltQJNDoU7+4=",
     "rclc_examples/BUILD.bazel": "sha256-cc1kCXkgu5XvGz50FRw7m1sfaxPGevGm5T/M5cuWXfU=",
-    "rclc/BUILD.bazel": "sha256-PYZnlIXQBVOBYR/dEPv2yLaTzSxQxrTfYWm5mJHIiCY="
+    "rclc/BUILD.bazel": "sha256-tNxV5/h4dcQ5sH5d8Evcz+aNoNvjgGCWcpgQCIwXImU="
   }
 }
