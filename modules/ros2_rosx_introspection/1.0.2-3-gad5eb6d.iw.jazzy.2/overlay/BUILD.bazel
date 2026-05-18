@@ -1,0 +1,23 @@
+cc_library(
+    name = "rosx_introspection",
+    srcs = [
+        "src/deserializer.cpp",
+        "src/ros_field.cpp",
+        "src/ros_message.cpp",
+        "src/ros_parser.cpp",
+        "src/ros_type.cpp",
+        "src/serializer.cpp",
+        "src/stringtree_leaf.cpp",
+    ],
+    hdrs = glob([
+        "include/**/*.hpp",
+        "include/**/*.h",
+    ]),
+    copts = ["-std=c++17"],
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@fast_cdr",
+        "@rapidjson",
+    ],
+)
