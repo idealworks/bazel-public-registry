@@ -1,0 +1,13 @@
+diff --git a/src/FrameGrabberBase.cpp b/src/FrameGrabberBase.cpp
+index 41ab68a..5a70739 100644
+--- a/src/FrameGrabberBase.cpp
++++ b/src/FrameGrabberBase.cpp
+@@ -64,7 +64,7 @@ void FrameGrabberBase::run()
+         std::lock_guard<std::mutex> guard(m_dataHandler_mutex);
+         m_FrameAvailable     = true;
+         auto pOldDataHandler = std::move(m_pDataHandler);
+-        m_pDataHandler       = std::move(m_pDataStream->getDataHandler());
++        m_pDataHandler       = m_pDataStream->getDataHandler();
+         m_pDataStream->setDataHandler(pOldDataHandler);
+       }
+       m_frameAvailableCv.notify_one();
