@@ -104,3 +104,42 @@ index bdac2c1..04242c9 100644
  }
  
  }  // namespace rosbag2_py
+diff --git a/rosbag2_transport/src/rosbag2_transport/player.cpp b/rosbag2_transport/src/rosbag2_transport/player.cpp
+index 522d04c..7dffc44 100644
+--- a/rosbag2_transport/src/rosbag2_transport/player.cpp
++++ b/rosbag2_transport/src/rosbag2_transport/player.cpp
+@@ -323,6 +323,16 @@ private:
+     int(
+       const rosbag2_storage::SerializedBagMessageSharedPtr &,
+       const rosbag2_storage::SerializedBagMessageSharedPtr &)>;
++  /// Comparator for SerializedBagMessageSharedPtr to order chronologically by recv_timestamp.
++  struct
++  {
++    bool operator()(
++      const rosbag2_storage::SerializedBagMessageSharedPtr & l,
++      const rosbag2_storage::SerializedBagMessageSharedPtr & r) const
++    {
++      return l->recv_timestamp > r->recv_timestamp;
++    }
++  } bag_message_chronological_recv_timestamp_comparator;
+   LockedPriorityQueue<
+     rosbag2_storage::SerializedBagMessageSharedPtr,
+     std::vector<rosbag2_storage::SerializedBagMessageSharedPtr>,
+@@ -371,17 +381,6 @@ private:
+   std::vector<KeyboardHandler::callback_handle_t> keyboard_callbacks_;
+ 
+   std::shared_ptr<PlayerServiceClientManager> player_service_client_manager_;
+-
+-  /// Comparator for SerializedBagMessageSharedPtr to order chronologically by recv_timestamp.
+-  struct
+-  {
+-    bool operator()(
+-      const rosbag2_storage::SerializedBagMessageSharedPtr & l,
+-      const rosbag2_storage::SerializedBagMessageSharedPtr & r) const
+-    {
+-      return l->recv_timestamp > r->recv_timestamp;
+-    }
+-  } bag_message_chronological_recv_timestamp_comparator;
+ };
+ 
+ PlayerImpl::PlayerImpl(
