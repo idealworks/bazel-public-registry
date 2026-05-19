@@ -4,7 +4,7 @@
   "strip_prefix": "ae400-realsense-sdk-2554f30bdcbf71b5b7279fef494176f3fbd6c6c7",
   "patch_strip": 1,
   "patches": {
-    "bazel-modifications.patch": "sha256-/Y1OixpZXYin2MmC4pW7dEg/SN3ueyCGZeiddQrSDA8="
+    "bazel-modifications.patch": "sha256-iACE0ZVl/8tXruuf5me97AmSEedzfL6loXqhHeSI9WY="
   },
   "overlay": {
     "MODULE.bazel": "sha256-bV+GlBrNZhlZMv6rp9t9qHP79+taPZsEI7BDz47/gbc=",
