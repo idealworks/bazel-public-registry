@@ -4,7 +4,7 @@
   "strip_prefix": "rosbag2-6091bc7d4a126a808753d9260f89826fbd6ab98d",
   "patch_strip": 1,
   "patches": {
-    "bazel-modifications.patch": "sha256-+lkXCzI7iFBAjvImPKYBzXfzVpwNS8uV3088Z5A/gyI="
+    "bazel-modifications.patch": "sha256-g6k1tE1G0sZbW/jZjIX7Z0Gv2EZI7/NpmBXDXHQeUh8="
   },
   "overlay": {
     "MODULE.bazel": "sha256-AR8kxLVz+V/4qKVw7sin7FNkWBJipnIR7xGEaI/wRxk=",

@@ -1,22 +1,22 @@
 diff --git a/rosbag2_cpp/src/rosbag2_cpp/cache/circular_message_cache.cpp b/rosbag2_cpp/src/rosbag2_cpp/cache/circular_message_cache.cpp
-index d26d04e..47369f5 100644
+index d26d04e..b3e6c58 100644
 --- a/rosbag2_cpp/src/rosbag2_cpp/cache/circular_message_cache.cpp
 +++ b/rosbag2_cpp/src/rosbag2_cpp/cache/circular_message_cache.cpp
-@@ -47,12 +47,14 @@ void CircularMessageCache::push(std::shared_ptr<const rosbag2_storage::Serialize
+@@ -46,12 +46,14 @@ void CircularMessageCache::push(std::shared_ptr<const rosbag2_storage::Serialize
+   producer_buffer_->push(msg);
  }
  
++__attribute__((no_thread_safety_analysis))
  std::shared_ptr<CacheBufferInterface> CircularMessageCache::get_consumer_buffer()
-+  RCPPUTILS_TSA_NO_THREAD_SAFETY_ANALYSIS
  {
    consumer_buffer_mutex_.lock();
    return consumer_buffer_;
  }
  
++__attribute__((no_thread_safety_analysis))
  void CircularMessageCache::release_consumer_buffer()
-+  RCPPUTILS_TSA_NO_THREAD_SAFETY_ANALYSIS
  {
    consumer_buffer_mutex_.unlock();
- }
 diff --git a/rosbag2_cpp/src/rosbag2_cpp/serialization_format_converter_factory_impl.hpp b/rosbag2_cpp/src/rosbag2_cpp/serialization_format_converter_factory_impl.hpp
 index b338a15..149957a 100644
 --- a/rosbag2_cpp/src/rosbag2_cpp/serialization_format_converter_factory_impl.hpp
