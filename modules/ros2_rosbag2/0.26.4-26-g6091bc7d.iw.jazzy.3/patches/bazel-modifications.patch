@@ -17,6 +17,25 @@ index d26d04e..b3e6c58 100644
  void CircularMessageCache::release_consumer_buffer()
  {
    consumer_buffer_mutex_.unlock();
+diff --git a/rosbag2_cpp/src/rosbag2_cpp/cache/message_cache.cpp b/rosbag2_cpp/src/rosbag2_cpp/cache/message_cache.cpp
+index 139cb6f..a65ae06 100644
+--- a/rosbag2_cpp/src/rosbag2_cpp/cache/message_cache.cpp
++++ b/rosbag2_cpp/src/rosbag2_cpp/cache/message_cache.cpp
+@@ -60,12 +60,14 @@ void MessageCache::push(std::shared_ptr<const rosbag2_storage::SerializedBagMess
+   notify_data_ready();
+ }
+ 
++__attribute__((no_thread_safety_analysis))
+ std::shared_ptr<CacheBufferInterface> MessageCache::get_consumer_buffer()
+ {
+   consumer_buffer_mutex_.lock();
+   return consumer_buffer_;
+ }
+ 
++__attribute__((no_thread_safety_analysis))
+ void MessageCache::release_consumer_buffer()
+ {
+   consumer_buffer_mutex_.unlock();
 diff --git a/rosbag2_cpp/src/rosbag2_cpp/serialization_format_converter_factory_impl.hpp b/rosbag2_cpp/src/rosbag2_cpp/serialization_format_converter_factory_impl.hpp
 index b338a15..149957a 100644
 --- a/rosbag2_cpp/src/rosbag2_cpp/serialization_format_converter_factory_impl.hpp
