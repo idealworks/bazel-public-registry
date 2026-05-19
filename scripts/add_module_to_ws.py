@@ -92,9 +92,9 @@ def add_module_to_ws(
                 f"Unable to extract {target_tarfile}, unknown extension {target_tarfile.suffix}"
             )
 
-        if target_dir.exists():
-            print(f"{target_dir} already exists, skipping...")
-            return
+        # if target_dir.exists():
+        #     print(f"{target_dir} already exists, skipping...")
+        #     return
 
         subprocess.run(
             ["git", "init"],
