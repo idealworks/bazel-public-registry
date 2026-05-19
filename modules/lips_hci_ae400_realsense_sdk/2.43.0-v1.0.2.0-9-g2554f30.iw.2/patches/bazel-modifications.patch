@@ -1,3 +1,18 @@
+diff --git a/src/algo/depth-to-rgb-calibration/optimizer.cpp b/src/algo/depth-to-rgb-calibration/optimizer.cpp
+index f59be54..919f788 100644
+--- a/src/algo/depth-to-rgb-calibration/optimizer.cpp
++++ b/src/algo/depth-to-rgb-calibration/optimizer.cpp
+@@ -932,8 +932,8 @@ void optimizer::set_z_data( std::vector< z_t > && depth_data,
+         depth_filter( _z.weights, valid_weights, is_inside, 1, is_inside.size() );
+     }
+ 
+-    transform(valid_edge_sub_pixel_x.begin(), valid_edge_sub_pixel_x.end(), valid_edge_sub_pixel_x.begin(), bind2nd(std::plus<double>(), -1.0));
+-    transform(valid_edge_sub_pixel_y.begin(), valid_edge_sub_pixel_y.end(), valid_edge_sub_pixel_y.begin(), bind2nd(std::plus<double>(), -1.0));
++    transform(valid_edge_sub_pixel_x.begin(), valid_edge_sub_pixel_x.end(), valid_edge_sub_pixel_x.begin(), [](double x) { return x - 1.0; });
++    transform(valid_edge_sub_pixel_y.begin(), valid_edge_sub_pixel_y.end(), valid_edge_sub_pixel_y.begin(), [](double x) { return x - 1.0; });
+     depth_filter(_z.subpixels_x, valid_edge_sub_pixel_x, is_inside, 1, is_inside.size());
+     depth_filter(_z.subpixels_y, valid_edge_sub_pixel_y, is_inside, 1, is_inside.size());
+ 
 diff --git a/third-party/realsense-file/rosbag/rosbag_storage/include/rosbag/bag_player.h b/third-party/realsense-file/rosbag/rosbag_storage/include/rosbag/bag_player.h
 index 852bcff..2d399d6 100644
 --- a/third-party/realsense-file/rosbag/rosbag_storage/include/rosbag/bag_player.h
