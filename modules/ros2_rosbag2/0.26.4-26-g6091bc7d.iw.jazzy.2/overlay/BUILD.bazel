@@ -415,7 +415,25 @@ py_library(
     visibility = ["//visibility:public"],
     deps = [
         ":rosbag2_py",
+        ":ros2bag_mcap_cli",
+        ":ros2bag_sqlite3_cli",
         "@ros2cli",
         requirement("pyyaml"),
     ],
+)
+
+py_library(
+    name = "ros2bag_mcap_cli",
+    srcs = ["rosbag2_storage_mcap/ros2bag_mcap_cli/__init__.py"],
+    imports = ["rosbag2_storage_mcap"],
+    data = ["rosbag2_storage_mcap/ros2bag_mcap_cli.dist-info/entry_points.txt"],
+    visibility = ["//visibility:public"],
+)
+
+py_library(
+    name = "ros2bag_sqlite3_cli",
+    srcs = ["rosbag2_storage_sqlite3/ros2bag_sqlite3_cli/__init__.py"],
+    imports = ["rosbag2_storage_sqlite3"],
+    data = ["rosbag2_storage_sqlite3/ros2bag_sqlite3_cli.dist-info/entry_points.txt"],
+    visibility = ["//visibility:public"],
 )
