@@ -1,5 +1,18 @@
+diff --git a/ros2bag/ros2bag/api/__init__.py b/ros2bag/ros2bag/api/__init__.py
+index 42af8c9..626a92f 100644
+--- a/ros2bag/ros2bag/api/__init__.py
++++ b/ros2bag/ros2bag/api/__init__.py
+@@ -300,7 +300,7 @@ def add_writer_storage_plugin_extensions(parser: ArgumentParser) -> None:
+             [('none', 'Default writer configuration.')]
+     except AttributeError:
+         print(f'Storage plugin {plugin_id} does not provide function "get_preset_profiles".')
+-        preset_profiles = ['none']
++        preset_profiles = [('none', 'Default writer configuration.')]
+     default_preset_profile = preset_profiles[0][0]
+     parser.add_argument(
+         '--storage-preset-profile', type=str, default=default_preset_profile,
 diff --git a/rosbag2_cpp/src/rosbag2_cpp/serialization_format_converter_factory_impl.hpp b/rosbag2_cpp/src/rosbag2_cpp/serialization_format_converter_factory_impl.hpp
-index b338a158..149957a1 100644
+index b338a15..149957a 100644
 --- a/rosbag2_cpp/src/rosbag2_cpp/serialization_format_converter_factory_impl.hpp
 +++ b/rosbag2_cpp/src/rosbag2_cpp/serialization_format_converter_factory_impl.hpp
 @@ -57,8 +57,7 @@ public:
@@ -40,7 +53,7 @@ index b338a158..149957a1 100644
    }
  
 diff --git a/rosbag2_py/src/rosbag2_py/_writer.cpp b/rosbag2_py/src/rosbag2_py/_writer.cpp
-index bdac2c12..04242c96 100644
+index bdac2c1..04242c9 100644
 --- a/rosbag2_py/src/rosbag2_py/_writer.cpp
 +++ b/rosbag2_py/src/rosbag2_py/_writer.cpp
 @@ -83,12 +83,16 @@ std::unordered_set<std::string> get_registered_compressors()
