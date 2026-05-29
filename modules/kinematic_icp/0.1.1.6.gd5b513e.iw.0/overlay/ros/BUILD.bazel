@@ -1,0 +1,50 @@
+load("@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl", "ros2_cpp_binary", "ros2_cpp_library")
+
+ros2_cpp_library(
+    name = "kinematic_icp_ros",
+    srcs = [
+        "src/kinematic_icp_ros/nodes/online_node.cpp",
+        "src/kinematic_icp_ros/server/LidarOdometryServer.cpp",
+        "src/kinematic_icp_ros/utils/RosUtils.cpp",
+        "src/kinematic_icp_ros/utils/RosbagUtils.cpp",
+        "src/kinematic_icp_ros/utils/TimeStampHandler.cpp",
+    ],
+    hdrs = glob(["include/**/*.hpp"]),
+    copts = [
+        "-Wno-reorder",
+        "-Wno-pessimizing-move",
+    ],
+    defines = ["RCLCPP_VERSION_GTE(major,minor,patch)=((RCLCPP_VERSION_MAJOR>major)||(RCLCPP_VERSION_MAJOR==major&&RCLCPP_VERSION_MINOR>minor)||(RCLCPP_VERSION_MAJOR==major&&RCLCPP_VERSION_MINOR==minor&&RCLCPP_VERSION_PATCH>=patch))"],
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//cpp/kinematic_icp:kinematic_icp_pipeline",
+        "@eigen",
+        "@ros2_common_interfaces//:cpp_geometry_msgs",
+        "@ros2_common_interfaces//:cpp_nav_msgs",
+        "@ros2_common_interfaces//:cpp_sensor_msgs",
+        "@ros2_common_interfaces//:cpp_std_msgs",
+        "@ros2_common_interfaces//:cpp_std_srvs",
+        "@ros2_common_interfaces//:cpp_visualization_msgs",
+        "@ros2_geometry2//:tf2_ros",
+        "@ros2_laser_geometry//:laser_geometry",
+        "@ros2_rclcpp//:rclcpp",
+        "@ros2_rclcpp//:rclcpp_components",
+        "@ros2_rosbag2//:rosbag2_cpp",
+        "@sophus",
+    ],
+)
+
+ros2_cpp_binary(
+    name = "kinematic_icp_online_node",
+    srcs = ["src/kinematic_icp_ros/nodes/online_node_exe.cpp"],
+    visibility = ["//visibility:public"],
+    deps = [":kinematic_icp_ros"],
+)
+
+ros2_cpp_binary(
+    name = "kinematic_icp_offline_node",
+    srcs = ["src/kinematic_icp_ros/nodes/offline_node.cpp"],
+    visibility = ["//visibility:public"],
+    deps = [":kinematic_icp_ros"],
+)
