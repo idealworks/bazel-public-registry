@@ -1,0 +1,36 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+cc_library(
+    name = "core",
+    srcs = [
+        "cpp/kiss_icp/core/Preprocessing.cpp",
+        "cpp/kiss_icp/core/Registration.cpp",
+        "cpp/kiss_icp/core/Threshold.cpp",
+        "cpp/kiss_icp/core/VoxelHashMap.cpp",
+        "cpp/kiss_icp/core/VoxelUtils.cpp",
+    ],
+    hdrs = [
+        "cpp/kiss_icp/core/Preprocessing.hpp",
+        "cpp/kiss_icp/core/Registration.hpp",
+        "cpp/kiss_icp/core/Threshold.hpp",
+        "cpp/kiss_icp/core/VoxelHashMap.hpp",
+        "cpp/kiss_icp/core/VoxelUtils.hpp",
+    ],
+    includes = ["cpp"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@eigen",
+        "@onetbb//:tbb",
+        "@robin-map",
+        "@sophus",
+    ],
+)
+
+cc_library(
+    name = "pipeline",
+    srcs = ["cpp/kiss_icp/pipeline/KissICP.cpp"],
+    hdrs = ["cpp/kiss_icp/pipeline/KissICP.hpp"],
+    includes = ["cpp"],
+    visibility = ["//visibility:public"],
+    deps = [":core"],
+)
