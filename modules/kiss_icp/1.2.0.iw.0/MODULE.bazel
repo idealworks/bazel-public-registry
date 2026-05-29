@@ -1,0 +1,10 @@
+module(
+    name = "kiss_icp",
+    version = "1.2.0.iw.0",
+)
+
+bazel_dep(name = "rules_cc", version = "0.2.18")
+bazel_dep(name = "eigen", version = "3.4.0.bcr.1.1")
+bazel_dep(name = "onetbb", version = "2021.13.0.iw.0")
+bazel_dep(name = "sophus", version = "1.22.10.bcr.1")
+bazel_dep(name = "robin-map", version = "1.2.1")

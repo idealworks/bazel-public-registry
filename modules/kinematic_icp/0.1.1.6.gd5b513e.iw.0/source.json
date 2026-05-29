@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/PRBonn/kinematic-icp/archive/d5b513e7a4822362e8307fbed5ff52f0b502a9eb.tar.gz",
+  "integrity": "sha256-xNKS1/+htbX+ATRtWdZWYbejeKJ8vtyNpFjVlhAkglg=",
+  "strip_prefix": "kinematic-icp-d5b513e7a4822362e8307fbed5ff52f0b502a9eb",
+  "overlay": {
+    "MODULE.bazel": "sha256-em0k2hpnWch2VfyVNZoVnqfP25SiI/knyABlSAd1Fy4=",
+    "ros/src/kinematic_icp_ros/nodes/online_node_exe.cpp": "sha256-Y7VA4WkfxErl56p0RNo0ufMYRxbiP6KKSikNaCI4M2M=",
+    "ros/BUILD.bazel": "sha256-mx1LEPzx88cIlFhLaj1RtOLxc81R93yDBzpPEPiJHT8=",
+    "cpp/kinematic_icp/BUILD.bazel": "sha256-8anBGtO15wRmwX1LtFxI0zw0/a4UWo3lWFE3OubeGq8="
+  }
+}

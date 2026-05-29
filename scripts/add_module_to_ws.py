@@ -65,6 +65,16 @@ def add_module_to_ws(
         storage_dir.mkdir(exist_ok=True)
         url = source_cnt["url"]
         target_tarfile = storage_dir / url.split("/")[-1]
+
+        if source_cnt.get("strip_prefix", ""):
+            target_dir = workspace_path / source_cnt["strip_prefix"]
+        else:
+            target_dir = workspace_path / module_name
+
+        if target_dir.exists():
+            print(f"{target_dir} already exists, skipping...")
+            return
+
         print(f"Downloading {url}...")
         download_direct_link_with_progress(url, target_tarfile)
 
@@ -91,10 +101,6 @@ def add_module_to_ws(
             raise ValueError(
                 f"Unable to extract {target_tarfile}, unknown extension {target_tarfile.suffix}"
             )
-
-        # if target_dir.exists():
-        #     print(f"{target_dir} already exists, skipping...")
-        #     return
 
         subprocess.run(
             ["git", "init"],
