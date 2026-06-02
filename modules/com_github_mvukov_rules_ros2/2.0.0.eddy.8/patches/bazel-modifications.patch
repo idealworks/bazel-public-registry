@@ -1,0 +1,21 @@
+diff --git a/ros2/bag.py.tpl b/ros2/bag.py.tpl
+index ab8429b..a35e141 100644
+--- a/ros2/bag.py.tpl
++++ b/ros2/bag.py.tpl
+@@ -1,6 +1,16 @@
+ import os
+ import sys
+ 
++# Load C++ extension modules (rosbag2_py *.so) and their dlopen'd pluginlib
++# plugins into the GLOBAL symbol scope. Required under Clang/libc++, whose
++# dynamic_cast compares std::type_info by address: with the default RTLD_LOCAL,
++# the plugin's and consumer's typeinfo for the plugin base class are not unified
++# across the dlopen boundary, so class_loader's dynamic_cast in createInstance
++# fails ("Could not create instance of type ..."). libstdc++ (GCC) compared by
++# string and so tolerated this. Setting RTLD_GLOBAL here (before importing the
++# extension modules) unifies the typeinfo.
++sys.setdlopenflags(os.RTLD_GLOBAL | os.RTLD_LAZY)
++
+ import ros2.ros2_cmd
+ import ros2bag.verb.convert
+ import ros2bag.verb.info

@@ -1,0 +1,12 @@
+{
+  "url": "https://github.com/EddyGharib/rules_ros2/archive/d56992fa6bdd33bba5e5471f05fdad94733befd8.tar.gz",
+  "integrity": "sha256-PH9LB2lD0MFM0OmL9zhfEAG9L0tF2QokZtP6rsqjKpo=",
+  "strip_prefix": "rules_ros2-d56992fa6bdd33bba5e5471f05fdad94733befd8",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-Fm25qrTL6BFju9/YlnljuPWZmSFD9MTasQaOLdQ21lE="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-opn7yJXLFQLN5wHWXr6c8jRaA7Xktuabc++5d+3eZyQ="
+  }
+}
