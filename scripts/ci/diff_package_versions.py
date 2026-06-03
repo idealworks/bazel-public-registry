@@ -129,6 +129,13 @@ def write_outputs(text):
 
 
 def main():
+    # add_module_to_ws git-inits and commits a baseline; CI runners have no git identity, so
+    # provide one (without overriding an existing configured identity).
+    os.environ.setdefault("GIT_AUTHOR_NAME", "ci")
+    os.environ.setdefault("GIT_AUTHOR_EMAIL", "ci@idealworks.local")
+    os.environ.setdefault("GIT_COMMITTER_NAME", "ci")
+    os.environ.setdefault("GIT_COMMITTER_EMAIL", "ci@idealworks.local")
+
     base_sha = os.environ.get("BASE_SHA") or "origin/master"
     added = added_versions(base_sha)
 
