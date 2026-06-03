@@ -19,13 +19,22 @@ import sys
 import tempfile
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
-SCRIPTS_DIR = REPO_ROOT / "scripts"
+# Repo checkout root: `bazel run` sets BUILD_WORKSPACE_DIRECTORY to the workspace (where `.git`
+# and `modules/` live); fall back to the source location for direct (non-Bazel) runs.
+REPO_ROOT = Path(
+    os.environ.get("BUILD_WORKSPACE_DIRECTORY") or Path(__file__).resolve().parents[2]
+)
 MODULES_DIR = REPO_ROOT / "modules"
-sys.path.insert(0, str(SCRIPTS_DIR))
 
-from add_module_to_ws import add_module_to_ws  # noqa: E402
-from version import Version  # noqa: E402
+try:
+    # Provided as Bazel deps: //scripts:add_module_to_ws pulls in utils -> requests and version.
+    from add_module_to_ws import add_module_to_ws
+    from version import Version
+except ImportError:
+    # Fallback for direct invocation from a checkout (requires deps installed locally).
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from add_module_to_ws import add_module_to_ws
+    from version import Version
 
 # Keep the diff readable in a PR comment / step summary (GitHub comments cap at 65536
 # chars). The full diff is always reproducible locally via add_module_to_ws.py.
