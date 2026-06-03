@@ -13,16 +13,3 @@ index 4b1b7fd..c449f07 100644
  
  		/* If not many correspondences, bail out */
  		int num_corr = ld_num_valid_correspondences(laser_sens);
-diff --git a/src/icp/icp_outliers.cpp b/src/icp/icp_outliers.cpp
-index bc68bab..b8034ca 100644
---- a/src/icp/icp_outliers.cpp
-+++ b/src/icp/icp_outliers.cpp
-@@ -21,7 +21,7 @@ void visibilityTest(LDP laser_ref, const gsl_vector*u) {
- 	}
- 	
- 	sm_debug("\tvisibility: Found outliers: ");
--	int invalid = 0;
-+	[[maybe_unused]] int invalid = 0;
- 	for(j=1;j<laser_ref->nrays;j++) {
- 		if(!ld_valid_ray(laser_ref,j)||!ld_valid_ray(laser_ref,j-1)) continue;
- 		if(theta_from_u[j]<theta_from_u[j-1]) {
