@@ -1,0 +1,29 @@
+diff --git a/include/behaviortree_cpp/utils/timer_queue.h b/include/behaviortree_cpp/utils/timer_queue.h
+index 9132277..92a3bf3 100644
+--- a/include/behaviortree_cpp/utils/timer_queue.h
++++ b/include/behaviortree_cpp/utils/timer_queue.h
+@@ -193,7 +193,7 @@ private:
+       // timers
+       checkWork();
+     }
+-
++    checkWork();
+     // If we are shutting down, we should not have any items left,
+     // since the shutdown cancels all items
+     assert(m_items.size() == 0);
+diff --git a/src/decorators/timeout_node.cpp b/src/decorators/timeout_node.cpp
+index ae1018b..091d543 100644
+--- a/src/decorators/timeout_node.cpp
++++ b/src/decorators/timeout_node.cpp
+@@ -65,9 +65,9 @@ NodeStatus TimeoutNode::tick()
+     if(isStatusCompleted(child_status))
+     {
+       timeout_started_ = false;
+-      timeout_mutex_.unlock();
++      lk.unlock();
+       timer_.cancel(timer_id_);
+-      timeout_mutex_.lock();
++      lk.lock();
+       resetChild();
+     }
+     return child_status;

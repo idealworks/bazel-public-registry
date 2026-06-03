@@ -73,7 +73,7 @@ def add_module_to_ws(
 
         if target_dir.exists():
             print(f"{target_dir} already exists, skipping...")
-            return
+            return target_dir
 
         print(f"Downloading {url}...")
         download_direct_link_with_progress(url, target_tarfile)
@@ -147,6 +147,8 @@ def add_module_to_ws(
         )
         if status.returncode != 0:
             print(f"Error running patch {patch_file}: {status.stderr}")
+
+    return target_dir
 
 
 if __name__ == "__main__":

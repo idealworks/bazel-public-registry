@@ -1,0 +1,43 @@
+cc_library(
+    name = "sick_visionary_cpp_shared",
+    srcs =
+        glob([
+            "src/*.cpp",
+            "3pp/md5/*.cpp",
+            "3pp/sha256/*.cpp",
+        ]),
+    hdrs = glob([
+        "src/*.h",
+        "3pp/md5/*.h",
+        "3pp/sha256/*.h",
+    ]),
+    includes = [
+        "3pp/md5",
+        "3pp/sha256",
+        "src",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@boost.align",
+        "@boost.bind",
+        "@boost.config",
+        "@boost.detail",
+        "@boost.exception",
+        "@boost.foreach",
+        "@boost.iterator",
+        "@boost.move",
+        "@boost.mpl",
+        "@boost.multi_index",
+        "@boost.optional",
+        "@boost.predef",
+        "@boost.preprocessor",
+        "@boost.property_tree",
+        "@boost.range",
+        "@boost.serialization",
+        "@boost.smart_ptr",
+        "@boost.tuple",
+        "@boost.type_index",
+        "@boost.type_traits",
+        "@boost.utility",
+    ],
+)

@@ -1,0 +1,11 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+
+py_binary(
+    name = "diff_package_versions",
+    srcs = ["diff_package_versions.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//scripts:add_module_to_ws",
+        "//scripts:version",
+    ],
+)
