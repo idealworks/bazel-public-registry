@@ -1,0 +1,59 @@
+name: Pull Request Comment
+
+# Runs in the base-repo context (with a write-capable token) after the
+# Pull Request Pipeline finishes. This is the GitHub-recommended pattern for
+# commenting on PRs from forks, whose pull_request token is read-only.
+on:
+  workflow_run:
+    workflows: ["Pull Request Pipeline"]
+    types: [completed]
+
+jobs:
+  comment:
+    name: Post package diff comment
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Download diff report
+        uses: actions/download-artifact@v4
+        with:
+          name: package-diff-report
+          path: report
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Post diff as a sticky PR comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const reportPath = "report/package_diff_report.md";
+            const numberPath = "report/pr_number.txt";
+            if (!fs.existsSync(reportPath) || !fs.existsSync(numberPath)) {
+              core.info("No diff report artifact; nothing to comment.");
+              return;
+            }
+            const issue_number = parseInt(fs.readFileSync(numberPath, "utf8").trim(), 10);
+            if (!Number.isInteger(issue_number)) {
+              core.info("No valid PR number; nothing to comment.");
+              return;
+            }
+            let body = fs.readFileSync(reportPath, "utf8");
+            const marker = "<!-- package-version-diff -->";
+            const limit = 65000;
+            if (body.length > limit) {
+              body = body.slice(0, limit) + "\n\n_…report truncated (too large for a comment)._";
+            }
+            body = `${marker}\n${body}`;
+            const { owner, repo } = context.repo;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner, repo, issue_number,
+            });
+            const existing = comments.find((c) => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
