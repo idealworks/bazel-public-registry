@@ -1,0 +1,38 @@
+diff --git a/src/csm/logging.cpp b/src/csm/logging.cpp
+index 95da035..a376a78 100644
+--- a/src/csm/logging.cpp
++++ b/src/csm/logging.cpp
+@@ -8,6 +8,7 @@
+ #include "csm_all.h"
+ #include "utils.h"
+ 
++#define SUPPRESS_LOGS 1
+ 
+ int sm_debug_write_flag = 0;
+ 
+@@ -48,6 +49,8 @@ void sm_write_context();
+ 
+ void sm_error(const char *msg, ...)
+ {
++	if(SUPPRESS_LOGS) return;
++
+ 	check_for_xterm_color();
+ 	if(xterm_color_available)
+ 		fprintf(stderr, XTERM_ERROR);
+@@ -70,6 +73,8 @@ void sm_error(const char *msg, ...)
+ 
+ void sm_info(const char *msg, ...)
+ {
++	if(SUPPRESS_LOGS) return;
++
+ 	check_for_xterm_color();
+ 	
+ 	if(sm_program_name) 
+@@ -87,6 +92,7 @@ void sm_info(const char *msg, ...)
+ 
+ void sm_debug(const char *msg, ...)
+ {
++	if(SUPPRESS_LOGS) return;
+ 	if(!sm_debug_write_flag) return;
+ 	
+ 	check_for_xterm_color();
