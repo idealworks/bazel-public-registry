@@ -1,0 +1,44 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+cc_library(
+    name = "correspondence_threshold",
+    srcs = ["correspondence_threshold/CorrespondenceThreshold.cpp"],
+    hdrs = ["correspondence_threshold/CorrespondenceThreshold.hpp"],
+    include_prefix = "kinematic_icp/correspondence_threshold",
+    strip_include_prefix = "correspondence_threshold",
+    deps = [
+        "@eigen",
+        "@sophus",
+    ],
+)
+
+cc_library(
+    name = "registration",
+    srcs = ["registration/Registration.cpp"],
+    hdrs = ["registration/Registration.hpp"],
+    include_prefix = "kinematic_icp/registration",
+    strip_include_prefix = "registration",
+    deps = [
+        "@eigen",
+        "@kiss_icp//:core",
+        "@onetbb//:tbb",
+        "@sophus",
+    ],
+)
+
+cc_library(
+    name = "kinematic_icp_pipeline",
+    srcs = ["pipeline/KinematicICP.cpp"],
+    hdrs = ["pipeline/KinematicICP.hpp"],
+    include_prefix = "kinematic_icp/pipeline",
+    strip_include_prefix = "pipeline",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":correspondence_threshold",
+        ":registration",
+        "@eigen",
+        "@kiss_icp//:core",
+        "@kiss_icp//:pipeline",
+        "@sophus",
+    ],
+)
