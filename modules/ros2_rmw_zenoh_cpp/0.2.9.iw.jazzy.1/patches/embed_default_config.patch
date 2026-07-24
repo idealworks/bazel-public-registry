@@ -1,0 +1,58 @@
+--- a/rmw_zenoh_cpp/src/detail/zenoh_config.cpp
++++ b/rmw_zenoh_cpp/src/detail/zenoh_config.cpp
+@@ -25,7 +25,7 @@
+ 
+ #include "logging_macros.hpp"
+ 
+-#include <ament_index_cpp/get_package_share_directory.hpp>
++#include "default_config.hpp"
+ #include <rmw/impl/cpp/macros.hpp>
+ 
+ ///=============================================================================
+@@ -53,7 +53,7 @@
+ 
+ std::optional<zenoh::Config> _get_z_config(
+   const char * envar_name,
+-  const char * default_uri)
++  const char * default_config)
+ {
+   const char * configured_uri;
+   const char * envar_uri;
+@@ -64,12 +64,14 @@
+       "rmw_zenoh_cpp", "Envar %s cannot be read.", envar_name);
+     return std::nullopt;
+   }
+-  // If the environment variable is set, try to read the configuration from the file,
+-  // if the environment variable is not set use internal configuration
+-  configured_uri = envar_uri[0] != '\0' ? envar_uri : default_uri;
+-  // Try to read the configuration
++  // If the environment variable is set, read the configuration from that file;
++  // otherwise use the built-in default configuration that is embedded into the
++  // binary at build time (so no installed share/ files are required).
++  configured_uri = envar_uri[0] != '\0' ? envar_uri : "<built-in default>";
+   zenoh::ZResult result;
+-  zenoh::Config config = zenoh::Config::from_file(configured_uri, &result);
++  zenoh::Config config = envar_uri[0] != '\0'
++    ? zenoh::Config::from_file(envar_uri, &result)
++    : zenoh::Config::from_str(default_config, &result);
+   if (result != Z_OK) {
+     RMW_ZENOH_LOG_ERROR_NAMED(
+       "rmw_zenoh_cpp",
+@@ -118,12 +120,12 @@
+       "rmw_zenoh_cpp", "get_z_config called with invalid ConfigurableEntity.");
+     return std::nullopt;
+   }
+-  // Get the absolute path to the default configuration file.
+-  static const std::string path_to_config_folder =
+-    ament_index_cpp::get_package_share_directory("rmw_zenoh_cpp") + "/config/";
+-  const std::string default_config_path = path_to_config_folder + envar_map_it->second.second;
++  // Use the built-in default configuration that is embedded at build time.
++  const char * default_config = (entity == ConfigurableEntity::Router)
++    ? kDefaultRouterConfig
++    : kDefaultSessionConfig;
+ 
+-  return _get_z_config(envar_map_it->second.first, default_config_path.c_str());
++  return _get_z_config(envar_map_it->second.first, default_config);
+ }
+ 
+ ///=============================================================================

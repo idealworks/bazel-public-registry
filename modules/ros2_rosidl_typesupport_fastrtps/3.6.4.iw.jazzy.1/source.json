@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/rosidl_typesupport_fastrtps/archive/b883555055cce17982a22172a42ef557ef40bac5.tar.gz",
+  "integrity": "sha256-S7IQIKsookmJAzkwHvuOIAr4Mwpt7m4T7Nk4iYHLqD0=",
+  "strip_prefix": "rosidl_typesupport_fastrtps-b883555055cce17982a22172a42ef557ef40bac5",
+  "overlay": {
+    "MODULE.bazel": "sha256-gIFUZ4UEM3zzyQ0aysigSoVuQzzC07uGznpCUXHa8DI=",
+    "BUILD.bazel": "sha256-Do7pu+o2VJBEhT9OJOXqvWLVdrCSZHGpaBdXLWXBrd8="
+  }
+}
