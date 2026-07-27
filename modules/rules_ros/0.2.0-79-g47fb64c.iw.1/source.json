@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/hadisamhat/rules_ros/archive/7672a7c0776a92ba6d7eb2687da3d59e76964d56.tar.gz",
-  "integrity": "sha256-xRgr1XmtBuWvhJom32h7mTcTCwrdKfC3LWBqxkJOSj8=",
+  "integrity": "sha256-iYpfIB7wqivfrK1MB2Tx5uSH7Zei88SQidGBtvW7elU=",
   "strip_prefix": "rules_ros-7672a7c0776a92ba6d7eb2687da3d59e76964d56",
   "overlay": {
     "MODULE.bazel": "sha256-HTpUgdf3451eRK+w6ECzbVrZXAuJzzP7T9EGpVhBpGw="
