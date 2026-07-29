@@ -1,0 +1,30 @@
+--- a/rmw_zenoh_cpp/src/detail/rmw_context_impl_s.cpp
++++ b/rmw_zenoh_cpp/src/detail/rmw_context_impl_s.cpp
+@@ -91,15 +91,18 @@
+       return RMW_RET_ERROR;
+     }
+ 
+-    // Explicitly close the session before releasing our shared_ptr reference.
+-    // This calls wait_callbacks() internally (since zenoh commit e5db0ce), which waits
+-    // for all in-flight callbacks to finish. We call close() here while node-level entities
+-    // (subscriptions, publishers, etc.) are still alive — at shutdown time, the spin loop
+-    // has already exited so there are no active callbacks, and wait_callbacks() returns
+-    // immediately. The session is then marked as closed, so when the shared_ptr refcount
+-    // eventually reaches zero (after rcl destroys each handle in the normal teardown order),
+-    // the session destructor finds is_closed()==true and skips the blocking close() call.
+-    session_->close();
++    // NOTE(iw): Intentionally leak a reference to the zenoh Session rather than
++    // calling close(). zenoh-c's z_close() drives the tokio runtime; when this
++    // shutdown() runs during process-exit static destruction (the rclcpp Context
++    // is torn down from __cxa_finalize, e.g. when a program does not call
++    // rclcpp::shutdown() explicitly), the runtime's thread-local state is already
++    // gone and z_close() panics with a TLS AccessError. Because z_close() is an
++    // extern "C" boundary that "cannot unwind", that panic aborts the process.
++    // Holding an extra Session reference that is never released ensures the
++    // Session destructor (which would otherwise call close()) never runs, so
++    // z_close() is never invoked during teardown. The OS reclaims the underlying
++    // transport at exit, and the router detects the departed node via liveliness.
++    new std::shared_ptr<zenoh::Session>(session_);
+ 
+     session_.reset();
+ 

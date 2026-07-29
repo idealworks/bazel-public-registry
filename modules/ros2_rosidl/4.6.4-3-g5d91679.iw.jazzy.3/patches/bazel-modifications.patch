@@ -1,0 +1,107 @@
+diff --git a/rosidl_adapter/rosidl_adapter/action/__init__.py b/rosidl_adapter/rosidl_adapter/action/__init__.py
+index 6e8719b..0944049 100644
+--- a/rosidl_adapter/rosidl_adapter/action/__init__.py
++++ b/rosidl_adapter/rosidl_adapter/action/__init__.py
+@@ -17,19 +17,19 @@ from rosidl_adapter.resource import expand_template
+ 
+ 
+ def convert_action_to_idl(package_dir, package_name, input_file, output_dir):
+-    assert package_dir.is_absolute()
++    assert str(package_dir) == "." or package_dir.is_absolute()
+     assert not input_file.is_absolute()
+     assert input_file.suffix == '.action'
+ 
+     abs_input_file = package_dir / input_file
+-    print(f'Reading input file: {abs_input_file}')
++    # print(f'Reading input file: {abs_input_file}')
+     abs_input_file = package_dir / input_file
+     content = abs_input_file.read_text(encoding='utf-8')
+     action = parse_action_string(package_name, input_file.stem, content)
+ 
+     output_file = output_dir / input_file.with_suffix('.idl').name
+     abs_output_file = output_file.absolute()
+-    print(f'Writing output file: {abs_output_file}')
++    # print(f'Writing output file: {abs_output_file}')
+     data = {
+         'pkg_name': package_name,
+         'relative_input_file': input_file.as_posix(),
+diff --git a/rosidl_adapter/rosidl_adapter/msg/__init__.py b/rosidl_adapter/rosidl_adapter/msg/__init__.py
+index b02b7b5..81313a2 100644
+--- a/rosidl_adapter/rosidl_adapter/msg/__init__.py
++++ b/rosidl_adapter/rosidl_adapter/msg/__init__.py
+@@ -17,19 +17,19 @@ from rosidl_adapter.resource import expand_template
+ 
+ 
+ def convert_msg_to_idl(package_dir, package_name, input_file, output_dir):
+-    assert package_dir.is_absolute()
++    assert str(package_dir) == "." or package_dir.is_absolute()
+     assert not input_file.is_absolute()
+     assert input_file.suffix == '.msg'
+ 
+     abs_input_file = package_dir / input_file
+-    print(f'Reading input file: {abs_input_file}')
+-    abs_input_file = package_dir / input_file
++    # print(f'Reading input file: {abs_input_file}')
++    # abs_input_file = package_dir / input_file
+     content = abs_input_file.read_text(encoding='utf-8')
+     msg = parse_message_string(package_name, input_file.stem, content)
+ 
+     output_file = output_dir / input_file.with_suffix('.idl').name
+-    abs_output_file = output_file.absolute()
+-    print(f'Writing output file: {abs_output_file}')
++    # abs_output_file = output_file.absolute()
++    # print(f'Writing output file: {abs_output_file}')
+     data = {
+         'pkg_name': package_name,
+         'relative_input_file': input_file.as_posix(),
+diff --git a/rosidl_adapter/rosidl_adapter/srv/__init__.py b/rosidl_adapter/rosidl_adapter/srv/__init__.py
+index c57b701..c9698ba 100644
+--- a/rosidl_adapter/rosidl_adapter/srv/__init__.py
++++ b/rosidl_adapter/rosidl_adapter/srv/__init__.py
+@@ -17,19 +17,19 @@ from rosidl_adapter.resource import expand_template
+ 
+ 
+ def convert_srv_to_idl(package_dir, package_name, input_file, output_dir):
+-    assert package_dir.is_absolute()
++    assert str(package_dir) == "." or package_dir.is_absolute()
+     assert not input_file.is_absolute()
+     assert input_file.suffix == '.srv'
+ 
+     abs_input_file = package_dir / input_file
+-    print(f'Reading input file: {abs_input_file}')
++    # print(f'Reading input file: {abs_input_file}')
+     abs_input_file = package_dir / input_file
+     content = abs_input_file.read_text(encoding='utf-8')
+     srv = parse_service_string(package_name, input_file.stem, content)
+ 
+     output_file = output_dir / input_file.with_suffix('.idl').name
+     abs_output_file = output_file.absolute()
+-    print(f'Writing output file: {abs_output_file}')
++    # print(f'Writing output file: {abs_output_file}')
+     data = {
+         'pkg_name': package_name,
+         'relative_input_file': input_file.as_posix(),
+diff --git a/rosidl_generator_cpp/resource/idl__struct.hpp.em b/rosidl_generator_cpp/resource/idl__struct.hpp.em
+index c4b7c28..92aa1e1 100644
+--- a/rosidl_generator_cpp/resource/idl__struct.hpp.em
++++ b/rosidl_generator_cpp/resource/idl__struct.hpp.em
+@@ -27,6 +27,7 @@ include_directives = set()
+ #define @(header_guard_variable)
+ 
+ #include <algorithm>
++#include <cstdint>
+ #include <array>
+ #include <memory>
+ #include <string>
+diff --git a/rosidl_runtime_cpp/include/rosidl_runtime_cpp/traits.hpp b/rosidl_runtime_cpp/include/rosidl_runtime_cpp/traits.hpp
+index 2d285b7..bd3c8f7 100644
+--- a/rosidl_runtime_cpp/include/rosidl_runtime_cpp/traits.hpp
++++ b/rosidl_runtime_cpp/include/rosidl_runtime_cpp/traits.hpp
+@@ -19,6 +19,7 @@
+ #include <iomanip>
+ #include <iosfwd>
+ #include <string>
++#include <cstdint>
+ #include <type_traits>
+ 
+ namespace rosidl_generator_traits

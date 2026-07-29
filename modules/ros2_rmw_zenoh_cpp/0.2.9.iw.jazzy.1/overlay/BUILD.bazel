@@ -1,0 +1,110 @@
+""" Builds rmw_zenoh_cpp (the Zenoh rmw implementation) and the rmw_zenohd router.
+"""
+
+# Embed the default session/router zenoh configs into the binary at build time.
+# zenoh_config.cpp (patched) uses these via Config::from_str when the
+# ZENOH_*_CONFIG_URI env vars are unset, so there is no dependency on installed
+# share/ files or AMENT_PREFIX_PATH at runtime.
+genrule(
+    name = "default_config_hpp",
+    srcs = [
+        "rmw_zenoh_cpp/config/DEFAULT_RMW_ZENOH_SESSION_CONFIG.json5",
+        "rmw_zenoh_cpp/config/DEFAULT_RMW_ZENOH_ROUTER_CONFIG.json5",
+    ],
+    outs = ["rmw_zenoh_cpp/src/detail/default_config.hpp"],
+    cmd = "\n".join([
+        "{",
+        "  echo '#pragma once';",
+        "  echo 'namespace rmw_zenoh_cpp {';",
+        "  echo 'inline constexpr const char * kDefaultSessionConfig = R\"ZENOHCFG(';",
+        "  cat $(location rmw_zenoh_cpp/config/DEFAULT_RMW_ZENOH_SESSION_CONFIG.json5);",
+        "  echo ')ZENOHCFG\";';",
+        "  echo 'inline constexpr const char * kDefaultRouterConfig = R\"ZENOHCFG(';",
+        "  cat $(location rmw_zenoh_cpp/config/DEFAULT_RMW_ZENOH_ROUTER_CONFIG.json5);",
+        "  echo ')ZENOHCFG\";';",
+        "  echo '}  // namespace rmw_zenoh_cpp';",
+        "} > $@",
+    ]),
+)
+
+# Named with the lib*.so pattern so the output shared object does not collide
+# with the "rmw_zenoh_cpp/" source directory at the repository root.
+cc_binary(
+    name = "librmw_zenoh_cpp.so",
+    srcs = glob(
+        [
+            "rmw_zenoh_cpp/src/*.cpp",
+            "rmw_zenoh_cpp/src/*.hpp",
+            "rmw_zenoh_cpp/src/detail/*.cpp",
+            "rmw_zenoh_cpp/src/detail/*.hpp",
+            "rmw_zenoh_cpp/include/**/*.hpp",
+        ],
+        allow_empty = True,
+    ) + [":default_config_hpp"],
+    copts = [
+        "-fvisibility=hidden",
+        "-fPIC",
+    ],
+    includes = [
+        "rmw_zenoh_cpp/include",
+        "rmw_zenoh_cpp/src",
+        "rmw_zenoh_cpp/src/detail",
+    ],
+    linkopts = ["-fvisibility=hidden"],
+    linkshared = True,
+    local_defines = [
+        "RMW_VERSION_MAJOR=7",
+        "RMW_VERSION_MINOR=3",
+        "RMW_VERSION_PATCH=1",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@fast_cdr//:fast_cdr",
+        "@ros2_ament_index//:ament_index_cpp",
+        "@ros2_rcpputils//:rcpputils",
+        "@ros2_rcutils//:rcutils",
+        "@ros2_rmw//:rmw",
+        "@ros2_rmw//:rmw_cpp",
+        "@ros2_rosidl//:rosidl_runtime_c",
+        "@ros2_rosidl//:rosidl_typesupport_introspection_c",
+        "@ros2_rosidl//:rosidl_typesupport_introspection_cpp",
+        "@ros2_rosidl_dynamic_typesupport//:rosidl_dynamic_typesupport",
+        "@ros2_rosidl_typesupport_fastrtps//:rosidl_typesupport_fastrtps_c",
+        "@ros2_rosidl_typesupport_fastrtps//:rosidl_typesupport_fastrtps_cpp",
+        "@ros2_tracing//:tracetools",
+        "@zenoh-cpp",
+    ],
+)
+
+cc_binary(
+    name = "rmw_zenohd",
+    srcs = [
+        "rmw_zenoh_cpp/src/detail/liveliness_utils.cpp",
+        "rmw_zenoh_cpp/src/detail/logging.cpp",
+        "rmw_zenoh_cpp/src/detail/qos.cpp",
+        "rmw_zenoh_cpp/src/detail/simplified_xxhash3.cpp",
+        "rmw_zenoh_cpp/src/detail/zenoh_config.cpp",
+        "rmw_zenoh_cpp/src/zenohd/main.cpp",
+    ] + glob(
+        [
+            "rmw_zenoh_cpp/src/detail/*.hpp",
+            "rmw_zenoh_cpp/include/**/*.hpp",
+        ],
+        allow_empty = True,
+    ) + [":default_config_hpp"],
+    copts = ["-fPIC"],
+    includes = [
+        "rmw_zenoh_cpp/include",
+        "rmw_zenoh_cpp/src",
+        "rmw_zenoh_cpp/src/detail",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ros2_ament_index//:ament_index_cpp",
+        "@ros2_rcpputils//:rcpputils",
+        "@ros2_rcutils//:rcutils",
+        "@ros2_rmw//:rmw",
+        "@ros2_rmw//:rmw_cpp",
+        "@zenoh-cpp",
+    ],
+)

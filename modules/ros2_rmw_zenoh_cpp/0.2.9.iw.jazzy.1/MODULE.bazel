@@ -1,0 +1,20 @@
+module(
+    name = "ros2_rmw_zenoh_cpp",
+    version = "0.2.9.iw.jazzy.1",
+    compatibility_level = 1,
+)
+
+# 0.2.9 validates against zenoh 1.6.2, but BCR only publishes zenoh-cpp 1.7.2
+# (no 1.6.2). 1.7.2 is one minor ahead and wire/ABI-compatible within zenoh 1.x.
+# See the root MODULE.bazel zenoh pairing note before changing this. Bump only
+# alongside a matching rmw_zenoh release.
+bazel_dep(name = "zenoh-cpp", version = "1.7.2")
+bazel_dep(name = "fast_cdr", version = "v2.2.5.iw.jazzy.1")
+bazel_dep(name = "ros2_ament_index", version = "1.8.1-1-g0a35ca6.iw.jazzy.1")
+bazel_dep(name = "ros2_rcutils", version = "6.7.2-1-g63a2414.iw.jazzy.1")
+bazel_dep(name = "ros2_rcpputils", version = "2.11.0-2-gc007186.iw.jazzy.1")
+bazel_dep(name = "ros2_rmw", version = "7.3.1-1-gc9dd78a.iw.jazzy.1")
+bazel_dep(name = "ros2_rosidl", version = "4.6.4-3-g5d91679.iw.jazzy.2")
+bazel_dep(name = "ros2_rosidl_dynamic_typesupport", version = "0.3.0.iw.jazzy.1")
+bazel_dep(name = "ros2_rosidl_typesupport_fastrtps", version = "3.6.4.iw.jazzy.1")
+bazel_dep(name = "ros2_tracing", version = "8.2.2-1-g73a7e6d.iw.jazzy.1")

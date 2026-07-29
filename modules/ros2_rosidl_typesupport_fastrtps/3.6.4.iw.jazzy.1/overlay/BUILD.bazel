@@ -1,0 +1,141 @@
+""" Builds rosidl_typesupport_fastrtps_c and rosidl_typesupport_fastrtps_cpp.
+
+Provides both the runtime libraries linked into rmw_fastrtps / rmw_zenoh_cpp
+and message libraries, and the code generators (apps + em templates + visibility
+control templates) consumed by rules_ros2's interface generation.
+"""
+
+load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+
+exports_files([
+    "rosidl_typesupport_fastrtps_c/resource/rosidl_typesupport_fastrtps_c__visibility_control.h.in",
+    "rosidl_typesupport_fastrtps_cpp/resource/rosidl_typesupport_fastrtps_cpp__visibility_control.h.in",
+])
+
+# ----------------------------------------------------------------------------
+# Runtime libraries
+# ----------------------------------------------------------------------------
+
+cc_library(
+    name = "rosidl_typesupport_fastrtps_c",
+    srcs = glob([
+        "rosidl_typesupport_fastrtps_c/src/*.cpp",
+    ]),
+    hdrs = glob([
+        "rosidl_typesupport_fastrtps_c/include/**/*.h",
+        "rosidl_typesupport_fastrtps_c/include/**/*.hpp",
+    ]),
+    includes = ["rosidl_typesupport_fastrtps_c/include"],
+    local_defines = ["ROSIDL_TYPESUPPORT_FASTRTPS_C_BUILDING_DLL"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@fast_cdr//:fast_cdr",
+        "@ros2_rosidl//:rosidl_runtime_c",
+        "@ros2_rosidl//:rosidl_typesupport_interface",
+    ],
+)
+
+cc_library(
+    name = "rosidl_typesupport_fastrtps_cpp",
+    srcs = glob([
+        "rosidl_typesupport_fastrtps_cpp/src/*.cpp",
+    ]),
+    hdrs = glob([
+        "rosidl_typesupport_fastrtps_cpp/include/**/*.h",
+        "rosidl_typesupport_fastrtps_cpp/include/**/*.hpp",
+    ]),
+    includes = ["rosidl_typesupport_fastrtps_cpp/include"],
+    local_defines = ["ROSIDL_TYPESUPPORT_FASTRTPS_CPP_BUILDING_DLL"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@fast_cdr//:fast_cdr",
+        "@ros2_rmw//:rmw",
+        "@ros2_rosidl//:rosidl_runtime_c",
+        "@ros2_rosidl//:rosidl_typesupport_interface",
+    ],
+)
+
+# ----------------------------------------------------------------------------
+# C type support generator
+# ----------------------------------------------------------------------------
+
+py_library(
+    name = "rosidl_typesupport_fastrtps_c_generator_lib",
+    srcs = ["rosidl_typesupport_fastrtps_c/rosidl_typesupport_fastrtps_c/__init__.py"],
+    imports = ["rosidl_typesupport_fastrtps_c"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ros2_rosidl//:rosidl_cmake",
+        "@ros2_rosidl//:rosidl_generator_c_lib",
+        "@ros2_rosidl//:rosidl_generator_cpp_lib",
+        "@ros2_rosidl//:rosidl_generator_type_description_lib",
+        "@ros2_rosidl//:rosidl_parser",
+        "@ros2_rosidl//:rosidl_pycommon",
+    ],
+)
+
+_C_GENERATOR_APP_PY = "rosidl_typesupport_fastrtps_c_generator_app.py"
+
+copy_file(
+    name = "rosidl_typesupport_fastrtps_c_generator_copy",
+    src = "rosidl_typesupport_fastrtps_c/bin/rosidl_typesupport_fastrtps_c",
+    out = _C_GENERATOR_APP_PY,
+)
+
+py_binary(
+    name = "rosidl_typesupport_fastrtps_c_generator_app",
+    srcs = [_C_GENERATOR_APP_PY],
+    legacy_create_init = False,
+    main = _C_GENERATOR_APP_PY,
+    visibility = ["//visibility:public"],
+    deps = [":rosidl_typesupport_fastrtps_c_generator_lib"],
+)
+
+filegroup(
+    name = "rosidl_typesupport_fastrtps_c_generator_templates",
+    srcs = glob(["rosidl_typesupport_fastrtps_c/resource/*.em"]),
+    visibility = ["//visibility:public"],
+)
+
+# ----------------------------------------------------------------------------
+# C++ type support generator
+# ----------------------------------------------------------------------------
+
+py_library(
+    name = "rosidl_typesupport_fastrtps_cpp_generator_lib",
+    srcs = ["rosidl_typesupport_fastrtps_cpp/rosidl_typesupport_fastrtps_cpp/__init__.py"],
+    imports = ["rosidl_typesupport_fastrtps_cpp"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ros2_rosidl//:rosidl_cmake",
+        "@ros2_rosidl//:rosidl_generator_c_lib",
+        "@ros2_rosidl//:rosidl_generator_cpp_lib",
+        "@ros2_rosidl//:rosidl_generator_type_description_lib",
+        "@ros2_rosidl//:rosidl_parser",
+        "@ros2_rosidl//:rosidl_pycommon",
+    ],
+)
+
+_CPP_GENERATOR_APP_PY = "rosidl_typesupport_fastrtps_cpp_generator_app.py"
+
+copy_file(
+    name = "rosidl_typesupport_fastrtps_cpp_generator_copy",
+    src = "rosidl_typesupport_fastrtps_cpp/bin/rosidl_typesupport_fastrtps_cpp",
+    out = _CPP_GENERATOR_APP_PY,
+)
+
+py_binary(
+    name = "rosidl_typesupport_fastrtps_cpp_generator_app",
+    srcs = [_CPP_GENERATOR_APP_PY],
+    legacy_create_init = False,
+    main = _CPP_GENERATOR_APP_PY,
+    visibility = ["//visibility:public"],
+    deps = [":rosidl_typesupport_fastrtps_cpp_generator_lib"],
+)
+
+filegroup(
+    name = "rosidl_typesupport_fastrtps_cpp_generator_templates",
+    srcs = glob(["rosidl_typesupport_fastrtps_cpp/resource/*.em"]),
+    visibility = ["//visibility:public"],
+)

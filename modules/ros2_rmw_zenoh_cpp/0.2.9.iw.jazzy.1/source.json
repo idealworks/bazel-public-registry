@@ -1,0 +1,14 @@
+{
+  "url": "https://github.com/ros2/rmw_zenoh/archive/fe3553c7c127273280617d3d778859f22c4c3eb7.tar.gz",
+  "integrity": "sha256-ptbou7e1sypMj+2UXTeXxGzI/QzMaW2Hlw68kG8UdeQ=",
+  "strip_prefix": "rmw_zenoh-fe3553c7c127273280617d3d778859f22c4c3eb7",
+  "patch_strip": 1,
+  "patches": {
+    "embed_default_config.patch": "sha256-roiHbms2NthJ8TlMbBhSl2JfxlFy55bxJCidDeyQ3Tw=",
+    "leak_session_on_shutdown.patch": "sha256-WZvldvnzqOYVA4I9SyhTp3vgqfW58md5qgww7Zlotv4="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-j3AI5rYYiDOqr3mR0545fd00XrWOmftuZuZzKZqv1oI=",
+    "BUILD.bazel": "sha256-0pyxBHt2lKskq25GuWOhQt/jIYyEgdRvdEwb4x9YvjY="
+  }
+}
