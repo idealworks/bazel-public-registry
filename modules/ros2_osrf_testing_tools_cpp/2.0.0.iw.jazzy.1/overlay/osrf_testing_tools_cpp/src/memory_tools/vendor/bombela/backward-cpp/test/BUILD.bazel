@@ -1,0 +1,17 @@
+TEST_NAMES = [
+    "test",
+    "stacktrace",
+    "rectrace",
+    "suicide",
+    "select_signals",
+]
+
+[cc_test(
+    name = test_name,
+    srcs = [
+        "_test_main.cpp",
+        "{}.cpp".format(test_name),
+        "test.hpp",
+    ],
+    deps = ["//osrf_testing_tools_cpp/src/memory_tools/vendor/bombela/backward-cpp"],
+) for test_name in TEST_NAMES]

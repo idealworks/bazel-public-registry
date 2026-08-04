@@ -1,0 +1,57 @@
+""" Builds osrf_testing_tools_cpp.
+"""
+
+cc_library(
+    name = "memory_tools_headers",
+    hdrs = glob(["include/osrf_testing_tools_cpp/**/*.hpp"]),
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "memory_tools",
+    srcs = [
+        "src/memory_tools/custom_memory_functions.cpp",
+        "src/memory_tools/implementation_monitoring_override.cpp",
+        "src/memory_tools/initialize.cpp",
+        "src/memory_tools/is_working.cpp",
+        "src/memory_tools/memory_tools_service.cpp",
+        "src/memory_tools/monitoring.cpp",
+        "src/memory_tools/register_hooks.cpp",
+        "src/memory_tools/stack_trace.cpp",
+        "src/memory_tools/testing_helpers.cpp",
+        "src/memory_tools/verbosity.cpp",
+    ] + glob(["src/memory_tools/*.hpp"]),
+    hdrs = glob(["include/osrf_testing_tools_cpp/**/*.hpp"]),
+    includes = ["include"],
+    local_defines = ["OSRF_TESTING_TOOLS_CPP_MEMORY_TOOLS_BUILDING_DLL"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//osrf_testing_tools_cpp/src/memory_tools/vendor/bombela/backward-cpp",
+    ],
+)
+
+cc_library(
+    name = "_memory_tools_interpose",
+    srcs = [
+        "src/memory_tools/memory_tools.cpp",
+    ],
+    hdrs = [
+        "src/memory_tools/impl/linux.cpp",
+        "src/memory_tools/impl/static_allocator.hpp",
+        "src/memory_tools/impl/unix_common.cpp",
+        "src/memory_tools/impl/unix_common.hpp",
+    ],
+    includes = [
+        "src/memory_tools",
+        "src/memory_tools/impl",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":memory_tools"],
+)
+
+cc_shared_library(
+    name = "memory_tools_interpose",
+    visibility = ["//visibility:public"],
+    deps = [":_memory_tools_interpose"],
+)

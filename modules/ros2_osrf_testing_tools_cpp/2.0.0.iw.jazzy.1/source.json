@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/osrf/osrf_testing_tools_cpp/archive/ab362a640ef30ca207c04d2c033392bbc6fcdf31.tar.gz",
+  "integrity": "sha256-/15tYkCQqoyXll40qRiSpnNn0lmav8SSRHY9GWnb6Dc=",
+  "strip_prefix": "osrf_testing_tools_cpp-ab362a640ef30ca207c04d2c033392bbc6fcdf31",
+  "overlay": {
+    "MODULE.bazel": "sha256-B+dU50IXyAOY9V1K2GvbbLXcZtEb7EdA4cZTTDJkc0E=",
+    "osrf_testing_tools_cpp/src/memory_tools/vendor/bombela/backward-cpp/test/BUILD.bazel": "sha256-jCEy56rPGbz5XNr6wXzs4CCOfVXDE3nTERi7PeYIM7s=",
+    "osrf_testing_tools_cpp/src/memory_tools/vendor/bombela/backward-cpp/BUILD.bazel": "sha256-J5NhbH0SRQRTsQWtmyTvJn15xyQ8/wr8V+M5Wyk+izY=",
+    "osrf_testing_tools_cpp/BUILD.bazel": "sha256-nRXeYOimOElARC9klY9ExWz5htyVUJzF1gzr5M+daXc="
+  }
+}
