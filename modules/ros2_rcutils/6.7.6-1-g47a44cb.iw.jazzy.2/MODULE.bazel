@@ -1,0 +1,30 @@
+module(
+    name = "ros2_rcutils",
+    version = "6.7.6-1-g47a44cb.iw.jazzy.2",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "bazel_skylib", version = "1.9.0")
+bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "rules_python", version = "1.9.0-rc1")
+bazel_dep(name = "googletest", version = "1.15.2")
+bazel_dep(name = "google_benchmark", version = "1.9.5")
+bazel_dep(name = "ros2_osrf_testing_tools_cpp", version = "2.0.0.iw.jazzy.1")
+bazel_dep(name = "mimick", version = "0.9.0.bcr.0")
+
+python = use_extension(
+    "@rules_python//python/extensions:python.bzl",
+    "python",
+)
+python.toolchain(
+    is_default = True,
+    python_version = "3.12",
+)
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+    hub_name = "ros2_rcutils_pip_deps",
+    python_version = "3.12",
+    requirements_lock = "//:requirements_lock.txt",
+)
+use_repo(pip, "ros2_rcutils_pip_deps")

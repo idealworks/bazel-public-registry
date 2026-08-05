@@ -1,0 +1,237 @@
+cc_library(
+    name = "allocator_testing_utils",
+    hdrs = ["allocator_testing_utils.h"],
+)
+
+cc_library(
+    name = "time_bomb_allocator_testing_utils",
+    hdrs = ["time_bomb_allocator_testing_utils.h"],
+)
+
+COMMON_DEPS = [
+    ":allocator_testing_utils",
+    ":time_bomb_allocator_testing_utils",
+    "@googletest//:gtest_main",
+    "//:rcutils",
+]
+
+# TODO: Fix the test_allocator_bin and test_allocator tests. They are currently disabled because they fail to run in CI due to the way Bazel handles dynamic linking and preloading of libraries. The tests are designed to test memory allocation and fault injection, but they require specific environment setup that is not compatible with Bazel's sandboxing.
+
+# cc_binary(
+#     name = "test_allocator_bin",
+#     srcs = ["test_allocator.cpp"],
+#     linkstatic = False,
+#     deps = COMMON_DEPS + [
+#         "@ros2_osrf_testing_tools_cpp//osrf_testing_tools_cpp:memory_tools",
+#     ],
+# )
+#
+# sh_test(
+#     name = "test_allocator",
+#     srcs = ["test_memory_tool_wrapper.sh"],
+#     data = [
+#         ":test_allocator_bin",
+#         "@ros2_osrf_testing_tools_cpp//osrf_testing_tools_cpp:memory_tools_interpose",
+#     ],
+#     env = {
+#         "TEST_BINARY_LOC": "$(location :test_allocator_bin)",
+#         "PRELOAD_LIB": "$(location @ros2_osrf_testing_tools_cpp//osrf_testing_tools_cpp:memory_tools_interpose)",
+#     },
+# )
+
+# require osrf_testing_tools_cpp:
+#   test_logging.cpp
+#   test_allocator.cpp
+#   test_error_handling.cpp
+#   test_error_handling_helpers.cpp
+#   test_filesystem.cpp
+#   test_string_map.cpp
+#   test_time.cpp
+#   test_logging_custom_env.cpp
+#   test_logging_custom_env2.cpp
+#   test_logging_enable_for.cpp
+#   test_logging_console_output_handler.cpp
+
+cc_test(
+    name = "benchmark_logging",
+    srcs = ["benchmark/benchmark_logging.cpp"],
+    deps = COMMON_DEPS + [
+        "@google_benchmark//:benchmark",
+        "@ros2_osrf_testing_tools_cpp//osrf_testing_tools_cpp:memory_tools",
+    ],
+)
+
+cc_test(
+    name = "benchmark_err_handle",
+    srcs = ["benchmark/benchmark_error_handling.cpp"],
+    deps = COMMON_DEPS + [
+        "@google_benchmark//:benchmark",
+        "@ros2_osrf_testing_tools_cpp//osrf_testing_tools_cpp:memory_tools",
+    ],
+)
+
+cc_test(
+    name = "test_array_list",
+    srcs = ["test_array_list.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_atomics",
+    srcs = ["test_atomics.c"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_char_array",
+    srcs = ["test_char_array.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_cmdline_parser",
+    srcs = ["test_cmdline_parser.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_env",
+    srcs = ["test_env.cpp"],
+    env = {
+        "HOME": "/tmp",
+        "NORMAL_TEST": "foo",
+    },
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_find",
+    srcs = ["test_find.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_format_string",
+    srcs = ["test_format_string.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_hash_map",
+    srcs = ["test_hash_map.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_isalnum_no_locale",
+    srcs = ["test_isalnum_no_locale.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_logging_bad_env",
+    srcs = ["test_logging_bad_env.cpp"],
+    env = {"RCUTILS_LOGGING_USE_STDOUT": "42"},
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_logging_bad_env2",
+    srcs = ["test_logging_bad_env.cpp"],
+    env = {"RCUTILS_LOGGING_USE_STDOUT": "42"},
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_logging_bad_env3",
+    srcs = ["test_logging_bad_env.cpp"],
+    env = {"RCUTILS_LOGGING_USE_STDOUT": "42"},
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_macros",
+    srcs = ["test_macros.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_process",
+    srcs = ["test_process.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_repl_str",
+    srcs = ["test_repl_str.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_sha256",
+    srcs = ["test_sha256.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_library(
+    name = "dummy_shared_library_in_run_paths",
+    srcs = ["dummy_shared_library/dummy_shared_library.c"],
+    hdrs = ["dummy_shared_library/dummy_shared_library.h"],
+    includes = ["dummy_shared_library"],
+    local_defines = ["DUMMY_SHARED_LIBRARY_BUILDING_DLL"],
+)
+
+cc_test(
+    name = "test_shared_library_in_run_paths",
+    srcs = ["test_shared_library.cpp"],
+    linkopts = ["-Wl,--disable-new-dtags"],
+    local_defines = [
+        "SHARED_LIBRARY_UNDER_TEST=external_Sros2_Urcutils+_Stest_Slibdummy_Ushared_Ulibrary_Uin_Urun_Upaths",
+    ],
+    deps = COMMON_DEPS + [":dummy_shared_library_in_run_paths"],
+)
+
+cc_test(
+    name = "test_snprintf",
+    srcs = ["test_snprintf.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_split",
+    srcs = ["test_split.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_strcasecmp",
+    srcs = ["test_strcasecmp.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_strdup",
+    srcs = ["test_strdup.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_strerror",
+    srcs = ["test_strerror.cpp"],
+    local_defines = [
+        "MIMICK_RCUTILS_SCOPE=\\\"@lib:external_Sros2_Urcutils+_Slibrcutils\\\"",
+    ],
+    deps = COMMON_DEPS + ["@mimick"],
+)
+
+cc_test(
+    name = "test_string_array",
+    srcs = ["test_string_array.cpp"],
+    deps = COMMON_DEPS,
+)
+
+cc_test(
+    name = "test_uint8_array",
+    srcs = ["test_uint8_array.cpp"],
+    deps = COMMON_DEPS,
+)
