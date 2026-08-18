@@ -1,0 +1,14 @@
+load("@rules_ros//ros:interfaces.bzl", "cc_ros_interface_library", "ros_interface_library")
+
+ros_interface_library(
+    name = "ackermann_msgs",
+    srcs = glob(["msg/*.msg"]),
+    visibility = ["//visibility:public"],
+    deps = ["@ros_common_msgs//:geometry_msgs"],
+)
+
+cc_ros_interface_library(
+    name = "cc_ackermann_msgs",
+    visibility = ["//visibility:public"],
+    deps = [":ackermann_msgs"],
+)

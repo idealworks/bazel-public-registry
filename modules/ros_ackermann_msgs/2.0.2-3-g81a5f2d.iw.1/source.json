@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros-drivers/ackermann_msgs/archive/843a4836ba942038db088e06fe626160c09249f0.tar.gz",
+  "integrity": "sha256-JVq5pglTSypMUuPz5YNWPYPRo095g83vA0Bv86MhAOQ=",
+  "strip_prefix": "ackermann_msgs-843a4836ba942038db088e06fe626160c09249f0",
+  "overlay": {
+    "MODULE.bazel": "sha256-RNJJWy4xPAUfZsUPs+Aa98VuUvd/C+/VbJCCTpyLKGQ=",
+    "BUILD.bazel": "sha256-NlLb96R844k5av8zFoPBdn8pIY8MsvQqlZcGzL6bcMg="
+  }
+}
