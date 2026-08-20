@@ -1,0 +1,8 @@
+{
+  "url": "https://github.com/hadisamhat/rules_ros/archive/3f813dce825f4fccf5eb1cc9be2e0513d4e4f41e.tar.gz",
+  "integrity": "sha256-KGLshWCsOnM6LzXWVQVmWEC+WmK1nudl10a9WK6eUi0=",
+  "strip_prefix": "rules_ros-3f813dce825f4fccf5eb1cc9be2e0513d4e4f41e",
+  "overlay": {
+    "MODULE.bazel": "sha256-oJDhP7ERo2fPk1E70UOCdnjlqLFfMg7yy2A/0BakR9Q="
+  }
+}
