@@ -1,0 +1,14 @@
+diff --git a/ros/src/kinematic_icp_ros/server/LidarOdometryServer.cpp b/ros/src/kinematic_icp_ros/server/LidarOdometryServer.cpp
+index fadfc4a..9a35ecd 100644
+--- a/ros/src/kinematic_icp_ros/server/LidarOdometryServer.cpp
++++ b/ros/src/kinematic_icp_ros/server/LidarOdometryServer.cpp
+@@ -199,7 +199,8 @@ void LidarOdometryServer::RegisterFrame(const sensor_msgs::msg::PointCloud2::Con
+                              wheel_odom_frame_, tf_timeout_, tf2_buffer_);
+ 
+     // Run kinematic ICP
+-    if (delta.log().norm() > 1e-3) {
++    if (delta.log().norm() > 2e-5) {  // For delta_t = 0.04s and a minimal linear velocity of 0.0005
++                                      // m/s, the norm of the delta is 2e-5
+         const auto &extrinsic = sensor_to_base_footprint_;
+         const auto points = PointCloud2ToEigen(msg, {});
+         const auto &[frame, kpoints] =
