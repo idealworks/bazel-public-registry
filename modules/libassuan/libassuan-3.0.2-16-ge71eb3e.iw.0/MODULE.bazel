@@ -1,0 +1,4 @@
+module(name = "libassuan", version = "libassuan-3.0.2-16-ge71eb3e.iw.0")
+
+bazel_dep(name = "libgpg-error", version = "libgpg-error-1.59-7-ge5a81da.iw.0")
+bazel_dep(name = "rules_cc_autoconf", version = "0.15.0")

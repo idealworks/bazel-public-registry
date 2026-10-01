@@ -51,19 +51,19 @@
 #define GPGRT_ENABLE_ARGPARSE_MACROS 1
 
 #if __GNUC__ > 2
-# define GPGME_GCC_A_PURE  __attribute__ ((__pure__))
+#define GPGME_GCC_A_PURE __attribute__((__pure__))
 #else
-# define GPGME_GCC_A_PURE
+#define GPGME_GCC_A_PURE
 #endif
 
 #ifdef HAVE_DOSISH_SYSTEM
-# define PATHSEP_C ';'
-# define DIRSEP_C '\\'
-# define DIRSEP_S "\\"
+#define PATHSEP_C ';'
+#define DIRSEP_C '\\'
+#define DIRSEP_S "\\"
 #else
-# define PATHSEP_C ':'
-# define DIRSEP_C '/'
-# define DIRSEP_S "/"
+#define PATHSEP_C ':'
+#define DIRSEP_C '/'
+#define DIRSEP_S "/"
 #endif
 
 #define GPG_ERR_ENABLE_GETTEXT_MACROS 1
@@ -74,7 +74,8 @@
 
 #define HAVE_TLS 1
 
-#define CRIGHTBLURB "Copyright (C) 2000 Werner Koch\n" \
-                    "Copyright (C) 2001--2025 g10 Code GmbH\n"
+#define CRIGHTBLURB                                                            \
+  "Copyright (C) 2000 Werner Koch\n"                                           \
+  "Copyright (C) 2001--2025 g10 Code GmbH\n"
 
 #endif /* GPGME_CONFIG_H */

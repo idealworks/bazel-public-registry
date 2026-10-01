@@ -1,0 +1,165 @@
+load("@rules_cc_autoconf//autoconf:autoconf.bzl", "autoconf")
+load("@rules_cc_autoconf//autoconf:autoconf_hdr.bzl", "autoconf_hdr")
+load("@rules_cc_autoconf//autoconf:checks.bzl", "checks")
+
+package(default_visibility = ["//visibility:public"])
+
+LIBASSUAN_VERSION = "3.0.2"
+
+LIBASSUAN_VERSION_NUMBER = "0x030002"
+
+cc_binary(
+    name = "mkheader",
+    srcs = ["src/mkheader.c"],
+)
+
+genrule(
+    name = "gen_assuan_h",
+    srcs = [
+        "src/assuan.h.in",
+        "src/posix-includes.inc.h",
+        "src/w32-includes.inc.h",
+        "src/posix-types.inc.h",
+        "src/w32-types.inc.h",
+        "src/posix-fd-t.inc.h",
+        "src/w32-fd-t.inc.h",
+        "src/posix-sock-nonce.inc.h",
+        "src/w32-sock-nonce.inc.h",
+    ],
+    outs = ["src/assuan.h"],
+    cmd = "$(location :mkheader) linux-gnu $(location src/assuan.h.in) {} {} > $@".format(
+        LIBASSUAN_VERSION,
+        LIBASSUAN_VERSION_NUMBER,
+    ),
+    tools = [":mkheader"],
+)
+
+autoconf(
+    name = "config_checks",
+    checks = [
+        checks.AC_CHECK_HEADER(
+            "sys/types.h",
+            define = "HAVE_SYS_TYPES_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "sys/stat.h",
+            define = "HAVE_SYS_STAT_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "sys/socket.h",
+            define = "HAVE_SYS_SOCKET_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "sys/un.h",
+            define = "HAVE_SYS_UN_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "sys/uio.h",
+            define = "HAVE_SYS_UIO_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "unistd.h",
+            define = "HAVE_UNISTD_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "stdint.h",
+            define = "HAVE_STDINT_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "inttypes.h",
+            define = "HAVE_INTTYPES_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "stdlib.h",
+            define = "HAVE_STDLIB_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "string.h",
+            define = "HAVE_STRING_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "fcntl.h",
+            define = "HAVE_FCNTL_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "winsock2.h",
+            define = "HAVE_WINSOCK2_H",
+        ),
+        checks.AC_CHECK_FUNC(
+            "getenv",
+            define = "HAVE_GETENV",
+        ),
+        checks.AC_CHECK_FUNC(
+            "memrchr",
+            define = "HAVE_MEMRCHR",
+        ),
+        checks.AC_CHECK_FUNC(
+            "stpcpy",
+            define = "HAVE_STPCPY",
+        ),
+        checks.AC_CHECK_FUNC(
+            "setenv",
+            define = "HAVE_SETENV",
+        ),
+        checks.AC_CHECK_FUNC(
+            "fopencookie",
+            define = "HAVE_FOPENCOOKIE",
+        ),
+        checks.AC_CHECK_FUNC(
+            "nanosleep",
+            define = "HAVE_NANOSLEEP",
+        ),
+    ],
+)
+
+autoconf_hdr(
+    name = "config_h",
+    out = "src/config.h",
+    template = "config.in.h",
+    deps = [":config_checks"],
+)
+
+cc_library(
+    name = "libassuan",
+    srcs = [
+        "src/assuan.c",
+        "src/assuan-buffer.c",
+        "src/assuan-error.c",
+        "src/assuan-handler.c",
+        "src/assuan-inquire.c",
+        "src/assuan-io.c",
+        "src/assuan-listen.c",
+        "src/assuan-logging.c",
+        "src/assuan-pipe-connect.c",
+        "src/assuan-pipe-server.c",
+        "src/assuan-socket.c",
+        "src/assuan-socket-connect.c",
+        "src/assuan-socket-server.c",
+        "src/assuan-uds.c",
+        "src/client.c",
+        "src/context.c",
+        "src/conversion.c",
+        "src/debug.c",
+        "src/funopen.c",
+        "src/server.c",
+        "src/system.c",
+        "src/system-posix.c",
+        "src/sysutils.c",
+    ],
+    hdrs = [
+        "src/assuan-defs.h",
+        "src/debug.h",
+        ":config_h",
+        ":gen_assuan_h",
+    ],
+    includes = [
+        "src",
+    ],
+    local_defines = [
+        "HAVE_CONFIG_H",
+        "_GNU_SOURCE",
+    ],
+    deps = [
+        "@libgpg-error",
+    ],
+)
