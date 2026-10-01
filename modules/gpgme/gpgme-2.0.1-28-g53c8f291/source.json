@@ -5,6 +5,6 @@
   "overlay": {
     "MODULE.bazel": "sha256-MmrdtoFtOmfJBLX4yFCl+A8C4G2PqL7ry3pEIf/c6Mc=",
     "BUILD.bazel": "sha256-MdjF1RXuwzKXQ7PGPKEgqffWDJs/OlNKmTxTpogYlMU=",
-    "conf/config.h": "sha256-eW5katsjRin9g0MdxH9iOpbMxiULYG6NYqgMDjhLlbk="
+    "conf/config.h": "sha256-qCpT67ALNgZDSFY+Q7OzLjh2SXGWQrR2Ft7OM7YURJs="
   }
 }

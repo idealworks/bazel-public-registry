@@ -8,7 +8,7 @@
   },
   "overlay": {
     "MODULE.bazel": "sha256-sn0bCK/Royq+Te+9DEorpUiXIo8K0lffA0DpGnbBgXs=",
-    "ext2fs/ext2_fs.h": "sha256-wwjUlkgZjR+pEUmNR/to9YUKFGzEAZR1jSIbmWPs9mg=",
+    "ext2fs/ext2_fs.h": "sha256-1htv0mDkKh1bWhYD+CXxupZyIilnrx6G5NSC8YeuJm8=",
     "BUILD.bazel": "sha256-pJ15Ahl7coQFdK3sUa3ATVvHNfNXW4YQn6RclBuBkS4="
   }
 }
