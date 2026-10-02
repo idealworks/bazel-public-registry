@@ -1,0 +1,19 @@
+{
+  "url": "https://github.com/ros2/rclcpp/archive/3aa906a2c7ad13d1623b31a55731993f56538e72.tar.gz",
+  "integrity": "sha256-nZGNWPdIPPSK+EOZBSNh3b81OBSCcb8yU00LC+NP8bg=",
+  "strip_prefix": "rclcpp-3aa906a2c7ad13d1623b31a55731993f56538e72",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-dZwFDNT7GXe3yGp55Dok1T9oeKdBsbn/OCXqu3J6s0g="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-/yI/uUJ/xdBl/OgcLZSyDTdzS9obbPizv6AJRTQ2B9A=",
+    "requirements_lock.txt": "sha256-1ec/tIlNpO8jWsTN+sSQ1MZBR55rZnszPIx8vEivG1M=",
+    "requirements.txt": "sha256-GQzV2W/B2yR7dYaKaiXc10FSgLwd4FLENYR7+MJ3Fgo=",
+    "rclcpp/include/rclcpp/version.h": "sha256-6Amp61zBxzXb+F8t7A9dxcbSQsyk3aUK+SNsDEgALUg=",
+    "bzl/generate_rclcpp_logging_macros.py": "sha256-28hBX7ohFUbte/DZXnDzSRyb4aeVsTVVLlIIBmtExY4=",
+    "bzl/generate_rclcpp_interface.py": "sha256-xVrDAj7GMIXbpuRYY+f0LRNlVw/foZtFJzwXG9f9F9k=",
+    "bzl/BUILD.bazel": "sha256-3CXT6PORxeCE7DS35q7KwkeOY7F/ecuGOShCng1BuPw=",
+    "BUILD.bazel": "sha256-HfG/0L1ofHFGfDJxrIcjsMeJM94n9d5pzKes3mK9WCg="
+  }
+}
