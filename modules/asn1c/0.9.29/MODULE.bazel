@@ -1,0 +1,6 @@
+module(
+    name = "asn1c",
+    version = "0.9.29",
+)
+
+bazel_dep(name = "rules_cc_autoconf", version = "0.24.0")
