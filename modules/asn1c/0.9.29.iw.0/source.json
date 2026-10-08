@@ -3,8 +3,8 @@
   "integrity": "sha256-dheJ73wtf7rA8QdzGN1WgcDmDQlOHj74OmfFj8JYuZw=",
   "strip_prefix": "asn1c-8a274c3f99761f249b6c205e1c89be1b1cb7c669",
   "overlay": {
-    "MODULE.bazel": "sha256-y0pWrslMTjq8OoqCE3TTHRUkWlIgIgnCbafJnFFqKT0=",
+    "MODULE.bazel": "sha256-ohSEZ6X+RlXWAm1/Hd7bm+x/O3anurf91YeUSLS6V34=",
     "conf/config.h.in": "sha256-5A654AE1PTiXuQs5eGwrDjtE781n8V6u0gWs3jfXb94=",
-    "BUILD.bazel": "sha256-rqaSY3CWj82gpJda3AIvdj/g0dSIDQmV40pqNhWQnkY="
+    "BUILD.bazel": "sha256-hKtmonKnessZVjikxc0tILGCpGoES3wfaBO1uKyiw4c="
   }
 }
