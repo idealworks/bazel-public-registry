@@ -1,0 +1,135 @@
+load("@rules_cc_autoconf//autoconf:autoconf.bzl", "autoconf")
+load("@rules_cc_autoconf//autoconf:autoconf_hdr.bzl", "autoconf_hdr")
+load("@rules_cc_autoconf//autoconf:checks.bzl", "checks", "macros")
+
+autoconf(
+    name = "autoconf",
+    checks = [
+        checks.AC_CHECK_TYPE(
+            "__int128",
+            define = "HAVE_128_BIT_INT",
+        ),
+        checks.AC_CHECK_SIZEOF(
+            "void*",
+            define = "SIZEOF_VOID_P",
+        ),
+        checks.AC_CHECK_TYPE("off_t"),
+        checks.AC_DEFINE(
+            "off_t",
+            "long int",
+            requires = ["!ac_cv_type_off_t"],
+        ),
+        checks.AC_CHECK_TYPE("size_t"),
+        checks.AC_DEFINE(
+            "size_t",
+            "unsigned int",
+            requires = ["!ac_cv_type_size_t"],
+        ),
+        checks.AC_CHECK_TYPE("intmax_t"),
+        checks.AC_DEFINE(
+            "intmax_t",
+            "int64_t",
+            requires = ["!ac_cv_type_intmax_t"],
+        ),
+        checks.AC_CHECK_TYPE(
+            "struct tm",
+            name = "ac_cv_struct_tm",
+            includes = ["#include <time.h>"],
+        ),
+        checks.AC_DEFINE(
+            "TM_IN_SYS_TIME",
+            1,
+            requires = ["!ac_cv_struct_tm"],
+        ),
+        checks.AC_DEFINE("STDC_HEADERS", 1),
+        checks.AC_DEFINE("LT_OBJDIR", "\".libs/\""),
+        checks.AC_DEFINE("YYTEXT_POINTER", 1),
+    ] + macros.AC_CHECK_FUNCS([
+        "strtoimax",
+        "strtoll",
+        "mergesort",
+        "mkstemps",
+        "timegm",
+        "symlink",
+    ]) + macros.AC_CHECK_DECLS([
+        "strcasecmp",
+        "vasprintf",
+    ]) + macros.AC_CHECK_HEADERS([
+        "sys/param.h",
+        "dlfcn.h",
+        "inttypes.h",
+        "stdint.h",
+        "stdio.h",
+        "stdlib.h",
+        "strings.h",
+        "string.h",
+        "sys/stat.h",
+        "sys/types.h",
+        "unistd.h",
+    ]),
+    deps = [
+        "@rules_cc_autoconf//autoconf/macros/AC_C_BIGENDIAN",
+    ],
+)
+
+autoconf_hdr(
+    name = "config_h",
+    out = "conf/config.h",
+    template = "conf/config.h.in",
+    deps = [":autoconf"],
+)
+
+cc_library(
+    name = "asn1c_libs",
+    srcs = glob(
+        [
+            "libasn1common/*.c",
+            "libasn1parser/*.c",
+            "libasn1fix/*.c",
+            "libasn1print/*.c",
+            "libasn1compiler/*.c",
+        ],
+        exclude = ["lib*/check_*.c"],
+    ),
+    hdrs = glob([
+        "libasn1common/*.h",
+        "libasn1parser/*.h",
+        "libasn1fix/*.h",
+        "libasn1print/*.h",
+        "libasn1compiler/*.h",
+    ]) + [":config_h"],
+    copts = ["-w"],
+    defines = ["HAVE_CONFIG_H"],
+    includes = [
+        "conf",
+        "libasn1common",
+        "libasn1compiler",
+        "libasn1fix",
+        "libasn1parser",
+        "libasn1print",
+    ],
+)
+
+cc_binary(
+    name = "asn1c",
+    srcs = ["asn1c/asn1c.c"],
+    copts = ["-w"],
+    data = [":skeletons"],
+    local_defines = ['DATADIR=\\\"/asn1c-datadir-not-configured/always-use-the-S-flag\\\"'],
+    visibility = ["//visibility:public"],
+    deps = [":asn1c_libs"],
+)
+
+filegroup(
+    name = "skeletons",
+    srcs = glob([
+        "skeletons/*.c",
+        "skeletons/*.h",
+        "skeletons/standard-modules/*",
+    ]) + ["skeletons/file-dependencies"],
+    visibility = ["//visibility:public"],
+)
+
+exports_files([
+    "skeletons/file-dependencies",
+])
