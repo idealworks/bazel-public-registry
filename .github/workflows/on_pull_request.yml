@@ -28,6 +28,16 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: bazel run //scripts/ci:diff_package_versions
+      - name: Add artifact link to report
+        if: always()
+        run: |
+          if [ -f package_diff_report.md ]; then
+            {
+              printf '[Download the full report](%s/%s/actions/runs/%s#artifacts) (artifact `package-diff-report`)\n\n' \
+                "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID"
+              cat package_diff_report.md
+            } > report.tmp && mv report.tmp package_diff_report.md
+          fi
       - name: Render diff to job summary
         if: always()
         run: |

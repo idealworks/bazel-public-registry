@@ -1,0 +1,44 @@
+""" Builds rmw_implementation.
+"""
+
+# Selects the rmw that gets linked, keyed on the same build setting the
+# interface generators read (@com_github_mvukov_rules_ros2//:rmw). Driving both
+# halves from one flag matters: this rule links a single rmw statically instead
+# of dlopening the one named by RMW_IMPLEMENTATION, so a build where only the
+# generators switched yields zenoh typesupport on a cyclonedds rmw, and every
+# node then fails at creation with "Type support not from this implementation".
+config_setting(
+    name = "zenoh",
+    flag_values = {"@com_github_mvukov_rules_ros2//:rmw": "zenoh"},
+)
+
+cc_library(
+    name = "rmw_implementation",
+    srcs = [
+        "rmw_implementation/src/functions.cpp",
+        "rmw_implementation/src/functions.hpp",
+        "rmw_implementation/src/visibility_control.h",
+    ],
+    copts = ["-w"],
+    data = select({
+        ":zenoh": ["@ros2_rmw_zenoh_cpp//:librmw_zenoh_cpp.so"],
+        "//conditions:default": ["@ros2_rmw_cyclonedds//:rmw_cyclonedds"],
+    }),
+    includes = ["include"],
+    local_defines = select({
+        ":zenoh": [
+            "RMW_LIBRARY_PATH=\\\"$(rootpath @ros2_rmw_zenoh_cpp//:librmw_zenoh_cpp.so)\\\"",
+        ],
+        "//conditions:default": [
+            "RMW_LIBRARY_PATH=\\\"$(rootpath @ros2_rmw_cyclonedds//:rmw_cyclonedds)\\\"",
+        ],
+    }),
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ros2_ament_index//:ament_index_cpp",
+        "@ros2_rcpputils//:rcpputils",
+        "@ros2_rcutils//:rcutils",
+        "@ros2_rmw//:rmw",
+        "@ros2_rosidl_dynamic_typesupport//:rosidl_dynamic_typesupport",
+    ],
+)
