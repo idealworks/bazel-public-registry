@@ -1,0 +1,7 @@
+cc_library(
+    name = "systemd",
+    hdrs = glob(["**/*.h"]),
+    include_prefix = "systemd",
+    includes = ["."],
+    visibility = ["//visibility:public"],
+)

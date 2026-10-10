@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/Kistler-Group/sdbus-cpp/archive/c2bb343f8a762c9179dd58bcd13bb8fa69daefbd.tar.gz",
+  "integrity": "sha256-qWTwD2cITlV4ojzDWMtutP3aJGCtp7GcdCQgTw6tCHM=",
+  "strip_prefix": "sdbus-cpp-c2bb343f8a762c9179dd58bcd13bb8fa69daefbd",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-vq1RkkHC87HtPXXkiJZY6bRXuM5D1H1984k8athOrb4="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-JIcRqFw31g4U/k2j2UxmLkacMz3l33rFLX8z97viZlY=",
+    "BUILD.bazel": "sha256-BQWhLb4BsmPKKaAvxhYsVhPpW6qAKhImu6oyWMYSvk4="
+  }
+}

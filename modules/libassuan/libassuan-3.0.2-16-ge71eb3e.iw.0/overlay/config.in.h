@@ -1,0 +1,41 @@
+#ifndef ASSUAN_CONFIG_H
+#define ASSUAN_CONFIG_H
+
+#define PACKAGE "libassuan"
+#define PACKAGE_NAME "libassuan"
+#define PACKAGE_VERSION "3.0.2"
+#define VERSION "3.0.2"
+
+#define BUILD_REVISION "e71eb3e"
+#define BUILD_COMMITID "e71eb3ec615e5c4a2dd8b5ecd068c3a9f6547a47"
+#define BUILD_TIMESTAMP "<none>"
+
+#undef HAVE_SYS_TYPES_H
+#undef HAVE_SYS_STAT_H
+#undef HAVE_SYS_SOCKET_H
+#undef HAVE_SYS_UN_H
+#undef HAVE_SYS_UIO_H
+#undef HAVE_UNISTD_H
+#undef HAVE_STDINT_H
+#undef HAVE_INTTYPES_H
+#undef HAVE_STDLIB_H
+#undef HAVE_STRING_H
+#undef HAVE_FCNTL_H
+#undef HAVE_WINSOCK2_H
+
+#undef HAVE_GETENV
+#undef HAVE_MEMRCHR
+#undef HAVE_STPCPY
+#undef HAVE_SETENV
+#undef HAVE_FOPENCOOKIE
+#undef HAVE_NANOSLEEP
+
+#define HAVE_POSIX_SYSTEM 1
+
+#define HAVE_STRUCT_SOCKADDR_UN 1
+
+#define SIZEOF_UNSIGNED_INT 4
+#define SIZEOF_UNSIGNED_LONG 8
+#define SIZEOF_VOID_P 8
+
+#endif

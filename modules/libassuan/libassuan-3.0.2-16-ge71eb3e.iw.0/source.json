@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/gpg/libassuan/archive/e71eb3ec615e5c4a2dd8b5ecd068c3a9f6547a47.tar.gz",
+  "integrity": "sha256-/bKqVygGJdl7ZQewr9hyOcMLG36mK+dj5MbeN3ms8QY=",
+  "strip_prefix": "libassuan-e71eb3ec615e5c4a2dd8b5ecd068c3a9f6547a47",
+  "overlay": {
+    "MODULE.bazel": "sha256-hszvtM5Dl8pK6YhBJJDIpetLNnsj8v9g0fOtVQPVOyk=",
+    "config.in.h": "sha256-OdPdbrTd6c/FWsYAgEDm3tssz1qApbIC2qf1tfhJY9Q=",
+    "BUILD.bazel": "sha256-j4u/AZSqoVL1llA+YTeyHc8/aaUzVch87RcK0FNR224="
+  }
+}
