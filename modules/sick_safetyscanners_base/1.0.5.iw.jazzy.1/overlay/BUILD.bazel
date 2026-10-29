@@ -1,0 +1,14 @@
+cc_library(
+    name = "sick_safetyscanners_base",
+    srcs = glob(["**/*.cpp"]),
+    hdrs = glob(["**/*.h"]) + glob(["**/*.hpp"]),
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@boost.asio",
+        "@boost.chrono",
+        "@boost.lambda",
+        "@boost.system",
+        "@boost.thread",
+    ],
+)
