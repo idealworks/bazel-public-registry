@@ -362,6 +362,10 @@ if __name__ == "__main__":
         default="",
     )
     args = parser.parse_args()
+    # `bazel run` changes cwd to the runfiles dir; resolve relative args from where the user ran it
+    base = Path(os.environ.get("BUILD_WORKING_DIRECTORY", "."))
+    args.workspace_path = str(base / args.workspace_path)
+    args.registry_path = str(base / args.registry_path)
 
     if (args.url and not args.strip_prefix) or (not args.url and args.strip_prefix):
         raise ValueError("url and strip prefix should be provided together")

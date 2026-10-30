@@ -166,9 +166,11 @@ if __name__ == "__main__":
         "-v", "--version", help="workspace to add the module to", type=str, default=""
     )
     args = parser.parse_args()
+    # `bazel run` changes cwd to the runfiles dir; resolve relative args from where the user ran it
+    base = Path(os.environ.get("BUILD_WORKING_DIRECTORY", "."))
     add_module_to_ws(
         args.module_name,
-        Path(args.registry_path),
-        Path(args.workspace_path),
+        base / args.registry_path,
+        base / args.workspace_path,
         args.version,
     )

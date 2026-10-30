@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/SICKAG/sick_safetyscanners_base/archive/0f8df3486b586013e6799bd3a8223ae9163a50f3.tar.gz",
+  "integrity": "sha256-0VroQRjetkksGfZ3YlF3FSVScgfJIZfyXGfoQcVc9JE=",
+  "strip_prefix": "sick_safetyscanners_base-0f8df3486b586013e6799bd3a8223ae9163a50f3",
+  "overlay": {
+    "MODULE.bazel": "sha256-RWUd0SovZ3aU7PntVq39xzzeTCshpl6ICxBQA385pkA=",
+    "BUILD.bazel": "sha256-70Ro1m7W5ZoqTZwMVWLLnmD3DXAS83GN6dQBJLy7DO0="
+  }
+}
