@@ -217,8 +217,7 @@ expand_template(
 cc_library(
     name = "ext2fs_stub",
     hdrs = ["ext2fs/ext2_fs.h"],
-    include_prefix = "ext2fs",
-    strip_include_prefix = "ext2fs",
+    includes = ["."],
 )
 
 cc_library(

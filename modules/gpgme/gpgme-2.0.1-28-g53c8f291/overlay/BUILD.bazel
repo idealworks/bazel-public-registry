@@ -1,4 +1,7 @@
 load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
+load("@rules_cc_autoconf//autoconf:autoconf.bzl", "autoconf")
+load("@rules_cc_autoconf//autoconf:autoconf_hdr.bzl", "autoconf_hdr")
+load("@rules_cc_autoconf//autoconf:checks.bzl", "checks")
 
 expand_template(
     name = "gen_gpgme_h",
@@ -17,6 +20,111 @@ expand_template(
     },
     template = "src/gpgme.h.in",
     visibility = ["//visibility:public"],
+)
+
+autoconf(
+    name = "config_checks",
+    checks = [
+        checks.AC_CHECK_HEADER(
+            "stdint.h",
+            define = "HAVE_STDINT_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "inttypes.h",
+            define = "HAVE_INTTYPES_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "sys/types.h",
+            define = "HAVE_SYS_TYPES_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "sys/stat.h",
+            define = "HAVE_SYS_STAT_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "unistd.h",
+            define = "HAVE_UNISTD_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "locale.h",
+            define = "HAVE_LOCALE_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "sys/time.h",
+            define = "HAVE_SYS_TIME_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "sys/select.h",
+            define = "HAVE_SYS_SELECT_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "sys/uio.h",
+            define = "HAVE_SYS_UIO_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "fcntl.h",
+            define = "HAVE_FCNTL_H",
+        ),
+        checks.AC_CHECK_HEADER(
+            "poll.h",
+            define = "HAVE_POLL_H",
+        ),
+        checks.AC_CHECK_FUNC(
+            "fseeko",
+            define = "HAVE_FSEEKO",
+        ),
+        checks.AC_CHECK_FUNC(
+            "stpcpy",
+            define = "HAVE_STPCPY",
+        ),
+        checks.AC_CHECK_FUNC(
+            "timegm",
+            define = "HAVE_TIMEGM",
+        ),
+        checks.AC_CHECK_FUNC(
+            "setlocale",
+            define = "HAVE_SETLOCALE",
+        ),
+        checks.AC_CHECK_FUNC(
+            "nanosleep",
+            define = "HAVE_NANOSLEEP",
+        ),
+        checks.AC_CHECK_FUNC(
+            "getgid",
+            define = "HAVE_GETGID",
+        ),
+        checks.AC_CHECK_FUNC(
+            "getegid",
+            define = "HAVE_GETEGID",
+        ),
+        checks.AC_CHECK_FUNC(
+            "closefrom",
+            define = "HAVE_CLOSEFROM",
+        ),
+        checks.AC_CHECK_FUNC(
+            "getenv",
+            define = "HAVE_GETENV",
+        ),
+        checks.AC_CHECK_FUNC(
+            "setenv",
+            define = "HAVE_SETENV",
+        ),
+        checks.AC_CHECK_FUNC(
+            "ttyname_r",
+            define = "HAVE_TTYNAME_R",
+        ),
+        checks.AC_CHECK_FUNC(
+            "getenv_r",
+            define = "HAVE_GETENV_R",
+        ),
+    ],
+)
+
+autoconf_hdr(
+    name = "config_h",
+    out = "conf/config.h",
+    template = "src/config.h.in",
+    deps = [":config_checks"],
 )
 
 cc_library(
@@ -89,7 +197,6 @@ cc_library(
         "src/wait-user.c",
     ],
     hdrs = [
-        "conf/config.h",
         "src/context.h",
         "src/data.h",
         "src/debug.h",
@@ -103,6 +210,7 @@ cc_library(
         "src/sys-util.h",
         "src/util.h",
         "src/wait.h",
+        ":config_h",
         ":gen_gpgme_h",
     ],
     copts = ["-std=gnu11"],
@@ -113,6 +221,8 @@ cc_library(
     linkopts = ["-lpthread"],
     local_defines = [
         "HAVE_CONFIG_H",
+        "_GNU_SOURCE",
+        "_DEFAULT_SOURCE",
     ],
     visibility = ["//visibility:public"],
     deps = [
