@@ -1,0 +1,8 @@
+catkin_pkg
+empy
+netifaces
+numpy
+packaging
+psutil
+pyyaml
+types-setuptools

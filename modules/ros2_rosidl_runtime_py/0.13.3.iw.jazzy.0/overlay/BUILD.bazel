@@ -1,0 +1,32 @@
+""" Builds rosidl_runtime_py.
+"""
+
+load("@ros2_rosidl_runtime_py_pip_deps//:requirements.bzl", "requirement")
+load("@rules_python//python:defs.bzl", "py_library")
+load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+
+compile_pip_requirements(
+    name = "python_requirements",
+    extra_args = ["--allow-unsafe"],
+    requirements_in = "//:requirements.txt",
+    requirements_txt = "//:requirements_lock.txt",
+    tags = ["manual"],
+)
+
+exports_files([
+    "requirements.txt",
+    "requirements_lock.txt",
+])
+
+py_library(
+    name = "rosidl_runtime_py",
+    srcs = glob(["rosidl_runtime_py/**/*.py"]),
+    imports = ["."],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ros2_ament_index//:ament_index_python",
+        "@ros2_rosidl//:rosidl_parser",
+        requirement("numpy"),
+        requirement("pyyaml"),
+    ],
+)

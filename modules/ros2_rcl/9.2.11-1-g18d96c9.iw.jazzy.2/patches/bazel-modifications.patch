@@ -1,0 +1,13 @@
+diff --git a/rcl/src/rcl/init.c b/rcl/src/rcl/init.c
+index ec05b2d..1a46242 100644
+--- a/rcl/src/rcl/init.c
++++ b/rcl/src/rcl/init.c
+@@ -41,7 +41,7 @@ extern "C"
+ #include "./context_impl.h"
+ #include "./init_options_impl.h"
+ 
+-static atomic_uint_least64_t __rcl_next_unique_id = ATOMIC_VAR_INIT(1);
++static atomic_uint_least64_t __rcl_next_unique_id = 1;
+ 
+ rcl_ret_t
+ rcl_init(

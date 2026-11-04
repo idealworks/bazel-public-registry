@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/rosidl_dynamic_typesupport/archive/cb8c54d12c678daa70410bb0626ed8626f561e45.tar.gz",
+  "integrity": "sha256-ydMPA+qtNGV86U/+lfrsRF1G3M2yNy1m0G04KrxQSnY=",
+  "strip_prefix": "rosidl_dynamic_typesupport-cb8c54d12c678daa70410bb0626ed8626f561e45",
+  "overlay": {
+    "MODULE.bazel": "sha256-3Julbs83+9cA25iI+8YjL578uQKmUZrjnqWDvNVzSNQ=",
+    "BUILD.bazel": "sha256-VHgmITIGf/5XsPZbH35qhKbvX8qg/3IS5t2uTGv8HWU="
+  }
+}

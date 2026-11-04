@@ -63,6 +63,14 @@ class ModuleDeclaration:
                 return False
         return True
 
+    def get_unprocessed_deps(self, ws_modules, processed_deps):
+        """returns a list of unprocessed dependencies of the module based on the list of processed modules"""
+        unprocessed_deps = []
+        for bazel_dep in self.bazel_deps:
+            if bazel_dep.name in ws_modules and bazel_dep.name not in processed_deps:
+                unprocessed_deps.append(bazel_dep.name)
+        return unprocessed_deps
+
 
 @dataclass
 class SourceData:
@@ -381,6 +389,7 @@ if __name__ == "__main__":
                 f"Module {module_dec.header.name} has local_path_override inside, make sure to remove it"
             )
         all_module_infos.append(module_info)
+    print(f"Found {len(all_module_infos)} modules in the workspace")
 
     # Remove the child modules from the list (example modules)
     parent_module_infos = []
@@ -417,22 +426,8 @@ if __name__ == "__main__":
         module_info.dec.header.name for module_info in all_module_infos
     ]
 
-    to_be_processed = all_module_infos.copy()
-    already_processed = []
-    while len(to_be_processed) != 0:
-        processed_module_infos_copy = to_be_processed.copy()
-        while len(processed_module_infos_copy) != 0:
-            maybe_processed_module = processed_module_infos_copy.pop()
-            if maybe_processed_module.dec.all_deps_processed(
-                all_ws_module_names, already_processed
-            ):
-                maybe_processed_module.update_to_registry(
-                    Path(args.registry_path), args.url, args.strip_prefix
-                )
-                already_processed.append(maybe_processed_module.dec.header.name)
-                to_be_processed = [
-                    module_info
-                    for module_info in to_be_processed
-                    if module_info.dec.header.name
-                    != maybe_processed_module.dec.header.name
-                ]
+    for module_info in all_module_infos:
+        print(f"Processing {module_info.dec.header.name}")
+        module_info.update_to_registry(
+            Path(args.registry_path), args.url, args.strip_prefix
+        )

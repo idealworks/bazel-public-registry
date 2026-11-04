@@ -1,0 +1,8 @@
+module(
+    name = "ros2_tracing",
+    version = "8.2.6.iw.jazzy.0",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "rules_cc", version = "0.2.27")
+bazel_dep(name = "bazel_skylib", version = "1.9.2")

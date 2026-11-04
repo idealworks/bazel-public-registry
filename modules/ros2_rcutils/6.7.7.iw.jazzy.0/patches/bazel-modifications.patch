@@ -1,0 +1,53 @@
+diff --git a/src/strdup.c b/src/strdup.c
+index e769b51..f60bad8 100644
+--- a/src/strdup.c
++++ b/src/strdup.c
+@@ -44,7 +44,7 @@ rcutils_strndup(const char * str, size_t max_length, rcutils_allocator_t allocat
+     return NULL;
+   }
+   RCUTILS_CHECK_ALLOCATOR(&allocator, return NULL);
+-  char * p = memchr(str, '\0', max_length);
++  const char * p = memchr(str, '\0', max_length);
+   size_t string_length = p == NULL ? max_length : (size_t)(p - str);
+   char * new_string = allocator.allocate(string_length + 1, allocator.state);
+   if (NULL == new_string) {
+diff --git a/test/test_allocator.cpp b/test/test_allocator.cpp
+index d4769d7..efbb49e 100644
+--- a/test/test_allocator.cpp
++++ b/test/test_allocator.cpp
+@@ -105,7 +105,7 @@ TEST_F(CLASSNAME(TestAllocatorFixture, RMW_IMPLEMENTATION), test_default_allocat
+   EXPECT_EQ(2u, frees);
+ }
+ 
+-TEST(test_allocator, realloc_failing_allocators) {
++TEST_F(CLASSNAME(TestAllocatorFixture, RMW_IMPLEMENTATION), realloc_failing_allocators) {
+   void * allocated_memory = nullptr;
+   EXPECT_EQ(nullptr, rcutils_reallocf(allocated_memory, 1024, nullptr));
+ 
+@@ -113,7 +113,7 @@ TEST(test_allocator, realloc_failing_allocators) {
+   EXPECT_EQ(nullptr, rcutils_reallocf(allocated_memory, 1024, &failing_allocator));
+ }
+ 
+-TEST(test_allocator, default_allocator_maybe_fail) {
++TEST_F(CLASSNAME(TestAllocatorFixture, RMW_IMPLEMENTATION), default_allocator_maybe_fail) {
+   rcutils_allocator_t allocator = rcutils_get_default_allocator();
+ 
+   // Check allocate
+diff --git a/test/test_strerror.cpp b/test/test_strerror.cpp
+index d5aa63f..74e4f9f 100644
+--- a/test/test_strerror.cpp
++++ b/test/test_strerror.cpp
+@@ -109,7 +109,12 @@ char * mocked_gnu_strerror(int errnum, char * buf, size_t buflen)
+ TEST(test_strerror, test_mock) {
+   // Mock the strerror_r function in the current module using
+   // the `strerror_r_mock` blueprint.
+-  mmk_mock(RCUTILS_STRINGIFY(strerror_r) "@lib:rcutils", strerror_r_mock);
++  #ifdef MIMICK_RCUTILS_SCOPE
++    #define MIMICK_RCUTILS_ACTIVE_SCOPE MIMICK_RCUTILS_SCOPE
++  #else
++    #define MIMICK_RCUTILS_ACTIVE_SCOPE "@lib:rcutils"
++  #endif
++  mmk_mock(RCUTILS_STRINGIFY(strerror_r) MIMICK_RCUTILS_ACTIVE_SCOPE, strerror_r_mock);
+   // Tell the mock to call mocked_gnu_strerror instead
+   mmk_when(
+     strerror_r(mmk_any(int), mmk_any(char *), mmk_any(size_t) ),

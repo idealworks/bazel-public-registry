@@ -1,0 +1,22 @@
+module(
+    name = "ros2_rosidl_python",
+    version = "0.22.2.iw.jazzy.0",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "bazel_skylib", version = "1.9.2")
+bazel_dep(name = "ros2_rosidl", version = "4.6.10.iw.jazzy.0")
+bazel_dep(name = "ros2_rpyutils", version = "0.4.2.iw.jazzy.0")
+bazel_dep(name = "rules_python", version = "2.5.0-rc0")
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+    hub_name = "ros2_rosidl_python_pip_deps",
+    python_version = "3.12",
+    requirements_lock = "//:requirements_lock.txt",
+    target_platforms = [
+        "linux_x86_64",
+        "linux_aarch64",
+    ],
+)
+use_repo(pip, "ros2_rosidl_python_pip_deps")

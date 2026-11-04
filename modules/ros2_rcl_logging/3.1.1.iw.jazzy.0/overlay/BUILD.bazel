@@ -1,0 +1,40 @@
+""" Builds rcl_logging.
+"""
+
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "rcl_logging_interface",
+    srcs = glob(["rcl_logging_interface/src/*.c"]),
+    hdrs = glob(["rcl_logging_interface/include/**/*.h"]),
+    includes = ["rcl_logging_interface/include"],
+    deps = [
+        "@ros2_rcutils//:rcutils",
+    ],
+)
+
+cc_library(
+    name = "rcl_logging_spdlog",
+    srcs = glob(["rcl_logging_spdlog/src/*.cpp"]),
+    copts = ["-std=c++17"],  # Uses std::filesystem
+    includes = ["rcl_logging_spdlog/include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":rcl_logging_interface",
+        "@ros2_rcpputils//:rcpputils",
+        "@ros2_rcutils//:rcutils",
+        "@spdlog",
+    ],
+)
+
+cc_library(
+    name = "rcl_logging_noop",
+    srcs = glob(["rcl_logging_noop/src/rcl_logging_noop/*.cpp"]),
+    copts = ["-std=c++17"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":rcl_logging_interface",
+        "@ros2_rcpputils//:rcpputils",
+        "@ros2_rcutils//:rcutils",
+    ],
+)

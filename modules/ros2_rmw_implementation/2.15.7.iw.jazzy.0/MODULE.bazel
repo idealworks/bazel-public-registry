@@ -1,0 +1,15 @@
+module(
+    name = "ros2_rmw_implementation",
+    version = "2.15.7.iw.jazzy.0",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "rules_cc", version = "0.2.27")
+bazel_dep(name = "com_github_mvukov_rules_ros2", version = "2.0.0.eddy.10")
+bazel_dep(name = "ros2_ament_index", version = "1.8.4.iw.jazzy.0")
+bazel_dep(name = "ros2_rcpputils", version = "2.11.4.iw.jazzy.0")
+bazel_dep(name = "ros2_rcutils", version = "6.7.7.iw.jazzy.0")
+bazel_dep(name = "ros2_rmw", version = "7.3.4.iw.jazzy.0")
+bazel_dep(name = "ros2_rmw_cyclonedds", version = "2.2.4-4-gb70b71b.iw.jazzy.0")
+bazel_dep(name = "ros2_rmw_zenoh_cpp", version = "0.2.13.iw.jazzy.0")
+bazel_dep(name = "ros2_rosidl_dynamic_typesupport", version = "0.1.2.iw.jazzy.0")

@@ -166,3 +166,8 @@ class TestVersion(unittest.TestCase):
         self.assertLess(
             Version.parse("0.7.0-1-gb86d2da"), Version.parse("1.5.1.40.g507de66.iw.1")
         )
+
+    def test_rmw_cyclone_dds(self):
+        self.assertLess(
+            Version.parse("2.2.4.iw.jazzy.1"), Version.parse("2.2.4-4-gb70b71b.iw.jazzy.0")
+        )
