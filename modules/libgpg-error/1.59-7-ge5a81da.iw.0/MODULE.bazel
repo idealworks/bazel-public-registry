@@ -1,0 +1,7 @@
+module(
+    name = "libgpg-error",
+    version = "1.59-7-ge5a81da.iw.0",
+)
+
+bazel_dep(name = "platforms", version = "0.0.11")
+bazel_dep(name = "rules_cc_autoconf", version = "0.15.0")

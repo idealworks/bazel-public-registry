@@ -1,0 +1,286 @@
+diff --git a/src/libostree/ostree-enumtypes.c.template b/src/libostree/ostree-enumtypes.c.template
+index 72c64601..2cc2c319 100644
+--- a/src/libostree/ostree-enumtypes.c.template
++++ b/src/libostree/ostree-enumtypes.c.template
+@@ -26,7 +26,7 @@
+ /*** BEGIN file-production ***/
+ 
+ /* enumerations from "@filename@" */
+-#include "@filename@"
++#include "@basename@"
+ 
+ /*** END file-production ***/
+ 
+diff --git a/src/libostree/ostree-ref.c b/src/libostree/ostree-ref.c
+index 149c2915..9469bb3b 100644
+--- a/src/libostree/ostree-ref.c
++++ b/src/libostree/ostree-ref.c
+@@ -25,7 +25,7 @@
+ #include <gio/gio.h>
+ #include <glib-object.h>
+ #include <glib.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ 
+ #include "ostree-autocleanups.h"
+ #include "ostree-core-private.h"
+diff --git a/src/libostree/ostree-repo-finder-avahi-parser.c b/src/libostree/ostree-repo-finder-avahi-parser.c
+index dfa8d173..f4449491 100644
+--- a/src/libostree/ostree-repo-finder-avahi-parser.c
++++ b/src/libostree/ostree-repo-finder-avahi-parser.c
+@@ -27,7 +27,7 @@
+ #include <avahi-common/strlst.h>
+ #include <glib-object.h>
+ #include <glib.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ #include <string.h>
+ 
+ #include "ostree-autocleanups.h"
+diff --git a/src/libostree/ostree-repo-finder-avahi.c b/src/libostree/ostree-repo-finder-avahi.c
+index 680ac0b7..a37de91b 100644
+--- a/src/libostree/ostree-repo-finder-avahi.c
++++ b/src/libostree/ostree-repo-finder-avahi.c
+@@ -42,7 +42,7 @@
+ #include <gio/gio.h>
+ #include <glib-object.h>
+ #include <glib.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ 
+ #include "ostree-autocleanups.h"
+ #include "ostree-repo-finder-avahi.h"
+diff --git a/src/libostree/ostree-repo-finder-config.c b/src/libostree/ostree-repo-finder-config.c
+index a907dc3d..ca5f9579 100644
+--- a/src/libostree/ostree-repo-finder-config.c
++++ b/src/libostree/ostree-repo-finder-config.c
+@@ -26,7 +26,7 @@
+ #include <gio/gio.h>
+ #include <glib-object.h>
+ #include <glib.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ 
+ #include "ostree-autocleanups.h"
+ #include "ostree-remote-private.h"
+diff --git a/src/libostree/ostree-repo-finder-mount.c b/src/libostree/ostree-repo-finder-mount.c
+index 3f92b278..6ef49a02 100644
+--- a/src/libostree/ostree-repo-finder-mount.c
++++ b/src/libostree/ostree-repo-finder-mount.c
+@@ -26,7 +26,7 @@
+ #include <gio/gunixmounts.h>
+ #include <glib-object.h>
+ #include <glib.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ #include <stdlib.h>
+ 
+ #include "ostree-autocleanups.h"
+diff --git a/src/libostree/ostree-repo-finder-override.c b/src/libostree/ostree-repo-finder-override.c
+index 29308a99..fe3cb0e2 100644
+--- a/src/libostree/ostree-repo-finder-override.c
++++ b/src/libostree/ostree-repo-finder-override.c
+@@ -26,7 +26,7 @@
+ #include <gio/gio.h>
+ #include <glib-object.h>
+ #include <glib.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ 
+ #include "ostree-autocleanups.h"
+ #include "ostree-remote-private.h"
+diff --git a/src/libostree/ostree-repo-finder.c b/src/libostree/ostree-repo-finder.c
+index 2f1af1c1..2ad2861f 100644
+--- a/src/libostree/ostree-repo-finder.c
++++ b/src/libostree/ostree-repo-finder.c
+@@ -25,7 +25,7 @@
+ #include <gio/gio.h>
+ #include <glib-object.h>
+ #include <glib.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ 
+ #include "ostree-autocleanups.h"
+ #include "ostree-core.h"
+diff --git a/src/libostree/ostree-repo.c b/src/libostree/ostree-repo.c
+index 04a54029..d896dfb9 100644
+--- a/src/libostree/ostree-repo.c
++++ b/src/libostree/ostree-repo.c
+@@ -30,7 +30,7 @@
+ #include <gio/gunixinputstream.h>
+ #include <gio/gunixoutputstream.h>
+ #include <glib-unix.h>
+-#include <glnx-console.h>
++#include "glnx-console.h"
+ #include <linux/magic.h>
+ 
+ #include "ostree-autocleanups.h"
+diff --git a/src/libostree/ostree-sign-dummy.c b/src/libostree/ostree-sign-dummy.c
+index fdd6ca59..eb400002 100644
+--- a/src/libostree/ostree-sign-dummy.c
++++ b/src/libostree/ostree-sign-dummy.c
+@@ -23,7 +23,7 @@
+ #include "config.h"
+ 
+ #include "ostree-sign-dummy.h"
+-#include <libglnx.h>
++#include "libglnx.h"
+ #include <string.h>
+ 
+ #undef G_LOG_DOMAIN
+diff --git a/src/libostree/ostree-sign-ed25519.c b/src/libostree/ostree-sign-ed25519.c
+index cfe1f652..1c34a977 100644
+--- a/src/libostree/ostree-sign-ed25519.c
++++ b/src/libostree/ostree-sign-ed25519.c
+@@ -25,7 +25,7 @@
+ 
+ #include "ostree-sign-ed25519.h"
+ #include "otcore.h"
+-#include <libglnx.h>
++#include "libglnx.h"
+ #include <ot-checksum-utils.h>
+ 
+ #undef G_LOG_DOMAIN
+diff --git a/src/libotutil/ot-variant-builder.c b/src/libotutil/ot-variant-builder.c
+index 68b3a3be..13c1ef40 100644
+--- a/src/libotutil/ot-variant-builder.c
++++ b/src/libotutil/ot-variant-builder.c
+@@ -21,7 +21,7 @@
+ 
+ #include "config.h"
+ 
+-#include "libglnx/libglnx.h"
++#include "libglnx.h"
+ #include "ot-variant-builder.h"
+ 
+ /*****************************************************************************************
+diff --git a/src/libotutil/otutil.h b/src/libotutil/otutil.h
+index 27f84103..0263405e 100644
+--- a/src/libotutil/otutil.h
++++ b/src/libotutil/otutil.h
+@@ -22,7 +22,7 @@
+ #pragma once
+ 
+ #include <gio/gio.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ #include <string.h> /* Yeah...let's just do that here. */
+ #include <syslog.h>
+ 
+diff --git a/src/ostree/ot-remote-builtin-gpg-import.c b/src/ostree/ot-remote-builtin-gpg-import.c
+index d24eecbf..b3a541c1 100644
+--- a/src/ostree/ot-remote-builtin-gpg-import.c
++++ b/src/ostree/ot-remote-builtin-gpg-import.c
+@@ -20,7 +20,7 @@
+ #include "config.h"
+ 
+ #include <gio/gunixinputstream.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ 
+ #include "otutil.h"
+ 
+diff --git a/src/switchroot/ostree-prepare-root.c b/src/switchroot/ostree-prepare-root.c
+index b93e05c7..d96602fd 100644
+--- a/src/switchroot/ostree-prepare-root.c
++++ b/src/switchroot/ostree-prepare-root.c
+@@ -56,7 +56,7 @@
+ #include <err.h>
+ #include <errno.h>
+ #include <fcntl.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ #include <stdarg.h>
+ #include <stdbool.h>
+ #include <stdio.h>
+diff --git a/src/switchroot/ostree-system-generator.c b/src/switchroot/ostree-system-generator.c
+index 4fddc363..d6237e5a 100644
+--- a/src/switchroot/ostree-system-generator.c
++++ b/src/switchroot/ostree-system-generator.c
+@@ -25,7 +25,7 @@
+ #include <sys/stat.h>
+ #include <unistd.h>
+ 
+-#include <libglnx.h>
++#include "libglnx.h"
+ 
+ #include "ostree-cmd-private.h"
+ 
+diff --git a/tests/repo-finder-mount.c b/tests/repo-finder-mount.c
+index 68a0e3de..ae2c3cac 100644
+--- a/tests/repo-finder-mount.c
++++ b/tests/repo-finder-mount.c
+@@ -26,7 +26,7 @@
+ #include <gio/gio.h>
+ #include <glib-object.h>
+ #include <glib.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ #include <locale.h>
+ 
+ #include "ostree-autocleanups.h"
+diff --git a/tests/test-mock-gio.c b/tests/test-mock-gio.c
+index 94682f2c..2d7fcbbd 100644
+--- a/tests/test-mock-gio.c
++++ b/tests/test-mock-gio.c
+@@ -26,7 +26,7 @@
+ #include <gio/gio.h>
+ #include <glib-object.h>
+ #include <glib.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ 
+ #include "test-mock-gio.h"
+ 
+diff --git a/tests/test-mock-gio.h b/tests/test-mock-gio.h
+index fae260ab..59e098d3 100644
+--- a/tests/test-mock-gio.h
++++ b/tests/test-mock-gio.h
+@@ -25,7 +25,7 @@
+ #include <gio/gio.h>
+ #include <glib-object.h>
+ #include <glib.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ 
+ #include "ostree-types.h"
+ 
+diff --git a/tests/test-repo-finder-config.c b/tests/test-repo-finder-config.c
+index 4b08b2eb..906282af 100644
+--- a/tests/test-repo-finder-config.c
++++ b/tests/test-repo-finder-config.c
+@@ -25,7 +25,7 @@
+ #include <gio/gio.h>
+ #include <glib-object.h>
+ #include <glib.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ #include <locale.h>
+ #include <string.h>
+ 
+diff --git a/tests/test-repo-finder-mount.c b/tests/test-repo-finder-mount.c
+index 0bbcd844..d7487dfe 100644
+--- a/tests/test-repo-finder-mount.c
++++ b/tests/test-repo-finder-mount.c
+@@ -25,7 +25,7 @@
+ #include <gio/gio.h>
+ #include <glib-object.h>
+ #include <glib.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ #include <locale.h>
+ 
+ #include "libostreetest.h"
+diff --git a/tests/test-repo.c b/tests/test-repo.c
+index 1bc4cb81..9a7b3425 100644
+--- a/tests/test-repo.c
++++ b/tests/test-repo.c
+@@ -25,7 +25,7 @@
+ #include <gio/gio.h>
+ #include <glib-object.h>
+ #include <glib.h>
+-#include <libglnx.h>
++#include "libglnx.h"
+ #include <locale.h>
+ 
+ #include "ostree-autocleanups.h"
