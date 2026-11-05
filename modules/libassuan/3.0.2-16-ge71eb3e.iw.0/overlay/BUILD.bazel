@@ -4,7 +4,7 @@ load("@rules_cc_autoconf//autoconf:checks.bzl", "checks")
 
 package(default_visibility = ["//visibility:public"])
 
-LIBASSUAN_VERSION = "3.0.2"
+LIBASSUAN_VERSION = module_version().split("-", 1)[0]
 
 LIBASSUAN_VERSION_NUMBER = "0x030002"
 
@@ -124,6 +124,7 @@ cc_library(
     srcs = [
         "src/assuan.c",
         "src/assuan-buffer.c",
+        "src/assuan-defs.h",
         "src/assuan-error.c",
         "src/assuan-handler.c",
         "src/assuan-inquire.c",
@@ -140,6 +141,7 @@ cc_library(
         "src/context.c",
         "src/conversion.c",
         "src/debug.c",
+        "src/debug.h",
         "src/funopen.c",
         "src/server.c",
         "src/system.c",
@@ -147,8 +149,6 @@ cc_library(
         "src/sysutils.c",
     ],
     hdrs = [
-        "src/assuan-defs.h",
-        "src/debug.h",
         ":config_h",
         ":gen_assuan_h",
     ],
@@ -157,7 +157,6 @@ cc_library(
     ],
     local_defines = [
         "HAVE_CONFIG_H",
-        "_GNU_SOURCE",
     ],
     deps = [
         "@libgpg-error",

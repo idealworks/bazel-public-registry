@@ -4,11 +4,9 @@ load("@rules_cc_autoconf//autoconf:checks.bzl", "checks")
 
 package(default_visibility = ["//visibility:public"])
 
-LIBGPG_ERROR_VERSION = "1.59.7"
+LIBGPG_ERROR_VERSION = ".".join(module_version().split("-")[:2])
 
-LIBGPG_ERROR_VERSION_NUMBER = "0x015907"
-
-HOST_TRIPLET = "aarch64-unknown-linux-gnu"
+LIBGPG_ERROR_VERSION_NUMBER = "0x013b07"
 
 cc_binary(
     name = "mkheader",
@@ -87,14 +85,19 @@ genrule(
         "src/err-codes.h.in",
         "src/errnos.in",
         "src/w32-add.h",
-        "src/syscfg/lock-obj-pub.aarch64-unknown-linux-gnu.h",
         ":gen_err_sources_h",
         ":gen_err_codes_h",
         ":config_h",
-    ],
+    ] + select({
+        "@platforms//cpu:aarch64": ["src/syscfg/lock-obj-pub.aarch64-unknown-linux-gnu.h"],
+        "@platforms//cpu:x86_64": ["src/syscfg/lock-obj-pub.x86_64-unknown-linux-gnu.h"],
+    }),
     outs = ["src/gpg-error.h"],
-    cmd = "\"$(location :mkheader)\" --cross " +
-          HOST_TRIPLET + " " +
+    cmd = "\"$(location :mkheader)\" " +
+          select({
+              "@platforms//cpu:aarch64": "--cross aarch64-unknown-linux-gnu ",
+              "@platforms//cpu:x86_64": "x86_64-unknown-linux-gnu ",
+          }) +
           "\"$(location src/gpg-error.h.in)\" " +
           "\"$(location :config_h)\" " +
           LIBGPG_ERROR_VERSION + " " +
@@ -296,11 +299,18 @@ cc_library(
         "src/code-to-errno.c",
         "src/estream.c",
         "src/estream-printf.c",
+        "src/estream-printf.h",
+        "src/gettext.h",
+        "src/gpgrt-int.h",
         "src/init.c",
+        "src/init.h",
+        "src/lock.h",
         "src/logging.c",
         "src/name-value.c",
         "src/posix-lock.c",
+        "src/posix-lock-obj.h",
         "src/posix-thread.c",
+        "src/protos.h",
         "src/spawn-posix.c",
         "src/strerror.c",
         "src/stringutils.c",
@@ -308,24 +318,17 @@ cc_library(
         "src/strsource.c",
         "src/syscall-clamp.c",
         "src/sysutils.c",
+        "src/thread.h",
         "src/version.c",
         "src/visibility.c",
-    ],
-    hdrs = [
-        "src/estream-printf.h",
-        "src/gettext.h",
-        "src/gpgrt-int.h",
-        "src/init.h",
-        "src/lock.h",
-        "src/posix-lock-obj.h",
-        "src/protos.h",
-        "src/thread.h",
         "src/visibility.h",
         ":config_h",
         ":gen_code_from_errno_h",
         ":gen_code_to_errno_h",
         ":gen_err_codes_h",
         ":gen_err_sources_h",
+    ],
+    hdrs = [
         ":gen_gpg_error_h",
         ":gen_gpgrt_h",
     ],
@@ -336,9 +339,5 @@ cc_library(
     includes = [
         "src",
     ],
-    local_defines = [
-        "HAVE_CONFIG_H",
-        "_GNU_SOURCE",
-        "_DEFAULT_SOURCE",
-    ],
+    local_defines = ["HAVE_CONFIG_H"],
 )

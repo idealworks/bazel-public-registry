@@ -56,6 +56,7 @@
 #define HAVE_TLS 1
 #define HAVE_SYS_GETTID 1
 #define USE_POSIX_THREADS 1
+#define _GNU_SOURCE 1
 #define _REENTRANT 1
 #define USE_LINUX_GETDENTS 1
 #define GPGRT_ENABLE_ES_MACROS 1
