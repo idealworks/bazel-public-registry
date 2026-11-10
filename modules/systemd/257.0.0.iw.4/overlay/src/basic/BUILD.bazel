@@ -1,0 +1,352 @@
+load("//bzl:custom_generators.bzl", "generate_list_txt")
+
+py_binary(
+    name = "generate_filesystem_switch_case_py",
+    srcs = ["generate-filesystem-switch-case.py"],
+    main = "generate-filesystem-switch-case.py",
+)
+
+py_binary(
+    name = "generate_filesystem_list_py",
+    srcs = ["generate-filesystem-list.py"],
+    main = "generate-filesystem-list.py",
+)
+
+filegroup(
+    name = "missing_socket_h",
+    srcs = ["missing_socket.h"],
+)
+
+filegroup(
+    name = "missing_audit_h",
+    srcs = ["missing_audit.h"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "missing_capability_h",
+    srcs = ["missing_capability.h"],
+)
+
+filegroup(
+    name = "linux_if_arp_h",
+    srcs = ["linux/if_arp.h"],
+)
+
+genrule(
+    name = "filesystems_gperf_h",
+    srcs = ["filesystems-gperf.gperf"],
+    outs = ["filesystems-gperf.h"],
+    cmd = "./$(location @gperf//:gperf) $(location filesystems-gperf.gperf) > \"$@\"",
+    tools = ["@gperf"],
+)
+
+genrule(
+    name = "filesystems_switch_case_h",
+    srcs = ["filesystems-gperf.gperf"],
+    outs = ["filesystem-switch-case.h"],
+    cmd = "./$(location :generate_filesystem_switch_case_py) $(location filesystems-gperf.gperf) > \"$@\"",
+    tools = [":generate_filesystem_switch_case_py"],
+)
+
+genrule(
+    name = "filesystems_list_h",
+    srcs = ["filesystems-gperf.gperf"],
+    outs = ["filesystem-list.h"],
+    cmd = "./$(location :generate_filesystem_list_py) $(location filesystems-gperf.gperf) > \"$@\"",
+    tools = [":generate_filesystem_list_py"],
+)
+
+generate_list_txt(
+    name = "errno_list_txt",
+    output_txt = "errno-list.txt",
+    script = "generate-errno-list.sh",
+)
+
+generate_list_txt(
+    name = "af_list_txt",
+    output_txt = "af-list.txt",
+    script = "generate-af-list.sh",
+    script_args = [
+        "//:config_h_file",
+        ":missing_socket_h",
+    ],
+)
+
+generate_list_txt(
+    name = "arphrd_list_txt",
+    output_txt = "arphrd-list.txt",
+    script = "generate-arphrd-list.sh",
+    script_args = [
+        ":linux_if_arp_h",
+        "//:config_h_file",
+    ],
+)
+
+generate_list_txt(
+    name = "cap_list_txt",
+    output_txt = "cap-list.txt",
+    script = "generate-cap-list.sh",
+    script_args = [
+        "//:config_h_file",
+        ":missing_capability_h",
+    ],
+)
+
+ALL_ITEMS = {
+    "errno": {
+        "name": "errno",
+        "prefix": "''",
+    },
+    "af": {
+        "name": "af",
+        "prefix": "''",
+    },
+    "arphrd": {
+        "name": "arphrd",
+        "prefix": "ARPHRD_",
+    },
+    "cap": {
+        "name": "capability",
+        "prefix": "''",
+    },
+}
+
+[filegroup(
+    name = "{}_to_name_awk".format(name),
+    srcs = ["{}-to-name.awk".format(name)],
+) for name in ALL_ITEMS.keys()]
+
+[genrule(
+    name = "{}_gperf_gperf".format(name),
+    srcs = [":{}_list_txt".format(name)],
+    outs = ["{}-from-name.gperf".format(name)],
+    cmd = "./$(location //:generate_gperfs) {} {} $(location :{}_list_txt) > \"$@\"".format(
+        val["name"],
+        val["prefix"],
+        name,
+    ),
+    tools = ["//:generate_gperfs"],
+) for name, val in ALL_ITEMS.items()]
+
+[genrule(
+    name = "{}_from_name_h".format(name),
+    srcs = [":{}_gperf_gperf".format(name)],
+    outs = ["{}-from-name.h".format(name)],
+    cmd = "./$(location @gperf//:gperf) -L ANSI-C -t --ignore-case -N lookup_{} -H hash_{}_name -p -C $(location :{}_gperf_gperf) > \"$@\"".format(
+        val["name"],
+        name,
+        name,
+    ),
+    tools = ["@gperf"],
+) for name, val in ALL_ITEMS.items()]
+
+[genrule(
+    name = "{}_to_name_h".format(name),
+    srcs = [
+        ":{}_list_txt".format(name),
+        ":{}_to_name_awk".format(name),
+    ],
+    outs = ["{}-to-name.h".format(name)],
+    cmd = "awk -f $(locations :{}_to_name_awk) $(location :{}_list_txt) > \"$@\"".format(name, name),
+) for name in ALL_ITEMS.keys()]
+
+cc_library(
+    name = "pub_headers",
+    hdrs = [
+        "constants.h",
+        "list.h",
+        "log.h",
+        "macro.h",
+        "missing_type.h",
+        "ratelimit.h",
+        "stdio-util.h",
+        "time-util.h",
+        "utf8.h",
+    ],
+    defines = [
+        "RELATIVE_SOURCE_PATH=\\\".\\\"",
+        "SIZEOF_TIME_T=8",
+    ],
+    includes = ["."],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "basic",
+    srcs = [
+        "MurmurHash2.c",
+        "af-list.c",
+        "alloc-util.c",
+        "architecture.c",
+        "argv-util.c",
+        "arphrd-util.c",
+        "audit-util.c",
+        "btrfs.c",
+        "build.c",
+        "build-path.c",
+        "bus-label.c",
+        "cap-list.c",
+        "capability-util.c",
+        "cgroup-util.c",
+        "chase.c",
+        "chattr-util.c",
+        "compress.c",
+        "conf-files.c",
+        "confidential-virt.c",
+        "devnum-util.c",
+        "dirent-util.c",
+        "dlfcn-util.c",
+        "efivars.c",
+        "env-file.c",
+        "env-util.c",
+        "errno-list.c",
+        "escape.c",
+        "ether-addr-util.c",
+        "extract-word.c",
+        "fd-util.c",
+        "fileio.c",
+        "filesystems.c",
+        "format-ifname.c",
+        "format-util.c",
+        "fs-util.c",
+        "gcrypt-util.c",
+        "glob-util.c",
+        "glyph-util.c",
+        "gunicode.c",
+        "hash-funcs.c",
+        "hashmap.c",
+        "hexdecoct.c",
+        "hmac.c",
+        "hostname-util.c",
+        "in-addr-util.c",
+        "initrd-util.c",
+        "inotify-util.c",
+        "io-util.c",
+        "ioprio-util.c",
+        "iovec-util.c",
+        "iovec-wrapper.c",
+        "keyring-util.c",
+        "label.c",
+        "limits-util.c",
+        "locale-util.c",
+        "lock-util.c",
+        "log.c",
+        "login-util.c",
+        "memfd-util.c",
+        "memory-util.c",
+        "mempool.c",
+        "memstream-util.c",
+        "mkdir.c",
+        "mountpoint-util.c",
+        "namespace-util.c",
+        "nulstr-util.c",
+        "ordered-set.c",
+        "os-util.c",
+        "parse-util.c",
+        "path-util.c",
+        "percent-util.c",
+        "pidref.c",
+        "prioq.c",
+        "proc-cmdline.c",
+        "process-util.c",
+        "procfs-util.c",
+        "psi-util.c",
+        "random-util.c",
+        "ratelimit.c",
+        "recurse-dir.c",
+        "replace-var.c",
+        "rlimit-util.c",
+        "runtime-scope.c",
+        "sha256.c",
+        "sigbus.c",
+        "signal-util.c",
+        "siphash24.c",
+        "socket-util.c",
+        "sort-util.c",
+        "stat-util.c",
+        "strbuf.c",
+        "string-table.c",
+        "string-util.c",
+        "strv.c",
+        "strxcpyx.c",
+        "sync-util.c",
+        "sysctl-util.c",
+        "syslog-util.c",
+        "terminal-util.c",
+        "time-util.c",
+        "tmpfile-util.c",
+        "uid-classification.c",
+        "uid-range.c",
+        "unit-def.c",
+        "unit-name.c",
+        "user-util.c",
+        "utf8.c",
+        "virt.c",
+        "xattr-util.c",
+        ":filesystems_gperf_h",
+        ":filesystems_list_h",
+        ":filesystems_switch_case_h",
+    ] + glob([
+        "*.h",
+        "linux/*.h",
+    ]),
+    hdrs = [
+        ":af_from_name_h",
+        ":af_to_name_h",
+        ":arphrd_from_name_h",
+        ":arphrd_to_name_h",
+        ":cap_from_name_h",
+        ":cap_to_name_h",
+        ":errno_from_name_h",
+        ":errno_to_name_h",
+    ],
+    defines = [
+        "GPERF_LEN_TYPE=size_t",
+        "DEFAULT_COMPRESSION=2",
+        "COMPRESSION_PRIORITY_LZ4=\\\"recommended\\\"",
+        "_GNU_SOURCE=1",
+        "_FILE_OFFSET_BITS=64",
+        "SIZEOF_DEV_T=8",
+        "SIZEOF_INO_T=8",
+        "SIZEOF_RLIM_T=8",
+        "SIZEOF_TIMEX_MEMBER=8",
+        "HAVE_REALLOCARRAY=1",
+        "HAVE_STRUCT_STATX=true",
+        "HAVE_STRUCT_SCHED_ATTR=true",
+        "HAVE_NAME_TO_HANDLE_AT=true",
+        "HAVE_XZ=false",
+        "HAVE_LZ4=true",
+        "HAVE_ZSTD=false",
+        "CONTAINER_UID_BASE_MIN=524288",
+        "CONTAINER_UID_BASE_MAX=1878982656",
+        "DYNAMIC_UID_MIN=61184",
+        "DYNAMIC_UID_MAX=65519",
+    ],
+    includes = ["."],
+    local_defines = [
+        "SIZEOF_TIME_T=8",
+        "BUILD_MODE_DEVELOPER=0",
+        "FALLBACK_HOSTNAME=\\\"localhost\\\"",
+        "HAVE_SCHED_SETATTR=true",
+        "HAVE_STRUCT_MOUNT_ATTR=true",
+        "SYSTEM_ALLOC_UID_MIN=0",
+        "SYSTEM_ALLOC_GID_MIN=0",
+        "SYSTEM_UID_MAX=0",
+        "SYSTEM_GID_MAX=0",
+        "DEFAULT_USER_SHELL=\\\"/bin/bash\\\"",
+        "NOBODY_USER_NAME=\\\"nobody\\\"",
+        "NOBODY_GROUP_NAME=\\\"nobody\\\"",
+        "NOLOGIN=\\\"/run/nologin\\\"",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":pub_headers",
+        "//:version_h",
+        "//src/fundamental",
+        "//src/systemd",
+        "@libcap",
+        "@lz4",
+        "@lz4//:lz4_frame",
+    ],
+)
