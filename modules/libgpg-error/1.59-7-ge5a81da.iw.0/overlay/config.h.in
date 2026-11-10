@@ -47,8 +47,8 @@
 
 #define PACKAGE "libgpg-error"
 #define PACKAGE_NAME "libgpg-error"
-#define PACKAGE_VERSION "1.59.7"
-#define VERSION "1.59.7"
+#define PACKAGE_VERSION "1.59.0"
+#define VERSION "1.59.0"
 #define BUILD_REVISION "e5a81da"
 #define BUILD_COMMITID "e5a81daca8e0a8238b74ba6cb0e2738d1f60444a"
 #define BUILD_TIMESTAMP "<none>"

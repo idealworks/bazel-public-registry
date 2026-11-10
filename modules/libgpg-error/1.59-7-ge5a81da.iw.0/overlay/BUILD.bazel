@@ -4,9 +4,20 @@ load("@rules_cc_autoconf//autoconf:checks.bzl", "checks")
 
 package(default_visibility = ["//visibility:public"])
 
-LIBGPG_ERROR_VERSION = ".".join(module_version().split("-")[:2])
+VERSION_ARRAY = module_version().split("-", 1)[0].split(".") + [
+    "0",
+    "0",
+]
 
-LIBGPG_ERROR_VERSION_NUMBER = "0x013b07"
+MAJOR_VERSION = int(VERSION_ARRAY[0])
+
+MINOR_VERSION = int(VERSION_ARRAY[1])
+
+PATCH_VERSION = int(VERSION_ARRAY[2])
+
+LIBGPG_ERROR_VERSION = "{}.{}.{}".format(MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION)
+
+LIBGPG_ERROR_VERSION_NUMBER = "0x%x" % (MAJOR_VERSION * 0x10000 + MINOR_VERSION * 0x100 + PATCH_VERSION)
 
 cc_binary(
     name = "mkheader",

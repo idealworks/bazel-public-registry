@@ -4,9 +4,20 @@ load("@rules_cc_autoconf//autoconf:checks.bzl", "checks")
 
 package(default_visibility = ["//visibility:public"])
 
-LIBASSUAN_VERSION = module_version().split("-", 1)[0]
+VERSION_ARRAY = module_version().split("-", 1)[0].split(".") + [
+    "0",
+    "0",
+]
 
-LIBASSUAN_VERSION_NUMBER = "0x030002"
+MAJOR_VERSION = int(VERSION_ARRAY[0])
+
+MINOR_VERSION = int(VERSION_ARRAY[1])
+
+PATCH_VERSION = int(VERSION_ARRAY[2])
+
+LIBASSUAN_VERSION = "{}.{}.{}".format(MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION)
+
+LIBASSUAN_VERSION_NUMBER = "0x%x" % (MAJOR_VERSION * 0x10000 + MINOR_VERSION * 0x100 + PATCH_VERSION)
 
 cc_binary(
     name = "mkheader",
