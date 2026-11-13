@@ -1,0 +1,13 @@
+module(
+    name = "ros_ackermann_msgs",
+    version = "1.0.2.0.iw.1",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "rules_ros", version = "0.0.0.293.iw.2")
+
+non_module_ros_repositories = use_extension("@rules_ros//ros:extensions.bzl", "non_module_dependencies")
+use_repo(
+    non_module_ros_repositories,
+    "ros_common_msgs",
+)

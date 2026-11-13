@@ -1,0 +1,7 @@
+module(
+    name = "ros2_ament_cmake_ros",
+    version = "0.12.2.0.iw.0",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "rules_python", version = "2.5.0")

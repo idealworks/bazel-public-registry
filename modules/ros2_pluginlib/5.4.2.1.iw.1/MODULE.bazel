@@ -1,0 +1,11 @@
+module(
+    name = "ros2_pluginlib",
+    version = "5.4.2.1.iw.1",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "ros2_ament_index", version = "1.8.1.1.iw.1")
+bazel_dep(name = "ros2_class_loader", version = "2.7.0.0.iw.1")
+bazel_dep(name = "ros2_rcpputils", version = "2.11.0.2.iw.1")
+bazel_dep(name = "ros2_rcutils", version = "6.7.2.1.iw.1")
+bazel_dep(name = "tinyxml2", version = "10.0.0")

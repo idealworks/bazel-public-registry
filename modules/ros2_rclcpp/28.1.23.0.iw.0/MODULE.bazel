@@ -1,0 +1,27 @@
+module(
+    name = "ros2_rclcpp",
+    version = "28.1.23.0.iw.0",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "rules_cc", version = "0.2.28")
+bazel_dep(name = "ros2_ament_index", version = "1.8.4.0.iw.0")
+bazel_dep(name = "ros2_class_loader", version = "2.7.1.0.iw.0")
+bazel_dep(name = "ros2_libstatistics_collector", version = "1.7.4.0.iw.0")
+bazel_dep(name = "ros2_rcl", version = "9.2.11.1.iw.4")
+bazel_dep(name = "ros2_rcl_interfaces", version = "2.0.4.0.iw.0")
+bazel_dep(name = "ros2_rcpputils", version = "2.11.4.0.iw.0")
+bazel_dep(name = "ros2_rcutils", version = "6.7.7.0.iw.0")
+bazel_dep(name = "ros2_rmw", version = "7.3.4.0.iw.0")
+bazel_dep(name = "ros2_rosidl", version = "4.6.10.1.iw.0")
+bazel_dep(name = "ros2_rosidl_typesupport", version = "3.2.3.0.iw.0")
+bazel_dep(name = "ros2_tracing", version = "8.2.7.0.iw.0")
+bazel_dep(name = "rules_python", version = "2.5.0")
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+    hub_name = "ros2_rclcpp_pip_deps",
+    python_version = "3.12",
+    requirements_lock = "//:requirements_lock.txt",
+)
+use_repo(pip, "ros2_rclcpp_pip_deps")

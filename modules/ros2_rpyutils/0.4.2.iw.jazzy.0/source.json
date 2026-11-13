@@ -1,9 +1,0 @@
-{
-  "url": "https://github.com/ros2/rpyutils/archive/973dbcc0a0a18299d840d089e47372d569264c31.tar.gz",
-  "integrity": "sha256-o9YD+a//Bi08lsaBuw/aTu0zF/d8H+ogiCb+wCUl4ZM=",
-  "strip_prefix": "rpyutils-973dbcc0a0a18299d840d089e47372d569264c31",
-  "overlay": {
-    "MODULE.bazel": "sha256-jCcaAD0FgoJriAwWAf12faRdYP99DiE5jZDqZc0IZkg=",
-    "BUILD.bazel": "sha256-/bk8uBtUTj7pwhkOYm3i9gzLAjX8XJ0i4ILuKsUWNJw="
-  }
-}

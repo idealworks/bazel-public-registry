@@ -1,0 +1,15 @@
+{
+  "url": "https://github.com/ros2/ros2cli/archive/221ce584a937ac234ae6337cac71c22d42e8b692.tar.gz",
+  "integrity": "sha256-+lmdAwCqFBisKFDZm4opFOWF1OtdzDdKj5EZELT+NJU=",
+  "strip_prefix": "ros2cli-221ce584a937ac234ae6337cac71c22d42e8b692",
+  "overlay": {
+    "MODULE.bazel": "sha256-vOF3+lz2u/5415oqS2G2SqcZuBXmHkT+Uc4/uPbn09M=",
+    "ros2_param.py": "sha256-6ggZYPj31fqBYlurzdAs2iUayXru+qHceifFf+hoink=",
+    "ros2_node.py": "sha256-ZWwhwxbtfglQWkf5aGi7Mz4tBvxxJVjRcMg62eT1Otw=",
+    "ros2_lifecycle.py": "sha256-UMujmlTfiDllH4CCYQJFcJuiJCJcn+cKXKno2hlbe9o=",
+    "ros2_cmd.py": "sha256-9+QXGXV6HsjfgwpMUDsDhfDmlhzrnypb2I9GKC9XSug=",
+    "requirements_lock.txt": "sha256-Lv8KgBCCV0CvintNTmlcsfYoIHeLnWmJZkkZYY990C8=",
+    "requirements.txt": "sha256-/LsuoNaynNKsxWh7tLtxFqtQld9hbFJgfhnP4rozE2M=",
+    "BUILD.bazel": "sha256-1LsKgSC9fhopdx9HeejBLj+2g4Vg6OgX9//fgA9qhCM="
+  }
+}

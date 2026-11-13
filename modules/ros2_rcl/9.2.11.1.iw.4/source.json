@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/ros2/rcl/archive/18d96c9c2b98e616324ae9a2c7701dd0b0886ff0.tar.gz",
+  "integrity": "sha256-j3DiHGa6cHO+sZbzQBWI1MN8Eca+ckd4XLyVQOs9IM4=",
+  "strip_prefix": "rcl-18d96c9c2b98e616324ae9a2c7701dd0b0886ff0",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-5BkYqTxJF5cFF5cZu59ICIYfplcYoqh78EqDQK4uv94="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-tyluXfbSF0mzbbAajDOdl6Yu1QMWAYj8peB+tcX6mIs=",
+    "BUILD.bazel": "sha256-YEzu/Q4bzByxHcAJNliYyFj/Xf+IFNQlUbE1uWwxhEY="
+  }
+}

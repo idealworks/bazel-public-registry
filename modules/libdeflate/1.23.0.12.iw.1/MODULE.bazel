@@ -1,0 +1,4 @@
+module(
+    name = "libdeflate",
+    version = "1.23.0.12.iw.1",
+)

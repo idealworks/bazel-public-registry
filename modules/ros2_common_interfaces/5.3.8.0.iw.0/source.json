@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/common_interfaces/archive/a941f14bb318d8d904505ed935ccbb97f24a70a4.tar.gz",
+  "integrity": "sha256-QUDMeArsKWvNiMMEm6VBeD1A+7fdDlkZ5iGoXjFEFro=",
+  "strip_prefix": "common_interfaces-a941f14bb318d8d904505ed935ccbb97f24a70a4",
+  "overlay": {
+    "MODULE.bazel": "sha256-cqEzFafyAnjgP1deBb98Vz/fIM0lEUsnw4rA0Q8GgAA=",
+    "BUILD.bazel": "sha256-Tg2jX7fky4BTUpZDfBjlNWBWael1GT/BOnff+GzjB8k="
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros/diagnostics/archive/20667d1d47c77d5d1fdb9252f16d585c49706dfd.tar.gz",
+  "integrity": "sha256-SaTlHO0kMb7HfBkdtPeE0Po868V5bzvKZ7hdGA6qmgQ=",
+  "strip_prefix": "diagnostics-20667d1d47c77d5d1fdb9252f16d585c49706dfd",
+  "overlay": {
+    "MODULE.bazel": "sha256-PUykw+77EoVVIWfipJoiwOSbWssalB5WKku0esb6f7E=",
+    "BUILD.bazel": "sha256-Dh6SG3LuUX5Bd7jTran4qVKPsQCBSHbBxK4aHXoTtzE="
+  }
+}

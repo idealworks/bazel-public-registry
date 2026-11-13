@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/ament_cmake_ros/archive/5b77a227b940a25be5224d78d37591c8baccd756.tar.gz",
+  "integrity": "sha256-0GPpzFxo0S0zWX8KxbuVaHEISK0IdBsBmlQ261LEOYg=",
+  "strip_prefix": "ament_cmake_ros-5b77a227b940a25be5224d78d37591c8baccd756",
+  "overlay": {
+    "MODULE.bazel": "sha256-uoqaIPapVTywm6EV97K2kX2zn9+n4zGz84vtCx7ttGQ=",
+    "BUILD.bazel": "sha256-hlDWKUiIfqjuhN8cqGTmUifJHbrIyXmblqLOXMqVHGs="
+  }
+}

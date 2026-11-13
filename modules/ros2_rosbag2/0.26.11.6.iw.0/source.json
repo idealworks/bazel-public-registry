@@ -1,0 +1,17 @@
+{
+  "url": "https://github.com/ros2/rosbag2/archive/12b5e8ba4eb5665501a16f0d9e050552a1149f56.tar.gz",
+  "integrity": "sha256-5zMxFJTxzLZ5ycZndHzyGWHZ7htW6UY3ezHFko3lDzo=",
+  "strip_prefix": "rosbag2-12b5e8ba4eb5665501a16f0d9e050552a1149f56",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-SMZ0QLfC2YSTUK8ulXcbG8+/YXrQ2J9qimNumbpyIDA="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-c9TGHbQznHYE9p6TFdYtu7f/WT+kE2z9IZw44u/S+Zk=",
+    "rosbag2_storage_sqlite3/ros2bag_sqlite3_cli.dist-info/entry_points.txt": "sha256-cFdooQG6JFwPwnmTnYr176mB3m5ux0LpLA6Mavyj7aM=",
+    "rosbag2_storage_mcap/ros2bag_mcap_cli.dist-info/entry_points.txt": "sha256-Y2+WL7IV+hQ7CPly2/vNdprVaOyJlrCCp2iOiAJflTQ=",
+    "requirements_lock.txt": "sha256-zN82x5kcl3WgMZH5OtgiOostbJPSwXqmeOhZy/cwL3Q=",
+    "requirements.txt": "sha256-67DhZUXJEb0x7DOs5X3t+EwE5nPS3CjAKQho5K3023c=",
+    "BUILD.bazel": "sha256-0fx1ewiUcrzDisNiyIwCVuM1ZRF8ls0MU1b6Iwz8vaA="
+  }
+}

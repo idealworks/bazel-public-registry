@@ -1,4 +1,0 @@
-module(
-    name = "libdeflate",
-    version = "1.23-12-g24dd71e.iw.1",
-)

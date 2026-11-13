@@ -1,0 +1,25 @@
+module(
+    name = "ros2_rclpy",
+    version = "7.1.13.0.iw.0",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "rules_cc", version = "0.2.28")
+bazel_dep(name = "ros2_ament_index", version = "1.8.4.0.iw.0")
+bazel_dep(name = "ros2_rcl", version = "9.2.11.1.iw.3")
+bazel_dep(name = "ros2_rcl_interfaces", version = "2.0.4.0.iw.0")
+bazel_dep(name = "ros2_rpyutils", version = "0.4.2.0.iw.0")
+bazel_dep(name = "rules_python", version = "2.5.0")
+bazel_dep(name = "pybind11_bazel", version = "2.13.6")
+
+# pybind11 headers from BCR (same v2.13.6 sources as the old iw pybind11 module)
+pybind_configure = use_extension("@pybind11_bazel//:internal_configure.bzl", "internal_configure_extension")
+use_repo(pybind_configure, "pybind11")
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+    hub_name = "ros2_rclpy_pip_deps",
+    python_version = "3.12",
+    requirements_lock = "//:requirements_lock.txt",
+)
+use_repo(pip, "ros2_rclpy_pip_deps")

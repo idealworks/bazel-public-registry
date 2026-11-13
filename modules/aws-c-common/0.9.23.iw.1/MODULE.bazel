@@ -1,4 +1,0 @@
-module(
-    name = "aws-c-common",
-    version = "0.9.23.iw.1",
-)

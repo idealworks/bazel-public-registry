@@ -1,0 +1,6 @@
+module(
+    name = "azure_umqtt_c",
+    version = "2022.07.02.26.iw.0",
+)
+
+bazel_dep(name = "azure_c_shared_utility", version = "2022.07.02.68.iw.0")

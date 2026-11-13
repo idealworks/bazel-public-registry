@@ -1,9 +1,0 @@
-{
-  "url": "https://github.com/ros2/rcl_interfaces/archive/7aa3caf43377ea6ad615bc1040832e2c7566bfbe.tar.gz",
-  "integrity": "sha256-2YSUIDXNTfT2DJLWA4zsv8P1oBoZd8GzGZzuRc1nKBw=",
-  "strip_prefix": "rcl_interfaces-7aa3caf43377ea6ad615bc1040832e2c7566bfbe",
-  "overlay": {
-    "MODULE.bazel": "sha256-Dm+kUt1jZ6+DsmCdiHVbgOUr6J8dKe2/Lo8TzLvYGjA=",
-    "BUILD.bazel": "sha256-uJb+dGbBNQglTcTAORlTP9Zv1P0W/0iNfDRUacDHEmk="
-  }
-}

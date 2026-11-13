@@ -1,0 +1,8 @@
+{
+  "url": "https://github.com/EddyGharib/rules_ros2_interfaces/archive/44ccc8766435031e1baac67800fbc18e16bfbd93.tar.gz",
+  "integrity": "sha256-88aR+pdYgRkQuEJ7DvP9vG5SXZ7YNPrGqbZ6337Ahkw=",
+  "strip_prefix": "rules_ros2_interfaces-44ccc8766435031e1baac67800fbc18e16bfbd93",
+  "overlay": {
+    "MODULE.bazel": "sha256-W6xsJoDfds+XY1sgJnLmDZ39b+I4rbGtgRo8VU4FbFY="
+  }
+}

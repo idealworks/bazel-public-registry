@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros/resource_retriever/archive/549b0c712f18c33699b4ce43ddc294a9ab7d2188.tar.gz",
+  "integrity": "sha256-xgy+Neit/16Ss8gQMo5s0MZM6NzJSphCtlejTDFffJQ=",
+  "strip_prefix": "resource_retriever-549b0c712f18c33699b4ce43ddc294a9ab7d2188",
+  "overlay": {
+    "MODULE.bazel": "sha256-Qln5+BhfGIA/qO9mh+OVMspgYA2Z76l2M/1M4VSRKd4=",
+    "BUILD.bazel": "sha256-XZ4vyGUrVcl/zjgaXXYPqzmBcooUzlEVfCsXNXJybAs="
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ament/ament_index/archive/2ccdcb8fd19a364fc793273b5793459207a440b9.tar.gz",
+  "integrity": "sha256-VMomnTH8a49lDOJi9XgfiAXMfIdQRn+N+vahbL2fjb0=",
+  "strip_prefix": "ament_index-2ccdcb8fd19a364fc793273b5793459207a440b9",
+  "overlay": {
+    "MODULE.bazel": "sha256-pM6DmIMIEwbTDm0uGFxeHa6y3AW4zSE9ef/4qwA10d4=",
+    "BUILD.bazel": "sha256-qDwV4ONAXiw/H1Zr82ATWOSC5qYgqjVpHutt07TWbFs="
+  }
+}

@@ -1,0 +1,92 @@
+diff --git a/rmw_zenoh_cpp/src/detail/rmw_context_impl_s.cpp b/rmw_zenoh_cpp/src/detail/rmw_context_impl_s.cpp
+index 6695b98..54ee1c3 100644
+--- a/rmw_zenoh_cpp/src/detail/rmw_context_impl_s.cpp
++++ b/rmw_zenoh_cpp/src/detail/rmw_context_impl_s.cpp
+@@ -97,15 +97,18 @@ public:
+       return RMW_RET_ERROR;
+     }
+ 
+-    // Explicitly close the session before releasing our shared_ptr reference.
+-    // This calls wait_callbacks() internally (since zenoh commit e5db0ce), which waits
+-    // for all in-flight callbacks to finish. We call close() here while node-level entities
+-    // (subscriptions, publishers, etc.) are still alive — at shutdown time, the spin loop
+-    // has already exited so there are no active callbacks, and wait_callbacks() returns
+-    // immediately. The session is then marked as closed, so when the shared_ptr refcount
+-    // eventually reaches zero (after rcl destroys each handle in the normal teardown order),
+-    // the session destructor finds is_closed()==true and skips the blocking close() call.
+-    session_->close();
++    // NOTE(iw): Intentionally leak a reference to the zenoh Session rather than
++    // calling close(). zenoh-c's z_close() drives the tokio runtime; when this
++    // shutdown() runs during process-exit static destruction (the rclcpp Context
++    // is torn down from __cxa_finalize, e.g. when a program does not call
++    // rclcpp::shutdown() explicitly), the runtime's thread-local state is already
++    // gone and z_close() panics with a TLS AccessError. Because z_close() is an
++    // extern "C" boundary that "cannot unwind", that panic aborts the process.
++    // Holding an extra Session reference that is never released ensures the
++    // Session destructor (which would otherwise call close()) never runs, so
++    // z_close() is never invoked during teardown. The OS reclaims the underlying
++    // transport at exit, and the router detects the departed node via liveliness.
++    new std::shared_ptr<zenoh::Session>(session_);
+ 
+     session_.reset();
+ 
+diff --git a/rmw_zenoh_cpp/src/detail/zenoh_config.cpp b/rmw_zenoh_cpp/src/detail/zenoh_config.cpp
+index 7853220..31d8a60 100644
+--- a/rmw_zenoh_cpp/src/detail/zenoh_config.cpp
++++ b/rmw_zenoh_cpp/src/detail/zenoh_config.cpp
+@@ -25,7 +25,7 @@
+ 
+ #include "logging_macros.hpp"
+ 
+-#include <ament_index_cpp/get_package_share_directory.hpp>
++#include "default_config.hpp"
+ #include <rmw/impl/cpp/macros.hpp>
+ 
+ ///=============================================================================
+@@ -53,7 +53,7 @@ static const char * zenoh_config_override = "ZENOH_CONFIG_OVERRIDE";
+ 
+ std::optional<zenoh::Config> _get_z_config(
+   const char * envar_name,
+-  const char * default_uri)
++  const char * default_config)
+ {
+   const char * configured_uri;
+   const char * envar_uri;
+@@ -64,12 +64,14 @@ std::optional<zenoh::Config> _get_z_config(
+       "rmw_zenoh_cpp", "Envar %s cannot be read.", envar_name);
+     return std::nullopt;
+   }
+-  // If the environment variable is set, try to read the configuration from the file,
+-  // if the environment variable is not set use internal configuration
+-  configured_uri = envar_uri[0] != '\0' ? envar_uri : default_uri;
+-  // Try to read the configuration
++  // If the environment variable is set, read the configuration from that file;
++  // otherwise use the built-in default configuration that is embedded into the
++  // binary at build time (so no installed share/ files are required).
++  configured_uri = envar_uri[0] != '\0' ? envar_uri : "<built-in default>";
+   zenoh::ZResult result;
+-  zenoh::Config config = zenoh::Config::from_file(configured_uri, &result);
++  zenoh::Config config = envar_uri[0] != '\0'
++    ? zenoh::Config::from_file(envar_uri, &result)
++    : zenoh::Config::from_str(default_config, &result);
+   if (result != Z_OK) {
+     RMW_ZENOH_LOG_ERROR_NAMED(
+       "rmw_zenoh_cpp",
+@@ -118,12 +120,12 @@ std::optional<zenoh::Config> get_z_config(const ConfigurableEntity & entity)
+       "rmw_zenoh_cpp", "get_z_config called with invalid ConfigurableEntity.");
+     return std::nullopt;
+   }
+-  // Get the absolute path to the default configuration file.
+-  static const std::string path_to_config_folder =
+-    ament_index_cpp::get_package_share_directory("rmw_zenoh_cpp") + "/config/";
+-  const std::string default_config_path = path_to_config_folder + envar_map_it->second.second;
++  // Use the built-in default configuration that is embedded at build time.
++  const char * default_config = (entity == ConfigurableEntity::Router)
++    ? kDefaultRouterConfig
++    : kDefaultSessionConfig;
+ 
+-  return _get_z_config(envar_map_it->second.first, default_config_path.c_str());
++  return _get_z_config(envar_map_it->second.first, default_config);
+ }
+ 
+ ///=============================================================================

@@ -1,0 +1,15 @@
+{
+  "url": "https://github.com/RobotWebTools/rosbridge_suite/archive/cb33a16b890e4b8d9def531326409f3ee6c12537.tar.gz",
+  "integrity": "sha256-BiGp8oQZs1irYZuYRacUgpFy/E1nEYjPRsd871xPU14=",
+  "strip_prefix": "rosbridge_suite-cb33a16b890e4b8d9def531326409f3ee6c12537",
+  "overlay": {
+    "MODULE.bazel": "sha256-IwIswsG3sIJvD0//Kn1077K13jeDPbwIfP8s6fS/hEo=",
+    "third_party/requirements_lock.txt": "sha256-7/jY6AukzRKjVdFY/ye+KFrU8Fp2J2nt77XWmPGuK1A=",
+    "third_party/requirements.txt": "sha256-YUVOLWnuQQg+Ai4BtczXH5zuP7ncJoYiGIBJpmQyRFA=",
+    "third_party/BUILD.bazel": "sha256-OlYtRCIgv9bbRv3oR6b+gHF6mSxZRsm94Cv3Sg05di4=",
+    "rosbridge_server/BUILD.bazel": "sha256-hbubmbPzz6q3MxU6XUk0APaEc/IF6CNGg4BZWjJd/fE=",
+    "rosbridge_msgs/BUILD.bazel": "sha256-Sf2djOjZuOhdOmX3TovfjLKhqFa6qu1l7yK93LC23wI=",
+    "rosbridge_library/BUILD.bazel": "sha256-TB5jgX4BB6Pw2ohsBxYiPY6rpA7dN2rzCMdUiOSLnjI=",
+    "BUILD.bazel": "sha256-GgKogC8wTv/rnSES7Vi+WYKdqUg1D9jZrSQcdkrzhCw="
+  }
+}

@@ -1,0 +1,94 @@
+diff --git a/examples/actions/BUILD.bazel b/examples/actions/BUILD.bazel
+index 061a344..51a1a35 100644
+--- a/examples/actions/BUILD.bazel
++++ b/examples/actions/BUILD.bazel
+@@ -1,3 +1,4 @@
++load("@com_github_mvukov_rules_ros2//ros2:action.bzl", "ros2_action")
+ load("@com_github_mvukov_rules_ros2//ros2:cc_defs.bzl", "ros2_cpp_binary")
+ load(
+     "@com_github_mvukov_rules_ros2//ros2:interfaces.bzl",
+@@ -61,3 +62,10 @@ ros2_launch(
+         ":server",
+     ],
+ )
++
++ros2_action(
++    name = "action",
++    deps = [
++        ":py_fibonacci_msgs",
++    ],
++)
+diff --git a/ros2/BUILD.bazel b/ros2/BUILD.bazel
+index 8d1df61..e294b2c 100644
+--- a/ros2/BUILD.bazel
++++ b/ros2/BUILD.bazel
+@@ -6,6 +6,7 @@ load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+ load("@rules_python//python:pip.bzl", "whl_filegroup")
+ 
+ exports_files([
++    "action.bzl",
+     "ament.bzl",
+     "ament_setup.cc.tpl",
+     "ament_setup.h.tpl",
+@@ -19,6 +20,7 @@ exports_files([
+     "plugin.bzl",
+     "py_defs.bzl",
+     "pytest_wrapper.py.tpl",
++    "ros2_action.py",
+     "ros2_service.py",
+     "ros2_topic.py",
+     "rust_interfaces.bzl",
+diff --git a/ros2/action.bzl b/ros2/action.bzl
+new file mode 100644
+index 0000000..03b882a
+--- /dev/null
++++ b/ros2/action.bzl
+@@ -0,0 +1,25 @@
++""" Implements a macro for setting up a ROS 2 action app.
++"""
++
++load("@rules_python//python:defs.bzl", "py_binary")
++
++def ros2_action(name, deps, **kwargs):
++    """ Defines a ROS 2 action app for a set of deps.
++
++    Args:
++        name: A unique target name.
++        deps: A list of Python targets: typically IDL libraries
++        (py_ros2_interface_library targets) used by the action app.
++        **kwargs: https://bazel.build/reference/be/common-definitions#common-attributes-binaries
++    """
++    py_binary(
++        name = name,
++        srcs = ["@com_github_mvukov_rules_ros2//ros2:ros2_action.py"],
++        main = "@com_github_mvukov_rules_ros2//ros2:ros2_action.py",
++        deps = [
++            "@com_github_mvukov_rules_ros2//ros2:ros2_cmd",
++            "@ros2cli//:ros2action",
++            "@ros2cli",
++        ] + deps,
++        **kwargs
++    )
+diff --git a/ros2/ros2_action.py b/ros2/ros2_action.py
+new file mode 100644
+index 0000000..b44dbda
+--- /dev/null
++++ b/ros2/ros2_action.py
+@@ -0,0 +1,17 @@
++import sys
++
++import ros2action.verb.info
++import ros2action.verb.list
++import ros2action.verb.send_goal
++import ros2cli.cli
++
++import ros2.ros2_cmd
++
++COMMAND_EXTENSIONS = {
++    'info': ros2action.verb.info.InfoVerb(),
++    'list': ros2action.verb.list.ListVerb(),
++    'send_goal': ros2action.verb.send_goal.SendGoalVerb(),
++}
++
++extension = ros2.ros2_cmd.Ros2CommandExtension(COMMAND_EXTENSIONS)
++sys.exit(ros2cli.cli.main(extension=extension))

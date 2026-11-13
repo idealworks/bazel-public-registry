@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros/class_loader/archive/c404b82f04e6b0cce5c6205626b2d35fdf4dc882.tar.gz",
+  "integrity": "sha256-8kFM8oGPGWp/ydmKQekSBfztevoRa+VOu8qYc3Hg4w0=",
+  "strip_prefix": "class_loader-c404b82f04e6b0cce5c6205626b2d35fdf4dc882",
+  "overlay": {
+    "MODULE.bazel": "sha256-nXSQ0a3k20IQR9BD/m2gcfNBBzgIEVc4u8sZVSFlZ+I=",
+    "BUILD.bazel": "sha256-Ywqq4xO2bQRlEoYr5bJw4FEeYAGWHBgzbjh9u7EGwoI="
+  }
+}

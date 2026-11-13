@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/ros-tooling/keyboard_handler/archive/b007b08de43ecb9fe12bf72c406b4345de8d42b4.tar.gz",
+  "integrity": "sha256-IZvrbwxWlVngfQs41coIyxU45bIRjgY9Xbopc8Cge8E=",
+  "strip_prefix": "keyboard_handler-b007b08de43ecb9fe12bf72c406b4345de8d42b4",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-NTiutlLh3KZR+FAgW7F7BdpRvTTct962Ruej4UhhIlA="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-cuVEprDXBqugQSsJWVuwD2MNeoc05HGkNCCzy0GmTA4=",
+    "BUILD.bazel": "sha256-0sXEKXOeRdrnZQ8lrwAY6kQM2b03rHx7X/Z3Kq6gQRM="
+  }
+}

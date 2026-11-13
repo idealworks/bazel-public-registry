@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/rmw_cyclonedds/archive/b70b71b0816fbe88c579782ec8756dae40af220a.tar.gz",
+  "integrity": "sha256-bj62ps9qfFVkemfeKMeXhV48K2PuaMu4Yi1fKSXCALA=",
+  "strip_prefix": "rmw_cyclonedds-b70b71b0816fbe88c579782ec8756dae40af220a",
+  "overlay": {
+    "MODULE.bazel": "sha256-ZrAbdme1VU3sevUIdDkTj/lmLaFbwuaZVkxiYgtwQQM=",
+    "BUILD.bazel": "sha256-TP161rOJ4rlYOA2QgF3ggMWOZ1SbJl0XqCFBpQp/IXE="
+  }
+}
