@@ -1,0 +1,31 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "rosx_introspection",
+    srcs = [
+        "src/deserializer.cpp",
+        "src/flat_message_writer.cpp",
+        "src/idl_parser.cpp",
+        "src/json_message_writer.cpp",
+        "src/msgpack_message_writer.cpp",
+        "src/msgpack_utils.cpp",
+        "src/ros_field.cpp",
+        "src/ros_message.cpp",
+        "src/ros_parser.cpp",
+        "src/ros_type.cpp",
+        "src/serializer.cpp",
+        "src/stringtree_leaf.cpp",
+    ],
+    hdrs = glob(
+        [
+            "include/**/*.hpp",
+            "include/**/*.h",
+        ],
+        exclude = ["include/rosx_introspection/ros_utils/**"],  # ROS-only helpers (rosbag2_cpp), off as in upstream's non-ament build
+    ),
+    copts = ["-std=c++20"],  # upstream requires cxx_std_20 PUBLIC (std::span in the headers); consumers need C++20 too
+    includes = ["include"],
+    local_defines = ["ROSX_HAS_JSON"],
+    visibility = ["//visibility:public"],
+    deps = ["@rapidjson"],
+)

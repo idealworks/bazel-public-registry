@@ -1,2 +1,0 @@
-[ros2bag.storage_plugin_cli_extension]
-mcap = ros2bag_mcap_cli

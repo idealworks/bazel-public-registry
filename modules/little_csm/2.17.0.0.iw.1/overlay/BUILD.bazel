@@ -1,0 +1,14 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+cc_library(
+    name = "little_csm",
+    srcs = glob([
+        "src/*.c",
+        "src/*.h",
+    ]),
+    hdrs = glob(["include/*.h"]),
+    includes = [
+        "include",
+        "src",
+    ],
+    visibility = ["//visibility:public"],
+)

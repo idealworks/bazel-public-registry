@@ -1,8 +1,0 @@
-module(
-    name = "fast_cdr",
-    version = "v2.2.5.iw.jazzy.2",
-    compatibility_level = 1,
-)
-
-bazel_dep(name = "rules_cc", version = "0.2.27")
-bazel_dep(name = "bazel_skylib", version = "1.9.2")

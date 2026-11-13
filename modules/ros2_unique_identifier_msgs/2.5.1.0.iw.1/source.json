@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/unique_identifier_msgs/archive/901599ee92c2ee949f42a5c5d821c92b3e515d69.tar.gz",
+  "integrity": "sha256-Ydrq5n70QGYoAMa+3Chq2x3jUOKDjflZcgzlleOorpE=",
+  "strip_prefix": "unique_identifier_msgs-901599ee92c2ee949f42a5c5d821c92b3e515d69",
+  "overlay": {
+    "MODULE.bazel": "sha256-StkNeeVPjJMzU1Ixg9BDAfNlLn+wX8wheTC5TnLFZiY=",
+    "BUILD.bazel": "sha256-0EJLDS3MSbpGNFuWY/tMGCc1ul2FmKMFyof3RMtzw8U="
+  }
+}

@@ -1,2 +1,0 @@
-[ros2bag.storage_plugin_cli_extension]
-sqlite3 = ros2bag_sqlite3_cli

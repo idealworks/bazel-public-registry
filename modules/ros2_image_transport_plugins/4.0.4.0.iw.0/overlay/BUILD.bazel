@@ -1,0 +1,66 @@
+load(
+    "@rules_ros2_plugins//ros2:plugin.bzl",
+    "ros2_plugin",
+)
+
+ros2_plugin(
+    name = "compressed_depth_image_transport_plugins",
+    srcs = glob([
+        "compressed_depth_image_transport/src/*.cpp",
+    ]),
+    hdrs = glob([
+        "compressed_depth_image_transport/include/**/*.h",
+        "compressed_depth_image_transport/include/**/*.hpp",
+    ]),
+    includes = ["compressed_depth_image_transport/include"],
+    plugin_specs = [
+        {
+            "class_name": "mage_transport/compressedDepth_pub",
+            "class_type": "compressed_depth_image_transport::CompressedDepthPublisher",
+            "base_class_type": "image_transport::PublisherPlugin",
+        },
+        {
+            "class_name": "image_transport/compressedDepth_sub",
+            "class_type": "compressed_depth_image_transport::CompressedDepthSubscriber",
+            "base_class_type": "image_transport::SubscriberPlugin",
+        },
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ros2_image_common//:image_transport",
+        "@ros2_pluginlib//:pluginlib",
+        "@ros2_rclcpp//:rclcpp",
+        "@vision_opencv//:cv_bridge",
+    ],
+)
+
+ros2_plugin(
+    name = "compressed_image_transport_plugins",
+    srcs = glob([
+        "compressed_image_transport/src/*.cpp",
+    ]),
+    hdrs = glob([
+        "compressed_image_transport/include/**/*.h",
+        "compressed_image_transport/include/**/*.hpp",
+    ]),
+    includes = ["compressed_image_transport/include"],
+    plugin_specs = [
+        {
+            "class_name": "image_transport/compressed_pub",
+            "class_type": "compressed_image_transport::CompressedPublisher",
+            "base_class_type": "image_transport::PublisherPlugin",
+        },
+        {
+            "class_name": "image_transport/compressed_sub",
+            "class_type": "compressed_image_transport::CompressedSubscriber",
+            "base_class_type": "image_transport::SubscriberPlugin",
+        },
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@ros2_image_common//:image_transport",
+        "@ros2_pluginlib//:pluginlib",
+        "@ros2_rclcpp//:rclcpp",
+        "@vision_opencv//:cv_bridge",
+    ],
+)

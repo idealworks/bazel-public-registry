@@ -1,0 +1,13 @@
+module(
+    name = "perception_pcl",
+    version = "2.6.1.6.iw.1",
+)
+
+bazel_dep(name = "rules_cc", version = "0.2.28")
+bazel_dep(name = "eigen", version = "3.4.0.bcr.1")
+bazel_dep(name = "boost.filesystem", version = "1.83.0.bcr.1")
+bazel_dep(name = "pcl", version = "1.13.1.0.iw.8")
+bazel_dep(name = "pcl_msgs", version = "1.0.0.1.iw.1")
+bazel_dep(name = "ros2_common_interfaces", version = "5.3.8.0.iw.0")
+bazel_dep(name = "ros2_message_filters", version = "4.11.18.0.iw.0")
+bazel_dep(name = "ros2_rclcpp", version = "28.1.23.0.iw.0")

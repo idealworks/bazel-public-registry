@@ -1,0 +1,9 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+cc_library(
+    name = "umock_c",
+    srcs = glob(["src/**/*.c"]),
+    hdrs = glob(["inc/**/*.h"]),
+    includes = ["inc"],
+    visibility = ["//visibility:public"],
+    deps = ["@azure_macro_utils_c"],
+)

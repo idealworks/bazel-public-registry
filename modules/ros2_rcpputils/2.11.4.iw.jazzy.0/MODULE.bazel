@@ -1,8 +1,0 @@
-module(
-    name = "ros2_rcpputils",
-    version = "2.11.4.iw.jazzy.0",
-    compatibility_level = 1,
-)
-
-bazel_dep(name = "rules_cc", version = "0.2.27")
-bazel_dep(name = "ros2_rcutils", version = "6.7.7.iw.jazzy.0")

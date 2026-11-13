@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/ros2/rmw_implementation/archive/16201bff9bc198c8820cc2dfd19c1163204057c9.tar.gz",
+  "integrity": "sha256-sqrASQ3GO/RQmghj1JtIEKJdaXtlWhZ6PXqrelfSI48=",
+  "strip_prefix": "rmw_implementation-16201bff9bc198c8820cc2dfd19c1163204057c9",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-vFQTkVWV7upyIAOv50yn67bSNMsYVCHGa652shpw/94="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-nIpA5D22PNvMb8T3K10ygJckTMPSOp8BdfTjpJy4Faw=",
+    "BUILD.bazel": "sha256-6aWv9WHNMnPfVWgSHc5ycsRa/45a/8CFxTUuBxBcVmU="
+  }
+}

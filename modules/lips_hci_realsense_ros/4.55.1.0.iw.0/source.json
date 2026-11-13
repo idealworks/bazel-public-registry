@@ -1,0 +1,14 @@
+{
+  "url": "https://github.com/IntelRealSense/realsense-ros/archive/8a86cb88a428bdefa204759c899b84adc81606ae.tar.gz",
+  "integrity": "sha256-6ThapPYfaQ3xHVMrOo1mQsbYpKyB4TSCiEV2dOJFzcE=",
+  "strip_prefix": "realsense-ros-8a86cb88a428bdefa204759c899b84adc81606ae",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-BvqBARbFchwOm4ly4MglvOCA7DvtU22YuEih1EpPx5c="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-mZw0Pzibs4+WX7ig0UfZbFuJzzJEl2bwZyPTbaaDvRg=",
+    "realsense2_camera_msgs/BUILD.bazel": "sha256-8hT6Uof/NYjXSo7aBfjRTPTni0xzpQUZEogka246p9A=",
+    "realsense2_camera/BUILD.bazel": "sha256-BCXxTwVVFvZYa0rJJ88Me7BaP2YxYBwMdtngGGsrJDA="
+  }
+}

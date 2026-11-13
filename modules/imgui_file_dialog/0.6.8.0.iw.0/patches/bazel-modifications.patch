@@ -1,0 +1,26 @@
+diff --git a/ImGuiFileDialog.cpp b/ImGuiFileDialog.cpp
+index 0586da8..0b3a7fd 100644
+--- a/ImGuiFileDialog.cpp
++++ b/ImGuiFileDialog.cpp
+@@ -100,7 +100,7 @@ SOFTWARE.
+ #ifdef IMGUI_INTERNAL_INCLUDE
+ #include IMGUI_INTERNAL_INCLUDE
+ #else  // IMGUI_INTERNAL_INCLUDE
+-#include <imgui_internal.h>
++#include "imgui_internal.h"
+ #endif  // IMGUI_INTERNAL_INCLUDE
+ 
+ // legacy compatibility 1.89
+diff --git a/ImGuiFileDialog.h b/ImGuiFileDialog.h
+index 5d6c3c7..bb8e4fb 100644
+--- a/ImGuiFileDialog.h
++++ b/ImGuiFileDialog.h
+@@ -197,7 +197,7 @@ struct IGFD_Thumbnail_Info {
+ #ifdef IMGUI_INCLUDE
+ #include IMGUI_INCLUDE
+ #else  // IMGUI_INCLUDE
+-#include <imgui.h>
++#include "imgui.h"
+ #endif  // IMGUI_INCLUDE
+ 
+ #include <set>

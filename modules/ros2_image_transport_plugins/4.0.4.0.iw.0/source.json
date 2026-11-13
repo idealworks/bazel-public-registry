@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros-perception/image_transport_plugins/archive/0b3ec615c8e78baad65d48c4f2e860401f560f6d.tar.gz",
+  "integrity": "sha256-8KVeBVjDgffq7wI/9nq5yEgglQiXkkGJTbG1zzs9vBI=",
+  "strip_prefix": "image_transport_plugins-0b3ec615c8e78baad65d48c4f2e860401f560f6d",
+  "overlay": {
+    "MODULE.bazel": "sha256-ZW9ZZYkPRNyUPXFrNa3fudFjXMCOWiFlvQcCw5WK81M=",
+    "BUILD.bazel": "sha256-seIM2XfBH1vQs/uPuFLHMsUJeXIkde1wsnThXy+O7rk="
+  }
+}

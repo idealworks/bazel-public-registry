@@ -1,0 +1,11 @@
+module(
+    name = "ros2_image_transport_plugins",
+    version = "4.0.4.0.iw.0",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "rules_ros2_plugins", version = "0.1.0")
+bazel_dep(name = "ros2_image_common", version = "5.1.8.2.iw.0")
+bazel_dep(name = "ros2_pluginlib", version = "5.4.6.1.iw.0")
+bazel_dep(name = "ros2_rclcpp", version = "28.1.23.0.iw.0")
+bazel_dep(name = "vision_opencv", version = "4.1.0.0.iw.0")

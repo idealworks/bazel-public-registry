@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/ros2/rclpy/archive/696d063cf84c02d93a7b217193bc3bb1b4a69e5e.tar.gz",
+  "integrity": "sha256-wOu9nVd0GJhnu35d17a9hRGOuOKxotaNCjOKePbSnQk=",
+  "strip_prefix": "rclpy-696d063cf84c02d93a7b217193bc3bb1b4a69e5e",
+  "overlay": {
+    "MODULE.bazel": "sha256-tVLTkh1LA6uhqUJnaz5MTCOKSc93LjxxriOKvJdZ5OM=",
+    "requirements_lock.txt": "sha256-zN82x5kcl3WgMZH5OtgiOostbJPSwXqmeOhZy/cwL3Q=",
+    "requirements.txt": "sha256-NMkWvYDYr5+OnrCqjdCkfHbP9dFqncYTIUrKwA628dE=",
+    "BUILD.bazel": "sha256-7vM921eNnPWO/p1ERDfBcBhpM2RYowfchmelZNNsCCI="
+  }
+}

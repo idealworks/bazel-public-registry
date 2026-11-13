@@ -1,9 +1,0 @@
-{
-  "url": "https://github.com/ros2/rmw/archive/8cb94a87cf3f4049abe2d563af893517bf336930.tar.gz",
-  "integrity": "sha256-0NQ9PxmxJbGrweJsQSpnTMpNIKuIvZulSWz1ozbSX44=",
-  "strip_prefix": "rmw-8cb94a87cf3f4049abe2d563af893517bf336930",
-  "overlay": {
-    "MODULE.bazel": "sha256-xgAySQX8pKjDOsQEJKlIpN8q/hQAJ/8LNHBjxSt6fU0=",
-    "BUILD.bazel": "sha256-JoC+73fW9foat12ry1gDf40KQ31Sa6N7QvcAtXXNhIg="
-  }
-}

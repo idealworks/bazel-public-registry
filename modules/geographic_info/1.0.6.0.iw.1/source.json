@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros-geographic-info/geographic_info/archive/24806adc767414eb3a34a58aefeb648ee415b09a.tar.gz",
+  "integrity": "sha256-Yz5tH+/MK25qPKEw3sGAheGw0IydRdiiNDQANuV7uBs=",
+  "strip_prefix": "geographic_info-24806adc767414eb3a34a58aefeb648ee415b09a",
+  "overlay": {
+    "MODULE.bazel": "sha256-U47AH6wDlGW5DDdbxLDMbflIO/BkY9bq1zIMd5kG2+Y=",
+    "BUILD.bazel": "sha256-BlNcYGndDT2Noql4kQzjJd9furcgL7WO2ZWz9InyGwY="
+  }
+}

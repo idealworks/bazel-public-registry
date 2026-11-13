@@ -1,0 +1,17 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+exports_files([
+    "transport.c",
+    "Xtrans.c",
+    "Xtranslcl.c",
+    "Xtranssock.c",
+    "Xtransutil.c",
+])
+
+cc_library(
+    name = "libxtrans",
+    hdrs = [
+        "Xtrans.h",
+        "Xtransint.h",
+    ],
+    visibility = ["//visibility:public"],
+)

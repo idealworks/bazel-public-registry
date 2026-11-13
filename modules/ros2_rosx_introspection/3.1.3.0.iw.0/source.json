@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/facontidavide/rosx_introspection/archive/87ce5565c3fbed4c732ce37499d9007688a6a3f9.tar.gz",
+  "integrity": "sha256-03F3JFHhUwbUVOiOo6XltfJfF8LrXDVhHI9TBmI8eNg=",
+  "strip_prefix": "rosx_introspection-87ce5565c3fbed4c732ce37499d9007688a6a3f9",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-kfRjbxXIpZhBU7c5TRaO13x5bsd++JFJdJrxKA+WBUs="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-E3Xz8pDO9AkHTyXBbm6j9tOB/Vt4scFb8sPyB0+wVzE=",
+    "BUILD.bazel": "sha256-OFN70BTH9jhIg0a+7nFQLDt2YCkA2qzc4f598/qq/h8="
+  }
+}

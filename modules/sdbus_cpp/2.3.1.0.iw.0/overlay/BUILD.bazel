@@ -1,0 +1,38 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+# What upstream's CMake passes; LIBSYSTEMD_VERSION gates sd-bus features (method call timeouts, close_unref, ...)
+# and must match the systemd we link (BCR 260).
+_DEFINES = [
+    "SDBUS_HEADER=<systemd/sd-bus.h>",
+    "LIBSYSTEMD_VERSION=260",
+]
+
+# The one C source; kept separate so it does not get the C++20 flag below.
+cc_library(
+    name = "vtable_utils",
+    srcs = ["src/VTableUtils.c"],
+    hdrs = ["src/VTableUtils.h"],
+    local_defines = _DEFINES,
+    strip_include_prefix = "src",
+    deps = ["@systemd//:libsystemd"],
+)
+
+cc_library(
+    name = "sdbus_cpp",
+    srcs = glob(
+        [
+            "src/*.cpp",
+            "src/*.h",
+        ],
+        exclude = ["src/VTableUtils.h"],
+    ),
+    hdrs = glob(["include/sdbus-c++/*"]),
+    copts = ["-std=c++20"],
+    includes = ["include"],
+    local_defines = _DEFINES,
+    visibility = ["//visibility:public"],
+    deps = [
+        ":vtable_utils",
+        "@systemd//:libsystemd",
+    ],
+)

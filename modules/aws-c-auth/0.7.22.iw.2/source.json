@@ -1,9 +1,0 @@
-{
-  "url": "https://github.com/awslabs/aws-c-auth/archive/refs/tags/v0.7.22.tar.gz",
-  "integrity": "sha256-8kmhKmrDGekpwAX7fv1VNMg9OvOjpTciYm/2CklAVLs=",
-  "strip_prefix": "aws-c-auth-0.7.22",
-  "overlay": {
-    "MODULE.bazel": "sha256-IwIwZKr3iOCg8q5VXS41YbPRRCO5GGyt2AmZV6kjDC4=",
-    "BUILD.bazel": "sha256-9aEIsHYIdxP7iPTRTdYW0jcxuAAb/SX3nAqtkGOCqH0="
-  }
-}

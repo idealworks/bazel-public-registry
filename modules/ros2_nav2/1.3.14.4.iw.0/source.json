@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros-navigation/navigation2/archive/94d1c2a345dda6ff637e6a72c9101d927ee99f19.tar.gz",
+  "integrity": "sha256-EBuyty9u2D8Fdz+zXhSUgaUJ7vAIu+e4joZkxn4AnIc=",
+  "strip_prefix": "navigation2-94d1c2a345dda6ff637e6a72c9101d927ee99f19",
+  "overlay": {
+    "MODULE.bazel": "sha256-ccr16eU6A4kPXzbxbuEisxNX79J+ZzUji6XD0vGdL34=",
+    "BUILD.bazel": "sha256-aXR76Ro1uiDe6enRNBnG1aKCe7PYQMezZFlnYlNY6Tg="
+  }
+}

@@ -1,0 +1,15 @@
+module(
+    name = "kinematic_icp",
+    version = "0.1.1.6.iw.1",
+)
+
+bazel_dep(name = "rules_cc", version = "0.2.18")
+bazel_dep(name = "eigen", version = "3.4.0.bcr.1.1")
+bazel_dep(name = "onetbb", version = "2021.13.0.0.iw.0")
+bazel_dep(name = "sophus", version = "1.22.10.bcr.1")
+bazel_dep(name = "kiss_icp", version = "1.2.0.0.iw.0")
+bazel_dep(name = "ros2_common_interfaces", version = "5.3.8.0.iw.0")
+bazel_dep(name = "ros2_geometry2", version = "0.36.23.0.iw.0")
+bazel_dep(name = "ros2_laser_geometry", version = "2.7.2.0.iw.0")
+bazel_dep(name = "ros2_rclcpp", version = "28.1.23.0.iw.0")
+bazel_dep(name = "ros2_rosbag2", version = "0.26.11.6.iw.0")

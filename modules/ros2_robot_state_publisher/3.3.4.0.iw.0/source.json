@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros/robot_state_publisher/archive/d1b994d2d2eb19e4d2886be57211114134f25b50.tar.gz",
+  "integrity": "sha256-QUYcLVBB9Bx8jul9e5Gwt/iWsy02LFNYb/ieUhcbaLY=",
+  "strip_prefix": "robot_state_publisher-d1b994d2d2eb19e4d2886be57211114134f25b50",
+  "overlay": {
+    "MODULE.bazel": "sha256-HBzgaHjnSkU1Y5MMQ+iuOLkyaQxs8BYS8vO7E/1cDAM=",
+    "BUILD.bazel": "sha256-XZNO9LhSZ3U3drCVPQQMgIOU0pSVkaX6FRULj7Efcu8="
+  }
+}

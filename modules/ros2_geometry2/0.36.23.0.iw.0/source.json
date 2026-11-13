@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/geometry2/archive/f702874b1c8535d6a038230ab2cda0ba5d521ebd.tar.gz",
+  "integrity": "sha256-0kw/sXzACHsvx/CvrCitdO7iDJiKykJHwgH3anAx9iE=",
+  "strip_prefix": "geometry2-f702874b1c8535d6a038230ab2cda0ba5d521ebd",
+  "overlay": {
+    "MODULE.bazel": "sha256-iZ0diX0XyEBAvle7dKmNsT6TUc5rWUiYcCbJAXMk7xw=",
+    "BUILD.bazel": "sha256-Z4RJTYh4Dj/uaDE4a2jEhAxxhjysHuTq8K4hjw6hTGs="
+  }
+}

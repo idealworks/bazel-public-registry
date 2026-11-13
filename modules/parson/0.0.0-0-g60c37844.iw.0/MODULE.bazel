@@ -1,4 +1,0 @@
-module(
-    name = "parson",
-    version = "0.0.0-0-g60c37844.iw.0",
-)

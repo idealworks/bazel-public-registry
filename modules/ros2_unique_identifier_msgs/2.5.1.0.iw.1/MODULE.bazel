@@ -1,0 +1,7 @@
+module(
+    name = "ros2_unique_identifier_msgs",
+    version = "2.5.1.0.iw.1",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "rules_ros2_interfaces", version = "0.1.0")

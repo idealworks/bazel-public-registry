@@ -1,9 +1,0 @@
-{
-  "url": "https://github.com/eProsima/Fast-CDR/archive/0e2650a58c1968ca2acc3314e17ed2f8a1188f93.tar.gz",
-  "integrity": "sha256-eosB+RTZZIw3gmUWfy7F0Xf6zZD63VdzBiW0EHKxLOQ=",
-  "strip_prefix": "Fast-CDR-0e2650a58c1968ca2acc3314e17ed2f8a1188f93",
-  "overlay": {
-    "MODULE.bazel": "sha256-Ss7Fa/dJHrUs6Rr1nF0Ds5Dkc2k60gyaDSNaZ3zG0Xw=",
-    "BUILD.bazel": "sha256-hdRIG0akAZUv3FygrdOSKEvRsrFqbfsFhZe/pG9z7FA="
-  }
-}

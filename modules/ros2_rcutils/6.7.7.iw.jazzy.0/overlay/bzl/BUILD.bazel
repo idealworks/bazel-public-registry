@@ -1,1 +1,0 @@
-exports_files(["generate_rcutils_logging_macros.py"])

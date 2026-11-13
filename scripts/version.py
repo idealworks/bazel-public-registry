@@ -167,7 +167,29 @@ class TestVersion(unittest.TestCase):
             Version.parse("0.7.0-1-gb86d2da"), Version.parse("1.5.1.40.g507de66.iw.1")
         )
 
-    def test_rmw_cyclone_dds(self):
-        self.assertLess(
-            Version.parse("2.2.4.iw.jazzy.1"), Version.parse("2.2.4-4-gb70b71b.iw.jazzy.0")
-        )
+    def test_old_names_sorted_wrong(self):
+        # why N is a dotted release id: the old git-describe forms sort below X.Y.Z.iw
+        for later in ("2.2.4-4-gb70b71b.iw.jazzy.0", "2.2.4.4.gb70b71b.iw.jazzy.0"):
+            self.assertLess(Version.parse(later), Version.parse("2.2.4.iw.jazzy.1"))
+
+    def test_no_v_prefix(self):
+        # a v-tag copied into the name would outrank every plain BCR version of the module
+        self.assertLess(Version.parse("1.0.7"), Version.parse("v1.0.6.0-g8e7627d.iw.1"))
+        self.assertLess(Version.parse("1.0.6.0-g8e7627d.iw.1"), Version.parse("1.0.7"))
+        self.assertLess(Version.parse("1.0.0-rc4"), Version.parse("1.0.0"))
+
+    def test_describe_long_scheme(self):
+        ordered = [
+            "2.2.2.1.iw.1",
+            "2.2.4",  # upstream as-is at the tag
+            "2.2.4.0.iw.0",  # our overlay on the tag commit
+            "2.2.4.0.iw.1",
+            "2.2.4.4",  # upstream as-is, 4 commits later
+            "2.2.4.4.iw.0",
+            "2.2.4.4.iw.2",
+            "2.2.4.10.iw.0",  # N compares numerically
+            "2.2.5",
+            "2.2.5.0.iw.0",
+        ]
+        parsed = [Version.parse(v) for v in ordered]
+        self.assertEqual(sorted(parsed), parsed)

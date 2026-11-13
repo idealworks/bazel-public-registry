@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/BehaviorTree/BehaviorTree.CPP/archive/48f6c5bd1d797c73a562f1c92f404d0bb944e018.tar.gz",
+  "integrity": "sha256-8ApuLSsWzdCCLU9E8xxSVWc8gwWLMB3bLHT8UHic6ik=",
+  "strip_prefix": "BehaviorTree.CPP-48f6c5bd1d797c73a562f1c92f404d0bb944e018",
+  "overlay": {
+    "MODULE.bazel": "sha256-d6kmEKm0nJ7p4Xs9eVWPfRNXr4/P/eivZycSCaWdX0A=",
+    "BUILD.bazel": "sha256-AVy/i+UYdyGVS5BigxaNg0IFbKWIlnu3FveGnaOOn9Y=",
+    "3rdparty/lexy/BUILD.bazel": "sha256-MHWADuHaTMZvGK3aiw6iVXcvkK3iqQvs140V4LG+9K4="
+  }
+}

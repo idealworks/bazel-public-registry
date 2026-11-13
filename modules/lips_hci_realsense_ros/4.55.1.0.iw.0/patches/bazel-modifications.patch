@@ -1,0 +1,13 @@
+diff --git a/realsense2_camera/include/base_realsense_node.h b/realsense2_camera/include/base_realsense_node.h
+index 4792f545..16955b31 100755
+--- a/realsense2_camera/include/base_realsense_node.h
++++ b/realsense2_camera/include/base_realsense_node.h
+@@ -43,7 +43,7 @@
+ #include <tf2/LinearMath/Quaternion.h>
+ #include <tf2_ros/transform_broadcaster.h>
+ #include <tf2_ros/static_transform_broadcaster.h>
+-#include <eigen3/Eigen/Geometry>
++#include <Eigen/Geometry>
+ #include <condition_variable>
+ 
+ #include <ros_sensor.h>

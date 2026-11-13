@@ -1,7 +1,0 @@
-cc_library(
-    name = "i2c-tools",
-    srcs = glob(["lib/**/*.c"]),
-    hdrs = glob(["include/**/*.h"]),
-    includes = ["include"],
-    visibility = ["//visibility:public"],
-)

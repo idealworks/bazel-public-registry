@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros/pluginlib/archive/3e59af469b27b3a692f77dc4e76c64335dbf4c79.tar.gz",
+  "integrity": "sha256-I59ATWTglhIFesj9S/jecNRCgUwCaL5q9O2tnfuLrh4=",
+  "strip_prefix": "pluginlib-3e59af469b27b3a692f77dc4e76c64335dbf4c79",
+  "overlay": {
+    "MODULE.bazel": "sha256-TRgxmIUftZrmt+9WODPnDYAk1LIJXBJanBv09BCO8aA=",
+    "BUILD.bazel": "sha256-fdtHFNvjTY5xiw8rVyIwi1yHRur5uB8RZbPCz+OrBDI="
+  }
+}
