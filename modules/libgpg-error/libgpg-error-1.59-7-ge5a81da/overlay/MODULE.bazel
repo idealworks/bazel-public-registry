@@ -1,4 +1,0 @@
-module(
-    name = "libgpg-error",
-    version = "libgpg-error-1.59-7-ge5a81da",
-)

@@ -124,10 +124,12 @@ def expected_version(long_describe, modified):
     Modified (overlay or patches): "3.2.0-0-g9f40278" -> "3.2.0.0.iw", "2024.1-8-g9d5e1d1" -> "2024.1.0.8.iw".
     """
     tag, inc = re.match(r"^(.*)-(\d+)-g[0-9a-f]+$", long_describe).groups()
-    release = tag.replace("-", ".")
+    tag = re.sub(r"^[A-Za-z][\w.-]*?-(?=v?\d)", "", tag)  # drop a project prefix: "libgpg-error-1.59" -> "1.59"
+    tag = re.sub(r"^v(?=\d)", "", tag)  # a leading v would outrank every digit-only version in Bazel's order
+    release = re.sub(r"[-_]", ".", tag)
     if inc == "0" and not modified:
         return release
-    while re.fullmatch(r"v?\d+(\.\d+)?", release):  # pad to X.Y.Z so N is always the 4th id
+    while re.fullmatch(r"\d+(\.\d+)?", release):  # pad to X.Y.Z so N is always the 4th id
         release += ".0"
     return f"{release}.{inc}" + (".iw" if modified else "")
 
@@ -193,8 +195,7 @@ class ModuleInformation:
                 raise subprocess.SubprocessError(
                     f"Unable to run git describe in {self.dec.header.name}"
                 )
-            if git_rev[0].isdigit():
-                verify_git_tag_matched_module(git_rev, self.dec.header, any(git_status), self.ws_path)
+            verify_git_tag_matched_module(git_rev, self.dec.header, any(git_status), self.ws_path)
 
         if force_url:
             source_info = SourceData(force_url, force_strip_prefix)
@@ -361,6 +362,15 @@ class TestVersionNaming(unittest.TestCase):
         self.assertEqual(expected_version("2017-02-24-228-g504193e", True), "2017.02.24.228.iw")
         self.assertEqual(expected_version("2024.1-8-g9d5e1d1", True), "2024.1.0.8.iw")
         self.assertEqual(expected_version("2024.1-0-g9d5e1d1", False), "2024.1")
+        # project prefix and leading v are dropped
+        self.assertEqual(expected_version("libgpg-error-1.59-7-ge5a81da", True), "1.59.0.7.iw")
+        self.assertEqual(expected_version("gpgme-2.0.1-28-g53c8f291", True), "2.0.1.28.iw")
+        self.assertEqual(expected_version("libXau-1.0.12-0-g9f40278", False), "1.0.12")
+        self.assertEqual(expected_version("v2017.2-184-gde29c5f", True), "2017.2.0.184.iw")
+        self.assertEqual(expected_version("v257-0-g70bae76", True), "257.0.0.0.iw")
+        self.assertEqual(expected_version("v4.3-endsley-14-gb817e94", True), "4.3.endsley.14.iw")
+        # digit-first tags keep inner letters
+        self.assertEqual(expected_version("2.43.0-v1.0.2.0-9-g2554f30", True), "2.43.0.v1.0.2.0.9.iw")
 
     def test_verify(self):
         header = lambda v: ModuleHeader(name="m", version=v)  # noqa: E731

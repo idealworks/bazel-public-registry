@@ -28,11 +28,10 @@ A module built from a git commit is named after `git describe --tags --long` of 
   (patches, overlay, deps). No commit hash and no distro: `<tag>.<N>` already pins the commit
   on the branch the module tracks.
 
-`scripts/apply_ws_module_to_registry.py` enforces this for modules whose describe starts with a
-digit: anything staged in the module's checkout counts as an overlay or patch. Untagged repos
-are named as if their root commit were tagged `0.0.0`.
+`scripts/apply_ws_module_to_registry.py` enforces this: anything staged in the module's checkout
+counts as an overlay or patch. Untagged repos are named as if their root commit were tagged `0.0.0`.
 
-Exceptions: release tarballs (no git history) keep the upstream release version. `fast_cdr` is
-named after its CMake project version (`2.2.8.iw.0`), because eProsima tags releases on
-side branches, so `git describe` on the `2.2.x` branch Jazzy tracks prints `v2.0.0-N-g...`.
-
+Exceptions: release tarballs (no git history) keep the upstream release version, and the
+rules_ros2 fork keeps its own `2.0.0.eddy.N`. `fast_cdr` follows the rule even though the name
+looks low: eProsima tags releases on side branches, so the `2.2.x` branch Jazzy tracks describes
+as `v2.0.0-N-g...`, and `2.0.0.76.iw.0` is the 2.2.8 code.

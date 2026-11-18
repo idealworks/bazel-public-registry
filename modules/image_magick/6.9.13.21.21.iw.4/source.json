@@ -7,7 +7,7 @@
     "bazel-modifications.patch": "sha256-dTerOXZgj99CelPKLeShzf18eljRZpx0o5pIbGU9f4w="
   },
   "overlay": {
-    "MODULE.bazel": "sha256-Gj/aClOXH/6p/S7g1pj73MGHEZlRAYJKNMbg13DIlbM=",
+    "MODULE.bazel": "sha256-bA1jYirntWDZdLvTRLhfXtYAUdk5uhQSgXHF0mojpRo=",
     "magick/magick-baseconfig.h.in": "sha256-Sbljw95uOuOwO3NO+833JjHV3JMVwVwAlzswqVgaJHU=",
     "BUILD.bazel": "sha256-JuMKSMtn5l7wNM5GkYciSDAYKIFZUWPPZlinXrpgN4Y="
   }

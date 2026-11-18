@@ -17,7 +17,7 @@ rust_toolchains = use_extension("@rules_rs//rs/toolchains:module_extension.bzl",
 use_repo(rust_toolchains, "default_rust_toolchains")
 
 register_toolchains("@default_rust_toolchains//...")
-bazel_dep(name = "fast_cdr", version = "2.2.8.iw.0")
+bazel_dep(name = "fast_cdr", version = "2.0.0.76.iw.0")
 bazel_dep(name = "ros2_ament_index", version = "1.8.4.0.iw.0")
 bazel_dep(name = "ros2_rcutils", version = "6.7.7.0.iw.0")
 bazel_dep(name = "ros2_rcpputils", version = "2.11.4.0.iw.0")

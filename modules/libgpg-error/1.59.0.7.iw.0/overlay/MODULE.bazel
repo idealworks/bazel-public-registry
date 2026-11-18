@@ -1,0 +1,4 @@
+module(
+    name = "libgpg-error",
+    version = "1.59.0.7.iw.0",
+)

@@ -10,7 +10,7 @@
     "MODULE.bazel": "sha256-N2k1BKZzaVVhpFW2efkLU6AyX9nHPaZrMy3nENk1lm4=",
     "requirements_lock.txt": "sha256-1ec/tIlNpO8jWsTN+sSQ1MZBR55rZnszPIx8vEivG1M=",
     "requirements.txt": "sha256-GQzV2W/B2yR7dYaKaiXc10FSgLwd4FLENYR7+MJ3Fgo=",
-    "rclcpp/include/rclcpp/version.h": "sha256-6Amp61zBxzXb+F8t7A9dxcbSQsyk3aUK+SNsDEgALUg=",
+    "rclcpp/include/rclcpp/version.h": "sha256-Dfg7K3G3Dm+8HoBA5MHssYN8TLs8blRcPBzuF8BNbas=",
     "bzl/rclcpp_interfaces.bzl": "sha256-NyAgyJSQEZixUvnzH2lv7P4nDN0PA6JvyP7RScdFzjE=",
     "bzl/generate_rclcpp_logging_macros.py": "sha256-28hBX7ohFUbte/DZXnDzSRyb4aeVsTVVLlIIBmtExY4=",
     "bzl/generate_rclcpp_interface.py": "sha256-xVrDAj7GMIXbpuRYY+f0LRNlVw/foZtFJzwXG9f9F9k=",

@@ -1,0 +1,6 @@
+module(
+    name = "libassuan",
+    version = "3.0.2.16.iw.0",
+)
+
+bazel_dep(name = "libgpg-error", version = "1.59.0.7.iw.0")
