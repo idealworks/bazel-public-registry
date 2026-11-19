@@ -1,0 +1,7 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+cc_library(
+    name = "azure_macro_utils_c",
+    hdrs = glob(["inc/**/*.h"]),
+    includes = ["inc"],
+    visibility = ["//visibility:public"],
+)

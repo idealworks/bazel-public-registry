@@ -1,0 +1,9 @@
+module(
+    name = "ros2_resource_retriever",
+    version = "3.4.4.0.iw.0",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "curl", version = "8.23.0")
+bazel_dep(name = "ros2_ament_index", version = "1.8.4.0.iw.0")
+bazel_dep(name = "rules_cc", version = "0.2.28")

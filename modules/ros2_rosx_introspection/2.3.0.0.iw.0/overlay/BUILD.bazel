@@ -1,0 +1,29 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "rosx_introspection",
+    srcs = [
+        "src/deserializer.cpp",
+        "src/msgpack_utils.cpp",
+        "src/ros_field.cpp",
+        "src/ros_message.cpp",
+        "src/ros_parser.cpp",
+        "src/ros_type.cpp",
+        "src/serializer.cpp",
+        "src/stringtree_leaf.cpp",
+    ],
+    hdrs = glob(
+        [
+            "include/**/*.hpp",
+            "include/**/*.h",
+        ],
+        exclude = ["include/rosx_introspection/ros_utils/**"],  # ROS-only helpers (rosbag2_cpp), off as in upstream's non-ament build
+    ),
+    copts = ["-std=c++17"],
+    # upstream: PUBLIC so consumers on C++20 keep the nonstd::span ABI
+    defines = ["span_CONFIG_SELECT_SPAN=1"],
+    includes = ["include"],
+    local_defines = ["ROSX_HAS_JSON"],
+    visibility = ["//visibility:public"],
+    deps = ["@rapidjson"],
+)

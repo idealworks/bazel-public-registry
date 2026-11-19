@@ -25,6 +25,13 @@ py_binary(
     visibility = ["//visibility:public"],
     deps = [
         ":utils",
+    ],
+)
+
+py_binary(
+    name = "apply_overlay_and_patches",
+    srcs = ["apply_overlay_and_patches.py"],
+    deps = [
         ":version",
     ],
 )

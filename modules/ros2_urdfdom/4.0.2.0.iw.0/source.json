@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros/urdfdom/archive/79f079d1fd403f8102a4053b818719b966b5f49d.tar.gz",
+  "integrity": "sha256-QGyQOGHJ5ULPO3XWs6wjl5V4nYG1phTo+ZNTCbDKsC8=",
+  "strip_prefix": "urdfdom-79f079d1fd403f8102a4053b818719b966b5f49d",
+  "overlay": {
+    "MODULE.bazel": "sha256-bUWmDcAboH3JIGdpHHZluGByIN5keylxbN9pV8vcwqI=",
+    "BUILD.bazel": "sha256-elYV4oe4ZxWT8cf6HcUvr97MuYl5qi/tz/gBmqLip6w="
+  }
+}

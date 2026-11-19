@@ -1,0 +1,11 @@
+module(
+    name = "ros2_laser_scan_matcher",
+    version = "0.0.0.25.iw.0",
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "rules_cc", version = "0.2.28")
+bazel_dep(name = "boost.thread", version = "1.83.0.bcr.2")  # not 1.87+: Boost 1.87 removed the deprecated Asio API (io_service, deadline_timer, ...) that the stack still uses
+bazel_dep(name = "ros2_common_interfaces", version = "5.3.8.0.iw.0")
+bazel_dep(name = "ros2_geometry2", version = "0.36.23.0.iw.0")
+bazel_dep(name = "com_github_alexkaravaev_csm", version = "1.0.2.13.iw.2")

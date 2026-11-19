@@ -1,2 +1,0 @@
-empy==3.3.4
-lark-parser

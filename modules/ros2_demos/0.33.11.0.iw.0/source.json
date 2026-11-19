@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros2/demos/archive/37e25e0dece32f972b3cc8677b6aab3e891a9365.tar.gz",
+  "integrity": "sha256-Qv5d6mXYg9aXtoc6CLPbEoV7PBCT8R1DvIS+VoWX3tQ=",
+  "strip_prefix": "demos-37e25e0dece32f972b3cc8677b6aab3e891a9365",
+  "overlay": {
+    "MODULE.bazel": "sha256-b+EWCC7j4zrb1wmD3iU8iWR/nNydJXOqT5ZTyJ20Hno=",
+    "demo_nodes_py/demo_nodes_py/topics/BUILD.bazel": "sha256-yKoURXpGGq+eLiJaOelA16Oy7Jnju9FyyVqNKamjBJY="
+  }
+}

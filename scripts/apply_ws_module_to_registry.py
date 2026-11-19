@@ -10,6 +10,7 @@ import os
 import re
 import shutil
 import subprocess
+import unittest
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -63,6 +64,14 @@ class ModuleDeclaration:
                 return False
         return True
 
+    def get_unprocessed_deps(self, ws_modules, processed_deps):
+        """returns a list of unprocessed dependencies of the module based on the list of processed modules"""
+        unprocessed_deps = []
+        for bazel_dep in self.bazel_deps:
+            if bazel_dep.name in ws_modules and bazel_dep.name not in processed_deps:
+                unprocessed_deps.append(bazel_dep.name)
+        return unprocessed_deps
+
 
 @dataclass
 class SourceData:
@@ -108,27 +117,30 @@ def git_remote_to_source_data(git_remote, commit_hash):
     raise ValueError(f"{git_remote} not convertible to archive url")
 
 
-def verify_git_tag_matched_module(actual_git_tag, header, ws_path=""):
-    # Match against tags like "2017-02-24-228-g504193e"
-    # These can be safely converted to "2017.02.24-228-g504193e"
-    match = re.match(r"^(\d{4})-(\d{2})-(\d{2})-(\d+-g[0-9a-f]+$)", actual_git_tag)
-    if match:
-        year, month, day, ext = match.groups()
-        return header.version.startswith(f"{year}.{month}.{day}-{ext}")
+def expected_version(long_describe, modified):
+    """`git describe --tags --long` output -> required version, without `.<K>` when modified.
 
-    # Match against tags like "3.0.0-17-g9f40278"
-    # These can be safely converted to "3.0.0.17.g9f40278"
-    match = re.match(r"^(\d+)\.(\d+)\.(\d+)-(\d+)-(g[0-9a-f]+$)", actual_git_tag)
-    if match:
-        major, minor, patch, inc, ext = match.groups()
-        return header.version.startswith(f"{major}.{minor}.{patch}.{inc}.{ext}")
+    See README "Version names". Unmodified: "3.2.0-0-g9f40278" -> "3.2.0", "3.2.0-2-g9f40278" -> "3.2.0.2".
+    Modified (overlay or patches): "3.2.0-0-g9f40278" -> "3.2.0.0.iw", "2024.1-8-g9d5e1d1" -> "2024.1.0.8.iw".
+    """
+    tag, inc = re.match(r"^(.*)-(\d+)-g[0-9a-f]+$", long_describe).groups()
+    tag = re.sub(r"^[A-Za-z][\w.-]*?-(?=v?\d)", "", tag)  # drop a project prefix: "libgpg-error-1.59" -> "1.59"
+    tag = re.sub(r"^v(?=\d)", "", tag)  # a leading v would outrank every digit-only version in Bazel's order
+    release = re.sub(r"[-_]", ".", tag)
+    if inc == "0" and not modified:
+        return release
+    while re.fullmatch(r"\d+(\.\d+)?", release):  # pad to X.Y.Z so N is always the 4th id
+        release += ".0"
+    return f"{release}.{inc}" + (".iw" if modified else "")
 
-    if not header.version.startswith(actual_git_tag):
-        ws_loc_str = ""
-        if ws_path:
-            ws_loc_str = f" at {ws_loc_str}"
+
+def verify_git_tag_matched_module(actual_git_tag, header, modified, ws_path=""):
+    expected = expected_version(actual_git_tag, modified)
+    if not (re.fullmatch(rf"{re.escape(expected)}\.\d+", header.version) if modified else header.version == expected):
+        ws_loc_str = f" at {ws_path}" if ws_path else ""
+        want = f"{expected}.<K>" if modified else expected
         raise ValueError(
-            f"Module {header.name}{ws_loc_str} declares version '{header.version}' that does not start with '{actual_git_tag}'"
+            f"Module {header.name}{ws_loc_str} declares version '{header.version}', expected '{want}' (from git describe '{actual_git_tag}')"
         )
 
 
@@ -161,11 +173,19 @@ class ModuleInformation:
             registry_path / "modules" / self.dec.header.name / self.dec.header.version
         )
         mod_path.mkdir(parents=True, exist_ok=True)
-        # Get the exact tag of the repo in the workspace and check that the tag in MODULE.bazel starts with it
+        git_status = subprocess.run(
+            ["git", "status", "--short"],
+            cwd=self.ws_path,
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.split("\n")
+
+        # Check MODULE.bazel's version against git describe; anything staged means we modified the source
         if not force_url:
             try:
                 git_rev = subprocess.run(
-                    ["git", "describe", "--tags"],
+                    ["git", "describe", "--tags", "--long"],
                     cwd=self.ws_path,
                     check=True,
                     capture_output=True,
@@ -175,16 +195,7 @@ class ModuleInformation:
                 raise subprocess.SubprocessError(
                     f"Unable to run git describe in {self.dec.header.name}"
                 )
-            if git_rev[0].isdigit():
-                verify_git_tag_matched_module(git_rev, self.dec.header, self.ws_path)
-
-        git_status = subprocess.run(
-            ["git", "status", "--short"],
-            cwd=self.ws_path,
-            check=True,
-            capture_output=True,
-            text=True,
-        ).stdout.split("\n")
+            verify_git_tag_matched_module(git_rev, self.dec.header, any(git_status), self.ws_path)
 
         if force_url:
             source_info = SourceData(force_url, force_strip_prefix)
@@ -201,14 +212,16 @@ class ModuleInformation:
         overlay_path = mod_path / "overlay"
         overlay_path.mkdir(parents=True, exist_ok=True)
 
-        # Copy MODULE.bazel to overlay, symlink it and remove it from statuses
+        # Copy MODULE.bazel to the module dir and the overlay, and remove it from statuses
         shutil.copy(self.ws_path / "MODULE.bazel", mod_path)
         overlay_json_content = {
             "MODULE.bazel": generate_integrity(mod_path / "MODULE.bazel")
         }
-        if not (mod_path / "overlay" / "MODULE.bazel").exists():
-            os.symlink("../MODULE.bazel", mod_path / "overlay" / "MODULE.bazel")
-        git_status = [entry for entry in git_status if entry != "A  MODULE.bazel"]
+        # a real copy, not a symlink: raw.githubusercontent.com serves a symlink's target path, not its content
+        (overlay_path / "MODULE.bazel").unlink(missing_ok=True)
+        shutil.copy(mod_path / "MODULE.bazel", overlay_path / "MODULE.bazel")
+        # the overlay always carries MODULE.bazel; a patch hunk on it would fail after the overlay is written
+        git_status = [entry for entry in git_status if entry not in ("A  MODULE.bazel", "M  MODULE.bazel")]
 
         # Loop on all the files in the status and process them accordingly
         source_json_content = {
@@ -339,6 +352,38 @@ def find_files(filename, search_dir):
     return matches
 
 
+
+class TestVersionNaming(unittest.TestCase):
+    def test_expected_version(self):
+        self.assertEqual(expected_version("3.2.0-0-g9f40278", False), "3.2.0")
+        self.assertEqual(expected_version("3.2.0-2-g9f40278", False), "3.2.0.2")
+        self.assertEqual(expected_version("3.2.0-0-g9f40278", True), "3.2.0.0.iw")
+        self.assertEqual(expected_version("3.0.0-17-g9f40278", True), "3.0.0.17.iw")
+        self.assertEqual(expected_version("2017-02-24-228-g504193e", True), "2017.02.24.228.iw")
+        self.assertEqual(expected_version("2024.1-8-g9d5e1d1", True), "2024.1.0.8.iw")
+        self.assertEqual(expected_version("2024.1-0-g9d5e1d1", False), "2024.1")
+        # project prefix and leading v are dropped
+        self.assertEqual(expected_version("libgpg-error-1.59-7-ge5a81da", True), "1.59.0.7.iw")
+        self.assertEqual(expected_version("gpgme-2.0.1-28-g53c8f291", True), "2.0.1.28.iw")
+        self.assertEqual(expected_version("libXau-1.0.12-0-g9f40278", False), "1.0.12")
+        self.assertEqual(expected_version("v2017.2-184-gde29c5f", True), "2017.2.0.184.iw")
+        self.assertEqual(expected_version("v257-0-g70bae76", True), "257.0.0.0.iw")
+        self.assertEqual(expected_version("v4.3-endsley-14-gb817e94", True), "4.3.endsley.14.iw")
+        # digit-first tags keep inner letters
+        self.assertEqual(expected_version("2.43.0-v1.0.2.0-9-g2554f30", True), "2.43.0.v1.0.2.0.9.iw")
+
+    def test_verify(self):
+        header = lambda v: ModuleHeader(name="m", version=v)  # noqa: E731
+        verify_git_tag_matched_module("2.2.4-4-gb70b71b", header("2.2.4.4.iw.2"), True)
+        verify_git_tag_matched_module("2.2.4-0-gb70b71b", header("2.2.4.0.iw.0"), True)
+        verify_git_tag_matched_module("2.2.4-0-gb70b71b", header("2.2.4"), False)
+        verify_git_tag_matched_module("2.2.4-4-gb70b71b", header("2.2.4.4"), False)
+        for bad, modified in (("2.2.4.4", True), ("2.2.4.4.iw.0", False), ("2.2.4.4-gb70b71b.iw.jazzy.0", True),
+                              ("2.2.4.4.iw.jazzy.0", True), ("2.2.4.5.iw.0", True), ("2.2.4.iw.0", True)):
+            with self.assertRaises(ValueError):
+                verify_git_tag_matched_module("2.2.4-4-gb70b71b", header(bad), modified)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Creates a registry entry for all the modules in a workspace"
@@ -375,12 +420,8 @@ if __name__ == "__main__":
     for module_path in module_bazel_paths:
         module_dec: ModuleDeclaration = parse_module_file(module_path)
         module_info = ModuleInformation(module_dec, module_path.parent)
-        # Sanity check that the modules do not reference local_path_overrides
-        if module_dec.has_local_path_overrides():
-            raise ValueError(
-                f"Module {module_dec.header.name} has local_path_override inside, make sure to remove it"
-            )
         all_module_infos.append(module_info)
+    print(f"Found {len(all_module_infos)} modules in the workspace")
 
     # Remove the child modules from the list (example modules)
     parent_module_infos = []
@@ -398,6 +439,13 @@ if __name__ == "__main__":
         if not module_has_parent:
             parent_module_infos.append(module_info)
     all_module_infos = parent_module_infos
+
+    # Sanity check that the modules do not reference local_path_overrides (child modules may, e.g. integration tests)
+    for module_info in all_module_infos:
+        if module_info.dec.has_local_path_overrides():
+            raise ValueError(
+                f"Module {module_info.dec.header.name} has local_path_override inside, make sure to remove it"
+            )
 
     # Check that the modules in the ws reference eachother
     for module_info in all_module_infos:
@@ -417,22 +465,9 @@ if __name__ == "__main__":
         module_info.dec.header.name for module_info in all_module_infos
     ]
 
-    to_be_processed = all_module_infos.copy()
-    already_processed = []
-    while len(to_be_processed) != 0:
-        processed_module_infos_copy = to_be_processed.copy()
-        while len(processed_module_infos_copy) != 0:
-            maybe_processed_module = processed_module_infos_copy.pop()
-            if maybe_processed_module.dec.all_deps_processed(
-                all_ws_module_names, already_processed
-            ):
-                maybe_processed_module.update_to_registry(
-                    Path(args.registry_path), args.url, args.strip_prefix
-                )
-                already_processed.append(maybe_processed_module.dec.header.name)
-                to_be_processed = [
-                    module_info
-                    for module_info in to_be_processed
-                    if module_info.dec.header.name
-                    != maybe_processed_module.dec.header.name
-                ]
+    for module_info in all_module_infos:
+        print(f"Processing {module_info.dec.header.name}")
+        module_info.update_to_registry(
+            Path(args.registry_path), args.url, args.strip_prefix
+        )
+

@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/ros2/urdf/archive/2c6f1d0ed42890a0e30ef182c9055972cb8b883c.tar.gz",
+  "integrity": "sha256-Xg9Tsjm9YWA2EuWV7oie/x9tO1xeRg2RnFFdELQT+x4=",
+  "strip_prefix": "urdf-2c6f1d0ed42890a0e30ef182c9055972cb8b883c",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-H3l/zB/fzRSluplU/LiNULOqASVZj7ydU8VcM10iB9Q="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-AZpQLxxYJvLPDLit/ujXQNrkorYXze0xJYZvlISGRZk=",
+    "BUILD.bazel": "sha256-iBSGz9HCmIgfpv56VhVWWPRgqS9IKwu9eu41oa1R33w="
+  }
+}

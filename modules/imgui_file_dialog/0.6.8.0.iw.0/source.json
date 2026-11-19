@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/aiekick/ImGuiFileDialog/archive/ee77f190861193a995435c388682f1512f6fd29a.tar.gz",
+  "integrity": "sha256-tkR2K6FbvW/cK1SAN9i4cpQJkOsRHdsq9+J78VYU/oQ=",
+  "strip_prefix": "ImGuiFileDialog-ee77f190861193a995435c388682f1512f6fd29a",
+  "patch_strip": 1,
+  "patches": {
+    "bazel-modifications.patch": "sha256-1fSOgS2OUMu06U6Xl/ibL2JQs1k3sadPAGweuuEwLvo="
+  },
+  "overlay": {
+    "MODULE.bazel": "sha256-ysRMtO5XG3gyADNgwYiAtpToqZhmfIGGecT6xMSSJ9s=",
+    "BUILD.bazel": "sha256-UH0qtbYJyclf2EO5xsENUtsPY/Sm5M7nSwj0zbaXgTg="
+  }
+}

@@ -1,0 +1,12 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+cc_library(
+    name = "imgui_file_dialog",
+    srcs = ["ImGuiFileDialog.cpp"],
+    hdrs = glob(["*.h"]),
+    includes = ["."],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@imgui",
+    ],
+)

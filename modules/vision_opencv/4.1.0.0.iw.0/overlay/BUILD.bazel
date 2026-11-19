@@ -1,0 +1,21 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+cc_library(
+    name = "cv_bridge",
+    srcs = [
+        "cv_bridge/src/cv_bridge.cpp",
+        "cv_bridge/src/rgb_colors.cpp",
+    ],
+    hdrs = [
+        "cv_bridge/include/cv_bridge/cv_bridge_export.h",
+    ] + glob([
+        "cv_bridge/include/cv_bridge/*.hpp",
+    ]),
+    includes = ["cv_bridge/include"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@boost.endian",
+        "@opencv",
+        "@ros2_common_interfaces//:cpp_sensor_msgs",
+    ],
+)

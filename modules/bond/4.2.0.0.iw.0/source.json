@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros/bond_core/archive/8f024ddef9487916e721f688cc9339240e941a56.tar.gz",
+  "integrity": "sha256-UN77y3ucYa2ZaUjo5WEAu1S0964H2CB+oKWMvqJR5sk=",
+  "strip_prefix": "bond_core-8f024ddef9487916e721f688cc9339240e941a56",
+  "overlay": {
+    "MODULE.bazel": "sha256-uOHOa+SBPzXIVaE0pGZWlvphxjCy/WQ2B2yGbCx0lFo=",
+    "BUILD.bazel": "sha256-OxWwMDwBrM//Q7gF7QyXPV4xzrRd40qUkk/Fwa7B8yk="
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/ros/kdl_parser/archive/c6f0299344afd1afbeb442fe37e073be69dd5e47.tar.gz",
+  "integrity": "sha256-wirfhPwbJS3RP0QJLq/Jsrycav8RtmH1cXxypHWUe8E=",
+  "strip_prefix": "kdl_parser-c6f0299344afd1afbeb442fe37e073be69dd5e47",
+  "overlay": {
+    "MODULE.bazel": "sha256-PLTzV8c4iG+drN5zrATIkK609wTFX9UmIc0LfYCcYV0=",
+    "BUILD.bazel": "sha256-VmKJov+Q6PsSYbI+fvyD9vJoqKBdXWf2MMaKKgJ1hGY="
+  }
+}

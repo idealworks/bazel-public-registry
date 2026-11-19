@@ -1,0 +1,67 @@
+""" Builds foxglove_bridge.
+"""
+
+load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+
+expand_template(
+    name = "version_cpp",
+    out = "foxglove_bridge/src/version.cpp",
+    substitutions = {
+        "@FOXGLOVE_BRIDGE_VERSION@": "N/A",
+        "@FOXGLOVE_BRIDGE_GIT_HASH@": "N/A",
+    },
+    template = "foxglove_bridge_base/src/version.cpp.in",
+)
+
+cc_library(
+    name = "foxglove_bridge_base",
+    srcs = glob(["foxglove_bridge_base/src/**/*.cpp"]) + [":version_cpp"],
+    hdrs = glob(["foxglove_bridge_base/include/foxglove_bridge/**/*.hpp"]),
+    copts = ["-std=c++17"],
+    includes = ["foxglove_bridge_base/include"],
+    deps = [
+        "@nlohmann_json//:json",
+        "@websocketpp",
+    ],
+)
+
+cc_library(
+    name = "foxglove_bridge_component",
+    srcs = [
+        "ros2_foxglove_bridge/src/generic_client.cpp",
+        "ros2_foxglove_bridge/src/message_definition_cache.cpp",
+        "ros2_foxglove_bridge/src/param_utils.cpp",
+        "ros2_foxglove_bridge/src/parameter_interface.cpp",
+        "ros2_foxglove_bridge/src/ros2_foxglove_bridge.cpp",
+    ],
+    hdrs = glob(["ros2_foxglove_bridge/include/foxglove_bridge/*.hpp"]),
+    copts = ["-std=c++20"],  # rosx_introspection 3.x headers need C++20 (std::span)
+    includes = ["ros2_foxglove_bridge/include"],
+    # CMake passes resource_retriever's version; keep in sync with the ros2_resource_retriever bazel_dep
+    local_defines = [
+        "RESOURCE_RETRIEVER_VERSION_MAJOR=3",
+        "RESOURCE_RETRIEVER_VERSION_MINOR=4",
+        "RESOURCE_RETRIEVER_VERSION_PATCH=4",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":foxglove_bridge_base",
+        "@ros2_rcl_interfaces//:cpp_rosgraph_msgs",
+        "@ros2_rclcpp//:rclcpp",
+        "@ros2_rclcpp//:rclcpp_components",
+        "@ros2_resource_retriever//:resource_retriever",
+        "@ros2_rosx_introspection//:rosx_introspection",
+    ],
+)
+
+cc_binary(
+    name = "ros2_foxglove_bridge_node_no_container",
+    srcs = ["ros2_foxglove_bridge/src/ros2_foxglove_bridge_node_no_container.cc"],
+    copts = ["-std=c++20"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":foxglove_bridge_component",
+        "@ros2_rclcpp//:rclcpp",
+    ],
+)

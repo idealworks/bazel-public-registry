@@ -1,0 +1,10 @@
+{
+  "integrity": "sha256-4mgpuwAX8xfZzEWrg93LixbXWtoa4HFXAGwefWAciCQ=",
+  "strip_prefix": "flann-1.9.2",
+  "url": "https://github.com/flann-lib/flann/archive/refs/tags/1.9.2.tar.gz",
+  "patch_strip": 0,
+  "overlay": {
+    "MODULE.bazel": "sha256-u2HUOFnwaLO1X1hrjmLP6TJsjin2wibkmhrfD8+l3rA=",
+    "BUILD.bazel": "sha256-v8OzyWtNKCKBhDtFGoJD65NkI8JvgdviBqHGEtOYvWw="
+  }
+}

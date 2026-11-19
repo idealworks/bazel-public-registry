@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/Azure/azure-umqtt-c/archive/457e5af5e08ce72cee4c3c32d13ef274ab23c0d3.tar.gz",
+  "integrity": "sha256-p2b31Ub2P9bc1g//ruKODoKbBSFLvUr+vXRjUTV2b9U=",
+  "strip_prefix": "azure-umqtt-c-457e5af5e08ce72cee4c3c32d13ef274ab23c0d3",
+  "overlay": {
+    "MODULE.bazel": "sha256-qJra3OLXgAFEpx7Q7XiPGeV/yBb+VjPMo5h9E0sSgP0=",
+    "BUILD.bazel": "sha256-nAbRvl2VmkwdRun85FavB+mKWyIkxkImg9kmbzmEnzs="
+  }
+}

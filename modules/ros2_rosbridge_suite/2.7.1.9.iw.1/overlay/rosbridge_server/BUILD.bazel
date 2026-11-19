@@ -1,0 +1,17 @@
+load("@rules_python//python:defs.bzl", "py_library")
+load(":rosbridge.bzl", "ros2_rosbridge")
+
+exports_files(["scripts/rosbridge_websocket.py"])
+
+py_library(
+    name = "rosbridge_server",
+    srcs = glob(["src/rosbridge_server/*.py"]),
+    imports = ["src"],
+    visibility = ["//visibility:public"],
+)
+
+ros2_rosbridge(
+    name = "rosbridge_websocket",
+    py_idl_deps = [],
+    visibility = ["//visibility:public"],
+)

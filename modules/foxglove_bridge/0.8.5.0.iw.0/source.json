@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/foxglove/ros-foxglove-bridge/archive/41f96cc6053632a472d9a821989952771b1117f2.tar.gz",
+  "integrity": "sha256-bs8JxJtlQhoRS02GnHZnNce3tFsgyU+SI4vV1ErALEA=",
+  "strip_prefix": "ros-foxglove-bridge-41f96cc6053632a472d9a821989952771b1117f2",
+  "overlay": {
+    "MODULE.bazel": "sha256-g6Q1v0SfEB4NetaCEd2RUq80v7YKKZKgjzT9AbHMdKo=",
+    "ros2_foxglove_bridge/src/ros2_foxglove_bridge_node_no_container.cc": "sha256-mqvegsi1mMoELrIftwelSQdwPfHTt7TpBFrWdw+uJKw=",
+    "BUILD.bazel": "sha256-F8fUnSEVI4pkxmAFh0F12BIu8dPEHDdESGcv+gRESl0="
+  }
+}

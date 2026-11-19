@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/berndporr/iir1/archive/refs/tags/1.9.5.zip",
+  "integrity": "sha256-5WSiR57YnJJuYnyM+MbvVUenULLgNXH2TaM3KJfu77Q=",
+  "strip_prefix": "iir1-1.9.5",
+  "overlay": {
+    "MODULE.bazel": "sha256-k2sjD2RNi15qX/WzJZbBC5hdAdsjyDaZhV60/DWHBvU=",
+    "BUILD.bazel": "sha256-2GxUXREywdEhJ0m7MqlQkSz8MbF+n9xcG3OtHJiSz+4="
+  }
+}

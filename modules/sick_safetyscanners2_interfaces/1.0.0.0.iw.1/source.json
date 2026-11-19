@@ -1,0 +1,9 @@
+{
+  "url": "https://github.com/sickag/sick_safetyscanners2_interfaces/archive/5c0d90c3d98821436358d66c59efbf205086e526.tar.gz",
+  "integrity": "sha256-FUUmOS4lDqAqjR2IzRCWBxgSR3IQrxxHEnjnoexCXds=",
+  "strip_prefix": "sick_safetyscanners2_interfaces-5c0d90c3d98821436358d66c59efbf205086e526",
+  "overlay": {
+    "MODULE.bazel": "sha256-LT+P6QT3IRACD5lVQ/YeOwG8ATnikGMgbhOLiyZHpUI=",
+    "BUILD.bazel": "sha256-LnZXM+Mdqn6UcPMWt4h6OaBUG/f0EkwfXpaqifxMuNY="
+  }
+}

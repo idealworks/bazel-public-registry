@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/ros-perception/vision_opencv/archive/f5b738d9694f0cee5904440d03912fc249943f8a.tar.gz",
+  "integrity": "sha256-vECEVgejksRpjmiuCtqMraXHSJ9+ulDO0/X0JWNMo/w=",
+  "strip_prefix": "vision_opencv-f5b738d9694f0cee5904440d03912fc249943f8a",
+  "overlay": {
+    "MODULE.bazel": "sha256-G54DXxoFX1sOcbgjqNemWRVTAxRo9gHTBbAG6wujX/A=",
+    "cv_bridge/include/cv_bridge/cv_bridge_export.h": "sha256-LRc30VBFrXZSvbqG2cvdoA92lzU3M8N0SZNuGlcCkOA=",
+    "BUILD.bazel": "sha256-CgRnYLOd4O8tdO7ak6f+q0WzEl/gDKH5wWTasibaKTk="
+  }
+}

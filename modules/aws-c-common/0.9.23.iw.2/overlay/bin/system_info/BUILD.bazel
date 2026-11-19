@@ -1,5 +1,0 @@
-cc_binary(
-    name = "system_info",
-    srcs = ["print_system_info.c"],
-    deps = ["//:aws-c-common"],
-)

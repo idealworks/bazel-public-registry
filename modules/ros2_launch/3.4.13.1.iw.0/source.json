@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/ros2/launch/archive/ede227f7d0d0bf37ad09168dc05eca3ddc76a4a4.tar.gz",
+  "integrity": "sha256-uYNWVKJNdzjyyRWoo2iuEzFm3YjD0GBlI7fKDAa+T88=",
+  "strip_prefix": "launch-ede227f7d0d0bf37ad09168dc05eca3ddc76a4a4",
+  "overlay": {
+    "MODULE.bazel": "sha256-Esi/WMYa1N19xmYk7gGjElFZ98MGz059sXHurujfHDs=",
+    "requirements_lock.txt": "sha256-BtDhHFUpSDGXKVIssLk0Uy3fdLBO4m7nfNKD2QG5i7E=",
+    "requirements.txt": "sha256-LnUI8HKsScptReMkRWa11/g95p5g9cNPWsvR/lns6Ns=",
+    "BUILD.bazel": "sha256-mEKtvntsQdvNwvfoq2MSVqqkLs9qtUdtHr6weNRT9eU="
+  }
+}

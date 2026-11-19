@@ -1,0 +1,5 @@
+pymongo
+Pillow
+tornado
+cbor2
+ujson
