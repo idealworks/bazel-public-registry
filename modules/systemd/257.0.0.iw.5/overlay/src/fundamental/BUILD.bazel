@@ -1,0 +1,44 @@
+cc_library(
+    name = "pub_headers",
+    hdrs = [
+        "confidential-virt-fundamental.h",
+        "efivars-fundamental.h",
+        "iovec-util-fundamental.h",
+        "logarithm.h",
+        "macro-fundamental.h",
+        "memory-util-fundamental.h",
+        "sha256-fundamental.h",
+        "string-util-fundamental.h",
+        "unaligned-fundamental.h",
+    ],
+    includes = ["."],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "fundamental",
+    srcs = [
+        "bootspec-fundamental.c",
+        "chid-fundamental.c",
+        "efivars-fundamental.c",
+        "sha1-fundamental.c",
+        "sha256-fundamental.c",
+        "string-util-fundamental.c",
+        "uki.c",
+    ],
+    hdrs = [
+        "bootspec-fundamental.h",
+        "chid-fundamental.h",
+        "efi-fundamental.h",
+        "sbat.h",
+        "sha1-fundamental.h",
+        "tpm2-pcr.h",
+        "uki.h",
+    ],
+    includes = ["."],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":pub_headers",
+        "//src/basic:pub_headers",
+    ],
+)

@@ -1,0 +1,9 @@
+{
+  "url": "https://mirrors.edge.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.59.tar.xz",
+  "integrity": "sha256-SfZK5AsRPlPLwWHiKvcJTju0oGEfoz71pCV7ARd58DQ=",
+  "strip_prefix": "libcap-2.59",
+  "overlay": {
+    "MODULE.bazel": "sha256-cspIOfbWExypcTS8n338dsW6xdFsxnXnsuLMsifRmVM=",
+    "BUILD.bazel": "sha256-XYXvFNDZJaNnUIw8roSbpZKEtikxGp7pu5gxi2HqeQc="
+  }
+}
