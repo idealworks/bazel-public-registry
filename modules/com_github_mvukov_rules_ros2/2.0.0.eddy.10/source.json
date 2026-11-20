@@ -1,7 +1,7 @@
 {
-  "url": "https://github.com/EddyGharib/rules_ros2/archive/650a90a36d8d333beea87bcb668bfeb4f593de40.tar.gz",
-  "integrity": "sha256-k+KYBAt77OPJXCODPl8bgDdZP9GrFhPC67bkGWYyLbE=",
-  "strip_prefix": "rules_ros2-650a90a36d8d333beea87bcb668bfeb4f593de40",
+  "url": "https://github.com/EddyGharib/rules_ros2/archive/74bd3a1cee3bc6ea17f42f332e0e34e4276c7b28.tar.gz",
+  "integrity": "sha256-g+yKYeszOcMeqhJW3+A2a6Rjl0IT5tsL7S8JhFD1XCg=",
+  "strip_prefix": "rules_ros2-74bd3a1cee3bc6ea17f42f332e0e34e4276c7b28",
   "overlay": {
     "MODULE.bazel": "sha256-gXogyvqnDS13xcBcORXm3tjF3RMcYUFhRR5V+53pjq4="
   }
