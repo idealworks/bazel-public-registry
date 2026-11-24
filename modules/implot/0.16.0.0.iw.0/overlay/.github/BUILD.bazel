@@ -1,0 +1,10 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+
+cc_binary(
+    name = "example_implot",
+    srcs = ["example_implot.cpp"],
+    deps = [
+        "//:implot",
+        "@imgui",
+    ],
+)

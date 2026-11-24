@@ -1,0 +1,10 @@
+--- a/include/polyscope/view.h
++++ b/include/polyscope/view.h
+@@ -17,6 +17,7 @@
+ #include "glm/gtc/matrix_transform.hpp"
+ #include "glm/gtc/type_ptr.hpp"
+ #include "glm/gtx/dual_quaternion.hpp"
++#include "glm/gtx/quaternion.hpp" // length2(qua) for dual_quaternion; glm 1.0.3 gtx/norm.hpp no longer provides it
+ #include "glm/gtx/norm.hpp" // necessary for dual_quaternion below
+ #include "glm/mat4x4.hpp"
+ #include "glm/vec3.hpp"
