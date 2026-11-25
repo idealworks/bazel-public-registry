@@ -1,0 +1,13 @@
+diff --git a/.gitignore b/.gitignore
+index fa9b999..44f6795 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -8,7 +8,7 @@ Makefile.in
+ aclocal.m4
+ autom4te.cache/
+ configure
+-config.h.in
++# config.h.in
+ src/err-codes.h
+ src/err-sources.h
+ /po/libgpg-error.pot
