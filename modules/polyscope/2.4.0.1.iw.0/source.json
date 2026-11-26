@@ -1,0 +1,20 @@
+{
+    "integrity": "sha256-+hPbjxVZ2EaZ4Tezk+inVFjRV76RpURCNZEb2VIDfKo=",
+    "patch_strip": 1,
+    "strip_prefix": "polyscope-f0245f375f4585c0fdd5d57179c28f25aa03cf22",
+    "url": "https://github.com/nmwsharp/polyscope/archive/f0245f375f4585c0fdd5d57179c28f25aa03cf22.tar.gz",
+    "patches": {
+        "polyscope.patch": "sha256-YhkulibOk0qUQXeBDy0V9R3kHauMf8wApYhGLcx3kQw=",
+        "glm_quaternion_include.patch": "sha256-kgV17JCl+6bA65D7zYWwvYK/Fx8WR9oSfz2txAgNVKw="
+    },
+    "overlay": {
+        "BUILD.bazel": "sha256-fofwhtXcXNaLvct9rq88C4Z61Kozzh2pz3jHGUaMm9s=",
+        "MODULE.bazel": "sha256-ET4SlkXypR+juQ0/k+MNRrh5OBv/yAT1oIO7B9i6kpY=",
+        "deps/MarchingCubeCpp/BUILD.bazel": "sha256-CMOY+UtI2c02KqGHYSc2ef7iufTz9stQ2w3qMnOdY4E=",
+        "deps/args/args/BUILD.bazel": "sha256-zJpQ/674Sfjpx7ndVjHhfaysAEm9Q8l6/YOCTvLigzA=",
+        "deps/glad/BUILD.bazel": "sha256-XbQiCjvbH9ZXQplxi6ZvrYZqRGcOj7/zY0RdriacWBU=",
+        "deps/stb/BUILD.bazel": "sha256-V69wOqJtZjwLFhdqGqhnyGqSpemLxVQPNeDgHgYe5Go=",
+        "examples/demo-app/BUILD.bazel": "sha256-PSCGoNobZj6h0WtHk4R28HgiRrycFssg8HpMuXbzq4c=",
+        "test/BUILD.bazel": "sha256-nY+z/3U1l2Tt4jhDobTqDXBTT2pnEQKN9SKmS9ZmPWo="
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "integrity": "sha256-lh3zJ9inVjBNGwpnMW7r2xER0T1Vnw00FRFOwOswq9E=",
+    "overlay": {
+        ".github/BUILD.bazel": "sha256-+pxq+BlZ70UY5oobAJyoNGQ6y1ziH7loogAdMBdmRAE=",
+        "BUILD.bazel": "sha256-Yxg3ko99lcAXccnuKcl/KTz3DFf32PWScN+ieAV1cWM=",
+        "MODULE.bazel": "sha256-laNrOpV25/JOnBnA0Hpeqm5IuVNt2BbeQ5A1WXDsSuI="
+    },
+    "strip_prefix": "implot-0.16",
+    "url": "https://github.com/epezent/implot/archive/refs/tags/v0.16.tar.gz"
+}
