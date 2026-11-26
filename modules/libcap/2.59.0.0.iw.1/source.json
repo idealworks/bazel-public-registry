@@ -1,7 +1,7 @@
 {
-  "url": "https://web.git.kernel.org/pub/scm/libs/libcap/libcap.git/snapshot/libcap-9eb56596eef5e55a596aa97ecaf8466ea559d05c.tar.gz",
-  "integrity": "sha256-/jJyyQn7cvld3HUMe5jPG+y1nxdGFi3As+nv2ZSa7aM=",
-  "strip_prefix": "libcap-9eb56596eef5e55a596aa97ecaf8466ea559d05c",
+  "url": "https://mirrors.edge.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.59.tar.xz",
+  "integrity": "sha256-SfZK5AsRPlPLwWHiKvcJTju0oGEfoz71pCV7ARd58DQ=",
+  "strip_prefix": "libcap-2.59",
   "overlay": {
     "MODULE.bazel": "sha256-pprhweqvh8veFHxNSlQPz/9qqub30pjEKZ2R0LzmH6M=",
     "BUILD.bazel": "sha256-XYXvFNDZJaNnUIw8roSbpZKEtikxGp7pu5gxi2HqeQc="

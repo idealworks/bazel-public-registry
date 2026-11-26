@@ -39,7 +39,7 @@ cc_library(
     ],
     deps = [
         "@glib//gio",
-        "@glib//gio:gio-unix",
+        "@glib//gio:gio_unix",
         "@glib//glib",
     ],
 )

@@ -3,4 +3,4 @@ module(
     version = "2017.2.0.184.iw.0",
 )
 
-bazel_dep(name = "glib", version = "2.82.2.bcr.8")
+bazel_dep(name = "glib", version = "2.82.2.bcr.11")

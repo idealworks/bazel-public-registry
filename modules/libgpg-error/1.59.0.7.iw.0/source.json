@@ -3,8 +3,8 @@
   "integrity": "sha256-DBGukyUo4S+hB5rYWbQXQ6zcISt7kqxl2CEG4/PXmDk=",
   "strip_prefix": "libgpg-error-e5a81daca8e0a8238b74ba6cb0e2738d1f60444a",
   "overlay": {
-    "MODULE.bazel": "sha256-olLLppqjqeUqqO/3GALLYIFrHpToOVEQwxLTIAw0dNs=",
-    "src/config.h": "sha256-i1Mw8O8UaXPufUFmXmSErHxZ2thyDezSHRhKVQajE5Q=",
-    "BUILD.bazel": "sha256-Dufwys4jG4lffu1QZKH4CPXxyJWm8z6U4YXp0usCRmc="
+    "MODULE.bazel": "sha256-WHGIrcfZW4ZEPjAL34WE0WJcAg7z8IalkFFPdltnAjc=",
+    "config.h.in": "sha256-zk/LrbyX+kfnz7AIzn2rnNRunYoYu4SArDMCmnixbso=",
+    "BUILD.bazel": "sha256-B3qAM5M3EVk93fbloqdDJgK8Uszxmg5tj1CpFPXdrDM="
   }
 }

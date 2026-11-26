@@ -1,4 +1,5 @@
 load("@bazel_skylib//rules:expand_template.bzl", "expand_template")
+load("@glib//gobject:gobject.bzl", "mkenums")
 
 package(
     default_visibility = ["//visibility:public"],
@@ -67,23 +68,18 @@ cc_library(
     visibility = ["//visibility:private"],
 )
 
-genrule(
+mkenums(
     name = "generate_ostree_enumtypes_h",
-    srcs = ["src/libostree/ostree-enumtypes.h.template"] + ENUM_TYPES,
-    outs = ["src/libostree/ostree-enumtypes.h"],
-    cmd = "$(location @glib//gobject:glib_mkenums) --template $(location src/libostree/ostree-enumtypes.h.template) $(locations src/libostree/ostree-fetcher.h) > $@.tmp && mv $@.tmp $@",
-    tools = ["@glib//gobject:glib_mkenums"],
+    srcs = ENUM_TYPES,
+    out = "src/libostree/ostree-enumtypes.h",
+    template = "src/libostree/ostree-enumtypes.h.template",
 )
 
-genrule(
+mkenums(
     name = "generate_ostree_enumtypes_c",
-    srcs = [
-        "src/libostree/ostree-enumtypes.c.template",
-        ":generate_ostree_enumtypes_h",
-    ] + ENUM_TYPES,
-    outs = ["src/libostree/ostree-enumtypes.c"],
-    cmd = "$(location @glib//gobject:glib_mkenums) --template $(location src/libostree/ostree-enumtypes.c.template) $(locations src/libostree/ostree-fetcher.h) > $@.tmp && mv $@.tmp $@",
-    tools = ["@glib//gobject:glib_mkenums"],
+    srcs = ENUM_TYPES,
+    out = "src/libostree/ostree-enumtypes.c",
+    template = "src/libostree/ostree-enumtypes.c.template",
 )
 
 filegroup(

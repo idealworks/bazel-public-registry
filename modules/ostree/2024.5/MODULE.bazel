@@ -4,7 +4,7 @@ module(
     compatibility_level = 1,
 )
 
-bazel_dep(name = "glib", version = "2.82.2.iw.1")
+bazel_dep(name = "glib", version = "2.82.2.bcr.11")
 bazel_dep(name = "libglnx", version = "2017.2.0.184.iw.0")
 bazel_dep(name = "bsdiff", version = "4.3.endsley.14.iw.0")
 bazel_dep(name = "bzip2", version = "1.0.8.bcr.3")
